@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import NavAuth from './NavAuth';
+
 function Header() {
 	const [active, setActive] = useState(false);
 	const handleClick = () => {
@@ -9,14 +11,12 @@ function Header() {
 
 	return (
 		<header className="mb-3 flex flex-wrap items-center justify-center bg-green-600 p-3">
-			<nav className="container mx-auto flex flex-wrap items-center justify-between bg-green-600">
+			<nav className="container mx-auto flex flex-wrap items-center justify-between bg-green-600 text-xl text-white">
 				<NavLink to="/">
-					<span className="text-xl text-white">
-						Load Order Library
-					</span>
+					<span className="">Load Order Library</span>
 				</NavLink>
 				<button
-					className=" ml-auto inline-flex rounded p-3 text-white outline-none hover:bg-green-600 hover:text-white lg:hidden"
+					className="ml-auto inline-flex rounded p-3 outline-none hover:bg-green-600 hover:text-white lg:hidden"
 					type="button"
 					onClick={handleClick}
 				>
@@ -40,10 +40,17 @@ function Header() {
 						active ? '' : 'hidden'
 					}   w-full lg:inline-flex lg:w-auto lg:flex-grow`}
 				>
-					<div className="flex w-full flex-col items-start lg:ml-auto lg:inline-flex lg:h-auto  lg:w-auto lg:flex-row lg:items-center">
-						<NavLink to="/test" className="text-xl text-white">
-							Test Page
+					<div className="flex w-full flex-col items-start lg:ml-auto lg:inline-flex lg:h-auto lg:w-auto lg:flex-row lg:items-center">
+						<NavLink to="/test" className="p-2">
+							Upload
 						</NavLink>
+						<NavLink to="/test" className="p-2">
+							Browse
+						</NavLink>
+						<NavLink to="/test" className="p-2">
+							Compare
+						</NavLink>
+						<NavAuth />
 					</div>
 				</div>
 			</nav>
