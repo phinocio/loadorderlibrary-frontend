@@ -6,7 +6,7 @@ export default function RootLayout() {
 		<>
 			<Header />
 
-			<main className="container mx-auto text-white">
+			<main className="container mx-auto px-4 py-6 text-white">
 				<Outlet />
 			</main>
 		</>

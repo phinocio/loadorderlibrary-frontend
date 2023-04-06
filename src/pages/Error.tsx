@@ -7,7 +7,7 @@ export default function Error() {
 	return (
 		<div
 			id="error-page"
-			className="flex h-screen flex-col content-center items-center justify-center text-xl"
+			className="flex h-screen flex-col content-center items-center justify-center px-4 text-xl"
 		>
 			<strong className="text-3xl">HTTP {error.status}</strong>
 			<p>
