@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, Location } from 'react-router-dom';
 
 export default function Header() {
 	const [active, setActive] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
+	const location: Location = useLocation();
 
 	// Temp until useAuth
 	const user = { name: 'Phinocio' };
@@ -18,10 +19,6 @@ export default function Header() {
 
 	const closeDropdown = () => {
 		setOpen(false);
-	};
-
-	const hideMenu = () => {
-		setActive(false);
 	};
 
 	const handleEscape = useCallback(
@@ -39,8 +36,13 @@ export default function Header() {
 		return () => document.removeEventListener('keydown', handleEscape);
 	}, [handleEscape]);
 
+	useEffect(() => {
+		setOpen(false);
+		setActive(false);
+	}, [location]);
+
 	return (
-		<header className="border-b border-gray-500">
+		<header className="border-b border-gray-500 bg-gray-900">
 			<nav className="px-4 py-5 text-xl sm:container sm:mx-auto sm:flex">
 				<div className="flex items-center justify-between">
 					<NavLink to="/" className="flex-none">
@@ -90,38 +92,33 @@ export default function Header() {
 						<NavLink
 							to="/upload"
 							className="rounded px-2 py-1 hover:bg-blue-500"
-							onClick={hideMenu}
 						>
 							Upload
 						</NavLink>
 						<NavLink
-							to="/browse"
+							to="/lists"
 							className="rounded px-2 py-1 hover:bg-blue-500"
-							onClick={hideMenu}
 						>
 							Browse
 						</NavLink>
 						<NavLink
 							to="/compare"
 							className="rounded px-2 py-1 hover:bg-blue-500"
-							onClick={hideMenu}
 						>
 							Compare
 						</NavLink>
 					</div>
 					<hr className="my-4 border-gray-700 sm:hidden" />
-					<div className="flex hidden flex-col sm:flex-row">
+					<div className="hidden flex-col sm:flex-row">
 						<NavLink
 							to="/login"
 							className="block rounded px-2 py-1 hover:bg-blue-500 focus:text-blue-500"
-							onClick={hideMenu}
 						>
 							Login
 						</NavLink>
 						<NavLink
 							to="/register"
 							className="block rounded px-2 py-1 hover:bg-blue-500 focus:text-blue-500"
-							onClick={hideMenu}
 						>
 							Register
 						</NavLink>

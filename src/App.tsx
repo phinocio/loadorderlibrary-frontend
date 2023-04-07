@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Test from './pages/Test';
 import Login from './pages/Login';
 import Error from './pages/Error';
+import Browse, { listsLoader } from './pages/Browse';
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
 			<Route index element={<Home />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/test" element={<Test />} />
+			<Route path="/lists" element={<Browse />} loader={listsLoader} />
 		</Route>
 	)
 );
