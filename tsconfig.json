@@ -14,12 +14,14 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@lib/*": ["./src/lib/*"],
+			"@types/*": ["./src/types/*"]
+		},
+		"typeRoots": ["./src/types"]
 	},
-	"include": [
-		"vite.config.ts",
-		".eslintrc.cjs",
-		"src"
-	],
+	"include": ["vite.config.ts", ".eslintrc.cjs", "src"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

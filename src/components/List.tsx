@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { List as ListType } from '../types/ListTypes';
 
-export default function List({ list }) {
+export default function List({ list }: ListType) {
 	return (
 		<div className="flex flex-col rounded bg-gray-700">
 			{/* List Card Header */}

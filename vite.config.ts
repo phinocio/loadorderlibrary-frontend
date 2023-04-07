@@ -8,6 +8,7 @@
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,5 +18,25 @@ export default defineConfig({
 		globals: true,
 		environment: 'jsdom',
 		setupFiles: ['./src/setupTests.ts'],
+	},
+	resolve: {
+		alias: [
+			{
+				find: '@',
+				replacement: fileURLToPath(new URL('./src', import.meta.url)),
+			},
+			{
+				find: '@lib',
+				replacement: fileURLToPath(
+					new URL('./src/lib', import.meta.url)
+				),
+			},
+			{
+				find: '@types',
+				replacement: fileURLToPath(
+					new URL('./src/types', import.meta.url)
+				),
+			},
+		],
 	},
 });

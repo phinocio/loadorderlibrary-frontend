@@ -14,10 +14,16 @@ import Browse, { listsLoader } from './pages/Browse';
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<RootLayout />} errorElement={<Error />}>
-			<Route index element={<Home />} />
-			<Route path="/login" element={<Login />} />
-			<Route path="/test" element={<Test />} />
-			<Route path="/lists" element={<Browse />} loader={listsLoader} />
+			<Route errorElement={<Error />}>
+				<Route index element={<Home />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/test" element={<Test />} />
+				<Route
+					path="/lists"
+					element={<Browse />}
+					loader={listsLoader}
+				/>
+			</Route>
 		</Route>
 	)
 );
