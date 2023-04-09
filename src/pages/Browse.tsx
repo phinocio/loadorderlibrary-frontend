@@ -23,7 +23,7 @@ export default function Browse() {
 
 export const listsLoader = async () => {
 	try {
-		const res = await axios.get('/lists');
+		const res = await axios.get('/v1/lists');
 		return res.data;
 	} catch (e: unknown) {
 		if (e instanceof AxiosError) {

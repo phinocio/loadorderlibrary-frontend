@@ -1,24 +1,26 @@
-import { useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import useAuth from '@/hooks/auth';
 import InputError from '@/components/InputErrors';
 
-export default function Login() {
-	const { login } = useAuth({
+export default function Register() {
+	const { register } = useAuth({
 		middleware: 'guest',
 		redirectIfAuthenticated: '/profile',
 	});
 
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
+	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 	const [errors, setErrors] = useState([]);
 
 	const submitForm = (e: any) => {
 		e.preventDefault();
 
-		login({
+		register({
 			name,
 			password,
+			password_confirmation: passwordConfirmation,
 			setErrors,
 		});
 	};
@@ -26,7 +28,7 @@ export default function Login() {
 	return (
 		<div className="flex flex-col content-center items-center justify-center px-4 text-xl">
 			<div className="justify-startp-5 flex flex-col items-center">
-				<h1 className="text-5xl text-gray-600">Login</h1>
+				<h1 className="text-5xl text-gray-600">Register</h1>
 				<Form
 					className="mt-5 flex flex-col space-y-4"
 					method="post"
@@ -97,18 +99,57 @@ export default function Login() {
 						/>
 					</div>
 
+					<div>
+						<label
+							htmlFor="password-confirm"
+							className="relative block"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth="1.5"
+								stroke="currentColor"
+								className="pointer-events-none absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 transform text-green-500"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+								/>
+							</svg>
+
+							<input
+								type="password"
+								name="password"
+								id="password-confirm"
+								value={passwordConfirmation}
+								onChange={(e) =>
+									setPasswordConfirmation(e.target.value)
+								}
+								className="block w-full rounded-full border border-gray-900 bg-gray-600 px-4 py-3 pl-14 placeholder-gray-400"
+								placeholder="Password Confirm..."
+								required
+							/>
+						</label>
+						<InputError
+							messages={errors.password_confirmation}
+							className="mt-2"
+						/>
+					</div>
+
 					<section className="flex items-center justify-between">
 						<Link
-							to="/register"
+							to="/login"
 							className="text-sm text-gray-400 underline hover:text-gray-600"
 						>
-							Not Registered?
+							Already Registered?
 						</Link>
 						<button
 							type="submit"
 							className="rounded px-2 py-1 hover:bg-blue-500"
 						>
-							Login
+							Register
 						</button>
 					</section>
 				</Form>

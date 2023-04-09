@@ -25,5 +25,6 @@ module.exports = {
 		'@typescript-eslint/indent': 0,
 		'react/jsx-indent': 0,
 		'react/react-in-jsx-scope': 0,
+		'import/extensions': 0,
 	},
 };

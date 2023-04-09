@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NavLink, useLocation, Location } from 'react-router-dom';
+import useAuth from '@/hooks/auth';
 
 export default function Header() {
 	const [active, setActive] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
 	const location: Location = useLocation();
 
-	// Temp until useAuth
-	const user = { name: 'Phinocio' };
+	const { user } = useAuth();
 
 	const toggleMenu = () => {
 		setActive(!active);
@@ -109,64 +109,67 @@ export default function Header() {
 						</NavLink>
 					</div>
 					<hr className="my-4 border-gray-700 sm:hidden" />
-					<div className="hidden flex-col sm:flex-row">
-						<NavLink
-							to="/login"
-							className="block rounded px-2 py-1 hover:bg-blue-500 focus:text-blue-500"
-						>
-							Login
-						</NavLink>
-						<NavLink
-							to="/register"
-							className="block rounded px-2 py-1 hover:bg-blue-500 focus:text-blue-500"
-						>
-							Register
-						</NavLink>
-					</div>
-					<div className="relative hidden sm:block">
-						<button
-							type="button"
-							className="relative z-10 hidden h-12 w-12 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-800 hover:bg-gray-700 sm:block"
-							onClick={toggleDropdown}
-						>
-							{user.name[0]}
-						</button>
-						<button
-							type="button"
-							onClick={closeDropdown}
-							aria-labelledby="Close Dropdown"
-							className={`${
-								open ? '' : 'hidden'
-							} fixed inset-0 h-full w-full cursor-default bg-black opacity-50`}
-							tabIndex={-1}
-						/>
-						<div
-							className={`${
-								!open ? 'sm:hidden' : 'block'
-							} mt-2 rounded-lg sm:absolute sm:right-0 sm:w-48 sm:bg-gray-800 sm:py-2 sm:drop-shadow-xl`}
-						>
+
+					{!user ? (
+						<div className="flex flex-col sm:flex-row">
 							<NavLink
-								to="/profile"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								to="/login"
+								className="block rounded px-2 py-1 hover:bg-blue-500"
 							>
-								Profile
+								Login
 							</NavLink>
 							<NavLink
-								to="/profile"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								to="/register"
+								className="block rounded px-2 py-1 hover:bg-blue-500"
 							>
-								My Lists
-							</NavLink>
-							<hr className="my-2 border-gray-500" />
-							<NavLink
-								to="/Logout"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
-							>
-								Logout
+								Register
 							</NavLink>
 						</div>
-					</div>
-
+					) : (
+						<div className="relative hidden sm:block">
+							<button
+								type="button"
+								className="relative z-10 hidden h-12 w-12 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-800 hover:bg-gray-700 sm:block"
+								onClick={toggleDropdown}
+							>
+								{user.name[0]}
+							</button>
+							<button
+								type="button"
+								onClick={closeDropdown}
+								aria-labelledby="Close Dropdown"
+								className={`${
+									open ? '' : 'hidden'
+								} fixed inset-0 h-full w-full cursor-default bg-black opacity-50`}
+								tabIndex={-1}
+							/>
+							<div
+								className={`${
+									!open ? 'sm:hidden' : 'block'
+								} mt-2 rounded-lg sm:absolute sm:right-0 sm:w-48 sm:bg-gray-800 sm:py-2 sm:drop-shadow-xl`}
+							>
+								<NavLink
+									to="/profile"
+									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								>
+									Profile
+								</NavLink>
+								<NavLink
+									to="/profile"
+									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								>
+									My Lists
+								</NavLink>
+								<hr className="my-2 border-gray-500" />
+								<NavLink
+									to="/Logout"
+									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								>
+									Logout
+								</NavLink>
+							</div>
+						</div>
+					)}
 					<div className="relative sm:hidden">
 						<button
 							type="button"
