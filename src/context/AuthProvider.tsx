@@ -1,11 +1,14 @@
-import { createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import axios from '@lib/axios';
-import { Navigate, redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const AuthContext = createContext({});
 
-export function AuthProvider({ children }) {
+type Props = {
+	children: ReactNode;
+};
+
+export function AuthProvider({ children }: Props) {
 	// const [user, setUser] = useState(null);
 	const [errors, setErrors] = useState(null);
 	// const navigate = useNavigate();
@@ -33,7 +36,7 @@ export function AuthProvider({ children }) {
 			.catch((e) => {
 				if (e.response.status !== 409) throw e;
 
-				navigate('/verify-email');
+				// redirect('/verify-email');
 			})
 	);
 

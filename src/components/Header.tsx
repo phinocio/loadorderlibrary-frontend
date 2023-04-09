@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NavLink, useLocation, Location } from 'react-router-dom';
 import useAuth from '../context/AuthProvider';
+import { Auth } from '@/types/AuthTypes';
 
 export default function Header() {
 	const [active, setActive] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
 	const location: Location = useLocation();
 
-	const { user, logout } = useAuth();
+	const { user, logout } = useAuth() as Auth;
 
 	const toggleMenu = () => {
 		setActive(!active);

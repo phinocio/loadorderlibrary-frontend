@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import useAuth from '../context/AuthProvider';
 import InputError from '@/components/InputError';
+import { Auth } from '@/types/AuthTypes';
 
 export default function Register() {
-	const { register, errors } = useAuth();
+	const { register, errors } = useAuth() as Auth;
 
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
