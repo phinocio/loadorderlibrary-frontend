@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
-import Browse, { listsLoader } from './pages/Browse';
+import Browse from './pages/Browse';
 import Profile from './pages/Profile';
 
 const router = createBrowserRouter(
@@ -22,7 +22,7 @@ const router = createBrowserRouter(
 				<Route
 					path="/lists"
 					element={<Browse />}
-					loader={listsLoader}
+					// loader={listsLoader} // Dunno how to get loader working with pagination as well, so not using it for now.
 				/>
 				<Route path="/profile" element={<Profile />} />
 			</Route>

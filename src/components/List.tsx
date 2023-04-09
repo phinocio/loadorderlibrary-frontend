@@ -21,13 +21,23 @@ export default function List({ list }: ListType) {
 					</strong>
 					<p>
 						by
-						<Link to="/" className="ml-2 text-sm text-green-400">
+						<Link
+							to={`/lists?filter[author]=${list.author?.name}`}
+							className="ml-2 text-sm text-green-400"
+						>
 							{list.author?.name ?? 'Anonymous'}
 						</Link>
 					</p>
 				</div>
 
-				<p className="text-blue-400">{list.game.name}</p>
+				<p>
+					<Link
+						to={`/lists?filter[game]=${list.game?.name}`}
+						className="ml-2 text-sm text-blue-400"
+					>
+						{list.game?.name ?? 'Anonymous'}
+					</Link>
+				</p>
 			</div>
 			{/* List Card Body */}
 			<div className="h-100 flex-auto bg-gray-700 p-4">
