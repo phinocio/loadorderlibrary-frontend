@@ -10,7 +10,7 @@ export default function Profile() {
 			) : (
 				<div>
 					<h1>{user.name}</h1>
-					<p>{user.admin === 1 ? 'admin ' : 'not admin'}</p>
+					<p>{user.admin ? 'admin ' : 'not admin'}</p>
 				</div>
 			)}
 
