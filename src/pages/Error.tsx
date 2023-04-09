@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 
 export default function Error() {
-	const error: unknown = useRouteError();
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const error: any = useRouteError();
 	const navigate: NavigateFunction = useNavigate();
 	if (isRouteErrorResponse(error)) {
 		return (

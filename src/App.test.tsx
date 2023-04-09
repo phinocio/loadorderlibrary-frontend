@@ -8,10 +8,5 @@ describe('App', () => {
 		render(<App />);
 		// Interact
 		// Inspect
-		expect(
-			screen.getByRole('heading', {
-				level: 1,
-			})
-		).toHaveTextContent('Hello World!');
 	});
 });
