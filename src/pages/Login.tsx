@@ -1,25 +1,13 @@
 import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
-import useAuth from '@/hooks/auth';
 import InputError from '@/components/InputError';
+import useAuth from '../context/AuthProvider';
 
 export default function Login() {
-	const { login } = useAuth({
-		middleware: 'guest',
-		redirectIfAuthenticated: '/profile',
-	});
-
-	type LoginErrors = {
-		name: Array<string>;
-		password: Array<string>;
-	};
+	const { login, errors } = useAuth();
 
 	const [name, setName] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [errors, setErrors] = useState<LoginErrors>({
-		name: [],
-		password: [],
-	});
 
 	const submitForm = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
@@ -27,7 +15,6 @@ export default function Login() {
 		login({
 			name,
 			password,
-			setErrors,
 		});
 	};
 
@@ -67,7 +54,12 @@ export default function Login() {
 								required
 							/>
 						</label>
-						<InputError messages={errors.name} className="mt-2" />
+						{errors?.name && (
+							<InputError
+								message={errors.name[0]}
+								className="mt-2"
+							/>
+						)}
 					</div>
 
 					<div>
@@ -99,10 +91,12 @@ export default function Login() {
 							/>
 						</label>
 
-						<InputError
-							messages={errors.password}
-							className="mt-2"
-						/>
+						{errors?.password && (
+							<InputError
+								message={errors.password[0]}
+								className="mt-2"
+							/>
+						)}
 					</div>
 
 					<section className="flex items-center justify-between">

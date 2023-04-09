@@ -1,28 +1,14 @@
 import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
-import useAuth from '@/hooks/auth';
+import useAuth from '../context/AuthProvider';
 import InputError from '@/components/InputError';
 
 export default function Register() {
-	const { register } = useAuth({
-		middleware: 'guest',
-		redirectIfAuthenticated: '/profile',
-	});
-
-	type RegisterErrors = {
-		name: Array<string>;
-		password: Array<string>;
-		password_confirmation: Array<string>;
-	};
+	const { register, errors } = useAuth();
 
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
-	const [errors, setErrors] = useState<RegisterErrors>({
-		name: [],
-		password: [],
-		password_confirmation: [],
-	});
 
 	const submitForm = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
@@ -31,7 +17,6 @@ export default function Register() {
 			name,
 			password,
 			password_confirmation: passwordConfirmation,
-			setErrors,
 		});
 	};
 
@@ -71,7 +56,12 @@ export default function Register() {
 								required
 							/>
 						</label>
-						<InputError messages={errors.name} className="mt-2" />
+						{errors?.name && (
+							<InputError
+								message={errors.name[0]}
+								className="mt-2"
+							/>
+						)}
 					</div>
 
 					<div>
@@ -103,10 +93,12 @@ export default function Register() {
 							/>
 						</label>
 
-						<InputError
-							messages={errors.password}
-							className="mt-2"
-						/>
+						{errors?.password && (
+							<InputError
+								message={errors.password[0]}
+								className="mt-2"
+							/>
+						)}
 					</div>
 
 					<div>
@@ -142,10 +134,12 @@ export default function Register() {
 								required
 							/>
 						</label>
-						<InputError
-							messages={errors.password_confirmation}
-							className="mt-2"
-						/>
+						{errors?.password_confirmation && (
+							<InputError
+								message={errors.password_confirmation[0]}
+								className="mt-2"
+							/>
+						)}
 					</div>
 
 					<section className="flex items-center justify-between">

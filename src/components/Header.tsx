@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NavLink, useLocation, Location } from 'react-router-dom';
-import useAuth from '@/hooks/auth';
+import useAuth from '../context/AuthProvider';
 
 export default function Header() {
 	const [active, setActive] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
 	const location: Location = useLocation();
 
-	const { user, logout } = useAuth({ middleware: 'guest' });
+	const { user, logout } = useAuth();
 
 	const toggleMenu = () => {
 		setActive(!active);
@@ -40,6 +40,7 @@ export default function Header() {
 		setOpen(false);
 		setActive(false);
 	}, [location]);
+
 	return (
 		<header className="border-b border-gray-500 bg-gray-900">
 			<nav className="px-4 py-5 text-xl sm:container sm:mx-auto sm:flex">
@@ -108,8 +109,7 @@ export default function Header() {
 						</NavLink>
 					</div>
 					<hr className="my-4 border-gray-700 sm:hidden" />
-
-					{!user ? (
+					{!user && (
 						<div className="flex flex-col sm:flex-row">
 							<NavLink
 								to="/login"
@@ -124,7 +124,10 @@ export default function Header() {
 								Register
 							</NavLink>
 						</div>
-					) : (
+					)}
+
+					{/* Non-Mobile Account Dropdown */}
+					{user && (
 						<div className="relative hidden sm:block">
 							<button
 								type="button"
@@ -170,6 +173,8 @@ export default function Header() {
 							</div>
 						</div>
 					)}
+
+					{/* Mobile Account Dropdown */}
 					{user && (
 						<div className="relative sm:hidden">
 							<button
@@ -197,12 +202,13 @@ export default function Header() {
 								>
 									My Lists
 								</NavLink>
-								<NavLink
-									to="/Logout"
-									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								<button
+									type="button"
+									className="block w-full px-2 py-2 text-left hover:bg-blue-500 sm:px-4"
+									onClick={logout}
 								>
 									Logout
-								</NavLink>
+								</button>
 							</div>
 						</div>
 					)}
