@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
 import Home from './pages/Home';
-import Test from './pages/Test';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
@@ -20,7 +19,6 @@ const router = createBrowserRouter(
 				<Route index element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
-				<Route path="/test" element={<Test />} />
 				<Route
 					path="/lists"
 					element={<Browse />}

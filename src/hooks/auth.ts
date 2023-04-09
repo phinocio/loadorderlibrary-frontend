@@ -1,17 +1,17 @@
 import useSWR from 'swr';
 import axios from '@lib/axios';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {
-	middleware?: string;
+interface AuthProps {
+	middleware?: 'guest' | 'auth';
 	redirectIfAuthenticated?: string;
-};
+}
 
 export default function useAuth({
 	middleware,
 	redirectIfAuthenticated,
-}: Props = {}) {
+}: AuthProps = {}) {
 	const navigate = useNavigate();
 
 	const {
@@ -22,8 +22,8 @@ export default function useAuth({
 		axios
 			.get('/v1/user')
 			.then((res) => res.data.data)
-			.catch((error) => {
-				if (error.response.status !== 409) throw error;
+			.catch((e) => {
+				if (e.response.status !== 409) throw error;
 
 				navigate('/verify-email');
 			})
@@ -31,101 +31,127 @@ export default function useAuth({
 
 	const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-	const register = async ({ setErrors, ...props }) => {
+	type RegisterErrors = {
+		name: Array<string>;
+		password: Array<string>;
+		password_confirmation: Array<string>;
+	};
+
+	type RegisterProps = {
+		setErrors: React.Dispatch<React.SetStateAction<RegisterErrors>>;
+		name: string;
+		password: string;
+		password_confirmation: string;
+	};
+
+	const register = async ({ setErrors, ...props }: RegisterProps) => {
 		await csrf();
 
-		setErrors([]);
+		setErrors({ name: [], password: [], password_confirmation: [] });
+
 		axios
 			.post('/register', props)
 			.then(() => mutate())
-			.catch((error) => {
-				if (error.response.status !== 422) throw error;
+			.catch((e) => {
+				if (e.response.status !== 422) throw e;
 
-				setErrors(error.response.data.errors);
+				setErrors(e.response.data.errors);
 			});
 	};
 
-	const login = async ({ setErrors, ...props }) => {
+	type LoginErrors = {
+		name: Array<string>;
+		password: Array<string>;
+	};
+
+	type LoginProps = {
+		setErrors: React.Dispatch<React.SetStateAction<LoginErrors>>;
+		name: string;
+		password: string;
+	};
+
+	const login = async ({ setErrors, ...props }: LoginProps) => {
 		await csrf();
 
-		setErrors([]);
+		setErrors({ name: [], password: [] });
+		// setStatus(null);
 
 		axios
 			.post('/login', props)
 			.then(() => mutate())
-			.catch((error) => {
-				if (error.response.status !== 422) throw error;
+			.catch((e) => {
+				if (e.response.status !== 422) throw e;
 
-				setErrors(error.response.data.errors);
+				setErrors(e.response.data.errors);
 			});
 	};
 
-	const forgotPassword = async ({ setErrors, setStatus, email }) => {
-		await csrf();
+	// const forgotPassword = async ({ setErrors, setStatus, email }) => {
+	// 	await csrf();
 
-		setErrors([]);
-		setStatus(null);
+	// 	setErrors([]);
+	// 	setStatus(null);
 
-		axios
-			.post('/forgot-password', { email })
-			.then((response) => setStatus(response.data.status))
-			.catch((error) => {
-				if (error.response.status !== 422) throw error;
+	// 	axios
+	// 		.post('/forgot-password', { email })
+	// 		.then((response) => setStatus(response.data.status))
+	// 		.catch((error) => {
+	// 			if (error.response.status !== 422) throw error;
 
-				setErrors(error.response.data.errors);
-			});
-	};
+	// 			setErrors(error.response.data.errors);
+	// 		});
+	// };
 
-	const resetPassword = async ({ setErrors, setStatus, ...props }) => {
-		await csrf();
+	// const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+	// 	await csrf();
 
-		setErrors([]);
-		setStatus(null);
+	// 	setErrors([]);
+	// 	setStatus(null);
 
-		axios
-			.post('/reset-password', { token: router.query.token, ...props })
-			.then((response) =>
-				navigate('/login?reset=' + btoa(response.data.status))
-			)
-			.catch((error) => {
-				if (error.response.status !== 422) throw error;
+	// 	axios
+	// 		.post('/reset-password', { token: router.query.token, ...props })
+	// 		.then((response) =>
+	// 			router.push('/login?reset=' + btoa(response.data.status))
+	// 		)
+	// 		.catch((error) => {
+	// 			if (error.response.status !== 422) throw error;
 
-				setErrors(error.response.data.errors);
-			});
-	};
+	// 			setErrors(error.response.data.errors);
+	// 		});
+	// };
 
-	const resendEmailVerification = ({ setStatus }) => {
-		axios
-			.post('/email/verification-notification')
-			.then((response) => setStatus(response.data.status));
-	};
+	// const resendEmailVerification = ({ setStatus }) => {
+	// 	axios
+	// 		.post('/email/verification-notification')
+	// 		.then((response) => setStatus(response.data.status));
+	// };
 
-	const logout = async () => {
+	const logout = useCallback(async () => {
 		if (!error) {
 			await axios.post('/logout').then(() => mutate());
 		}
 
 		window.location.pathname = '/login';
-	};
+	}, [error, mutate]);
 
 	useEffect(() => {
 		if (middleware === 'guest' && redirectIfAuthenticated && user)
 			navigate(redirectIfAuthenticated);
-		if (
-			window.location.pathname === '/verify-email' &&
-			user?.email_verified_at
-		)
-			navigate(redirectIfAuthenticated);
+		// if (
+		// 	window.location.pathname === '/verify-email' &&
+		// 	user?.email_verified_at
+		// )
+		// 	navigate(redirectIfAuthenticated);
 		if (middleware === 'auth' && error) logout();
-	}, [user, error]);
+	}, [user, error, middleware, redirectIfAuthenticated, navigate, logout]);
 
 	return {
 		user,
 		register,
 		login,
-		forgotPassword,
-		resetPassword,
-		resendEmailVerification,
+		// forgotPassword,
+		// resetPassword,
+		// resendEmailVerification,
 		logout,
 	};
 }

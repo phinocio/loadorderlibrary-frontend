@@ -7,7 +7,7 @@ export default function Header() {
 	const [open, setOpen] = useState<boolean>(false);
 	const location: Location = useLocation();
 
-	const { user } = useAuth();
+	const { user, logout } = useAuth({ middleware: 'guest' });
 
 	const toggleMenu = () => {
 		setActive(!active);
@@ -40,7 +40,6 @@ export default function Header() {
 		setOpen(false);
 		setActive(false);
 	}, [location]);
-
 	return (
 		<header className="border-b border-gray-500 bg-gray-900">
 			<nav className="px-4 py-5 text-xl sm:container sm:mx-auto sm:flex">
@@ -161,6 +160,43 @@ export default function Header() {
 									My Lists
 								</NavLink>
 								<hr className="my-2 border-gray-500" />
+								<button
+									type="button"
+									className="block w-full px-2 py-2 text-left hover:bg-blue-500 sm:px-4"
+									onClick={logout}
+								>
+									Logout
+								</button>
+							</div>
+						</div>
+					)}
+					{user && (
+						<div className="relative sm:hidden">
+							<button
+								type="button"
+								className="relative z-10 h-12 w-12 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-800 hover:bg-gray-700 sm:block"
+							>
+								{user.name[0]}
+							</button>
+							<span className="ml-4">{user.name}</span>
+
+							<div
+								className={`${
+									!open ? 'sm:hidden' : 'block'
+								} mt-2 rounded-lg sm:absolute sm:right-0 sm:w-48 sm:bg-gray-800 sm:py-2 sm:drop-shadow-xl`}
+							>
+								<NavLink
+									to="/profile"
+									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								>
+									Profile
+								</NavLink>
+								<NavLink
+									to="/profile"
+									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
+								>
+									My Lists
+								</NavLink>
 								<NavLink
 									to="/Logout"
 									className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
@@ -170,40 +206,6 @@ export default function Header() {
 							</div>
 						</div>
 					)}
-					<div className="relative sm:hidden">
-						<button
-							type="button"
-							className="relative z-10 h-12 w-12 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-800 hover:bg-gray-700 sm:block"
-						>
-							{user.name[0]}
-						</button>
-						<span className="ml-4">{user.name}</span>
-
-						<div
-							className={`${
-								!open ? 'sm:hidden' : 'block'
-							} mt-2 rounded-lg sm:absolute sm:right-0 sm:w-48 sm:bg-gray-800 sm:py-2 sm:drop-shadow-xl`}
-						>
-							<NavLink
-								to="/profile"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
-							>
-								Profile
-							</NavLink>
-							<NavLink
-								to="/profile"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
-							>
-								My Lists
-							</NavLink>
-							<NavLink
-								to="/Logout"
-								className="block px-2 py-2 hover:bg-blue-500 sm:px-4"
-							>
-								Logout
-							</NavLink>
-						</div>
-					</div>
 				</div>
 			</nav>
 		</header>

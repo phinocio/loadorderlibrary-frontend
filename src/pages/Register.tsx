@@ -1,7 +1,7 @@
-import { FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import useAuth from '@/hooks/auth';
-import InputError from '@/components/InputErrors';
+import InputError from '@/components/InputError';
 
 export default function Register() {
 	const { register } = useAuth({
@@ -9,12 +9,22 @@ export default function Register() {
 		redirectIfAuthenticated: '/profile',
 	});
 
+	type RegisterErrors = {
+		name: Array<string>;
+		password: Array<string>;
+		password_confirmation: Array<string>;
+	};
+
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState<RegisterErrors>({
+		name: [],
+		password: [],
+		password_confirmation: [],
+	});
 
-	const submitForm = (e: any) => {
+	const submitForm = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 
 		register({

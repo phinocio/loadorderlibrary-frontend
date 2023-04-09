@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import useAuth from '@/hooks/auth';
-import InputError from '@/components/InputErrors';
+import InputError from '@/components/InputError';
 
 export default function Login() {
 	const { login } = useAuth({
@@ -9,11 +9,19 @@ export default function Login() {
 		redirectIfAuthenticated: '/profile',
 	});
 
-	const [name, setName] = useState('');
-	const [password, setPassword] = useState('');
-	const [errors, setErrors] = useState([]);
+	type LoginErrors = {
+		name: Array<string>;
+		password: Array<string>;
+	};
 
-	const submitForm = (e: any) => {
+	const [name, setName] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [errors, setErrors] = useState<LoginErrors>({
+		name: [],
+		password: [],
+	});
+
+	const submitForm = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 
 		login({
