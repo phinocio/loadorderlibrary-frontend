@@ -23,7 +23,7 @@ export default function useAuth({
 			.get('/v1/user')
 			.then((res) => res.data.data)
 			.catch((e) => {
-				if (e.response.status !== 409) throw error;
+				if (e.response.status !== 409) throw e;
 
 				navigate('/verify-email');
 			})
