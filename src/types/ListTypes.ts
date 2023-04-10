@@ -46,6 +46,7 @@ export interface ListData {
 
 export type Author = {
 	name: string;
+	verified: boolean;
 };
 
 export type Game = {
