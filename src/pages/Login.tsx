@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import InputError from '@/components/InputError';
 import useAuth from '../context/AuthProvider';
-import { Auth } from '@/types/AuthTypes';
+import { Auth, LoginErrors } from '@/types/AuthTypes';
 
 export default function Login() {
 	const { login } = useAuth() as Auth;
 
 	const [name, setName] = useState<string>('');
-	const [errors, setErrors] = useState<Array<string> | null>(null);
+	const [errors, setErrors] = useState<LoginErrors | null>(null);
 	const [password, setPassword] = useState<string>('');
 
 	const submitForm = (e: { preventDefault: () => void }) => {

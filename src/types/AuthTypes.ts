@@ -1,4 +1,4 @@
-type LoginErrors = {
+export type LoginErrors = {
 	name: Array<string>;
 	password: Array<string>;
 };
@@ -6,10 +6,10 @@ type LoginErrors = {
 export type LoginProps = {
 	name: string;
 	password: string;
-	setErrors: React.Dispatch<React.SetStateAction<LoginErrors>>;
+	setErrors: React.Dispatch<React.SetStateAction<LoginErrors | null>>;
 };
 
-type RegisterErrors = {
+export type RegisterErrors = {
 	name: Array<string>;
 	password: Array<string>;
 	password_confirmation: Array<string>;
@@ -19,7 +19,7 @@ export type RegisterProps = {
 	name: string;
 	password: string;
 	password_confirmation: string;
-	setErrors: React.Dispatch<React.SetStateAction<RegisterErrors>>;
+	setErrors: React.Dispatch<React.SetStateAction<RegisterErrors | null>>;
 };
 
 export type User = {
@@ -33,11 +33,12 @@ export type User = {
 
 export type Auth = {
 	user: User;
-	login: ({ name, password }: LoginProps) => Promise<void>;
+	login: ({ name, password, setErrors }: LoginProps) => Promise<void>;
 	register: ({
 		name,
 		password,
 		password_confirmation,
+		setErrors,
 	}: RegisterProps) => Promise<void>;
 	logout: React.MouseEventHandler<HTMLButtonElement>;
 	isLoading: boolean;
