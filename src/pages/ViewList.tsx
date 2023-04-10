@@ -1,6 +1,6 @@
 import axios from '@lib/axios';
 import { useEffect, useState } from 'react';
-import { redirect, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ListData } from '@/types/ListTypes';
 import List from '../components/List';
 
@@ -21,6 +21,14 @@ export default function ViewList() {
 			});
 	}, [navigate, slug]);
 
+	type File = {
+		name: string;
+		bytes: number;
+		clean_name: string;
+		created: string;
+		updated: string;
+	};
+
 	return (
 		<div>
 			{!list && <p>Loading...</p>}
@@ -28,7 +36,7 @@ export default function ViewList() {
 				<div>
 					<List list={list} />
 					<div className="mt-4 flex flex-col">
-						{list.files?.map((file) => {
+						{list.files?.map((file: File) => {
 							return (
 								<div
 									className="mb-2 flex flex-row justify-between bg-gray-800 p-4"
@@ -37,7 +45,7 @@ export default function ViewList() {
 									<p className="text-green-500">
 										{file.clean_name}
 									</p>
-									<p>{parseInt(file.bytes, 10) / 1000} KB</p>
+									<p>{file.bytes / 1000} KB</p>
 								</div>
 							);
 						})}
