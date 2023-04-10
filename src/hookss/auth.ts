@@ -1,16 +1,18 @@
 import useSWR from 'swr';
 import axios from '@lib/axios';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthProps {
 	middleware?: 'guest' | 'auth';
 	redirectIfAuthenticated?: string;
+	children?: ReactNode;
 }
 
 export default function useAuth({
 	middleware,
 	redirectIfAuthenticated,
+	children,
 }: AuthProps = {}) {
 	const navigate = useNavigate();
 

@@ -5,9 +5,10 @@ import InputError from '@/components/InputError';
 import { Auth } from '@/types/AuthTypes';
 
 export default function Register() {
-	const { register, errors } = useAuth() as Auth;
+	const { register } = useAuth() as Auth;
 
 	const [name, setName] = useState('');
+	const [errors, setErrors] = useState(null);
 	const [password, setPassword] = useState('');
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
@@ -18,6 +19,7 @@ export default function Register() {
 			name,
 			password,
 			password_confirmation: passwordConfirmation,
+			setErrors,
 		});
 	};
 

@@ -1,7 +1,14 @@
-import useAuth from '@/hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { Auth } from '@/types/AuthTypes';
+import useAuth from '../context/AuthProvider';
 
 export default function Profile() {
-	const { user } = useAuth({ middleware: 'auth' });
+	const { user, isLoading } = useAuth() as Auth;
+	const navigate = useNavigate();
+
+	if (!isLoading && !user) {
+		navigate('/login');
+	}
 
 	return (
 		<>

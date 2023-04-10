@@ -20,6 +20,7 @@ export type PaginationLinks = {
 
 export type List = {
 	list: ListData;
+	className?: string;
 };
 
 export interface ListData {

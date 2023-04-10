@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, format } from 'date-fns';
 import { List as ListType } from '../types/ListTypes';
+import useAuth from '@/context/AuthProvider';
+import { Auth } from '@/types/AuthTypes';
 
-export default function List({ list }: ListType) {
+export default function List({ list, className }: ListType) {
+	const { user } = useAuth() as Auth;
+
 	return (
-		<div className="flex flex-col rounded bg-gray-700">
+		<div className={`${className} flex flex-col rounded bg-gray-700`}>
 			{/* List Card Header */}
 			<div className="flex justify-between border-b border-gray-600 bg-gray-800 p-4">
 				<div className="flex flex-col">
@@ -31,7 +35,7 @@ export default function List({ list }: ListType) {
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
 									fill="currentColor"
-									className="inline h-5 w-5 text-blue-500"
+									className="inline h-5 w-5 text-blue-400"
 								>
 									<path
 										fillRule="evenodd"
@@ -58,29 +62,50 @@ export default function List({ list }: ListType) {
 			</div>
 			{/* List Card Body */}
 			<div className="h-100 flex-auto bg-gray-700 p-4">
-				{list.description ?? 'No description provided.'}
+				<p>{list.description ?? 'No description provided.'}</p>
 			</div>
 
 			{/* List Card Footer */}
-			<div className="align-end border-t border-gray-800 bg-gray-800 p-4 text-gray-500">
-				<p>
-					Uploaded{' '}
-					{formatDistanceToNow(new Date(list.created), {
-						addSuffix: true,
-					})}
-				</p>
-				<p>
-					Updated{' '}
-					{formatDistanceToNow(new Date(list.updated), {
-						addSuffix: true,
-					})}
-				</p>
-				<p className={`${list.expires ?? 'hidden'}`}>
-					Expires{' '}
-					{formatDistanceToNow(new Date(list.expires), {
-						addSuffix: true,
-					})}
-				</p>
+			<div className="align-end flex items-end justify-between border-t border-gray-800 bg-gray-800 p-4 text-gray-500">
+				<div>
+					<p title={format(new Date(list.created), 'PPpp')}>
+						Uploaded{' '}
+						{formatDistanceToNow(new Date(list.created), {
+							addSuffix: true,
+						})}
+					</p>
+					<p title={format(new Date(list.updated), 'PPpp')}>
+						Updated{' '}
+						{formatDistanceToNow(new Date(list.updated), {
+							addSuffix: true,
+						})}
+					</p>
+					<p
+						className={`${list.expires ?? 'hidden'}`}
+						title={format(new Date(list.expires), 'PPpp')}
+					>
+						Expires{' '}
+						{formatDistanceToNow(new Date(list.expires), {
+							addSuffix: true,
+						})}
+					</p>
+				</div>
+				{user?.name === list.author?.name && (
+					<div className="space-x-2">
+						<button
+							type="button"
+							className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						>
+							Edit
+						</button>
+						<button
+							type="button"
+							className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						>
+							Delete
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

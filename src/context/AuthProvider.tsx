@@ -1,46 +1,34 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import {
+	ReactNode,
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+} from 'react';
 import axios from '@lib/axios';
 import useSWR from 'swr';
+import { LoginProps, RegisterProps } from '@/types/AuthTypes';
 
 const AuthContext = createContext({});
 
-type Props = {
+interface Props {
 	children: ReactNode;
-};
+}
 
 export function AuthProvider({ children }: Props) {
-	// const [user, setUser] = useState(null);
-	const [errors, setErrors] = useState(null);
-	// const navigate = useNavigate();
-
 	const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-	// const getUser = async () => {
-	// 	axios
-	// 		.get('/v1/user')
-	// 		.then((res) => setUser(res.data.data))
-	// 		.catch((e) => {
-	// 			if (e.response.status !== 409) throw e;
+	const fetcher = (url: string) =>
+		axios.get(url).then((res) => res.data.data);
 
-	// 			redirect('/verify-email');
-	// 		});
-	// };
 	const {
 		data: user,
 		error,
+		isLoading,
 		mutate,
-	} = useSWR('/v1/user', () =>
-		axios
-			.get('/v1/user')
-			.then((res) => res.data.data)
-			.catch((e) => {
-				if (e.response.status !== 409) throw e;
+	} = useSWR('/v1/user', fetcher);
 
-				// redirect('/verify-email');
-			})
-	);
-
-	const login = async ({ ...props }) => {
+	const login = useCallback(async ({ setErrors, ...props }: LoginProps) => {
 		await csrf();
 
 		axios
@@ -53,31 +41,47 @@ export function AuthProvider({ children }: Props) {
 
 				setErrors(e.response.data.errors);
 			});
-	};
+	}, []);
 
-	const register = async ({ ...props }) => {
-		await csrf();
+	const register = useCallback(
+		async ({ setErrors, ...props }: RegisterProps) => {
+			await csrf();
 
-		axios
-			.post('/register', props)
-			.then(() => {
-				window.location.pathname = '/profile';
-			})
-			.catch((e) => {
-				if (e.response.status !== 422) throw e;
+			axios
+				.post('/register', props)
+				.then(() => {
+					window.location.pathname = '/profile';
+				})
+				.catch((e) => {
+					if (e.response.status !== 422) throw e;
 
-				setErrors(e.response.data.errors);
-			});
-	};
+					setErrors(e.response.data.errors);
+				});
+		},
+		[]
+	);
 
-	const logout = async () => {
-		await axios.post('/logout').then(() => mutate());
+	const logout = useCallback(async () => {
+		if (!error) {
+			await axios.post('/logout').then(() => mutate());
+		}
 
 		window.location.pathname = '/login';
-	};
+	}, [error, mutate]);
+
+	const authProviderValue = useMemo(
+		() => ({
+			user,
+			isLoading,
+			login,
+			register,
+			logout,
+		}),
+		[isLoading, login, logout, register, user]
+	);
 
 	return (
-		<AuthContext.Provider value={{ user, errors, login, register, logout }}>
+		<AuthContext.Provider value={authProviderValue}>
 			{children}
 		</AuthContext.Provider>
 	);

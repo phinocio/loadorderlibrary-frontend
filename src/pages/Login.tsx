@@ -5,9 +5,10 @@ import useAuth from '../context/AuthProvider';
 import { Auth } from '@/types/AuthTypes';
 
 export default function Login() {
-	const { login, errors } = useAuth() as Auth;
+	const { login } = useAuth() as Auth;
 
 	const [name, setName] = useState<string>('');
+	const [errors, setErrors] = useState<Array<string> | null>(null);
 	const [password, setPassword] = useState<string>('');
 
 	const submitForm = (e: { preventDefault: () => void }) => {
@@ -16,6 +17,7 @@ export default function Login() {
 		login({
 			name,
 			password,
+			setErrors,
 		});
 	};
 

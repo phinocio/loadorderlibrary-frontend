@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NavLink, useLocation, Location } from 'react-router-dom';
-import useAuth from '../context/AuthProvider';
+import useAuth from '@/context/AuthProvider';
 import { Auth } from '@/types/AuthTypes';
 
 export default function Header() {
@@ -8,7 +8,7 @@ export default function Header() {
 	const [open, setOpen] = useState<boolean>(false);
 	const location: Location = useLocation();
 
-	const { user, logout } = useAuth() as Auth;
+	const { user, logout, isLoading } = useAuth() as Auth;
 
 	const toggleMenu = () => {
 		setActive(!active);
@@ -44,7 +44,7 @@ export default function Header() {
 
 	return (
 		<header className="border-b border-gray-500 bg-gray-900">
-			<nav className="px-4 py-5 text-xl sm:container sm:mx-auto sm:flex">
+			<nav className="px-4 py-2 text-xl sm:container sm:mx-auto sm:flex">
 				<div className="flex items-center justify-between">
 					<NavLink to="/" className="flex-none">
 						<img
@@ -110,6 +110,7 @@ export default function Header() {
 						</NavLink>
 					</div>
 					<hr className="my-4 border-gray-700 sm:hidden" />
+
 					{!user && (
 						<div className="flex flex-col sm:flex-row">
 							<NavLink

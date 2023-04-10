@@ -18,7 +18,7 @@ export default function Pagination({ links }: Links) {
 		return 'mr-1 mb-1 px-4 py-3 text-sm leading-4 rounded hover:bg-green-500';
 	}
 
-	return links.length > 3 ? (
+	return links.length > 2 ? (
 		<div className="mb-4">
 			<div className="mt-8 flex flex-wrap">
 				{links.map((link) =>
@@ -46,6 +46,6 @@ export default function Pagination({ links }: Links) {
 			</div>
 		</div>
 	) : (
-		<p>No Links</p>
+		<p>Viewing the only page.</p>
 	);
 }
