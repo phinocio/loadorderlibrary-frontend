@@ -37,7 +37,13 @@ export interface ListData {
 	updated: string;
 	author?: Author;
 	game: Game; // Make game type
-	files?: object; // Make files type
+	files?: Array<{
+		name: string;
+		bytes: number;
+		clean_name: string;
+		created: string;
+		updated: string;
+	}>; // Make files type
 	links: {
 		url: string;
 		self: string;
