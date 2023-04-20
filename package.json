@@ -47,12 +47,5 @@
 		"vite": "^4.2.0",
 		"vitest": "^0.29.8",
 		"husky": "^8.0.0"
-	},
-	"lint-staged": {
-		"*.{ts, tsx}": [
-			"tsc -p tsconfig.json",
-			"eslint",
-			"prettier --write"
-		]
 	}
 }
