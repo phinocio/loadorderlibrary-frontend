@@ -76,8 +76,9 @@ export function AuthProvider({ children }: Props) {
 			login,
 			register,
 			logout,
+			mutate,
 		}),
-		[isLoading, login, logout, register, user]
+		[isLoading, login, logout, mutate, register, user]
 	);
 
 	return (

@@ -47,4 +47,5 @@ export type Auth = {
 		password: Array<string>;
 		password_confirmation: Array<string>;
 	};
+	mutate: () => void;
 };

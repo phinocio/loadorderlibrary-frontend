@@ -55,9 +55,7 @@ export default function List({ list, className }: ListType) {
 					>
 						{list.game?.name ?? 'Anonymous'}
 					</Link>
-					<em className="text-gray-500">
-						{list.private && 'Private'}
-					</em>
+					<em className="font-light">{list.private && 'Private'}</em>
 				</p>
 			</div>
 			{/* List Card Body */}
