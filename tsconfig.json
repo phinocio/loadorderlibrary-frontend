@@ -22,6 +22,12 @@
 		},
 		"typeRoots": ["./src/types"]
 	},
-	"include": ["vite.config.ts", ".eslintrc.cjs", "src"],
+	"include": [
+		"vite.config.ts",
+		".eslintrc.cjs",
+		"src",
+		"lint-staged.config.cjs",
+		"postcss.config.js"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
