@@ -1,3 +1,3 @@
 module.exports = {
-	'*.{ts,tsx}': [() => 'tsc', 'eslint --fix', 'prettier --write'],
+	'*.{ts,tsx}': [() => 'tsc', 'npx eslint .', 'npx prettier --check'],
 };
