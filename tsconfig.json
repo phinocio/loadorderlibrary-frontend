@@ -26,7 +26,8 @@
 		"vite.config.ts",
 		".eslintrc.cjs",
 		"src",
-		"lint-staged.config.cjs"
+		"lint-staged.config.cjs",
+		"postcss.config.js"
 	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
