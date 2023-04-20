@@ -10,7 +10,8 @@ export default function Register() {
 	const [name, setName] = useState('');
 	const [errors, setErrors] = useState<RegisterErrors | null>(null);
 	const [password, setPassword] = useState('');
-	const [passwordConfirmation, setPasswordConfirmation] = useState('');
+	const [passwordConfirmation, setPasswordConfirmation] =
+		useState<boolean>('');
 
 	const submitForm = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
