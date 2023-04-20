@@ -49,8 +49,8 @@
 		"husky": "^8.0.0"
 	},
 	"lint-staged": {
-		"*.ts?(x)": [
-			"tsc",
+		"*.{ts, tsx}": [
+			"tsc -p tsconfig.json",
 			"eslint",
 			"prettier --write"
 		]
