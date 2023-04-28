@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router-dom';
 import { ListData } from '../types/ListTypes';
 import List from '../components/List';
 import Pagination from '@/components/Pagination';
-import ListSkeleton from '@/components/ListSkeleton';
 import useLists from '@/hookss/useLists';
 
 export default function ViewLists() {
