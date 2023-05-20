@@ -1,11 +1,12 @@
 export type UploadErrors = {
 	name: string;
 	description: string;
-	game: number;
+	game: string;
 	version?: string;
 	website?: string;
 	discord?: string;
 	readme?: string;
 	files: string;
 	expires?: string;
+	private?: string;
 };
