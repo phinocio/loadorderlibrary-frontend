@@ -88,7 +88,7 @@ export default function List({ list, className }: ListType) {
 						})}
 					</p>
 				</div>
-				{user?.name === list.author?.name && (
+				{user && user.name === list.author?.name && (
 					<div className="space-x-2">
 						<button
 							type="button"

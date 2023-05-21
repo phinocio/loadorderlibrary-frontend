@@ -284,10 +284,10 @@ export function UploadForm({ games }: UploadFormProps) {
 
 					<div>
 						<label className="block" htmlFor="private">
-							Private
+							Private List
 							<input
 								name="private"
-								className="block w-full rounded-xl border border-gray-900 bg-gray-600 px-4 py-3 placeholder-gray-400"
+								className="ml-2 rounded-xl border border-gray-900 bg-gray-600 px-4 py-3 placeholder-gray-400"
 								type="checkbox"
 								onChange={(e) => setIsPrivate(e.target.checked)}
 								id="private"
@@ -305,7 +305,7 @@ export function UploadForm({ games }: UploadFormProps) {
 					<section className="flex items-center justify-between">
 						<button
 							type="submit"
-							className="rounded px-2 py-1 hover:bg-blue-500"
+							className="rounded bg-green-500 px-2 py-1 hover:bg-blue-500"
 						>
 							Upload
 						</button>
@@ -317,10 +317,28 @@ export function UploadForm({ games }: UploadFormProps) {
 					<h1 className="text-center text-5xl text-gray-600">
 						Valid Files
 					</h1>
-					<ul className="text-right">
+					<ul className="space-y-2 text-right">
 						<li>enblocal.ini</li>
 						<li>enbseries.ini</li>
 						<li>fallout.ini</li>
+						<li>falloutprefs.ini</li>
+						<li>fallout4.ini</li>
+						<li>fallout4custom.ini</li>
+						<li>fallout4prefs.ini</li>
+						<li>geckcustom.ini</li>
+						<li>geckprefs.ini</li>
+						<li>loadorder.txt</li>
+						<li>mge.ini</li>
+						<li>modlist.txt</li>
+						<li>morrowind.ini</li>
+						<li>mwse-version.ini</li>
+						<li>oblivion.ini</li>
+						<li>plugins.txt</li>
+						<li>settings.ini</li>
+						<li>skyrim.ini</li>
+						<li>skyrimcustom.ini</li>
+						<li>skyrimprefs.ini</li>
+						<li>skyrimvr.ini</li>
 					</ul>
 				</div>
 			</div>
