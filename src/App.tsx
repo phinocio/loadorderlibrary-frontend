@@ -9,10 +9,10 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
-import Browse from './pages/Browse';
 import Profile from './pages/Profile';
 import ViewList from './pages/ViewList';
 import ViewLists from './pages/ViewLists';
+import Upload from './pages/Upload';
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -30,6 +30,7 @@ const router = createBrowserRouter(
 					<Route path=":slug" element={<ViewList />} />
 				</Route>
 				<Route path="profile" element={<Profile />} />
+				<Route path="upload" element={<Upload />} />
 			</Route>
 		</Route>
 	)
