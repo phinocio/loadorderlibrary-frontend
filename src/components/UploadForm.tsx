@@ -59,19 +59,19 @@ export function UploadForm({ games }: UploadFormProps) {
 		if (description) {
 			formData.append('description', description);
 		}
-		
+
 		if (discord) {
 			formData.append('discord', discord);
 		}
-		
+
 		if (readme) {
 			formData.append('readme', readme);
 		}
-		
+
 		if (website) {
 			formData.append('website', website);
 		}
-		
+
 		if (version) {
 			formData.append('version', version);
 		}
