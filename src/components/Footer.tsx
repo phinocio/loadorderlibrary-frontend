@@ -18,7 +18,7 @@ export default function Footer() {
 					<p className="font-bold text-green-500">Social</p>
 					<p className="flex justify-center space-x-2">
 						<Link
-							to="https://github.com/phinocio/loadorderlibrary"
+							to="https://github.com/Load-Order-Library"
 							className="hover:text-blue-500"
 						>
 							GitHub
