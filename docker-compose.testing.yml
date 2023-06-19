@@ -1,6 +1,6 @@
 services:
     app:
-        image: ghcr.io/phinocio/loadorderlibrary-next:dev
+        image: ghcr.io/load-order-library/loadorderlibrary-next:testing
         container_name: lol-next-app
         restart: unless-stopped
         ports:
