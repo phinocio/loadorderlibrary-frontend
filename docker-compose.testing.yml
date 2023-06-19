@@ -1,0 +1,13 @@
+services:
+    app:
+        image: ghcr.io/phinocio/loadorderlibrary-next:dev
+        container_name: lol-next-app
+        restart: unless-stopped
+        ports:
+            - '127.0.0.1:8002:80'
+        networks:
+            - lol-next
+
+networks:
+    lol-next:
+        driver: bridge
