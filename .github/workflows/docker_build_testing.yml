@@ -10,7 +10,6 @@ jobs:
         runs-on: ubuntu-latest
         env:
             TAG: loadorderlibrary-next
-            USER: ${{ github.repository_owner }}
             REGISTRY: ghcr.io
             VERSION: testing
         steps:
