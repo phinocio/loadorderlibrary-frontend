@@ -28,8 +28,8 @@ jobs:
             - name: Push to GHCR
               run: |
                   echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
-                  docker tag $TAG ${{ env.REGISTRY }}/$USER/$TAG:${{ env.VERSION }}
-                  docker push ${{ env.REGISTRY }}/$USER/$TAG:${{ env.VERSION }}
+                  docker tag $TAG ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
+                  docker push ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
 
     # deploy:
     #     name: Deploy Container to Server
