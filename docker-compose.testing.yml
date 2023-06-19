@@ -6,8 +6,8 @@ services:
         ports:
             - '127.0.0.1:8002:80'
         networks:
-            - lol-next
+            - lol
 
 networks:
-    lol-next:
-        driver: bridge
+    lol:
+        external: true
