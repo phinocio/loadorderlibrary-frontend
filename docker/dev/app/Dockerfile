@@ -18,5 +18,3 @@ FROM nginx:1.25.1-alpine as app-dev
 COPY --from=build-dev-node /app/dist /var/www/public
 COPY ./docker/dev/app/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/dev/app/conf.d/default.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 8000
