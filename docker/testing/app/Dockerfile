@@ -18,3 +18,5 @@ FROM nginx:1.25.1-alpine as app-testing
 COPY --from=build-testing-node /app/dist /var/www/public
 COPY ./docker/testing/app/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/testing/app/conf.d/default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 8000
