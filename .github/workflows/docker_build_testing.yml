@@ -31,13 +31,13 @@ jobs:
                   docker tag $TAG ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
                   docker push ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
 
-    # deploy:
-    #     name: Deploy Container to Server
-    #     runs-on: ubuntu-latest
-    #     needs: build
-    #     steps:
-    #         - name: SSH and deploy?
-    #           run: |
-    #               echo "${{ secrets.KEY }}" > id_meow
-    #               chmod 600 id_meow
-    #               ssh -i id_meow "${{ secrets.USERNAME }}"@"${{ secrets.HOST }}" -o "StrictHostKeyChecking no" "sudo /opt/lol/deploy_lolapi-testing.sh"
+    deploy:
+        name: Deploy Container to Server
+        runs-on: ubuntu-latest
+        needs: build-app
+        steps:
+            - name: SSH and deploy
+              run: |
+                  echo "${{ secrets.TESTING_KEY }}" > id_meow
+                  chmod 600 id_meow
+                  ssh -p ${{ secrets.TESTING_PORT }} -i id_meow "${{ secrets.TESTING_USER }}"@"${{ secrets.TESTING_HOST }}" -o "StrictHostKeyChecking no" "sudo ${{ secrets.TESTING_DEPLOY }}"
