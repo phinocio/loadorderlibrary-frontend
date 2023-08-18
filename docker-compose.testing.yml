@@ -3,6 +3,8 @@ services:
         image: ghcr.io/load-order-library/loadorderlibrary-next:testing
         container_name: lol-next-app
         restart: unless-stopped
+        ports:
+            - '127.0.0.1:8001:80'
         networks:
             - lol
 
