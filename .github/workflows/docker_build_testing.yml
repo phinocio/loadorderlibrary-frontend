@@ -15,6 +15,13 @@ jobs:
         steps:
             - uses: actions/checkout@main
 
+            - name: Create .env file
+              run: |
+                  touch .env
+                  echo API_URL="${{ secrets.TESTING_API_URL }}" >> .env
+                  echo PUBLIC_API_URL="${{ secrets.TESTING_API_URL }}" >> .env
+                  echo PUBLIC_APP_URL="${{ secrets.TESTING_APP_URL }}" >> .env
+
             - name: Build Container Image
               run: docker build --target app-testing -t $TAG -f docker/testing/app/Dockerfile .
 
