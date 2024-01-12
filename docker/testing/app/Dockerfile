@@ -1,4 +1,4 @@
-FROM node:20-alpine3.19 as build-dev-node
+FROM node:20-alpine3.19 as build-testing-node
 
 WORKDIR /app
 
@@ -11,12 +11,12 @@ COPY . .
 RUN npm run build
 
 ##########################################################
-# Dev Node
-FROM node:20-alpine3.19 as app-dev
+# Testing Node
+FROM node:20-alpine3.19 as app-testing
 
 WORKDIR /app
 
-COPY --from=build-dev-node /app/build /app/build
+COPY --from=build-testing-node /app/build /app/build
 COPY package*.json /app/
 COPY .env /app/.env
 
