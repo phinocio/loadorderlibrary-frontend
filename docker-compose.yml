@@ -10,7 +10,7 @@ services:
         container_name: lol-next-app
         restart: unless-stopped
         ports:
-            - '127.0.0.1:8002:80'
+            - '127.0.0.1:8002:3000'
         networks:
             - lol-next
 

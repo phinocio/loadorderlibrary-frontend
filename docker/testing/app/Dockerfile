@@ -1,5 +1,4 @@
-# Development build NPM
-FROM node:20-alpine3.18 as build-testing-node
+FROM node:20-alpine3.19 as build-dev-node
 
 WORKDIR /app
 
@@ -13,8 +12,14 @@ RUN npm run build
 
 ##########################################################
 # Dev Node
-FROM nginx:1.25.1-alpine as app-testing
+FROM node:20-alpine3.19 as app-dev
 
-COPY --from=build-testing-node /app/dist /var/www/public
-COPY ./docker/testing/app/nginx.conf /etc/nginx/nginx.conf
-COPY ./docker/testing/app/conf.d/default.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
+
+COPY --from=build-dev-node /app/build /app/build
+COPY package*.json /app/
+COPY .env /app/.env
+
+RUN npm ci --omit dev
+
+CMD PROTOCOL_HEADER=x-forwarded-proto HOST_HEADER=x-forwarded-host node -r dotenv/config build

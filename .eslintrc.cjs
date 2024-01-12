@@ -1,30 +1,25 @@
 module.exports = {
+	root: true,
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:svelte/recommended', 'prettier'],
+	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint'],
+	parserOptions: {
+		sourceType: 'module',
+		ecmaVersion: 2020,
+		extraFileExtensions: ['.svelte'],
+	},
 	env: {
 		browser: true,
-		es2021: true,
+		es2017: true,
+		node: true,
 	},
-	extends: [
-		'airbnb',
-		'airbnb-typescript',
-		'airbnb/hooks',
-		'plugin:react/recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:prettier/recommended',
+	overrides: [
+		{
+			files: ['*.svelte'],
+			parser: 'svelte-eslint-parser',
+			parserOptions: {
+				parser: '@typescript-eslint/parser',
+			},
+		},
 	],
-	overrides: [],
-	parser: '@typescript-eslint/parser',
-	parserOptions: {
-		ecmaVersion: 'latest',
-		sourceType: 'module',
-		project: './tsconfig.json',
-	},
-	plugins: ['react', '@typescript-eslint', 'prettier'],
-	rules: {
-		'no-tabs': 0,
-		indent: 0,
-		'@typescript-eslint/indent': 0,
-		'react/jsx-indent': 0,
-		'react/react-in-jsx-scope': 0,
-		'import/extensions': 0,
-	},
 };

@@ -15,13 +15,6 @@ jobs:
         steps:
             - uses: actions/checkout@main
 
-            # Creating as .production to ensure vite defaults to that.
-            - name: Create .env file
-              run: |
-                  touch .env.production
-                  echo VITE_APP_TITLE="${{ secrets.TESTING_APP_TITLE }}" >> .env
-                  echo VITE_API_URL="${{ secrets.TESTING_API_URL }}" >> .env
-
             - name: Build Container Image
               run: docker build --target app-testing -t $TAG -f docker/testing/app/Dockerfile .
 
