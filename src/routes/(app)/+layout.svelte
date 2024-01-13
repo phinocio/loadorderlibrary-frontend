@@ -166,7 +166,9 @@
 	</nav>
 </header>
 
-<noscript>Enabled JS you fuck</noscript>
+<noscript class="mb-2 flex w-1/2 justify-center self-center rounded-xl bg-red-500 py-2 text-white">
+	The site works best with JavaScript enabled.
+</noscript>
 
 <main class="container mx-auto mb-20 flex h-full flex-grow flex-col px-4 lg:px-20">
 	<Toaster />
