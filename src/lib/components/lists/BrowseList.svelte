@@ -12,7 +12,7 @@
 	class="flex flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
 >
 	<header class="flex justify-between">
-		<section class="flex max-w-40 flex-col md:max-w-80">
+		<section class="flex max-w-20 flex-col md:max-w-40">
 			<h1 class="flex justify-start font-bold">
 				<a
 					class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"

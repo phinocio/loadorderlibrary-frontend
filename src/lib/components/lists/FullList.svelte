@@ -109,7 +109,7 @@
 			</section>
 		</header>
 		<p class="py-4 leading-10 md:text-xl md:leading-10">
-			{list.description}
+			{list.description ?? 'No description provided.'}
 		</p>
 
 		<ManageButtons {list} />
