@@ -114,12 +114,18 @@
 
 		<ManageButtons {list} />
 
-		<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
+		<section class="flex space-x-2">
+			<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
+				<button
+					class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+					>All Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
+				>
+			</form>
 			<button
 				class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-				>All Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
+				>Install with Wabbajack <ExternalIcon class="ml-2 inline h-6 w-6 " /></button
 			>
-		</form>
+		</section>
 	</section>
 
 	<section class="flex flex-col space-y-6">
