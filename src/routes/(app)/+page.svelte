@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SimpleList from '$lib/components/lists/SimpleList.svelte';
+	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 
 	export let data;
 
@@ -10,54 +10,39 @@
 	<title>Home - Load Order Library</title>
 </svelte:head>
 
-<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:grid-rows-2 md:gap-8">
+<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">
 	<article class="space-y-4">
-		<h1 class="mb-4 text-3xl font-bold text-green-500">Load Order Library</h1>
-		<p class="leading-8 md:text-xl">
-			Load Order Library is a website/tool to share mod lists of - primarily Bethesda - games with other players.
-			Intended mostly for troubleshooting purposes, the site can be quite useful for YouTubers to have mod lists
-			for each of their let's play characters, modlist authors to share the list of mods with others, and many
-			other uses.
-		</p>
-		<footer class="text-center text-xl font-bold">
-			<a
-				href="/upload"
-				class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
-				>Create a List</a
-			>
-			|
-			<a
-				href="/lists"
-				class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
-				>Browse Lists</a
-			>
-			|
-			<a
-				href="/compare"
-				class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
-				>Compare Lists</a
-			>
-		</footer>
-	</article>
-	<section class="row-span-2 space-y-4">
-		<h2 class="text-2xl font-bold">Recent Lists</h2>
-		{#if lists.data.length > 0}
-			{#each lists.data as list}
-				<SimpleList {list} />
-			{/each}
-		{:else}
-			<p>
-				No lists available to show, why not <a
+		<header class="mb-4">
+			<h1 class=" text-3xl font-bold text-green-500">Load Order Library</h1>
+		</header>
+		<section class="flex flex-col space-y-4 md:text-xl">
+			<p class="leading-8 md:leading-8">
+				Load Order Library is a website/tool to share mod lists of - primarily Bethesda - games with other
+				players. Intended mostly for troubleshooting purposes, the site can be quite useful for YouTubers to
+				have mod lists for each of their let's play characters, modlist authors to share the list of mods with
+				others, and many other uses.
+			</p>
+			<p class="flex justify-center space-x-4 text-center font-bold">
+				<a
 					href="/upload"
 					class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
+					>Create a List</a
 				>
-					create one?
-				</a>
+
+				<a
+					href="/lists"
+					class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
+					>Browse Lists</a
+				>
+
+				<a
+					href="/compare"
+					class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
+					>Compare Lists</a
+				>
 			</p>
-		{/if}
-	</section>
-	<section class="space-y-2">
-		<section>
+		</section>
+		<footer>
 			<p>
 				Find a bug? Please report it on <a
 					href="https://github.com/phinocio/loadorderlibrary/issues"
@@ -79,8 +64,30 @@
 					>Ko-fi</a
 				>
 			</p>
+		</footer>
+	</article>
+	<article class="space-y-4">
+		<header class="mb-4">
+			<h1 class="text-3xl font-bold">Recent Lists</h1>
+		</header>
+		<section class="space-y-4">
+			{#if lists.data.length > 0}
+				{#each lists.data as list}
+					<BrowseList {list} />
+				{/each}
+			{:else}
+				<p>
+					No lists available to show, why not <a
+						href="/upload"
+						class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
+					>
+						create one?
+					</a>
+				</p>
+			{/if}
 		</section>
-	</section>
+	</article>
+
 	<!-- {#if user}
 		{#if lists.data.length > 0}
 			{#each lists.data as list}

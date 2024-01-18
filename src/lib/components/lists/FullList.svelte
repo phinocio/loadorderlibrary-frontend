@@ -9,6 +9,7 @@
 	import ManageButtons from './ManageButtons.svelte';
 	import FileView from './FileView.svelte';
 	import VerifiedIcon from '../icons/Verified.svelte';
+	import { page } from '$app/stores';
 
 	export let list: List;
 
@@ -17,7 +18,9 @@
 
 	if (list.files) {
 		for (const file of list.files) {
-			fileToggles[file.clean_name] = { hidden: true };
+			fileToggles[file.clean_name] = {
+				hidden: $page.url.searchParams.get('show') === file.clean_name ? false : true,
+			};
 		}
 	}
 
@@ -33,22 +36,37 @@
 
 <article class="space-y-8">
 	<section class="space-y-4">
-		<header class="flex justify-between">
-			<section class="b flex max-w-40 flex-col md:max-w-80">
-				<h1 class="font-bold">
-					<a class="text-xl text-green-600 hover:text-green-500 md:text-3xl" href="/lists/test-list"
-						>{list.name}</a
+		<header class="grid grid-cols-2 justify-between">
+			<h1 class="col-span-2 font-bold">
+				<a
+					class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
+					href="/lists/{list.slug}">{list.name}</a
+				>
+			</h1>
+			<section class="col-span-2">
+				<p>
+					<span class="font-bold">
+						{list.version ? 'v' + list.version : ''}
+					</span>
+					for
+					<a
+						class="inline font-bold text-blue-500 hover:text-blue-600"
+						href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
 					>
-				</h1>
-				<p class="font-bold">{list.version ? 'v' + list.version : ''}</p>
+				</p>
+				<em class="text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
 				<p class="mb-2">
 					by <a
 						class=" inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 						href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
-						>{list.author?.name ?? 'Anonymous'}{#if list.author?.verified}
+						>{list.author?.name ?? 'Anonymous'}
+						{#if list.author?.verified}
 							<VerifiedIcon class="ml-1 inline h-4 w-4 text-blue-500" />{/if}
 					</a>
 				</p>
+			</section>
+
+			<section>
 				{#if list.website}
 					<a
 						href={list.website}
@@ -79,33 +97,27 @@
 					</a>
 				{/if}
 			</section>
-			<section class="flex flex-col items-end justify-between space-y-1">
-				<a
-					class="font-bold text-blue-500 hover:text-blue-600"
-					href="/lists?filter[game]={list.game.name.replace('&', '%26')}">{list.game.name}</a
-				><span class="italic text-slate-500">{list.private ? 'Private List' : ''}</span>
-				<div class="flex flex-col items-end">
-					<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
-						Created{' '}
-						{formatDistanceToNow(new Date(list.created), {
+			<section class="flex flex-col items-end text-right">
+				<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
+					Created{' '}
+					{formatDistanceToNow(new Date(list.created), {
+						addSuffix: true,
+					})}
+				</p>
+				<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
+					Updated
+					{formatDistanceToNow(new Date(list.updated), {
+						addSuffix: true,
+					})}
+				</p>
+				{#if list.expires}
+					<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
+						Expires
+						{formatDistanceToNow(new Date(list.expires), {
 							addSuffix: true,
 						})}
 					</p>
-					<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
-						Updated
-						{formatDistanceToNow(new Date(list.updated), {
-							addSuffix: true,
-						})}
-					</p>
-					{#if list.expires}
-						<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
-							Expires
-							{formatDistanceToNow(new Date(list.expires), {
-								addSuffix: true,
-							})}
-						</p>
-					{/if}
-				</div>
+				{/if}
 			</section>
 		</header>
 		<p class="py-4 leading-10 md:text-xl md:leading-10">
@@ -131,9 +143,13 @@
 	<section class="flex flex-col space-y-6">
 		{#if list.files}
 			{#each list.files as file}
-				<section class="rounded-xl border border-blue-500 text-text-light dark:text-text-dark">
+				<section
+					class="{fileToggles[file.clean_name].hidden
+						? 'rounded-xl'
+						: 'rounded-t-xl'} border border-blue-500 text-text-light dark:text-text-dark"
+				>
 					<header class="flex items-center justify-between">
-						<section class="">
+						<section>
 							<button
 								class="mr-2 {fileToggles[file.clean_name].hidden
 									? 'rounded-l-xl'
@@ -178,7 +194,11 @@
 							</form>
 						</section>
 					</header>
-					<FileView content={file.content} class={fileToggles[file.clean_name].hidden ? 'hidden' : ''} />
+					<FileView
+						content={file.content}
+						class={fileToggles[file.clean_name].hidden ? 'hidden' : ''}
+						fileName={file.clean_name}
+					/>
 				</section>
 
 				<dialog

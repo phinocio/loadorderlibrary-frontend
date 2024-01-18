@@ -40,28 +40,7 @@
 				</a>
 			</p>
 		</section>
-		<section class="flex flex-col items-end">
-			<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
-				Created{' '}
-				{formatDistanceToNow(new Date(list.created), {
-					addSuffix: true,
-				})}
-			</p>
-			<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
-				Updated
-				{formatDistanceToNow(new Date(list.updated), {
-					addSuffix: true,
-				})}
-			</p>
-			{#if list.expires}
-				<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
-					Expires
-					{formatDistanceToNow(new Date(list.expires), {
-						addSuffix: true,
-					})}
-				</p>
-			{/if}
-		</section>
+
 		<!-- {#if list.website}
 			<a
 				href={list.website}
@@ -105,5 +84,29 @@
 		{/if}
 	</p>
 
-	<ManageButtons {list} />
+	<footer class="flex flex-col">
+		<section class="flex flex-col">
+			<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
+				Created{' '}
+				{formatDistanceToNow(new Date(list.created), {
+					addSuffix: true,
+				})}
+			</p>
+			<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
+				Updated
+				{formatDistanceToNow(new Date(list.updated), {
+					addSuffix: true,
+				})}
+			</p>
+			{#if list.expires}
+				<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
+					Expires
+					{formatDistanceToNow(new Date(list.expires), {
+						addSuffix: true,
+					})}
+				</p>
+			{/if}
+		</section>
+		<ManageButtons {list} />
+	</footer>
 </article>
