@@ -11,6 +11,7 @@
 	export { className as class };
 	export let fileName: string;
 	let filterText: string;
+	let separatorId: number;
 
 	let showDisabled: boolean = false;
 
@@ -18,6 +19,25 @@
 		file = content.filter((line) => {
 			return line.toLowerCase().includes(filterText.toLowerCase()) || line.endsWith('_separator');
 		});
+	}
+
+	function toggleSeparator(index: number) {
+		// We need to add the index of the separator we are working with to the found nextSep index so it
+		// matches the index in the original array, otherwise it's the index in the sliced array, which will
+		// often be below the passed in index value.
+		const nextSep = content.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
+		const listUl = document.getElementById(fileName);
+		const listLi = listUl?.getElementsByTagName('li');
+
+		if (!listUl || !listLi) {
+			return;
+		}
+
+		for (let i = index + 1; i < nextSep + 1; i++) {
+			if (!listLi[i].classList.contains('disabled')) {
+				listLi[i].classList.toggle('hidden');
+			}
+		}
 	}
 </script>
 
@@ -62,9 +82,12 @@
 
 				<!-- if the line is a separator -->
 				{#if line.endsWith('_separator')}
-					<span class="w-full bg-green-500 py-2 pl-4 text-center font-bold text-white">
+					<button
+						class="w-full bg-green-500 py-2 pl-4 text-center font-bold text-white"
+						on:click={() => toggleSeparator(i)}
+					>
 						{line.replace('_separator', '').replace(/^\+|^-/, '')}
-					</span>
+					</button>
 				{:else if line.startsWith('-')}
 					<span class="w-full bg-red-500 py-2 pl-4 font-bold text-white line-through">
 						{line.replace(/^-/, '')}

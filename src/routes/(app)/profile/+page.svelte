@@ -3,13 +3,9 @@
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 	import UpdateEmailForm from '$lib/components/auth/UpdateEmailForm.svelte';
 	import UpdatePasswordForm from '$lib/components/auth/UpdatePasswordForm.svelte';
-	import type { ActionData } from '../lists/[slug]/delete/$types';
+	import DeleteAccForm from '$lib/components/auth/DeleteAccForm.svelte';
 
 	export let data: PageData;
-
-	export let form: ActionData;
-
-	// const { user, lists } = data;
 
 	// When we update the email, this then lets the page reacte to that.
 	$: ({ user, lists } = data);
@@ -42,18 +38,20 @@
 			</p>
 		{/if}
 	</article>
-	<article class="col-span-2 md:col-span-1">
+	<article class="col-span-2 space-y-4 md:col-span-1">
 		<h2 class="mb-4 text-2xl font-bold">Manage Account</h2>
+		<p>Your email: {user?.email ?? 'N/A'}</p>
 
 		<section>
-			<h2 class="text-xl font-bold">Update Email</h2>
-			<span class="text-gray-500">To remove the email, submit with the field blank.</span>
-			<p>Your email: {user?.email ?? 'N/A'}</p>
 			<UpdateEmailForm data={data.emailUpdateForm} />
 		</section>
 
 		<section>
 			<UpdatePasswordForm data={data.passwordUpdateForm} />
+		</section>
+
+		<section class="flex flex-col space-y-2">
+			<DeleteAccForm />
 		</section>
 	</article>
 </div>

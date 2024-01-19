@@ -21,7 +21,10 @@
 	});
 </script>
 
-<form method="POST" action="?/updateEmail" class="mt-5 flex flex-col space-y-4" use:enhance>
+<h2 class="text-xl font-bold">Update Email</h2>
+<span class="text-gray-500">To remove the email, submit with the field blank.</span>
+
+<form method="POST" action="?/updateEmail" class="mt-2 flex flex-col space-y-4" use:enhance>
 	<label for="email" class="relative block"
 		><EmailIcon
 			class="pointer-events-none absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 transform {$errors?.email

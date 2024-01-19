@@ -52,14 +52,14 @@
 <dialog
 	id="delete-{list.slug}"
 	bind:this={deleteDialog}
-	class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
+	class="absolute max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
 >
 	<header class="mb-4 flex justify-between">
 		<h1 class="text-2xl font-bold text-blue-500">Delete {list.name}</h1>
 
 		<button
 			on:click={() => deleteDialog.close()}
-			class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+			class="self-start rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 			>X</button
 		>
 	</header>
