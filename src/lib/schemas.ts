@@ -160,9 +160,18 @@ export const editSchema = z.object({
 		.array(),
 });
 
+export const apiTokenSchema = z.object({
+	token_name: z.string({ required_error: 'Token Name is required.' }).min(1).max(32).trim(),
+	create: z.boolean().default(false),
+	read: z.boolean().default(false),
+	update: z.boolean().default(false),
+	delete: z.boolean().default(false),
+});
+
 export type RegisterSchema = typeof registerSchema;
 export type LoginSchema = typeof loginSchema;
 export type EmailUpdateSchema = typeof emailUpdateSchema;
 export type PasswordUpdateSchema = typeof passwordUpdateSchema;
 export type UploadSchema = typeof uploadSchema;
 export type EditSchema = typeof editSchema;
+export type ApiTokenSchema = typeof apiTokenSchema;

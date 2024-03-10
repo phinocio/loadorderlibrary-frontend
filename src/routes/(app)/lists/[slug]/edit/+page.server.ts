@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 		if (list.status === 404) {
 			error(404, 'List not found');
 		}
-		error(list.status, await list.text());
+		error(500, await list.text());
 	}
 
 	const listData = await list.json();
