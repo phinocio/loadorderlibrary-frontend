@@ -4,13 +4,14 @@
 	import PasswordIcon from '$lib/components/icons/Password.svelte';
 	import UserIcon from '$lib/components/icons/User.svelte';
 	import { registerSchema, type RegisterSchema } from '$lib/schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let data: SuperValidated<RegisterSchema>;
+	export let data: SuperValidated<Infer<RegisterSchema>>;
 
 	const { form, errors, enhance, constraints } = superForm(data, {
 		taintedMessage: null,
-		validators: registerSchema,
+		validators: zodClient(registerSchema),
 		validationMethod: 'auto',
 	});
 </script>

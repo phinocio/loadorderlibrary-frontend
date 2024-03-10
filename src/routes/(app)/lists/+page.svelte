@@ -1,16 +1,29 @@
 <script lang="ts">
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 	import ListPagination from '$lib/components/lists/ListPagination.svelte';
+	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 
-	export let data;
+	export let data: PageData;
 
 	$: ({ author, game, lists } = data);
 </script>
 
 <svelte:head>
 	<title>Lists - Load Order Library</title>
+	<!-- FB Meta -->
+	<meta property="og:url" content={$page.url.href} />
+	<meta property="og:title" content="Lists - Load Order Library" />
+	<meta property="og:description" content="A modlist files site to help with support." />
+	<meta property="og:image" content="/images/logo.png" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter Meta -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:url" content={$page.url.href} />
+	<meta name="twitter:title" content="Lists - Load Order Library" />
+	<meta name="twitter:description" content="A modlist files site to help with support." />
+	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
 
 <h1 class="mb-4 text-3xl font-bold">

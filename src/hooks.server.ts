@@ -1,4 +1,4 @@
-import { redirect, type Handle, type HandleFetch } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
 import { getUser } from './lib/auth/user';
 import { refreshXSRFToken } from '$lib/utils/useSetCookies';
@@ -33,4 +33,8 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 		);
 	}
 	return fetch(request);
+};
+
+export const handleError: HandleServerError = ({ error, event }) => {
+	console.error(error);
 };

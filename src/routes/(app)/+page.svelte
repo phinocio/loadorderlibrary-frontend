@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -8,6 +9,20 @@
 
 <svelte:head>
 	<title>Home - Load Order Library</title>
+
+	<!-- FB Meta -->
+	<meta property="og:url" content={$page.url.href} />
+	<meta property="og:title" content="Home - Load Order Library" />
+	<meta property="og:description" content="A modlist files site to help with support." />
+	<meta property="og:image" content="/images/logo.png" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter Meta -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:url" content={$page.url.href} />
+	<meta name="twitter:title" content="Home - Load Order Library" />
+	<meta name="twitter:description" content="A modlist files site to help with support." />
+	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
 
 <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">

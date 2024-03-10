@@ -6,6 +6,8 @@
 	export let data: PageData;
 
 	const { file } = data;
+
+	console.log(file);
 </script>
 
 <svelte:head>
@@ -35,5 +37,5 @@
 </svelte:head>
 
 <section class="text-text-light dark:text-text-dark">
-	<FileView content={file.data.content} />
+	<FileView content={file.data.content} fileName={file.data.clean_name} />
 </section>

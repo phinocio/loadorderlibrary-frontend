@@ -23,5 +23,5 @@
 </section>
 
 <section class="mt-4 flex items-center justify-center text-slate-500">
-	<p>Showing {listsMeta.from} to {listsMeta.to} of {listsMeta.total}</p>
+	<p>Showing {listsMeta.from ?? 0} to {listsMeta.to ?? 0} of {listsMeta.total}</p>
 </section>

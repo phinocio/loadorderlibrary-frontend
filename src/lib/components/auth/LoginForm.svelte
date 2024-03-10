@@ -3,13 +3,15 @@
 	import PasswordIcon from '$lib/components/icons/Password.svelte';
 	import UserIcon from '$lib/components/icons/User.svelte';
 	import { loginSchema, type LoginSchema } from '$lib/schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { SuperValidated, Infer } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import type { PageData } from '../../../routes/(app)/login/$types';
 
-	export let data: SuperValidated<LoginSchema>;
+	export let data: SuperValidated<Infer<LoginSchema>>;
 
 	const { form, errors, enhance, constraints } = superForm(data, {
 		taintedMessage: null,
-		validators: loginSchema,
+		validators: zodClient(loginSchema),
 		validationMethod: 'auto',
 	});
 </script>

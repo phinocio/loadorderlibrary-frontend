@@ -36,19 +36,19 @@
 
 <article class="space-y-8">
 	<section class="space-y-4">
-		<header class="grid grid-cols-2 justify-between">
-			<h1 class="col-span-2 font-bold">
+		<header>
+			<h1 class="font-bold">
 				<a
 					class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
 					href="/lists/{list.slug}">{list.name}</a
 				>
 			</h1>
-			<section class="col-span-2">
+			<section>
 				<p>
 					<span class="font-bold">
 						{list.version ? 'v' + list.version : ''}
 					</span>
-					for
+
 					<a
 						class="inline font-bold text-blue-500 hover:text-blue-600"
 						href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
@@ -97,7 +97,7 @@
 					</a>
 				{/if}
 			</section>
-			<section class="flex flex-col items-end text-right">
+			<section class="mt-4 flex space-x-4">
 				<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
 					Created{' '}
 					{formatDistanceToNow(new Date(list.created), {
@@ -120,7 +120,7 @@
 				{/if}
 			</section>
 		</header>
-		<p class="py-4 leading-10 md:text-xl md:leading-10">
+		<p class="border-y border-border-light py-4 leading-10 dark:border-border-dark md:text-xl md:leading-10">
 			{list.description ?? 'No description provided.'}
 		</p>
 
@@ -133,10 +133,6 @@
 					>All Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
 				>
 			</form>
-			<button
-				class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-				>Install with Wabbajack <ExternalIcon class="ml-2 inline h-6 w-6 " /></button
-			>
 		</section>
 	</section>
 
@@ -225,9 +221,8 @@
 					</p>
 					<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
 						<code class="text-green-500"
-							>&lt;iframe title="Load Order Library iframe"
-							src="http://testing.lol.wonderland/lists/aaaaaaaaaa-46/embed/{file.clean_name}" width="875"
-							height="1000" sandbox="allow-scripts allow-same-origin" &gt;&lt;/iframe&gt;</code
+							>&lt;iframe title="Load Order Library iframe" src="http://testing.lol.wonderland/lists/{list.slug}/embed/{file.clean_name}"
+							width="875" height="1000" sandbox="allow-scripts allow-same-origin" &gt;&lt;/iframe&gt;</code
 						>
 					</div>
 				</dialog>

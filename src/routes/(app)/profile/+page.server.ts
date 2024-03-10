@@ -3,11 +3,12 @@ import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { emailUpdateSchema, passwordUpdateSchema } from '$lib/schemas';
+import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = async () => {
 	// Different schemas, so no id required.
-	const emailUpdateForm = await superValidate(emailUpdateSchema);
-	const passwordUpdateForm = await superValidate(passwordUpdateSchema);
+	const emailUpdateForm = await superValidate(zod(emailUpdateSchema));
+	const passwordUpdateForm = await superValidate(zod(passwordUpdateSchema));
 
 	// Return them both
 	return { emailUpdateForm, passwordUpdateForm };
@@ -15,13 +16,13 @@ export const load = async () => {
 
 export const actions = {
 	updateEmail: async ({ fetch, request, locals }) => {
-		const emailUpdateForm = await superValidate(request, emailUpdateSchema);
+		const emailUpdateForm = await superValidate(request, zod(emailUpdateSchema));
 
 		if (!emailUpdateForm.valid) {
 			return fail(400, { emailUpdateForm });
 		}
 
-		if (emailUpdateForm.data.email === locals.user?.email) {
+		if (emailUpdateForm.data.email == locals.user?.email) {
 			return message(emailUpdateForm, 'This is already your email.');
 		}
 
@@ -63,7 +64,7 @@ export const actions = {
 		}
 	},
 	updatePassword: async ({ fetch, request }) => {
-		const passwordUpdateForm = await superValidate(request, passwordUpdateSchema);
+		const passwordUpdateForm = await superValidate(request, zod(passwordUpdateSchema));
 
 		if (!passwordUpdateForm.valid) {
 			// Clear passwords since we shouldn't return them in the response
@@ -86,7 +87,6 @@ export const actions = {
 			});
 
 			const respData = await resp.json();
-			console.log(resp.status);
 
 			// HTTP 200 is returned on update, if that's not the
 			// response status, an error occurred.

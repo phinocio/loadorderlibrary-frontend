@@ -10,7 +10,7 @@
 	import BlueSkyIcon from '$lib/components/icons/BlueSky.svelte';
 	import { enhance } from '$app/forms';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
-	import toast, { Toaster } from 'svelte-french-toast';
+	import { Toaster } from 'svelte-french-toast';
 
 	export let data;
 	export let hidden = true;
@@ -60,7 +60,7 @@
 				type="button"
 				on:click={() => (hidden = !hidden)}
 				aria-label="Toggle menu"
-				class="rounded text-green-500 hover:bg-blue-400 active:bg-blue-400 active:text-white md:hidden dark:hover:bg-blue-500 dark:active:bg-blue-500"
+				class="rounded text-green-500 hover:bg-blue-400 active:bg-blue-400 active:text-white dark:hover:bg-blue-500 dark:active:bg-blue-500 md:hidden"
 			>
 				<MenuIcon class="h-8 w-8" />
 			</button>
@@ -69,7 +69,7 @@
 			class="mt-2 hidden w-full flex-col text-center md:mt-0 md:flex md:flex-row md:items-center md:justify-between"
 			class:hidden
 		>
-			<div class="flex flex-col border-t border-border-light md:flex-row md:border-none dark:border-border-dark">
+			<div class="flex flex-col border-t border-border-light dark:border-border-dark md:flex-row md:border-none">
 				<a
 					href="/upload"
 					class="rounded-xl px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
@@ -166,11 +166,10 @@
 	</nav>
 </header>
 
-<noscript class="mb-2 flex w-1/2 justify-center self-center rounded-xl bg-red-500 py-2 text-white">
-	The site works best with JavaScript enabled.
-</noscript>
-
 <main class="container mx-auto mb-20 flex h-full flex-grow flex-col px-4 lg:px-20">
+	<noscript class="mb-2 flex w-full justify-center self-center rounded-xl bg-red-500 py-2 text-xl text-white">
+		The site works best with JavaScript enabled.
+	</noscript>
 	<Toaster />
 	<slot />
 </main>
@@ -190,7 +189,7 @@
 				>
 			</p>
 		</section>
-		<hr class="my-4 border-border-light sm:hidden dark:border-border-dark" />
+		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
 		<section class="space-y-2">
 			<p class="font-bold text-green-600 dark:text-green-500">Social</p>
 			<p class="flex justify-center space-x-2">
@@ -213,7 +212,7 @@
 				>
 			</p>
 		</section>
-		<hr class="my-4 border-border-light sm:hidden dark:border-border-dark" />
+		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
 		<section class="space-y-2">
 			<p class="font-bold text-green-600 dark:text-green-500">API Resources</p>
 			<p class="flex justify-center space-x-2">
@@ -225,7 +224,7 @@
 				>
 			</p>
 		</section>
-		<hr class="my-4 border-border-light sm:hidden dark:border-border-dark" />
+		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
 		<section class="space-y-2">
 			<p class="font-bold text-green-600 dark:text-green-500">Support The Site</p>
 			<p class="flex justify-center space-x-2">

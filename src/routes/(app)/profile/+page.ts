@@ -17,5 +17,5 @@ export const load: PageLoad = async ({ fetch, data }) => {
 		error(resp.status, lists.message);
 	}
 
-	return { lists, title: 'Meow', emailUpdateForm: data.emailUpdateForm, passwordUpdateForm: data.passwordUpdateForm };
+	return { lists, emailUpdateForm: data.emailUpdateForm, passwordUpdateForm: data.passwordUpdateForm };
 };

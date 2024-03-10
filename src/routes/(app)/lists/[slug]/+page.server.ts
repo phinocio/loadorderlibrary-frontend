@@ -1,9 +1,9 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { API_URL } from '$env/static/private';
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params }) => {
-	const route = `${PUBLIC_API_URL}/v1/lists/${params.slug}`;
+export const load: PageServerLoad = async ({ fetch, params }) => {
+	const route = `${API_URL}/v1/lists/${params.slug}`;
 
 	const resp = await fetch(route, {
 		headers: { Accept: 'application/json' },

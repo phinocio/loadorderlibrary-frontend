@@ -1,20 +1,21 @@
-import type { Actions } from './$types';
-import { superValidate } from 'sveltekit-superforms/server';
-import { error, fail, redirect } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
-import { useSetCookies } from '$lib/utils/useSetCookies';
 import { registerSchema } from '$lib/schemas';
+import { useSetCookies } from '$lib/utils/useSetCookies';
+import { error, fail, redirect } from '@sveltejs/kit';
+import { zod } from 'sveltekit-superforms/adapters';
+import { superValidate } from 'sveltekit-superforms/server';
+import type { Actions } from './$types';
 
 export const load = async () => {
 	// Server API:
-	const form = await superValidate(registerSchema);
+	const form = await superValidate(zod(registerSchema));
 
 	return { form };
 };
 
 export const actions = {
 	default: async ({ cookies, request, fetch, url }) => {
-		const form = await superValidate(request, registerSchema);
+		const form = await superValidate(request, zod(registerSchema));
 
 		if (!form.valid) {
 			// Clear passwords since we shouldn't return them in the response

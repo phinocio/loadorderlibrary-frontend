@@ -12,7 +12,6 @@
 	export let fileName: string;
 	let filterText: string;
 	let separatorId: number;
-
 	let showDisabled: boolean = false;
 
 	function filterList() {
@@ -27,6 +26,7 @@
 		// often be below the passed in index value.
 		const nextSep = content.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
 		const listUl = document.getElementById(fileName);
+		console.log(fileName);
 		const listLi = listUl?.getElementsByTagName('li');
 
 		if (!listUl || !listLi) {
@@ -45,7 +45,7 @@
 	<section class="flex flex-col items-center border border-blue-500 md:flex-row">
 		<input
 			type="text"
-			class="w-full flex-1 bg-gray-200 p-4 focus:outline-none focus:ring-1 focus:ring-blue-500 md:w-auto dark:bg-[#26263a]"
+			class="w-full flex-1 bg-gray-200 p-4 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a] md:w-auto"
 			placeholder="Filter..."
 			id="filter-{fileName}"
 			bind:value={filterText}

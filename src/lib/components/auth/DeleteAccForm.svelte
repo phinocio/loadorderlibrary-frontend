@@ -40,7 +40,7 @@
 <dialog
 	id="delete-account"
 	bind:this={deleteDialog}
-	class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
+	class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:bg-dark dark:text-text-dark"
 >
 	<header class="mb-4 flex justify-between">
 		<h1 class="text-2xl font-bold text-blue-500">Delete Account</h1>
