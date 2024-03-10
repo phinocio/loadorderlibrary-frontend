@@ -13,7 +13,7 @@
 
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
-	<meta property="og:title" content={list.data.game.name} />
+	<meta property="og:title" content={list.data.name} />
 	<meta
 		property="og:description"
 		content="A list for {list.data.game.name} by {list.data.author?.name ?? 'Anonymous'}"
