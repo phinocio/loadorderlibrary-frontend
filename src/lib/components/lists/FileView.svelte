@@ -26,7 +26,6 @@
 		// often be below the passed in index value.
 		const nextSep = content.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
 		const listUl = document.getElementById(fileName);
-		console.log(fileName);
 		const listLi = listUl?.getElementsByTagName('li');
 
 		if (!listUl || !listLi) {

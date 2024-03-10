@@ -44,7 +44,6 @@ export const actions = {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(editSchema));
 
-		console.log(formData.getAll('files[]'));
 		formData.append('_method', 'PUT');
 
 		if (!form.valid) {

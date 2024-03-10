@@ -6,8 +6,6 @@
 	export let data: PageData;
 
 	const { file } = data;
-
-	console.log(file);
 </script>
 
 <svelte:head>

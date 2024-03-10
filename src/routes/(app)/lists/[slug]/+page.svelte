@@ -5,8 +5,6 @@
 
 	export let data: PageData;
 
-	console.log($page);
-
 	const { list } = data;
 </script>
 
