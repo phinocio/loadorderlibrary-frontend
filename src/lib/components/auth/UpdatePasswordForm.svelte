@@ -2,13 +2,14 @@
 	import PasswordIcon from '$lib/components/icons/Password.svelte';
 	import { passwordUpdateSchema, type PasswordUpdateSchema } from '$lib/schemas';
 	import toast from 'svelte-french-toast';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { superForm } from 'sveltekit-superforms/client';
-	export let data: SuperValidated<PasswordUpdateSchema>;
+	export let data: SuperValidated<Infer<PasswordUpdateSchema>>;
 
 	const { form, errors, enhance, constraints } = superForm(data, {
 		taintedMessage: null,
-		validators: passwordUpdateSchema,
+		validators: zodClient(passwordUpdateSchema),
 		validationMethod: 'auto',
 		resetForm: true,
 		onUpdated({ form }) {

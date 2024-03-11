@@ -6,7 +6,7 @@ import { superValidate, withFiles } from 'sveltekit-superforms/server';
 import { editSchema } from '$lib/schemas';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
-	const route = `${API_URL}/v1/lists/${params.slug}`;
+	const route = `${API_URL}/v1/listas/${params.slug}`;
 
 	const list = await fetch(route, {
 		headers: { Accept: 'application/json' },
@@ -20,9 +20,11 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 
 	if (list.status !== 200) {
 		if (list.status === 404) {
-			error(404, 'List not found');
+			error(404, { message: 'List not found' });
 		}
-		error(500, await list.text());
+
+		const data = await list.json();
+		error(500, { message: data.message });
 	}
 
 	const listData = await list.json();

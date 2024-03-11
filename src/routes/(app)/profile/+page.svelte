@@ -50,6 +50,15 @@
 			<UpdatePasswordForm data={data.passwordUpdateForm} />
 		</section>
 
+		<section>
+			<h2 class="mb-4 text-2xl font-bold">Manage API Tokens</h2>
+			<a
+				href="/profile/api"
+				class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
+				>Go to API Tokens</a
+			>
+		</section>
+
 		<section class="flex flex-col space-y-2">
 			<DeleteAccForm />
 		</section>

@@ -1,21 +1,26 @@
 import { API_URL } from '$env/static/private';
 import { apiTokenSchema } from '$lib/schemas';
 import { message, superValidate } from 'sveltekit-superforms/server';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 
-export const load = async () => {
-	// const apiTokens = await fetch(`${API_URL}/v1/user/api-tokens`, {
-	//     headers: {
-	//         Accept: 'application/json',
-	//     },
-	//     credentials: 'include',
-	// }).then((resp) => resp.json());
+export const load: PageServerLoad = async ({ fetch }) => {
+	const resp = await fetch(`${API_URL}/v1/user/api-tokens`, {
+		headers: {
+			Accept: 'application/json',
+		},
+		credentials: 'include',
+	});
+
+	if (resp.status !== 200) {
+		const data = await resp.json();
+		error(500, { message: data.message });
+	}
 
 	const form = await superValidate(zod(apiTokenSchema));
 
-	return { form };
+	return { form, apiTokens: await resp.json() };
 };
 
 export const actions = {

@@ -22,6 +22,7 @@
 -   Need to move over the scheduled tasks for deleting expired lists and orphaned files from existing phinocio/loadorderlibrary repo.
 -   Comparison page
 -   Complete overview of token permissions on API
+-   Move APIToken stuff to a specific API Token controller
 
 # TO FIX:
 

@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import EmailIcon from '$lib/components/icons/Email.svelte';
 	import { emailUpdateSchema, type EmailUpdateSchema } from '$lib/schemas';
 	import toast from 'svelte-french-toast';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let data: SuperValidated<EmailUpdateSchema>;
+	export let data: SuperValidated<Infer<EmailUpdateSchema>>;
 
 	const { form, errors, enhance, constraints } = superForm(data, {
 		taintedMessage: null,
-		validators: emailUpdateSchema,
+		validators: zodClient(emailUpdateSchema),
 		validationMethod: 'auto',
 		resetForm: true,
 		onUpdated({ form }) {

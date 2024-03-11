@@ -4,9 +4,9 @@ import { useSetCookies } from '$lib/utils/useSetCookies';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
-export const load = async () => {
+export const load: PageServerLoad = async () => {
 	// Server API:
 	const form = await superValidate(zod(loginSchema));
 
