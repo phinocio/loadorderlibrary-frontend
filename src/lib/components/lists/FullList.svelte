@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { List } from '$lib/types/List';
-	import { formatDistanceToNow, format } from 'date-fns';
-	import ExternalIcon from '../icons/External.svelte';
+	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import PlusIcon from '../icons/Plus.svelte';
+	import type { List } from '$lib/types/List';
+	import { format, formatDistanceToNow } from 'date-fns';
 	import DownloadIcon from '../icons/Download.svelte';
 	import EmbedIcon from '../icons/Embed.svelte';
-	import ManageButtons from './ManageButtons.svelte';
-	import FileView from './FileView.svelte';
+	import ExternalIcon from '../icons/External.svelte';
+	import PlusIcon from '../icons/Plus.svelte';
 	import VerifiedIcon from '../icons/Verified.svelte';
-	import { page } from '$app/stores';
+	import FileView from './FileView.svelte';
+	import ManageButtons from './ManageButtons.svelte';
 
 	export let list: List;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 	import { page } from '$app/stores';
+	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 
 	export let data;
 

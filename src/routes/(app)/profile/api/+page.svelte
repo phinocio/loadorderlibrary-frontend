@@ -1,11 +1,10 @@
 <script lang="ts">
+	import Token from '$lib/components/apiTokens/Token.svelte';
+	import UserIcon from '$lib/components/icons/User.svelte';
 	import { apiTokenSchema } from '$lib/schemas';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import UserIcon from '$lib/components/icons/User.svelte';
-	import SuperDebug from 'sveltekit-superforms';
-	import { format, formatDistanceToNow } from 'date-fns';
 
 	export let data: PageData;
 
@@ -18,7 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>Api - Load Order Library</title>
+	<title>Api Tokens - Load Order Library</title>
 </svelte:head>
 
 <!-- <SuperDebug data={$form} /> -->
@@ -36,47 +35,7 @@
 		{#if data.apiTokens.length > 0}
 			<div class="grid grid-cols-1 gap-10 md:grid-cols-2">
 				{#each data.apiTokens as token}
-					<div class="flex justify-between rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-						<div>
-							<p class="text-xl font-bold text-green-600">
-								{token.name}
-							</p>
-							<p class="italic">
-								{#if token.abilities.length > 0}
-									{token.abilities.join(', ')}
-								{:else}
-									No abilities.
-								{/if}
-							</p>
-							<p class="text-sm text-slate-500">
-								Last Used:
-								{#if token.last_used_at !== null}
-									<span title={format(new Date(token.last_used_at), 'PPpp')}>
-										{formatDistanceToNow(new Date(token.last_used_at), {
-											addSuffix: true,
-										})}
-									</span>
-								{:else}
-									<span>Never</span>
-								{/if}
-							</p>
-							<p class="text-sm text-slate-500">
-								Created:
-								<span title={format(new Date(token.created_at), 'PPpp')}>
-									{formatDistanceToNow(new Date(token.created_at), {
-										addSuffix: true,
-									})}
-								</span>
-							</p>
-						</div>
-						<div class="flex items-end">
-							<button
-								type="submit"
-								class="rounded-full border border-red-500 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white active:bg-red-500 active:text-white"
-								>Delete Token</button
-							>
-						</div>
-					</div>
+					<Token {token} />
 				{/each}
 			</div>
 		{:else}

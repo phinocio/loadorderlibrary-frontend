@@ -1,9 +1,9 @@
 import { API_URL } from '$env/static/private';
 import { apiTokenSchema } from '$lib/schemas';
+import { error, fail } from '@sveltejs/kit';
+import { zod } from 'sveltekit-superforms/adapters';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
-import { zod } from 'sveltekit-superforms/adapters';
-import { error, fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ fetch }) => {
 	const resp = await fetch(`${API_URL}/v1/user/api-tokens`, {

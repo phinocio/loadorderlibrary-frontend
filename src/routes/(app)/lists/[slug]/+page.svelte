@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import FullList from '$lib/components/lists/FullList.svelte';
 	import { page } from '$app/stores';
+	import FullList from '$lib/components/lists/FullList.svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
