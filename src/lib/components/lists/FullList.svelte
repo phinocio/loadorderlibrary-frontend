@@ -44,16 +44,14 @@
 				>
 			</h1>
 			<section>
-				<p>
-					<span class="font-bold">
-						{list.version ? 'v' + list.version : ''}
-					</span>
-
-					<a
-						class="inline font-bold text-blue-500 hover:text-blue-600"
-						href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
-					>
+				<p class="font-bold">
+					{list.version ? 'v' + list.version : ''}
 				</p>
+
+				<a
+					class="inline font-bold text-blue-500 hover:text-blue-600"
+					href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
+				>
 				<em class="text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
 				<p class="mb-2">
 					by <a

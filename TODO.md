@@ -20,11 +20,11 @@
 # API
 
 -   [x] Need to move over the scheduled tasks for deleting expired lists and orphaned files from existing phinocio/loadorderlibrary repo.
--   Complete review of token permissions on API
--   Move APIToken stuff to a specific API Token controller
+-   [ ] Complete review of token permissions on API (half done)
+-   [x] Move APIToken stuff to a specific API Token controller
 
 # TO FIX:
 
 -   Text reflow issues on thinner mobile devices
--   No logo for non-list-specific embeds
+-   [x] No logo for non-list-specific embeds
 -   Verison and game name need to be split onto different lines in list view
