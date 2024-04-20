@@ -1,12 +1,12 @@
 import { API_URL } from '$env/static/private';
-import { error, type Actions, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { editSchema } from '$lib/schemas';
+import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate, withFiles } from 'sveltekit-superforms/server';
-import { editSchema } from '$lib/schemas';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
-	const route = `${API_URL}/v1/listas/${params.slug}`;
+	const route = `${API_URL}/v1/lists/${params.slug}`;
 
 	const list = await fetch(route, {
 		headers: { Accept: 'application/json' },

@@ -52,10 +52,10 @@
 					class="inline font-bold text-blue-500 hover:text-blue-600"
 					href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
 				>
-				<em class="text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
+				<em class="block text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
 				<p class="mb-2">
 					by <a
-						class=" inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+						class="inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 						href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
 						>{list.author?.name ?? 'Anonymous'}
 						{#if list.author?.verified}
@@ -189,7 +189,7 @@
 						</section>
 					</header>
 					<FileView
-						content={file.content}
+						content={file.clean_name === 'modlist.txt' ? file.content : file.content}
 						class={fileToggles[file.clean_name].hidden ? 'hidden' : ''}
 						fileName={file.clean_name}
 					/>

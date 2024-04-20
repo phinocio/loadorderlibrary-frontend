@@ -1,8 +1,8 @@
-import { redirect, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
 import { API_URL } from '$env/static/private';
-import { getUser } from './lib/auth/user';
-import { refreshXSRFToken } from '$lib/utils/useSetCookies';
 import { handleLoginRedirect } from '$lib/utils/handleLoginRedirect';
+import { refreshXSRFToken } from '$lib/utils/useSetCookies';
+import { redirect, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
+import { getUser } from './lib/auth/user';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.user = await getUser(event);

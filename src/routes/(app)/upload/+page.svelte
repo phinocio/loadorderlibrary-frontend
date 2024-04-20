@@ -125,37 +125,44 @@
 					</select>
 				</label>
 
-				<label for="name" class="relative block">
-					<TimeIcon
-						class="pointer-events-none absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 transform {$errors?.name
-							? 'text-red-500'
-							: 'text-green-500'}"
-					/>
+				<div>
+					<label for="name" class="relative block">
+						<TimeIcon
+							class="pointer-events-none absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 transform {$errors?.name
+								? 'text-red-500'
+								: 'text-green-500'}"
+						/>
 
-					<select
-						name="expires"
-						aria-invalid={$errors.expires ? 'true' : undefined}
-						id="expires"
-						bind:value={$form.expires}
-						class="w-full rounded-full {$errors?.expires
-							? 'border border-red-500'
-							: ''} appearance-none bg-gray-200 px-4 py-3 pl-14 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a]"
-						placeholder="Version (optional)..."
-						required
-						{...$constraints.expires}
-					>
-						<option value="3h">3 Hours</option>
-						<option value="24h" selected={!$page.data.user ? true : false}>24 Hours</option>
-						<option value="3d">3 Days</option>
-						<option value="1w">1 Week</option>
-						<option value="perm" selected={$page.data.user ? true : false}>Permanent</option>
-					</select>
-				</label>
-				{#if $errors?.expires}
-					{#each $errors?.expires as error}
-						<p class="ml-4 text-sm text-red-500">{error}</p>
-					{/each}
-				{/if}
+						<select
+							name="expires"
+							aria-invalid={$errors.expires ? 'true' : undefined}
+							id="expires"
+							bind:value={$form.expires}
+							class="w-full rounded-full {$errors?.expires
+								? 'border border-red-500'
+								: ''} appearance-none bg-gray-200 px-4 py-3 pl-14 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a]"
+							placeholder="Version (optional)..."
+							required
+							{...$constraints.expires}
+						>
+							<option value="3h">3 Hours</option>
+							<option value="24h" selected={!$page.data.user ? true : false}>24 Hours</option>
+							<option value="3d">3 Days</option>
+							<option value="1w">1 Week</option>
+							<option value="perm" selected={$page.data.user ? true : false}>Permanent</option>
+						</select>
+					</label>
+					{#if $errors?.expires}
+						{#each $errors?.expires as error}
+							<p class="ml-4 text-sm text-red-500">{error}</p>
+						{/each}
+					{/if}
+					<p class="ml-4 text-sm italic text-gray-500 dark:text-gray-300">
+						{$page.data.user
+							? 'User lists are permanent by default'
+							: 'Anonymous lists expire in 24h by default'}
+					</p>
+				</div>
 
 				<label for="name" class="relative block">
 					<BrowserIcon
@@ -252,23 +259,24 @@
 					{/each}
 				{/if}
 
-				<label for="files" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-					<input
-						type="file"
-						name="files[]"
-						id="files"
-						accept=".txt, .ini"
-						class="block w-full rounded-full bg-gray-200 file:rounded-l-full file:border-none file:bg-blue-500 file:p-4 file:text-white file:hover:cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a]"
-						multiple
-						required
-						on:input={(e) => ($form['files[]'] = Array.from(e.currentTarget.files ?? []))}
-					/>
-				</label>
+				<div>
+					<label for="files" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+						<input
+							type="file"
+							name="files[]"
+							id="files"
+							accept=".txt, .ini"
+							class="block w-full rounded-full bg-gray-200 file:rounded-l-full file:border-none file:bg-blue-500 file:p-4 file:text-white file:hover:cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a]"
+							multiple
+							required
+							on:input={(e) => ($form['files[]'] = Array.from(e.currentTarget.files ?? []))}
+						/>
+					</label>
 
-				<p class="pl-4 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-					.txt or .ini (Max 512KB)
-				</p>
-
+					<p class="pl-4 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
+						.txt or .ini files (Max 512KB)
+					</p>
+				</div>
 				{#if $errors['files[]']}
 					{#each Object.entries($errors['files[]']) as [index, error]}
 						<p class="ml-4 text-sm text-red-500">File {Number(index) + 1}: {error}</p>
@@ -276,7 +284,7 @@
 				{/if}
 			</section>
 			<section class="flex flex-col justify-between md:flex-row">
-				<div class="flex flex-col items-start pl-4">
+				<div class="flex flex-col items-start">
 					<label for="private" class="flex items-center">
 						<input
 							type="checkbox"

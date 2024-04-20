@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { formatDistanceToNow, format } from 'date-fns';
 	import type { List } from '$lib/types/List';
-	import ManageButtons from './ManageButtons.svelte';
+	import { format, formatDistanceToNow } from 'date-fns';
 	import VerifiedIcon from '../icons/Verified.svelte';
+	import ManageButtons from './ManageButtons.svelte';
 
 	export let list: List;
 </script>
 
 <article
-	class="flex flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
+	class="flex flex-col space-y-4 rounded-t-xl border-b border-border-light bg-gray-200 p-4 text-text-light dark:border-border-dark dark:bg-[#26263a] dark:text-text-dark"
 >
-	<section class=" justify-between">
+	<header class=" justify-between">
 		<h1 class="col-span-2 font-bold">
 			<a
 				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
@@ -37,9 +37,8 @@
 				</a>
 			</p>
 		</section>
-	</section>
-
-	<section class="flex flex-1">
+	</header>
+	<p class="flex flex-1">
 		<!-- This is better than nested ternary operators and I refuse to hear otherwise :P -->
 		{#if list.description}
 			{#if list.description.length > 300}
@@ -50,29 +49,48 @@
 		{:else}
 			No description provided.
 		{/if}
-	</section>
+	</p>
 
-	<section class="flex flex-col">
-		<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
-			Created{' '}
-			{formatDistanceToNow(new Date(list.created), {
-				addSuffix: true,
-			})}
-		</p>
-		<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
-			Updated
-			{formatDistanceToNow(new Date(list.updated), {
-				addSuffix: true,
-			})}
-		</p>
-		{#if list.expires}
-			<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
-				Expires
-				{formatDistanceToNow(new Date(list.expires), {
+	<footer class="flex flex-col">
+		<section class="flex flex-col">
+			<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
+				Created{' '}
+				{formatDistanceToNow(new Date(list.created), {
 					addSuffix: true,
 				})}
 			</p>
-		{/if}
+			<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
+				Updated
+				{formatDistanceToNow(new Date(list.updated), {
+					addSuffix: true,
+				})}
+			</p>
+			{#if list.expires}
+				<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
+					Expires
+					{formatDistanceToNow(new Date(list.expires), {
+						addSuffix: true,
+					})}
+				</p>
+			{/if}
+		</section>
 		<ManageButtons {list} />
-	</section>
+	</footer>
 </article>
+
+{#if list.files}
+	<article class="rounded-b-xl bg-gray-200 text-text-light dark:bg-[#26263a] dark:text-text-dark">
+		<ul>
+			{#each list.files as file}
+				<li class="flex justify-between px-4 py-2">
+					<span>{file.clean_name}</span><span
+						>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})} KiB</span
+					>
+				</li>
+			{/each}
+		</ul>
+	</article>
+{/if}

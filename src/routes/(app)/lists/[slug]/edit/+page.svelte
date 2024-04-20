@@ -281,7 +281,7 @@
 				<button
 					type="submit"
 					class="rounded-full bg-blue-500 px-8 py-3 text-white hover:bg-blue-600 active:bg-blue-700"
-					>Edit List</button
+					>Update List</button
 				>
 			</section>
 		</form>
