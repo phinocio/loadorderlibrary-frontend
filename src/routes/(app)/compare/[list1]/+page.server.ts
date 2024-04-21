@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 
 	if (resp2.status !== 200) {
 		if (resp2.status === 404) {
-			error(404, 'Unable to fetch first list');
+			error(404, 'Unable to fetch first list for comparison');
 		}
 		error(resp2.status, await resp.text());
 	}

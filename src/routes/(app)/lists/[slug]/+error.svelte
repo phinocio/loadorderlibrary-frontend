@@ -2,6 +2,10 @@
 	import { page } from '$app/stores';
 </script>
 
+<svelte:head>
+	<title>{$page.status} - Load Order Library</title>
+</svelte:head>
+
 <section class="flex flex-col items-center text-xl">
 	<header class="mb-10 text-center">
 		<h1 class="text-6xl font-bold">{$page.status}</h1>
