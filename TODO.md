@@ -43,4 +43,4 @@
 - [ ] More error pages (maybe make it just one generic top level instead of custom per route?)
 - [ ] Transparency page
 - [ ] Ensure pages have proper titles
-- [ ] Ensure pages have proper embeds for discord/twitter/fb (comparison page known missing)
+- [ ] Ensure pages have proper embeds for discord/twitter/fb
