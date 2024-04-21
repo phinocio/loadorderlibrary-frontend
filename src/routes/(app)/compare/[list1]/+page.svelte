@@ -47,16 +47,23 @@
 	</div>
 </section>
 
-<!-- TODO: Show simple view of the first list being compared -->
-
-<input
-	type="text"
-	class="my-8 flex w-full rounded-xl bg-gray-200 p-4 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a] md:w-auto"
-	placeholder="Filter..."
-	id="filter-lists"
-	bind:value={filterText}
-	on:input={filterLists}
-/>
+<div class="my-8 w-full">
+	<input
+		type="text"
+		class="flex w-full min-w-full rounded-xl bg-gray-200 p-4 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a] md:w-auto"
+		placeholder="Filter..."
+		id="filter-lists"
+		bind:value={filterText}
+		on:input={filterLists}
+	/>
+	<button
+		class="ml-2 text-gray-500 dark:text-gray-300"
+		on:click={() => {
+			filterText = '';
+			filterLists();
+		}}>Clear Filter</button
+	>
+</div>
 
 <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
 	{#if lists.length > 0}

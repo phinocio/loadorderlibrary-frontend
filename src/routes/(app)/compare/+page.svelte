@@ -48,7 +48,7 @@
 		on:click={() => {
 			filterText = '';
 			filterLists();
-		}}>Clear search</button
+		}}>Clear Filter</button
 	>
 </div>
 

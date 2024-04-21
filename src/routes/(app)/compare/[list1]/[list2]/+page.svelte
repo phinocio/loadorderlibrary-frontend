@@ -49,7 +49,7 @@
 
 <h1 class="mb-4 text-3xl font-bold">Comparison Results</h1>
 
-<article class="mb-8 flex flex-col justify-between gap-10 md:flex-row">
+<article class="mb-8 flex max-w-full flex-col justify-between gap-10 md:flex-row">
 	<section class="md:w-1/2">
 		<CompareList list={list1} />
 	</section>
