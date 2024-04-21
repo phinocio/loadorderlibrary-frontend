@@ -109,7 +109,7 @@ export const uploadSchema = z.object({
 	name: z
 		.string({ required_error: 'Name is required.' })
 		.min(1, { message: 'Name is required.' })
-		.max(32, { message: 'Name must be 32 characters or less.' })
+		.max(100, { message: 'Name must be 100 characters or less.' })
 		.trim(),
 	description: z.string().trim().optional(),
 	game: z.number({ required_error: 'A game is required.' }).default('' as unknown as number),
