@@ -2,6 +2,7 @@
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 	import type { List } from '$lib/types/List';
 	import type { PageData } from './$types';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 	let filterText: string;
@@ -30,6 +31,19 @@
 
 <svelte:head>
 	<title>Compare - Load Order Library</title>
+	<!-- FB Meta -->
+	<meta property="og:url" content={$page.url.href} />
+	<meta property="og:title" content={$page.data.title} />
+	<meta property="og:description" content="Compare lists." />
+	<meta property="og:image" content="/images/logo.png" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter Meta -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:url" content={$page.url.href} />
+	<meta name="twitter:title" content={$page.data.title} />
+	<meta name="twitter:description" content="Compare lists." />
+	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
 
 <h1 class="mb-4 text-3xl font-bold">Compare Lists</h1>
