@@ -1,7 +1,5 @@
 <script lang="ts">
-	import VerifiedIcon from '$lib/components/icons/Verified.svelte';
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
-	import CompareList from '$lib/components/lists/CompareList.svelte';
 	import type { List } from '$lib/types/List';
 	import type { PageData } from './$types';
 
@@ -27,6 +25,7 @@
 			);
 		});
 	}
+	console.log(firstList);
 </script>
 
 <svelte:head>
@@ -37,7 +36,7 @@
 
 <section class="flex flex-col justify-between gap-10 md:flex-row">
 	<div class="md:w-1/2">
-		<CompareList list={firstList.data} />
+		<BrowseList list={firstList.data} includeManageButtons={false} files={firstList.data.files} />
 	</div>
 	<p class="flex items-center justify-center text-4xl font-bold text-blue-500">vs.</p>
 	<div

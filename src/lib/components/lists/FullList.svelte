@@ -36,110 +36,108 @@
 </script>
 
 <article class="space-y-8">
-	<section class="space-y-4">
-		<header>
-			<h1 class="font-bold">
-				<a
-					class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
-					href="/lists/{list.slug}">{list.name}</a
-				>
-			</h1>
-			<section>
-				<p class="font-bold">
-					{list.version ? 'v' + list.version : ''}
-				</p>
+	<header class={list.name.includes(' ') ? '' : 'truncate'}>
+		<h1 class="font-bold">
+			<a
+				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
+				href="/lists/{list.slug}">{list.name}</a
+			>
+		</h1>
+		<section>
+			<p class="font-bold">
+				{list.version ? 'v' + list.version : ''}
+			</p>
 
-				<a
-					class="inline font-bold text-blue-500 hover:text-blue-600"
-					href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
-				>
-				<em class="block text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
-				<p class="mb-2">
-					by <a
-						class="inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
-						href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
-						>{list.author?.name ?? 'Anonymous'}
-						{#if list.author?.verified}
-							<VerifiedIcon class="ml-1 inline h-4 w-4 text-blue-500" />{/if}
-					</a>
-				</p>
-			</section>
-
-			<section>
-				{#if list.website}
-					<a
-						href={list.website}
-						class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
-						rel="noreferrer noopener"
-						target="_blank"
-						>{list.website} <ExternalIcon class="inline h-6 w-6 pl-2" />
-					</a>
-				{/if}
-
-				{#if list.readme}
-					<a
-						href={list.readme}
-						class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
-						rel="noreferrer noopener"
-						target="_blank"
-						>{list.readme} <ExternalIcon class="inline h-6 w-6 pl-2" />
-					</a>
-				{/if}
-
-				{#if list.discord}
-					<a
-						href={list.discord}
-						class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
-						rel="noreferrer noopener"
-						target="_blank"
-						>{list.discord}<ExternalIcon class="inline h-6 w-6 pl-2" />
-					</a>
-				{/if}
-			</section>
-			<section class="mt-4 flex space-x-4">
-				<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
-					Created{' '}
-					{formatDistanceToNow(new Date(list.created), {
-						addSuffix: true,
-					})}
-				</p>
-				<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
-					Updated
-					{formatDistanceToNow(new Date(list.updated), {
-						addSuffix: true,
-					})}
-				</p>
-				{#if list.expires}
-					<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
-						Expires
-						{formatDistanceToNow(new Date(list.expires), {
-							addSuffix: true,
-						})}
-					</p>
-				{/if}
-			</section>
-		</header>
-		<p class="border-y border-border-light py-4 leading-10 dark:border-border-dark md:text-xl md:leading-10">
-			{list.description ?? 'No description provided.'}
-		</p>
-
-		<ManageButtons {list} />
-
-		<section class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
-			<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
-				<button
-					class="flex w-full rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-					>Download Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
-				>
-			</form>
-			<p>
-				<a
-					href="/compare/{list.slug}"
-					class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-					>Compare List <CompareIcon class="ml-2 inline h-6 w-6 " /></a
-				>
+			<a
+				class="inline font-bold text-blue-500 hover:text-blue-600"
+				href="/lists?filter[game]={encodeURIComponent(list.game.name)}">{list.game.name}</a
+			>
+			<em class="block text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
+			<p class="mb-2">
+				by <a
+					class="inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
+					>{list.author?.name ?? 'Anonymous'}
+					{#if list.author?.verified}
+						<VerifiedIcon class="ml-1 inline h-4 w-4 text-blue-500" />{/if}
+				</a>
 			</p>
 		</section>
+
+		<section>
+			{#if list.website}
+				<a
+					href={list.website}
+					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					rel="noreferrer noopener"
+					target="_blank"
+					>{list.website} <ExternalIcon class="inline h-6 w-6 pl-2" />
+				</a>
+			{/if}
+
+			{#if list.readme}
+				<a
+					href={list.readme}
+					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					rel="noreferrer noopener"
+					target="_blank"
+					>{list.readme} <ExternalIcon class="inline h-6 w-6 pl-2" />
+				</a>
+			{/if}
+
+			{#if list.discord}
+				<a
+					href={list.discord}
+					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					rel="noreferrer noopener"
+					target="_blank"
+					>{list.discord}<ExternalIcon class="inline h-6 w-6 pl-2" />
+				</a>
+			{/if}
+		</section>
+		<section class="mt-4 flex space-x-4">
+			<p title={format(new Date(list.created), 'PPpp')} class="flex text-sm text-slate-500">
+				Created{' '}
+				{formatDistanceToNow(new Date(list.created), {
+					addSuffix: true,
+				})}
+			</p>
+			<p title={format(new Date(list.updated), 'PPpp')} class="flex text-sm text-slate-500">
+				Updated
+				{formatDistanceToNow(new Date(list.updated), {
+					addSuffix: true,
+				})}
+			</p>
+			{#if list.expires}
+				<p title={format(new Date(list.expires), 'PPpp')} class="flex text-sm text-slate-500">
+					Expires
+					{formatDistanceToNow(new Date(list.expires), {
+						addSuffix: true,
+					})}
+				</p>
+			{/if}
+		</section>
+	</header>
+	<p class="border-y border-border-light py-4 leading-10 dark:border-border-dark md:text-xl md:leading-10">
+		{list.description ?? 'No description provided.'}
+	</p>
+
+	<ManageButtons {list} />
+
+	<section class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
+		<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
+			<button
+				class="flex w-full rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+				>Download Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
+			>
+		</form>
+		<p>
+			<a
+				href="/compare/{list.slug}"
+				class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+				>Compare List <CompareIcon class="ml-2 inline h-6 w-6 " /></a
+			>
+		</p>
 	</section>
 
 	<section class="flex flex-col space-y-6">

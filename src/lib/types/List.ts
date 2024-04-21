@@ -1,3 +1,5 @@
+import type { ListFile } from './ListFile';
+
 export type List = {
 	name: string;
 	version: string;
@@ -9,9 +11,7 @@ export type List = {
 	discord: string;
 	readme: string;
 	game: { name: string };
-	files:
-		| { name: string; clean_name: string; bytes: number; content: string[]; created: string; updated: string }[]
-		| null;
+	files: ListFile[] | null;
 	created: string;
 	updated: string;
 	private: boolean;

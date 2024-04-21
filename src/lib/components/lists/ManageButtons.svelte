@@ -30,7 +30,7 @@
 	let deleteDialog: HTMLDialogElement;
 </script>
 
-<section class="flex w-full justify-end space-x-2 text-center">
+<section class="mt-4 flex w-full justify-end space-x-2 text-center">
 	<!-- Only the account owner is allowed to edit the list, but an admin can delete them. -->
 	{#if list.author && list.author.name === $page.data.user?.name}
 		<a

@@ -113,7 +113,7 @@ export const uploadSchema = z.object({
 		.trim(),
 	description: z.string().trim().optional(),
 	game: z.number({ required_error: 'A game is required.' }).default('' as unknown as number),
-	version: z.string().trim().optional(),
+	version: z.string().max(15, { message: 'Version must be 15 characters or less.' }).trim().optional(),
 	readme: z.string().trim().optional(),
 	website: z.string().trim().optional(),
 	discord: z.string().trim().optional(),
@@ -136,11 +136,11 @@ export const editSchema = z.object({
 	name: z
 		.string({ required_error: 'Name is required.' })
 		.min(1, { message: 'Name is required.' })
-		.max(32, { message: 'Name must be 32 characters or less.' })
+		.max(100, { message: 'Name must be 100 characters or less.' })
 		.trim(),
 	description: z.string().trim().optional().nullable(),
 	game: z.number({ required_error: 'A game is required.' }).default('' as unknown as number),
-	version: z.string().trim().optional().nullable(),
+	version: z.string().max(15, { message: 'Verion must be 15 characters or less.' }).trim().optional().nullable(),
 	readme: z.string().trim().optional().nullable(),
 	website: z.string().trim().optional().nullable(),
 	discord: z.string().trim().optional().nullable(),

@@ -35,7 +35,8 @@
 - [ ] search feature (after redesign is live)
 - [ ] API Docs
 - [ ] Admin game add/delete page
-- [ ] Admin user delete page
+- [ ] Admin user management page (verify/delete)
+- [ ] Simple stats page (num lists, num files, etc)
 - [ ] Go through and make div/article/section tags more consistent in use
 - [x] Text overflow issues for long strings with no whitespace
 - [ ] User avatars (maybe)

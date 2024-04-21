@@ -28,7 +28,7 @@
 
 <article class="grid grid-cols-1 gap-10 md:grid-cols-6">
 	<section class="col-span-4 flex flex-col">
-		<h2 class="text-3xl">Edit <span class="font-bold">{data.list.data.name}</span></h2>
+		<h2 class="truncate text-3xl">Editing <span class="font-bold">{data.list.data.name}</span></h2>
 
 		<form method="POST" class="mt-5 flex flex-col space-y-4" use:enhance enctype="multipart/form-data">
 			<input type="text" name="slug" value={$page.params.slug} hidden />

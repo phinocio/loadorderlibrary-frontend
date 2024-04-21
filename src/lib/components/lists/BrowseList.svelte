@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { formatDistanceToNow, format } from 'date-fns';
 	import type { List } from '$lib/types/List';
+	import type { ListFile } from '$lib/types/ListFile';
 	import ManageButtons from './ManageButtons.svelte';
 	import VerifiedIcon from '../icons/Verified.svelte';
 	import { page } from '$app/stores';
@@ -8,6 +9,7 @@
 	export let list: List;
 	export let includeManageButtons: boolean = true;
 	export let includeComparisonLink: boolean = false;
+	export let files: ListFile[] = [];
 </script>
 
 <article
@@ -80,12 +82,31 @@
 			<ManageButtons {list} />
 		{/if}
 	</section>
+
 	{#if includeComparisonLink}
 		<section class="self-end">
 			<a
 				href="{$page.url.pathname}/{list.slug}"
 				class="p-2 font-bold text-blue-500 hover:text-blue-600 active:text-blue-600">Compare List</a
 			>
+		</section>
+	{/if}
+
+	{#if files.length > 0}
+		<section class="rounded-b-xl bg-gray-200 text-text-light dark:bg-[#26263a] dark:text-text-dark">
+			<ul>
+				{#each files as file}
+					<li class="flex justify-between py-2">
+						<span>{file.clean_name}</span>
+						<span
+							>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2,
+							})} KiB</span
+						>
+					</li>
+				{/each}
+			</ul>
 		</section>
 	{/if}
 </article>
