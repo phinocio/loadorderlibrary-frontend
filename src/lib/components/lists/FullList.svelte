@@ -10,10 +10,11 @@
 	import VerifiedIcon from '../icons/Verified.svelte';
 	import FileView from './FileView.svelte';
 	import ManageButtons from './ManageButtons.svelte';
+	import CompareIcon from '../icons/Compare.svelte';
 
 	export let list: List;
 
-	// TODO: find better solution for toggling hidden states of lists.
+	// TODO: find better solution for toggling hidden states of files
 	let fileToggles: Record<string, { hidden: boolean }> = {};
 
 	if (list.files) {
@@ -124,13 +125,20 @@
 
 		<ManageButtons {list} />
 
-		<section class="flex space-x-2">
+		<section class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
 			<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
 				<button
-					class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-					>All Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
+					class="flex w-full rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+					>Download Files <DownloadIcon class="ml-2 inline h-6 w-6 " /></button
 				>
 			</form>
+			<p>
+				<a
+					href="/compare/{list.slug}"
+					class="flex rounded-full border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+					>Compare List <CompareIcon class="ml-2 inline h-6 w-6 " /></a
+				>
+			</p>
 		</section>
 	</section>
 
