@@ -30,7 +30,7 @@
 	{game ?? 'All'} Lists {#if author}
 		by <a
 			href="/lists?author={author}"
-			class=" text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+			class="text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 			>{author}</a
 		>
 	{/if}

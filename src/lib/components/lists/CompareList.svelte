@@ -10,7 +10,7 @@
 <article
 	class="flex flex-col space-y-4 rounded-t-xl border-b border-border-light bg-gray-200 p-4 text-text-light dark:border-border-dark dark:bg-[#26263a] dark:text-text-dark"
 >
-	<header class=" justify-between">
+	<header class={list.name.includes(' ') ? '' : 'truncate'}>
 		<h1 class="col-span-2 font-bold">
 			<a
 				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
@@ -29,7 +29,7 @@
 			<em class="text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
 			<p class="mb-2">
 				by <a
-					class=" inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					class="inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 					href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
 					>{list.author?.name ?? 'Anonymous'}
 					{#if list.author?.verified}

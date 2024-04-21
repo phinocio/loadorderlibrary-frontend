@@ -291,7 +291,7 @@
 							name="private"
 							id="private"
 							bind:checked={$form.private}
-							class=" h-5 w-5 cursor-pointer text-white accent-green-500"
+							class="h-5 w-5 cursor-pointer text-white accent-green-500"
 						/>
 
 						<span class="ml-4">Private List</span>

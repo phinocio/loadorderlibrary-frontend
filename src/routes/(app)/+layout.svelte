@@ -110,7 +110,7 @@
 						>
 							<a
 								aria-current="page"
-								class=" block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+								class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 								href="/profile">Profile</a
 							><a
 								aria-current="page"
@@ -132,7 +132,7 @@
 					<div class="relative mt-4 text-center sm:hidden">
 						<button
 							type="button"
-							class=" h-12 w-12 rounded-full border-2 border-green-500 bg-light hover:border-green-400 dark:bg-dark"
+							class="h-12 w-12 rounded-full border-2 border-green-500 bg-light hover:border-green-400 dark:bg-dark"
 							>{data.user.name.charAt(0)}</button
 						>
 						<div class="mt-2 rounded-lg">

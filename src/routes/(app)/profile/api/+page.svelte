@@ -82,7 +82,7 @@
 								name="create"
 								id="create"
 								bind:checked={$form.create}
-								class=" h-5 w-5 cursor-pointer text-white accent-green-500"
+								class="h-5 w-5 cursor-pointer text-white accent-green-500"
 							/>
 
 							<span class="ml-4">Create</span>
@@ -93,7 +93,7 @@
 								name="read"
 								id="read"
 								bind:checked={$form.read}
-								class=" h-5 w-5 cursor-pointer text-white accent-green-500"
+								class="h-5 w-5 cursor-pointer text-white accent-green-500"
 							/>
 
 							<span class="ml-4">Read</span>
@@ -106,7 +106,7 @@
 								name="update"
 								id="update"
 								bind:checked={$form.update}
-								class=" h-5 w-5 cursor-pointer text-white accent-green-500"
+								class="h-5 w-5 cursor-pointer text-white accent-green-500"
 							/>
 
 							<span class="ml-4">Update</span>
@@ -117,7 +117,7 @@
 								name="delete"
 								id="delete"
 								bind:checked={$form.delete}
-								class=" h-5 w-5 cursor-pointer text-white accent-green-500"
+								class="h-5 w-5 cursor-pointer text-white accent-green-500"
 							/>
 
 							<span class="ml-4">Delete</span>
