@@ -3,14 +3,17 @@
 	import type { List } from '$lib/types/List';
 	import ManageButtons from './ManageButtons.svelte';
 	import VerifiedIcon from '../icons/Verified.svelte';
+	import { page } from '$app/stores';
 
 	export let list: List;
+	export let includeManageButtons: boolean = true;
+	export let includeComparisonLink: boolean = false;
 </script>
 
 <article
 	class="flex flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
 >
-	<section class=" justify-between">
+	<header class={list.name.includes(' ') ? '' : 'truncate'}>
 		<h1 class="col-span-2 font-bold">
 			<a
 				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
@@ -29,7 +32,7 @@
 			<em class="text-sm text-slate-500 dark:text-slate-500">{list.private ? 'Private List' : ''}</em>
 			<p class="mb-2">
 				by <a
-					class=" inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
+					class="inline-flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 					href={list.author?.name ? '/lists?filter[author]=' + list.author.name : '/lists'}
 					>{list.author?.name ?? 'Anonymous'}
 					{#if list.author?.verified}
@@ -37,7 +40,7 @@
 				</a>
 			</p>
 		</section>
-	</section>
+	</header>
 
 	<section class="flex flex-1">
 		<!-- This is better than nested ternary operators and I refuse to hear otherwise :P -->
@@ -73,6 +76,16 @@
 				})}
 			</p>
 		{/if}
-		<ManageButtons {list} />
+		{#if includeManageButtons}
+			<ManageButtons {list} />
+		{/if}
 	</section>
+	{#if includeComparisonLink}
+		<section class="self-end">
+			<a
+				href="{$page.url.pathname}/{list.slug}"
+				class="p-2 font-bold text-blue-500 hover:text-blue-600 active:text-blue-600">Compare List</a
+			>
+		</section>
+	{/if}
 </article>

@@ -28,7 +28,7 @@
 <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">
 	<article class="space-y-4">
 		<header class="mb-4">
-			<h1 class=" text-3xl font-bold text-green-500">Load Order Library</h1>
+			<h1 class="text-3xl font-bold text-green-500">Load Order Library</h1>
 		</header>
 		<section class="flex flex-col space-y-4 md:text-xl">
 			<p class="leading-8 md:leading-8">
@@ -88,7 +88,7 @@
 		<section class="space-y-4">
 			{#if lists.data.length > 0}
 				{#each lists.data as list}
-					<BrowseList {list} />
+					<BrowseList {list} includeManageButtons={false} />
 				{/each}
 			{:else}
 				<p>
