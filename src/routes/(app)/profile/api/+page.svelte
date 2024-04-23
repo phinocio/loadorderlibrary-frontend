@@ -22,7 +22,7 @@
 
 <!-- <SuperDebug data={$form} /> -->
 {#if $message}
-	<div class="mb-5 w-full rounded-full bg-green-500 p-5 text-white">
+	<div class="mb-5 w-full rounded-full bg-green-600 p-5 text-white">
 		Token created. Save it somewhere safe as it will not be shown again.
 		<code class="font-bold">{$message}</code>
 	</div>
