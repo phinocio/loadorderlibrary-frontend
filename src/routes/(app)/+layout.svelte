@@ -115,7 +115,7 @@
 							><a
 								aria-current="page"
 								class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-								href="/profile">My Lists</a
+								href="/profile/api">API Tokens</a
 							>
 							<hr class="my-2 border-border-light dark:border-border-dark" />
 							<form method="POST" action="/logout">
