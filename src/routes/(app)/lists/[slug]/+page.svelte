@@ -11,6 +11,8 @@
 <svelte:head>
 	<title>{list.data.name} - Load Order Library</title>
 
+	<meta name="description" content="A list for {list.data.game.name} by {list.data.author?.name ?? 'Anonymous'}" />
+
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:title" content={list.data.name} />

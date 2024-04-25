@@ -11,6 +11,9 @@
 
 <svelte:head>
 	<title>Lists - Load Order Library</title>
+
+	<meta name="description" content="A modlist files site to help with support." />
+
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:title" content="Lists - Load Order Library" />

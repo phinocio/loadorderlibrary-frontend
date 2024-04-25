@@ -8,6 +8,9 @@
 
 <svelte:head>
 	<title>Login - Load Order Library</title>
+
+	<meta name="description" content="A modlist files site to help with support." />
+
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:title" content="Login - Load Order Library" />

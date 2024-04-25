@@ -30,6 +30,9 @@
 
 <svelte:head>
 	<title>Compare - Load Order Library</title>
+
+	<meta name="description" content="Compare lists." />
+
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:title" content={$page.data.title} />

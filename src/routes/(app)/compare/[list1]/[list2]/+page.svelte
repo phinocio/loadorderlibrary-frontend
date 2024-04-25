@@ -45,6 +45,9 @@
 
 <svelte:head>
 	<title>Comparison Results - Load Order Library</title>
+
+	<meta name="description" content="Results of {list1.name} vs {list2.name}" />
+
 	<!-- FB Meta -->
 	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:title" content={$page.data.title} />
