@@ -28,10 +28,6 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
 	<meta name="msapplication-TileColor" content="#2b5797" />
 	<meta name="theme-color" content="#ffffff" />
-	<meta
-		name="description"
-		content="Load Order Library is a website/tool to share mod lists of - primarily Bethesda - games with other players. Intended mostly for troubleshooting purposes, the site can be quite useful for YouTubers to have mod lists for each of their let's play characters, modlist authors to share the list of mods with others, and many other uses."
-	/>
 
 	<script>
 		if (
@@ -56,7 +52,7 @@
 <header class="mb-6 border-b-2 border-green-400 dark:border-green-800 dark:text-white">
 	<nav class="container mx-auto flex flex-col items-center px-4 py-4 text-xl md:flex-row lg:px-20">
 		<div class="flex w-full items-center justify-between md:w-auto">
-			<a href="/" class="text-2xl font-bold md:mr-4"
+			<a href="/" class="text-2xl font-bold md:mr-4" aria-label="Home"
 				><Logo class="h-8 w-8 text-green-500 hover:text-green-400" />
 			</a>
 			<p class="md:hidden">Load Order Library</p>
@@ -201,17 +197,20 @@
 					class="hover:text-blue-500"
 					href="https://github.com/phinocio/loadorderlibrary"
 					rel="noreferrer noopener"
+					aria-label="GitHub"
 					target="_blank"><GitHubIcon class="h-6 w-6" /></a
 				><a
 					class="hover:text-blue-500"
 					href="https://discord.gg/K3KnEgrQE4"
 					rel="noreferrer noopener"
+					aria-label="Discord"
 					target="_blank"><DiscordIcon class="h-6 w-6" /></a
 				>
 				<a
 					class="hover:text-blue-500"
 					href="https://bsky.app/profile/phinoc.io"
 					rel="noreferrer noopener"
+					aria-label="BlueSky"
 					target="_blank"><BlueSkyIcon class="h-6 w-6" /></a
 				>
 			</p>
