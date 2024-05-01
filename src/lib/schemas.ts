@@ -168,6 +168,10 @@ export const apiTokenSchema = z.object({
 	delete: z.boolean().default(false),
 });
 
+export const gameSchema = z.object({
+	name: z.string({ required_error: 'The game name is required.' }).min(3).max(32).trim(),
+});
+
 export type RegisterSchema = typeof registerSchema;
 export type LoginSchema = typeof loginSchema;
 export type EmailUpdateSchema = typeof emailUpdateSchema;
@@ -175,3 +179,4 @@ export type PasswordUpdateSchema = typeof passwordUpdateSchema;
 export type UploadSchema = typeof uploadSchema;
 export type EditSchema = typeof editSchema;
 export type ApiTokenSchema = typeof apiTokenSchema;
+export type GameSchema = typeof gameSchema;
