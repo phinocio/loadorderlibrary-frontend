@@ -112,11 +112,19 @@
 								aria-current="page"
 								class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 								href="/profile">Profile</a
-							><a
+							>
+							<a
 								aria-current="page"
 								class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 								href="/profile/api">API Tokens</a
 							>
+							{#if data.user.admin}
+								<a
+									aria-current="page"
+									class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+									href="/admin">Admin Dashboard</a
+								>
+							{/if}
 							<hr class="my-2 border-border-light dark:border-border-dark" />
 							<form method="POST" action="/logout">
 								<button
@@ -136,13 +144,18 @@
 							>{data.user.name.charAt(0)}</button
 						>
 						<div class="mt-2 rounded-lg">
-							<a class="active block px-2 py-2 hover:bg-blue-500" href="/profile">Profile</a><a
-								class="active block px-2 py-2 hover:bg-blue-500"
-								href="/profile">My Lists</a
-							>
+							<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/profile">Profile</a>
+							<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/profile/api">API Tokens</a>
+							{#if data.user.admin}
+								<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/admin"
+									>Admin Dashboard</a
+								>
+							{/if}
 							<hr class="my-2 border-border-light dark:border-border-dark" />
 							<form method="POST" action="?/logout" use:enhance>
-								<button type="button" class="block w-full px-2 py-2 text-center hover:bg-blue-500"
+								<button
+									type="button"
+									class="block w-full px-2 py-2 text-center hover:bg-blue-500 active:bg-blue-500"
 									>Logout</button
 								>
 							</form>
