@@ -7,6 +7,10 @@ declare global {
 			user: {
 				name: string;
 				email: string | null;
+				verified: boolean;
+				admin: boolean;
+				created: string;
+				updated: string;
 			} | null;
 		}
 		// interface PageData {}
