@@ -17,6 +17,10 @@
 
 <!-- TODO: Refresh page automatically when game is created (invalidateall) -->
 
+<svelte:head>
+	<title>Add Game - Load Order Library</title>
+</svelte:head>
+
 <h1 class="mb-4 text-3xl font-bold">Manage Games</h1>
 
 <div class="flex justify-between">
