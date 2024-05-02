@@ -42,8 +42,6 @@ export const actions = {
 			body: JSON.stringify({ ...form.data }),
 		});
 
-		console.log(resp);
-
 		if (resp.status !== 200) {
 			return fail(resp.status, { form });
 		}

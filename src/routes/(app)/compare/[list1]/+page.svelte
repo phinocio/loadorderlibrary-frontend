@@ -26,7 +26,6 @@
 			);
 		});
 	}
-	console.log(firstList);
 </script>
 
 <svelte:head>
