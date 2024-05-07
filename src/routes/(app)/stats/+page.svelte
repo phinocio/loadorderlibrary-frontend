@@ -23,74 +23,84 @@
 	</p>
 </div>
 
-<div class="flex w-full justify-between gap-10">
+<div class="flex w-full flex-col justify-between gap-10 md:flex-row">
 	<article
-		class="flex w-full flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
+		class="w-full rounded-xl border border-border-light bg-gray-200 pb-8 dark:border-border-dark dark:bg-[#26263a]"
 	>
-		<h2 class="text-2xl font-bold">List Stats</h2>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Total</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.lists.total}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Private</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.lists.private_lists}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Anonymous</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.lists.anonymous_lists}</span
-			>
-		</section>
+		<h2 class="p-2 pl-4 text-2xl font-bold">List Stats</h2>
+		<table class="w-full table-auto border-collapse">
+			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Total</td>
+					<td class="p-2 text-right">{stats.data.lists.total}</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Private</td>
+					<td class="p-2 text-right">{stats.data.lists.private_lists} </td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Anonymous</td>
+					<td class="p-2 text-right">{stats.data.lists.anonymous_lists}</td>
+				</tr>
+			</tbody>
+		</table>
 	</article>
 
 	<article
-		class="flex w-full flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
+		class="w-full rounded-xl border border-border-light bg-gray-200 pb-8 dark:border-border-dark dark:bg-[#26263a]"
 	>
-		<h2 class="text-2xl font-bold">User Stats</h2>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Total</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.users.total}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Without Email</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.users.without_email}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Verified</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white"
-				>{stats.data.users.verified_authors}</span
-			>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">With Lists</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.users.with_lists}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Last Registered</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.users.last_registered}</span
-			>
-		</section>
+		<h2 class="p-2 pl-4 text-2xl font-bold">User Stats</h2>
+		<table class="w-full table-auto border-collapse">
+			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Total</td>
+					<td class="p-2 text-right">{stats.data.users.total}</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Without Email</td>
+					<td class="p-2 text-right">{stats.data.users.without_email} </td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Verified Authors</td>
+					<td class="p-2 text-right">{stats.data.users.verified_authors}</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">With Lists</td>
+					<td class="p-2 text-right">{stats.data.users.with_lists}</td>
+				</tr>
+			</tbody>
+		</table>
 	</article>
 
 	<article
-		class="flex w-full flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
+		class="w-full rounded-xl border border-border-light bg-gray-200 pb-8 dark:border-border-dark dark:bg-[#26263a]"
 	>
-		<h2 class="text-2xl font-bold">File Stats</h2>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Total</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white">{stats.data.files.total}</span>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Total Size</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white"
-				>{stats.data.files.total_size_in_bytes}</span
-			>
-		</section>
-		<section class="flex items-center justify-between">
-			<p class="font-bold">Temp Size</p>
-			<span class="rounded-full bg-blue-500 px-4 py-2 text-sm text-white"
-				>{stats.data.files.total_tmp_size_in_bytes}</span
-			>
-		</section>
+		<h2 class="p-2 pl-4 text-2xl font-bold">File Stats</h2>
+		<table class="w-full table-auto border-collapse">
+			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Total</td>
+					<td class="p-2 text-right">{stats.data.files.total}</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Total Size</td>
+					<td class="p-2 text-right"
+						>{(Number(stats.data.files.total_size_in_bytes) / 1024).toLocaleString(undefined, {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})} KiB
+					</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Temp Size</td>
+					<td class="p-2 text-right"
+						>{(Number(stats.data.files.total_tmp_size_in_bytes) / 1024).toLocaleString(undefined, {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})} KiB</td
+					>
+				</tr>
+			</tbody>
+		</table>
 	</article>
 </div>
