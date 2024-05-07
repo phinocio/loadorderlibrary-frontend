@@ -13,7 +13,7 @@
 </script>
 
 <article
-	class="flex flex-col space-y-4 rounded-xl bg-gray-200 p-4 text-text-light dark:bg-[#26263a] dark:text-text-dark"
+	class="flex flex-col space-y-4 rounded-xl border border-border-light bg-gray-200 p-4 text-text-light dark:border-border-dark dark:bg-[#26263a] dark:text-text-dark"
 >
 	<header class={list.name.includes(' ') ? '' : 'truncate'}>
 		<h1 class="col-span-2 font-bold">
