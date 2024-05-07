@@ -4,7 +4,7 @@
 
 <div class="flex items-center justify-between">
 	<h1 class="mb-4 text-3xl font-bold">Transparency</h1>
-	<p>Last Updated: 2023-05-01</p>
+	<p>Last Updated: 2024-05-07</p>
 </div>
 
 <div class="space-y-4">
@@ -48,7 +48,7 @@
 	</div>
 
 	<h2 class="text-2xl font-bold">Income</h2>
-	<p><strong>TLDR:</strong> $123.51 CAD lifetime</p>
+	<p><strong>TLDR:</strong> $148.95 CAD lifetime</p>
 	<p>
 		NOTE: Not in the table is 0.0021051 ETH received on July 26, 2021 as I no longer accept cryptocurrency
 		donations.
@@ -63,6 +63,64 @@
 				</tr>
 			</thead>
 			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">March 2024 - April 2024</td>
+					<td class="p-2">$0.00 CAD</td>
+					<td class="p-2">All Sources</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">February 2024</td>
+					<td class="p-2">$5.00 CAD</td>
+					<td class="p-2">Ko-fi</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">January 2023</td>
+					<td class="p-2">$0.00 CAD</td>
+					<td class="p-2">All Sources</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="text-center font-bold" colspan="3">New Year 2024</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">December 2023</td>
+					<td class="p-2">$1.12 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">November 2023</td>
+					<td class="p-2">$1.11 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">October 2023</td>
+					<td class="p-2">$1.08 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">October 2023</td>
+					<td class="p-2">$5.00 CAD</td>
+					<td class="p-2">Ko-fi</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">September 2023</td>
+					<td class="p-2">$2.22 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">August 2023</td>
+					<td class="p-2">$2.20 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">July 2023</td>
+					<td class="p-2">$1.08 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">June 2023</td>
+					<td class="p-2">$6.63 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">May 2023</td>
 					<td class="p-2">$7.18 CAD</td>
@@ -122,10 +180,15 @@
 					<td class="p-2">Ko-fi</td>
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">January 2022 - August 2022</td>
+					<td class="p-2">$0.00 CAD</td>
+					<td class="p-2">All sources</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="text-center font-bold" colspan="3">New Year 2022</td>
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
-					<td class="p-2 pl-4">December 2021 - August 2022</td>
+					<td class="p-2 pl-4">December 2021</td>
 					<td class="p-2">$0.00 CAD</td>
 					<td class="p-2">All sources</td>
 				</tr>
