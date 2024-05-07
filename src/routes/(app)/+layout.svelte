@@ -204,6 +204,23 @@
 		</section>
 		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
 		<section class="space-y-2">
+			<p class="font-bold text-green-600 dark:text-green-500">Support The Site</p>
+			<p class="flex justify-center space-x-2">
+				<a
+					class="hover:text-blue-500"
+					href="https://patreon.com/phinocio"
+					rel="noreferrer noopener"
+					target="_blank">Patreon</a
+				><a
+					class="hover:text-blue-500"
+					href="https://ko-fi.com/phinocio"
+					rel="noreferrer noopener"
+					target="_blank">Ko-fi</a
+				>
+			</p>
+		</section>
+		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
+		<section class="space-y-2">
 			<p class="font-bold text-green-600 dark:text-green-500">Social</p>
 			<p class="flex justify-center space-x-2">
 				<a
@@ -242,19 +259,10 @@
 		</section>
 		<hr class="my-4 border-border-light dark:border-border-dark sm:hidden" />
 		<section class="space-y-2">
-			<p class="font-bold text-green-600 dark:text-green-500">Support The Site</p>
+			<p class="font-bold text-green-600 dark:text-green-500">Transparency</p>
 			<p class="flex justify-center space-x-2">
-				<a
-					class="hover:text-blue-500"
-					href="https://patreon.com/phinocio"
-					rel="noreferrer noopener"
-					target="_blank">Patreon</a
-				><a
-					class="hover:text-blue-500"
-					href="https://ko-fi.com/phinocio"
-					rel="noreferrer noopener"
-					target="_blank">Ko-fi</a
-				>
+				<a class="hover:text-blue-500" href="/stats">Stats</a>
+				<a class="hover:text-blue-500" href="/transparency">Financial</a>
 			</p>
 		</section>
 	</div>
