@@ -214,7 +214,7 @@
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4 font-bold">Total</td>
-					<td class="p-2">$123.51 CAD</td>
+					<td class="p-2">$148.95 CAD</td>
 					<td class="p-2"></td>
 				</tr>
 			</tbody>
