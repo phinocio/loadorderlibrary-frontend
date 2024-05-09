@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { PUBLIC_API_URL } from '$env/static/public';
+	import { PUBLIC_API_URL, PUBLIC_APP_URL } from '$env/static/public';
 	import type { List } from '$lib/types/List';
 	import { format, formatDistanceToNow } from 'date-fns';
 	import DownloadIcon from '../icons/Download.svelte';
@@ -225,7 +225,7 @@
 					</p>
 					<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
 						<code class="text-green-500"
-							>&lt;iframe title="Load Order Library iframe" src="http://testing.lol.wonderland/lists/{list.slug}/embed/{file.clean_name}"
+							>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
 							width="875" height="1000" sandbox="allow-scripts allow-same-origin" &gt;&lt;/iframe&gt;</code
 						>
 					</div>
