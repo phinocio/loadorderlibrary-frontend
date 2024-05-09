@@ -15,6 +15,7 @@ const config = {
 				'img-src': ['self'],
 				'frame-src': ['none'],
 				'frame-ancestors': ['none'],
+				'upgrade-insecure-requests': [],
 			},
 		},
 		adapter: adapter(),
