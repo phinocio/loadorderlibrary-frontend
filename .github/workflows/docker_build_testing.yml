@@ -4,6 +4,10 @@ on:
     push:
         branches: [testing]
 
+env:
+  IMAGE_NAME: loadorderlibrary-frontend
+  REGISTRY: ghcr.io
+
 jobs:
     build-app:
         name: Build Testing Container
