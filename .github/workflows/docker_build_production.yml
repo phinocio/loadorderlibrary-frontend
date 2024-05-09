@@ -2,7 +2,7 @@ name: Create Production Container
 
 on:
     push:
-        branches: [testing]
+        branches: [main]
 
 env:
   IMAGE_NAME: loadorderlibrary-frontend
