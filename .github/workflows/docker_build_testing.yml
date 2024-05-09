@@ -4,11 +4,6 @@ on:
     push:
         branches: [testing]
 
-env:
-  TAG: loadorderlibrary-frontend
-  REGISTRY: ghcr.io
-  VERSION: testing
-
 jobs:
     build-app:
         name: Build Testing Container
