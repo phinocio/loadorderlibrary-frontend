@@ -4,16 +4,23 @@ on:
     push:
         branches: [testing]
 
+env:
+  TAG: loadorderlibrary-frontend
+  REGISTRY: ghcr.io
+  VERSION: testing
+
 jobs:
     build-app:
         name: Build Testing Container
         runs-on: ubuntu-latest
-        env:
-            TAG: loadorderlibrary-frontend
-            REGISTRY: ghcr.io
-            VERSION: testing
+        permissions:
+          contents: read
+          packages: write
+          attestations: write
+
         steps:
-            - uses: actions/checkout@main
+            - name: Checkout Repository
+              uses: actions/checkout@v4
 
             - name: Create .env file
               run: |
@@ -22,14 +29,38 @@ jobs:
                   echo PUBLIC_API_URL="${{ secrets.TESTING_API_URL }}" >> .env
                   echo PUBLIC_APP_URL="${{ secrets.TESTING_APP_URL }}" >> .env
 
-            - name: Build Container Image
-              run: docker build --target app-testing -t $TAG -f docker/testing/app/Dockerfile .
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Push to GHCR
-              run: |
-                  echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
-                  docker tag $TAG ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
-                  docker push ${{ env.REGISTRY }}/${{ secrets.OWNER_LC }}/$TAG:${{ env.VERSION }}
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+              with:
+                images: |
+                  my-docker-hub-namespace/my-docker-hub-repository
+                  ghcr.io/${{ github.repository }}
+
+            - name: Build and push Docker images
+              id: push
+              uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+              with:
+                file: docker/testing/app/Dockerfile
+                context: .
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+
+
+            - name: Generate artifact attestation
+              uses: actions/attest-build-provenance@v1
+              with:
+                subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+                subject-digest: ${{ steps.push.outputs.digest }}
+                push-to-registry: true
 
     deploy:
         name: Deploy Container to Server
