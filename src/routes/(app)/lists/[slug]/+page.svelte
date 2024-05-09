@@ -20,7 +20,7 @@
 		property="og:description"
 		content="A list for {list.data.game.name} by {list.data.author?.name ?? 'Anonymous'}"
 	/>
-	<meta property="og:image" content="{$page.url.origin}/images/{list.data.game.name}.png" />
+	<meta property="og:image" content="/images/{list.data.game.name}.png" />
 	<meta property="og:type" content="website" />
 
 	<!-- Twitter Meta -->
@@ -31,7 +31,7 @@
 		name="twitter:description"
 		content="A list for {list.data.game.name} by {list.data.author?.name ?? 'Anonymous'}"
 	/>
-	<meta name="twitter:image" content="{$page.url.origin}/images/{list.data.game.name}.png" />
+	<meta name="twitter:image" content="/images/{list.data.game.name}.png" />
 </svelte:head>
 
 <FullList list={list.data} />
