@@ -46,7 +46,6 @@ export const actions = {
 			const data = await resp.json();
 			slug = data.data.slug;
 		} catch (err) {
-			console.log('upload error occurred:', err);
 			throw error(500, 'Something went wrong uploading.');
 		}
 

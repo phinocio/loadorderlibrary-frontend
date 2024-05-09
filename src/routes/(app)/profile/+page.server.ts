@@ -59,7 +59,6 @@ export const actions = {
 
 			return message(emailUpdateForm, 'Email successfully updated!');
 		} catch (err: unknown) {
-			console.log('error occurred:', err);
 			throw error(500, 'Something went wrong.');
 		}
 	},
@@ -106,7 +105,6 @@ export const actions = {
 
 			return message(passwordUpdateForm, 'Password successfully updated!');
 		} catch (err: unknown) {
-			console.log('error occurred:', err);
 			throw error(500, 'Something went wrong.');
 		}
 	},

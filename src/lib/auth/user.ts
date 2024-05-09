@@ -16,6 +16,6 @@ export async function getUser(event: RequestEvent) {
 		}
 		return user.data;
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }

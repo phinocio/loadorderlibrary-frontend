@@ -15,7 +15,6 @@ export const actions: Actions = {
 		});
 
 		if (resp.status !== 204) {
-			console.error('Account deletion failed somehow, status:', resp.status);
 			const data = await resp.json();
 			return fail(resp.status, { incorrect: true, errMessage: data.message });
 		}

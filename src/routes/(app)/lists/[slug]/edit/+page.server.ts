@@ -71,7 +71,6 @@ export const actions = {
 				return fail(resp.status, withFiles({ form }));
 			}
 		} catch (err) {
-			console.log('edit error occurred:', err);
 			throw error(500, 'Something went wrong editing.');
 		}
 

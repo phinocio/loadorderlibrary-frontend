@@ -5,8 +5,6 @@
 	export let data: PageData;
 
 	const { stats } = data;
-	console.log(stats);
-	console.log(new Date(stats.meta.last_updated));
 </script>
 
 <svelte:head>

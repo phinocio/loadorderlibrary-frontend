@@ -53,7 +53,6 @@ export const actions = {
 			// All faliure states have been handled, set the new cookies after logging in
 			await useSetCookies(resp.headers.getSetCookie(), cookies);
 		} catch (err: unknown) {
-			console.log('error occurred:', err);
 			throw error(500, 'Something went wrong.');
 		}
 

@@ -4,15 +4,14 @@ import { API_URL } from '$env/static/private';
 import type { Cookies } from '@sveltejs/kit';
 import { parse } from 'cookie';
 
-//TODO: Proper error handling
-
 export async function refreshXSRFToken(cookies: Cookies) {
 	await fetch(`${API_URL}/sanctum/csrf-cookie`, { credentials: 'include' })
 		.then(async (res) => {
 			await useSetCookies(res.headers.getSetCookie(), cookies);
 		})
 		.catch((err) => {
-			console.error(err);
+			// TODO: Proper error handling
+			// console.error(err);
 		});
 }
 
