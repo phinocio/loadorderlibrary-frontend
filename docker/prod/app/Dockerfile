@@ -18,7 +18,6 @@ WORKDIR /app
 
 COPY --from=build-prod-node /app/build /app/build
 COPY package*.json /app/
-COPY .env /app/.env
 
 RUN npm ci --omit dev
 
