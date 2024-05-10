@@ -1,13 +1,13 @@
-import { PUBLIC_API_URL } from '$env/static/public';
-import type { PageLoad } from './$types';
+import { API_URL } from '$env/static/private';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ url, fetch }) => {
+export const load: PageServerLoad = async ({ url, fetch }) => {
 	// const filters = 'author|game';
 	// const pageOptions = 'pageSize|pageNumber';
 	// const filterRe = new RegExp(`${filters}`, 'g');
 	// const pageRe = new RegExp(`${pageOptions}`, 'g');
 
-	let apiRoute = `${PUBLIC_API_URL}/v1/lists`;
+	let apiRoute = `${API_URL}/v1/lists`;
 
 	if (url.search) {
 		// const paramsForApi = new URLSearchParams();
