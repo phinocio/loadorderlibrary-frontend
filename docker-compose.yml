@@ -6,11 +6,11 @@ services:
                 uid: 1000
             dockerfile: docker/dev/app/Dockerfile
             target: app-dev
-        image: loadorderlibrary-next:dev
-        container_name: lol-next-app
+        image: loadorderlibrary-frontend:dev
+        container_name: lol-frontend-app
         restart: unless-stopped
         ports:
-            - '127.0.0.1:8002:3000'
+            - '127.0.0.1:8001:3000'
         networks:
             - lol-next
 
