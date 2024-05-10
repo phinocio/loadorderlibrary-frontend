@@ -2,7 +2,7 @@ services:
     app:
         image: ghcr.io/load-order-library/loadorderlibrary-next:testing
         env_file: .env
-        container_name: lol-frontent-app
+        container_name: lol-frontend-app
         restart: unless-stopped
         ports:
             - '127.0.0.1:8001:3000'
