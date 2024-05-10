@@ -1,6 +1,6 @@
 services:
     app:
-        image: ghcr.io/load-order-library/loadorderlibrary-next:testing
+        image: ghcr.io/phinocio/loadorderlibrary-frontend:testing
         env_file: .env
         container_name: lol-frontend-app
         restart: unless-stopped
