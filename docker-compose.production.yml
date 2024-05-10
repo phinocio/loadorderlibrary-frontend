@@ -5,7 +5,7 @@ services:
         container_name: lol-frontend-app
         restart: unless-stopped
         ports:
-            - '127.0.0.1:8001:3000'
+            - '127.0.0.1:8000:3000'
         networks:
             - lol
 
