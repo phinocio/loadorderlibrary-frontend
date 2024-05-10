@@ -26,9 +26,9 @@ jobs:
             - name: Create .env file
               run: |
                   touch .env
-                  echo API_URL="${{ secrets.TESTING_API_URL }}" >> .env
-                  echo PUBLIC_API_URL="${{ secrets.TESTING_API_URL }}" >> .env
-                  echo PUBLIC_APP_URL="${{ secrets.TESTING_APP_URL }}" >> .env
+                  echo API_URL="https://testingapi.loadorderlibrary.com" >> .env
+                  echo PUBLIC_API_URL="https://testingapi.loadorderlibrary.com" >> .env
+                  echo PUBLIC_APP_URL="https://testing.loadorderlibrary.com" >> .env
 
             - name: Log in to the Container registry
               uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
