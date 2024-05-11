@@ -13,9 +13,9 @@
 	let filterText: string;
 	let showDisabled: boolean = false;
 
-	if (fileName === 'modlist.txt') {
-		content = content.reverse();
-	}
+	// if (fileName === 'modlist.txt') {
+	// 	content = content.reverse();
+	// }
 
 	function filterList() {
 		file = content.filter((line) => {
