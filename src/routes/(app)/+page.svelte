@@ -62,7 +62,7 @@
 		<footer>
 			<p>
 				Find a bug? Please report it on <a
-					href="https://github.com/phinocio/loadorderlibrary/issues"
+					href="https://github.com/phinocio/loadorderlibrary-frontend/issues"
 					class="text-blue-600 hover:text-blue-400 active:text-blue-400 dark:text-blue-400 dark:hover:text-blue-600 dark:active:text-blue-600"
 					>GitHub</a
 				>

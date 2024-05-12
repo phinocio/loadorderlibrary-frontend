@@ -225,7 +225,7 @@
 			<p class="flex justify-center space-x-2">
 				<a
 					class="hover:text-blue-500"
-					href="https://github.com/phinocio/loadorderlibrary"
+					href="https://github.com/phinocio/loadorderlibrary-frontend"
 					rel="noreferrer noopener"
 					aria-label="GitHub"
 					target="_blank"><GitHubIcon class="h-6 w-6" /></a
