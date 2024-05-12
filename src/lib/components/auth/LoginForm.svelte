@@ -5,7 +5,6 @@
 	import { loginSchema, type LoginSchema } from '$lib/schemas';
 	import type { SuperValidated, Infer } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import Password from '$lib/components/icons/Password.svelte';
 
 	export let data: SuperValidated<Infer<LoginSchema>>;
 
@@ -14,8 +13,6 @@
 		validators: zodClient(loginSchema),
 		validationMethod: 'auto',
 	});
-
-	$: console.log($errors._errors);
 </script>
 
 <article class="flex w-full flex-col items-center">
