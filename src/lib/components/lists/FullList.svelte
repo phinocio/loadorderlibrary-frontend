@@ -226,7 +226,7 @@
 					<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
 						<code class="text-green-500"
 							>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
-							width="875" height="1000" sandbox="allow-scripts" &gt;&lt;/iframe&gt;</code
+							width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
 						>
 					</div>
 				</dialog>

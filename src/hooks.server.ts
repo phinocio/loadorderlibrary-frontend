@@ -21,6 +21,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		// error(403, 'go away');
 	}
 
+	if (/^\/lists\/.+\/embed/i.test(event.url.pathname)) {
+		const response = await resolve(event);
+		response.headers.set('Access-Control-Allow-Origin', '*');
+		return response;
+	}
+
 	return await resolve(event);
 };
 
