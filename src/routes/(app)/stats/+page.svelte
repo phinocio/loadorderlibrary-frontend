@@ -91,19 +91,19 @@
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">Total Size</td>
 					<td class="p-2 text-right"
-						>{(Number(stats.data.files.total_size_in_bytes) / 1024).toLocaleString(undefined, {
+						>{(Number(stats.data.files.total_size_in_bytes) / (1024 * 1024)).toLocaleString(undefined, {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
-						})} KiB
+						})} MiB
 					</td>
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">Temp Size</td>
 					<td class="p-2 text-right"
-						>{(Number(stats.data.files.total_tmp_size_in_bytes) / 1024).toLocaleString(undefined, {
+						>{(Number(stats.data.files.total_tmp_size_in_bytes) / (1024 * 1024)).toLocaleString(undefined, {
 							minimumFractionDigits: 2,
 							maximumFractionDigits: 2,
-						})} KiB</td
+						})} MiB</td
 					>
 				</tr>
 			</tbody>
