@@ -40,6 +40,10 @@
 					<td class="p-2 pl-4">Anonymous</td>
 					<td class="p-2 text-right">{stats.data.lists.anonymous_lists}</td>
 				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Last Created</td>
+					<td class="p-2 text-right">{stats.data.lists.last_created}</td>
+				</tr>
 			</tbody>
 		</table>
 	</article>
@@ -65,6 +69,10 @@
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">With Lists</td>
 					<td class="p-2 text-right">{stats.data.users.with_lists}</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">Last Registered</td>
+					<td class="p-2 text-right">{stats.data.users.last_registered}</td>
 				</tr>
 			</tbody>
 		</table>
