@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import type { User } from '$lib/types/User';
 	import toast from 'svelte-french-toast';
@@ -22,12 +21,12 @@
 
 		if (resp.ok) {
 			toast.success('Account successfully deleted!');
-			await goto('/');
+			await goto('/admin/users');
 			await invalidateAll();
 			document.cookie = '';
 		} else {
 			const data = await resp.json();
-			toast.error(`Failed to delete list!\n Error: ${data.message}`);
+			toast.error(`Failed to delete user!\n Error: ${data.message}`);
 		}
 	}
 </script>
