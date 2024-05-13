@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
-	import DeleteAccForm from '$lib/components/auth/DeleteAccForm.svelte';
 	import UpdateUserPasswordForm from '$lib/components/admin/UpdateUserPasswordForm.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { invalidateAll } from '$app/navigation';
 	import toast from 'svelte-french-toast';
+	import AdminDeleteUser from '$lib/components/admin/AdminDeleteUser.svelte';
 
 	export let data: PageData;
 
@@ -35,10 +35,10 @@
 </script>
 
 <svelte:head>
-	<title>Profile - Load Order Library</title>
+	<title>Manage {user.data.name} - Load Order Library</title>
 </svelte:head>
 
-<h1 class="mb-4 text-3xl font-bold">Managing User {user.data.name}</h1>
+<h1 class="mb-4 text-3xl font-bold">Managing {user.data.name}</h1>
 
 <div class="grid gap-10 md:grid-cols-3">
 	<article class="col-span-2">
@@ -75,7 +75,7 @@
 		</section>
 
 		<section class="flex flex-col space-y-2">
-			<DeleteAccForm />
+			<AdminDeleteUser user={user.data} />
 		</section>
 	</article>
 </div>

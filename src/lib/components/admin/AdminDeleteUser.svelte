@@ -2,12 +2,15 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
+	import type { User } from '$lib/types/User';
 	import toast from 'svelte-french-toast';
 
 	let deleteDialog: HTMLDialogElement;
 
+	export let user: User;
+
 	async function deleteAcc() {
-		const resp = await fetch(`${PUBLIC_API_URL}/v1/user/${$page.data.user.name}`, {
+		const resp = await fetch(`${PUBLIC_API_URL}/v1/admin/users/${user.name}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -52,7 +55,7 @@
 		>
 	</header>
 	<p>
-		Are you sure you want to delete your account? This action is permanent and cannot be undone. All lists tied to
+		Are you sure you want to delete this account? This action is permanent and cannot be undone. All lists tied to
 		the account will be deleted.
 	</p>
 	<footer class="flex justify-end space-x-2">
