@@ -78,6 +78,29 @@ export const passwordUpdateSchema = z
 		}
 	});
 
+export const adminPasswordUpdateSchema = z
+	.object({
+		password: z
+			.string({ required_error: 'A new password is required.' })
+			.min(8, { message: 'New password must be 8 characters or more.' })
+			.max(72, { message: 'New password must be 72 characters or less.' })
+			.trim(),
+		password_confirmation: z
+			.string({ required_error: 'A new password confirmation is required.' })
+			.min(8, { message: 'New password must be 8 characters or more.' })
+			.max(72, { message: 'New password must be 72 characters or less.' })
+			.trim(),
+	})
+	.superRefine(({ password, password_confirmation }, ctx) => {
+		if (password !== password_confirmation) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'Passwords do not match.',
+				path: ['password_confirmation'],
+			});
+		}
+	});
+
 const validFilenames = [
 	'enblocal.ini',
 	'enbseries.ini',
@@ -177,6 +200,7 @@ export type RegisterSchema = typeof registerSchema;
 export type LoginSchema = typeof loginSchema;
 export type EmailUpdateSchema = typeof emailUpdateSchema;
 export type PasswordUpdateSchema = typeof passwordUpdateSchema;
+export type AdminPasswordUpdateSchema = typeof adminPasswordUpdateSchema;
 export type UploadSchema = typeof uploadSchema;
 export type EditSchema = typeof editSchema;
 export type ApiTokenSchema = typeof apiTokenSchema;
