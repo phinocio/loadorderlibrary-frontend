@@ -67,7 +67,7 @@
 		<section>
 			{#if list.website}
 				<a
-					href={list.website}
+					href="https://{list.website}"
 					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 					rel="noreferrer noopener"
 					target="_blank"
@@ -77,7 +77,7 @@
 
 			{#if list.readme}
 				<a
-					href={list.readme}
+					href="https://{list.readme}"
 					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 					rel="noreferrer noopener"
 					target="_blank"
@@ -87,7 +87,7 @@
 
 			{#if list.discord}
 				<a
-					href={list.discord}
+					href="https://{list.discord}"
 					class="flex items-center text-green-600 hover:text-green-500 active:text-green-500 dark:text-green-500 dark:hover:text-green-600 dark:active:text-green-600"
 					rel="noreferrer noopener"
 					target="_blank"
