@@ -31,7 +31,7 @@ jobs:
                   echo PUBLIC_APP_URL="${{ secrets.PROD_APP_URL }}" >> .env
 
             - name: Log in to the Container registry
-              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              uses: docker/login-action@v3
               with:
                 registry: ghcr.io
                 username: ${{ github.actor }}
@@ -39,14 +39,14 @@ jobs:
 
             - name: Extract metadata (tags, labels) for Docker
               id: meta
-              uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+              uses: docker/metadata-action@v5
               with:
                 images: |
                   ghcr.io/${{ github.repository }}
 
             - name: Build and push Docker images
               id: push
-              uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+              uses: docker/build-push-action@v5
               with:
                 file: docker/prod/app/Dockerfile
                 context: .
