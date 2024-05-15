@@ -15,7 +15,15 @@
 	<title>Profile - Load Order Library</title>
 </svelte:head>
 
-<h1 class="mb-4 text-3xl font-bold">Hello, {user?.name}</h1>
+<div class="mb-4 flex items-center align-middle">
+	<!-- {data.user?.name.charAt(0)}-->
+	<img
+		class="mr-4 inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-green-500 bg-light hover:border-green-400 dark:bg-dark"
+		src="/images/pogatito.png"
+		alt="Profile"
+	/>
+	<h1 class="text-3xl font-bold">{user?.name}</h1>
+</div>
 
 <div class="grid gap-10 md:grid-cols-3">
 	<article class="col-span-2">
