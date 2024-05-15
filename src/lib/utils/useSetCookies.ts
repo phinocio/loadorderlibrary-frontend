@@ -19,7 +19,7 @@ export async function refreshXSRFToken(cookies: Cookies) {
 // actually being logged in and whatnot... but need to test it first
 export async function useSetCookies(setCookies: string[], cookies: Cookies) {
 	for (let i = 0; i < setCookies.length; i++) {
-		const cookie: myCookies = parse(setCookies[i]);
+		const cookie: myCookies = parse(setCookies[i]) as myCookies;
 		const name = Object.keys(cookie)[0];
 		const val: string = String(cookie[name]);
 		delete cookie[name];
