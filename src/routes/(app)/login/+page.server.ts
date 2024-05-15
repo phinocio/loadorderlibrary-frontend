@@ -38,6 +38,7 @@ export const actions = {
 		// HTTP 200 is returned on login, if that's not the
 		// response status, an error occurred.
 		if (resp.status !== 200) {
+			console.log(respData.errors);
 			if (resp.status === 419) {
 				await refreshXSRFToken(cookies);
 				return setError(form, 'name', 'Login failed. Please try again.');
