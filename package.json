@@ -10,7 +10,6 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
-		"prepare": "svelte-kit sync",
 		"format": "prettier --write ."
 	},
 	"type": "module",
