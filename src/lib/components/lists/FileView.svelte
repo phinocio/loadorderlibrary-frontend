@@ -13,10 +13,6 @@
 	let filterText: string;
 	let showDisabled: boolean = false;
 
-	// if (fileName === 'modlist.txt') {
-	// 	content = content.reverse();
-	// }
-
 	function filterList() {
 		file = content.filter((line) => {
 			return line.toLowerCase().includes(filterText.toLowerCase()) || line.endsWith('_separator');
