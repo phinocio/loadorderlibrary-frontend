@@ -11,7 +11,6 @@
 	import { enhance } from '$app/forms';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
 	import { Toaster } from 'svelte-french-toast';
-	import { browser } from '$app/environment';
 
 	export let data;
 	export let hidden = true;
@@ -19,7 +18,18 @@
 
 	$: $page.url && (hidden = true);
 	$: $page.url && (userMenuHidden = true);
-	if (browser) {
+</script>
+
+<svelte:head>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+	<link rel="manifest" href="/site.webmanifest" />
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="msapplication-TileColor" content="#2b5797" />
+	<meta name="theme-color" content="#ffffff" />
+
+	<script>
 		if (
 			localStorage.theme === 'dark' ||
 			(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
@@ -36,17 +46,7 @@
 				document.documentElement.classList.remove('dark');
 			}
 		});
-	}
-</script>
-
-<svelte:head>
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-	<link rel="manifest" href="/site.webmanifest" />
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-	<meta name="msapplication-TileColor" content="#2b5797" />
-	<meta name="theme-color" content="#ffffff" />
+	</script>
 </svelte:head>
 
 <header class="mb-6 border-b-2 border-green-400 dark:border-green-800 dark:text-white">

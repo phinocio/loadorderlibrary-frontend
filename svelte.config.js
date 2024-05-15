@@ -8,15 +8,6 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		csp: {
-			directives: {
-				'script-src': ['self'],
-				'style-src': ['self'],
-				'img-src': ['self'],
-				'frame-src': ['none'],
-				'frame-ancestors': ['none'],
-			},
-		},
 		adapter: adapter(),
 	},
 };
