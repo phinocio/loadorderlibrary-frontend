@@ -40,7 +40,11 @@ export const actions = {
 		if (resp.status !== 200) {
 			if (resp.status === 419) {
 				await refreshXSRFToken(cookies);
-				return setError(form, 'name', 'Login failed. Please try again.');
+				return setError(
+					form,
+					'name',
+					'Login failed. Please try again. If login continues to fail, clear all site data and try again.'
+				);
 			}
 			// Set the errors as returned from the server. setError is the "proper" way to do this,
 			// but I don't want to loop through multiple things, and username existing is the only
