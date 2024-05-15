@@ -76,8 +76,6 @@ jobs:
   clean:
     name: Clean untagged packages
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     needs: deploy
     steps:
       - uses: actions/delete-package-versions@v5
@@ -86,3 +84,4 @@ jobs:
           package-type: 'container'
           min-versions-to-keep: 1
           delete-only-untagged-versions: 'true'
+          token: ${{ secrets.PKGS_DEL }}
