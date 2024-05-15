@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import PasswordIcon from '$lib/components/icons/Password.svelte';
 	import UserIcon from '$lib/components/icons/User.svelte';
 	import { registerSchema, type RegisterSchema } from '$lib/schemas';

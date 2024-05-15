@@ -29,7 +29,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 };
 
 export const actions = {
-	default: async ({ cookies, request, fetch, url }) => {
+	default: async ({ request, fetch }) => {
 		const form = await superValidate(request, zod(gameSchema));
 
 		if (!form.valid) {
