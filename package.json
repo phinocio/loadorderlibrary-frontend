@@ -15,15 +15,16 @@
 	"type": "module",
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/adapter-node": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"@types/eslint": "8.56.0",
-		"@typescript-eslint/eslint-plugin": "^6.0.0",
-		"@typescript-eslint/parser": "^6.0.0",
+		"@types/cookie": "^0.6.0",
+		"@types/eslint": "8.56.10",
+		"@typescript-eslint/eslint-plugin": "^7.9.0",
+		"@typescript-eslint/parser": "^7.9.0",
 		"autoprefixer": "^10.4.19",
 		"date-fns": "^3.0.6",
-		"eslint": "^8.28.0",
+		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.30.0",
 		"postcss": "^8.4.38",
@@ -37,10 +38,12 @@
 		"tailwindcss": "^3.4.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
+		"typescript-eslint": "^7.9.0",
 		"vite": "^5.0.3",
 		"zod": "^3.22.4"
 	},
 	"dependencies": {
+		"cookie": "^0.6.0",
 		"diff2html": "^3.4.47",
 		"dotenv": "^16.3.1"
 	}
