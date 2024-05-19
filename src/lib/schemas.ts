@@ -122,6 +122,7 @@ const validFilenames = [
 	'settings.ini',
 	'settings.txt',
 	'skyrim.ini',
+	'skyrimvr.ini',
 	'skyrimcustom.ini',
 	'skyrimprefs.ini',
 	'starfield.ini',
