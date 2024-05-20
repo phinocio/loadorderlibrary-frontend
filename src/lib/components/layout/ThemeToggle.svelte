@@ -26,10 +26,10 @@
 
 <section class="mt-4 flex md:ml-4 md:mt-0">
 	<!-- Shows current theme -->
-	<span class="inline-flex rounded-l-full bg-gray-200 px-4 py-2 dark:bg-[#26263a]">
+	<label for="theme" class="inline-flex rounded-l-full bg-gray-200 px-4 py-2 dark:bg-[#26263a]">
 		<LightModeIcon class="inline h-6 w-6 dark:hidden" />
 		<DarkModeIcon class="hidden h-6 w-6 dark:inline" />
-	</span>
+	</label>
 
 	<select
 		name="theme"
