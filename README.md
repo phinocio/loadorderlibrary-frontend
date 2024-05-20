@@ -26,7 +26,7 @@ https://ko-fi.com/phinocio
 
 The goal of Load Order Library is to make the life of people doing support for mod lists easier. Often times we ask for an upload to [Modwatch](https://modwat.ch/) and then manually go through the files to determine if a mod is missing, or a mod is added. Whether the ini settings are correct, etc. By using the comparison tool, you get a quick view at a glance at what files are missing/added, and what contents of those files are also missing/added.
 
-![Image of comparison tool](https://cdn.discordapp.com/attachments/577715234752430082/811766182856097802/unknown.png)
+![Image of comparison tool](./docs/images/lol-compare.png)
 
 # Features
 
