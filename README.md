@@ -2,7 +2,7 @@
 
 Load Order Library is a tool mostly intended to help in debugging/supporting Mod Organizer lists for Bethesda games. It's meant to serve as an alternative/replacement for [Modwatch](https://modwat.ch/). The premiere feature being a list comparison tool.
 
-I have a Patreon I guess. Don't feel the need to contribute or anything, I have no intention of doing perks/goals (should things take off and people want me to, I probably will). If anything, the only thing I care about is covering the costs of the site/server, which atm are like CA$14/yr for the domain, and ~CA$8/mn for Digital Ocean hosting (though I host a few things on it). See EXPENSES.md for details.
+I have a Patreon I guess. Don't feel the need to contribute or anything, I have no intention of doing perks/goals. If anything, the only thing I care about is covering the costs of the site/server. See https://loadorderlibrary.com/transparency for details.
 
 https://www.patreon.com/phinocio
 
@@ -32,9 +32,9 @@ The goal of Load Order Library is to make the life of people doing support for m
 
 Load Order Library has a slew of features.
 
--   No registration required. Lists can be uploaded anonymously. You do need and account to delete lists, however. Anonymous ones can't be deleted.
+-   No registration required. Lists can be uploaded anonymously. You do need an account to edit and delete lists, however. Anonymous ones can't be deleted.
 -   Private lists. Only people with the link can view them.
--   For users that decide to register, you can have as many lists as you want - modwatch only ever lets you have 1.
+-   For users that decide to register, you can have as many lists as you want.
 -   Comparison tool.
 -   Completely free. No Ads.
 
