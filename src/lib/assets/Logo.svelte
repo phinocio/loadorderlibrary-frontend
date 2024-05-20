@@ -5,7 +5,15 @@
 	export { className as class };
 </script>
 
-<svg width="224" height="176" viewBox="0 0 224 176" fill="none" xmlns="http://www.w3.org/2000/svg" class={className}>
+<svg
+	class={className}
+	aria-label="Load Order Library Logo"
+	width="224"
+	height="176"
+	viewBox="0 0 224 176"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+>
 	<path d="M0 0H32V176H0V0Z" fill="currentColor" />
 	<path d="M20 144H96V176H20V144Z" fill="currentColor" />
 	<path d="M112 0H144V176H112V0Z" fill="currentColor" />
