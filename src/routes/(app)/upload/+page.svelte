@@ -66,7 +66,7 @@
 							? 'border border-red-500'
 							: ''} bg-gray-200 px-4 py-3 pl-14 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a]"
 						placeholder="List Name..."
-						autocomplete="name"
+						autocomplete="off"
 						required
 						{...$constraints.name}
 					/>
