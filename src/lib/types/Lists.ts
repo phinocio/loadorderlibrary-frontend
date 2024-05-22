@@ -3,6 +3,6 @@ import type { ListMeta } from './ListMeta';
 
 export type Lists = {
 	data: List[];
-	links?: object;
-	meta?: ListMeta;
+	links: object;
+	meta: ListMeta;
 };
