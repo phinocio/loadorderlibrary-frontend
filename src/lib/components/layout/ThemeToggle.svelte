@@ -4,7 +4,13 @@
 	import { browser } from '$app/environment';
 	import toast from 'svelte-french-toast';
 
-	function setTheme(theme: string) {
+	let theme = 'system';
+
+	if (browser) {
+		theme = localStorage.theme ?? 'system';
+	}
+
+	function setTheme() {
 		if (theme.toLowerCase() === 'system') {
 			localStorage.removeItem('theme');
 		} else {
@@ -35,10 +41,11 @@
 		name="theme"
 		id="theme"
 		class="appearance-none rounded-r-full bg-gray-200 pr-4 dark:bg-[#26263a]"
-		on:change={({ target }) => setTheme(target?.value)}
+		bind:value={theme}
+		on:change={() => setTheme()}
 	>
-		<option value="light" selected={browser && localStorage.theme === 'light'}>Light</option>
-		<option value="dark" selected={browser && localStorage.theme === 'dark'}>Dark</option>
-		<option value="system" selected={browser && !('theme' in localStorage)}>System</option>
+		<option value="light" selected={theme === 'light'}>Light</option>
+		<option value="dark" selected={theme === 'dark'}>Dark</option>
+		<option value="system" selected={theme === 'system'}>System</option>
 	</select>
 </section>

@@ -85,6 +85,11 @@
 					class="rounded-xl px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 					>Compare</a
 				>
+				<a
+					href="/search"
+					class="rounded-xl px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+					>Search</a
+				>
 			</div>
 			<hr class="border-border-light dark:border-border-dark" />
 			<div class="flex flex-col items-center md:flex-row">
