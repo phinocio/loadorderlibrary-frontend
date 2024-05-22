@@ -129,13 +129,12 @@
 
 			<input
 				type="text"
-				name="name"
-				id="name"
+				name="search"
+				id="search"
 				bind:value={searchText}
 				class="flex w-full min-w-full rounded-l-xl bg-gray-200 p-4 pl-14 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#26263a] md:w-auto"
 				placeholder="Filter..."
 				autocomplete="off"
-				required
 			/>
 		</label>
 		<button
