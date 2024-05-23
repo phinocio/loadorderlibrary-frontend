@@ -166,7 +166,7 @@
 							>
 								<p>{file.clean_name}</p>
 								{#if file.clean_name === 'modlist.txt'}
-									<p class="text-sm text-blue-500">
+									<p class="text-sm text-blue-500 dark:text-blue-400">
 										{file.content.length} total, {file.content.filter((line) => {
 											return line.startsWith('+');
 										}).length} enabled
