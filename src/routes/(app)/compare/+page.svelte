@@ -69,7 +69,7 @@
 	>
 </div>
 
-<div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
 	{#if lists.length > 0}
 		{#each lists as list}
 			<BrowseList {list} includeManageButtons={false} includeComparisonLink={true} />

@@ -36,7 +36,7 @@
 </script>
 
 <article class="space-y-8">
-	<header class={list.name.includes(' ') ? '' : 'truncate'}>
+	<header class="break-all">
 		<h1 class="font-bold">
 			<a
 				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
@@ -118,7 +118,7 @@
 			{/if}
 		</section>
 	</header>
-	<p class="border-y border-border-light py-4 leading-10 dark:border-border-dark md:text-xl md:leading-10">
+	<p class="break-all border-y border-border-light py-4 leading-10 dark:border-border-dark md:text-xl md:leading-10">
 		{list.description ?? 'No description provided.'}
 	</p>
 
