@@ -4,7 +4,7 @@ import type { List } from '$lib/types/List';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ fetch }) => {
-	const resp = await fetch(`${API_URL}/v1/lists?all=true`, {
+	const resp = await fetch(`${API_URL}/v1/lists?page[size]=all`, {
 		headers: { Accept: 'application/json' },
 		credentials: 'include',
 	});

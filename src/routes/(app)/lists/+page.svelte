@@ -24,9 +24,6 @@
 
 	function perPage() {
 		let urlParams = $page.url.searchParams;
-		if (urlParams.has('all')) {
-			urlParams.delete('all');
-		}
 		urlParams.set('page[size]', listsPerPage);
 		goto(`/lists?${urlParams.toString()}`, { invalidateAll: true });
 	}
@@ -98,6 +95,7 @@
 				<option value="30" selected={listsPerPage === '30'}>30</option>
 				<option value="60" selected={listsPerPage === '60'}>60</option>
 				<option value="90" selected={listsPerPage === '90'}>90</option>
+				<option value="all" selected={listsPerPage === 'all'}>All</option>
 			</select>
 		</section>
 
