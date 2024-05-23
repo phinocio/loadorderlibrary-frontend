@@ -64,7 +64,7 @@
 			</p>
 		</section>
 
-		<section>
+		<section class="max-w-fit">
 			{#if list.website}
 				<a
 					href="https://{list.website}"
