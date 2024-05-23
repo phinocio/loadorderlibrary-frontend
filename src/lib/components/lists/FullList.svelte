@@ -140,104 +140,230 @@
 		</p>
 	</section>
 
-	<section class="flex flex-col space-y-6">
-		{#if list.files}
-			{#each list.files as file}
-				<section
-					class="{fileToggles[file.clean_name].hidden
-						? 'rounded-xl'
-						: 'rounded-t-xl'} border border-blue-500 text-text-light dark:text-text-dark"
-				>
-					<header class="flex items-center justify-between">
-						<section class="flex items-center">
-							<button
-								class="mr-2 {fileToggles[file.clean_name].hidden
-									? 'rounded-l-xl'
-									: 'rounded-tl-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
-								on:click={() =>
-									(fileToggles[file.clean_name].hidden = !fileToggles[file.clean_name].hidden)}
-							>
-								<PlusIcon class="inline h-6 w-6 " />
-							</button>
-							<button
-								class="text-left font-bold text-green-600 dark:text-green-500"
-								on:click={() =>
-									(fileToggles[file.clean_name].hidden = !fileToggles[file.clean_name].hidden)}
-							>
-								<p>{file.clean_name}</p>
-								{#if file.clean_name === 'modlist.txt'}
-									<p class="text-sm text-blue-500 dark:text-blue-400">
-										{file.content.length} total, {file.content.filter((line) => {
-											return line.startsWith('+');
-										}).length} enabled
-									</p>
-								{/if}
-							</button>
+	{#if list.files && list.files.find((file) => {
+			return ['loadorder.txt', 'modlist.txt', 'plugins.txt'].includes(file.clean_name);
+		})}
+		<section class="flex flex-col space-y-6">
+			<h2 class="text-2xl font-bold">Load Order Files</h2>
+			{#if list.files}
+				{#each list.files as file}
+					{#if ['modlist.txt', 'plugins.txt', 'loadorder.txt'].includes(file.clean_name)}
+						<section
+							class="{fileToggles[file.clean_name].hidden
+								? 'rounded-xl'
+								: 'rounded-t-xl'} border border-blue-500 text-text-light dark:text-text-dark"
+						>
+							<header class="flex items-center justify-between">
+								<section class="flex items-center">
+									<button
+										class="mr-2 {fileToggles[file.clean_name].hidden
+											? 'rounded-l-xl'
+											: 'rounded-tl-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
+										on:click={() =>
+											(fileToggles[file.clean_name].hidden =
+												!fileToggles[file.clean_name].hidden)}
+									>
+										<PlusIcon class="inline h-6 w-6 " />
+									</button>
+									<button
+										class="text-left font-bold text-green-600 dark:text-green-500"
+										on:click={() =>
+											(fileToggles[file.clean_name].hidden =
+												!fileToggles[file.clean_name].hidden)}
+									>
+										<p>{file.clean_name}</p>
+										{#if file.clean_name === 'modlist.txt'}
+											<p class="text-sm text-blue-500 dark:text-blue-400">
+												{file.content.length} total, {file.content.filter((line) => {
+													return line.startsWith('+');
+												}).length} enabled
+											</p>
+										{/if}
+									</button>
+								</section>
+								<section class="flex items-center">
+									<!-- Undefined here uses the user's browser locale -->
+									<span
+										>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})} KiB</span
+									>
+									<button
+										class="ml-2 border-r border-border-light bg-blue-500 p-4 text-white dark:border-border-dark"
+										on:click={() => embedToggles[file.clean_name]?.showModal()}
+										><EmbedIcon class="inline h-6 w-6 " /></button
+									>
+									<form
+										class="inline"
+										method="GET"
+										action={PUBLIC_API_URL +
+											'/v1/lists/' +
+											list.slug +
+											'/download/' +
+											file.clean_name}
+									>
+										<button
+											class="{fileToggles[file.clean_name].hidden
+												? 'rounded-r-xl'
+												: 'rounded-tr-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
+											><DownloadIcon class="inline h-6 w-6 " /></button
+										>
+									</form>
+								</section>
+							</header>
+							<FileView
+								content={file.content}
+								class={fileToggles[file.clean_name].hidden ? 'hidden' : ''}
+								fileName={file.clean_name}
+							/>
 						</section>
-						<section class="flex items-center">
-							<!-- Undefined here uses the user's browser locale -->
-							<span
-								>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})} KiB</span
-							>
-							<button
-								class="ml-2 border-r border-border-light bg-blue-500 p-4 text-white dark:border-border-dark"
-								on:click={() => embedToggles[file.clean_name]?.showModal()}
-								><EmbedIcon class="inline h-6 w-6 " /></button
-							>
-							<form
-								class="inline"
-								method="GET"
-								action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download/' + file.clean_name}
-							>
+
+						<dialog
+							bind:this={embedToggles[file.clean_name]}
+							class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
+						>
+							<header class="mb-4 flex justify-between">
+								<h1 class="text-2xl font-bold text-blue-500">Embed {file.clean_name}</h1>
 								<button
-									class="{fileToggles[file.clean_name].hidden
-										? 'rounded-r-xl'
-										: 'rounded-tr-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
-									><DownloadIcon class="inline h-6 w-6 " /></button
+									on:click={() => embedToggles[file.clean_name]?.close()}
+									class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+									>X</button
 								>
-							</form>
+							</header>
+
+							<p>
+								If you want to have a quick way for users to view your list on your own site or
+								elsewhere, use this iframe.
+							</p>
+							<p>
+								Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to have
+								the theme of the embed match the user's system theme, collapse separators on
+								modlist.txt, and toggle showing of disabled mods on modlist.txt.
+							</p>
+							<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+								<code class="text-green-500"
+									>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
+									width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
+								>
+							</div>
+						</dialog>
+					{/if}
+				{/each}
+			{/if}
+		</section>
+	{/if}
+	{#if list.files && list.files.find((file) => {
+			return !['loadorder.txt', 'modlist.txt', 'plugins.txt'].includes(file.clean_name);
+		})}
+		<section class="flex flex-col space-y-6">
+			<h2 class="text-2xl font-bold">Ini Files</h2>
+			{#if list.files}
+				{#each list.files as file}
+					{#if !['modlist.txt', 'plugins.txt', 'loadorder.txt'].includes(file.clean_name)}
+						<section
+							class="{fileToggles[file.clean_name].hidden
+								? 'rounded-xl'
+								: 'rounded-t-xl'} border border-blue-500 text-text-light dark:text-text-dark"
+						>
+							<header class="flex items-center justify-between">
+								<section class="flex items-center">
+									<button
+										class="mr-2 {fileToggles[file.clean_name].hidden
+											? 'rounded-l-xl'
+											: 'rounded-tl-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
+										on:click={() =>
+											(fileToggles[file.clean_name].hidden =
+												!fileToggles[file.clean_name].hidden)}
+									>
+										<PlusIcon class="inline h-6 w-6 " />
+									</button>
+									<button
+										class="text-left font-bold text-green-600 dark:text-green-500"
+										on:click={() =>
+											(fileToggles[file.clean_name].hidden =
+												!fileToggles[file.clean_name].hidden)}
+									>
+										<p>{file.clean_name}</p>
+										{#if file.clean_name === 'modlist.txt'}
+											<p class="text-sm text-blue-500 dark:text-blue-400">
+												{file.content.length} total, {file.content.filter((line) => {
+													return line.startsWith('+');
+												}).length} enabled
+											</p>
+										{/if}
+									</button>
+								</section>
+								<section class="flex items-center">
+									<!-- Undefined here uses the user's browser locale -->
+									<span
+										>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2,
+										})} KiB</span
+									>
+									<button
+										class="ml-2 border-r border-border-light bg-blue-500 p-4 text-white dark:border-border-dark"
+										on:click={() => embedToggles[file.clean_name]?.showModal()}
+										><EmbedIcon class="inline h-6 w-6 " /></button
+									>
+									<form
+										class="inline"
+										method="GET"
+										action={PUBLIC_API_URL +
+											'/v1/lists/' +
+											list.slug +
+											'/download/' +
+											file.clean_name}
+									>
+										<button
+											class="{fileToggles[file.clean_name].hidden
+												? 'rounded-r-xl'
+												: 'rounded-tr-xl'} bg-blue-500 p-4 text-white hover:bg-blue-600"
+											><DownloadIcon class="inline h-6 w-6 " /></button
+										>
+									</form>
+								</section>
+							</header>
+							<FileView
+								content={file.content}
+								class={fileToggles[file.clean_name].hidden ? 'hidden' : ''}
+								fileName={file.clean_name}
+							/>
 						</section>
-					</header>
-					<FileView
-						content={file.content}
-						class={fileToggles[file.clean_name].hidden ? 'hidden' : ''}
-						fileName={file.clean_name}
-					/>
-				</section>
 
-				<dialog
-					bind:this={embedToggles[file.clean_name]}
-					class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
-				>
-					<header class="mb-4 flex justify-between">
-						<h1 class="text-2xl font-bold text-blue-500">Embed {file.clean_name}</h1>
-						<button
-							on:click={() => embedToggles[file.clean_name]?.close()}
-							class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-							>X</button
+						<dialog
+							bind:this={embedToggles[file.clean_name]}
+							class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
 						>
-					</header>
+							<header class="mb-4 flex justify-between">
+								<h1 class="text-2xl font-bold text-blue-500">Embed {file.clean_name}</h1>
+								<button
+									on:click={() => embedToggles[file.clean_name]?.close()}
+									class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+									>X</button
+								>
+							</header>
 
-					<p>
-						If you want to have a quick way for users to view your list on your own site or elsewhere, use
-						this iframe.
-					</p>
-					<p>
-						Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to have the theme
-						of the embed match the user's system theme, collapse separators on modlist.txt, and toggle
-						showing of disabled mods on modlist.txt.
-					</p>
-					<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-						<code class="text-green-500"
-							>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
-							width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
-						>
-					</div>
-				</dialog>
-			{/each}
-		{/if}
-	</section>
+							<p>
+								If you want to have a quick way for users to view your list on your own site or
+								elsewhere, use this iframe.
+							</p>
+							<p>
+								Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to have
+								the theme of the embed match the user's system theme, collapse separators on
+								modlist.txt, and toggle showing of disabled mods on modlist.txt.
+							</p>
+							<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+								<code class="text-green-500"
+									>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
+									width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
+								>
+							</div>
+						</dialog>
+					{/if}
+				{/each}
+			{/if}
+		</section>
+	{/if}
 </article>
