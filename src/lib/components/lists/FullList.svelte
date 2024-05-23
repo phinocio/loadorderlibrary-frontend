@@ -149,7 +149,7 @@
 						: 'rounded-t-xl'} border border-blue-500 text-text-light dark:text-text-dark"
 				>
 					<header class="flex items-center justify-between">
-						<section>
+						<section class="flex items-center">
 							<button
 								class="mr-2 {fileToggles[file.clean_name].hidden
 									? 'rounded-l-xl'
@@ -160,11 +160,18 @@
 								<PlusIcon class="inline h-6 w-6 " />
 							</button>
 							<button
-								class="font-bold text-green-600 dark:text-green-500"
+								class="text-left font-bold text-green-600 dark:text-green-500"
 								on:click={() =>
 									(fileToggles[file.clean_name].hidden = !fileToggles[file.clean_name].hidden)}
 							>
-								{file.clean_name}
+								<p>{file.clean_name}</p>
+								{#if file.clean_name === 'modlist.txt'}
+									<p class="text-sm text-blue-500">
+										{file.content.length} total, {file.content.filter((line) => {
+											return line.startsWith('+');
+										}).length} enabled
+									</p>
+								{/if}
 							</button>
 						</section>
 						<section class="flex items-center">
