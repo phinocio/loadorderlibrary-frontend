@@ -50,7 +50,6 @@ export const actions = {
 			});
 
 			const respData = await resp.json();
-			console.log(respData);
 
 			// HTTP 200 is returned on update, if that's not the
 			// response status, an error occurred.
