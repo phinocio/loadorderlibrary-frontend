@@ -24,6 +24,9 @@
 
 	function perPage() {
 		let urlParams = $page.url.searchParams;
+		if (urlParams.has('all')) {
+			urlParams.delete('all');
+		}
 		urlParams.set('page[size]', listsPerPage);
 		goto(`/lists?${urlParams.toString()}`, { invalidateAll: true });
 	}
@@ -68,7 +71,7 @@
 				>{author}</a
 			>
 		{/if}
-		<span class="text-base text-blue-500">{lists.meta.total} total</span>
+		<span class="text-base text-blue-500">{lists.data.length} total</span>
 	</h1>
 
 	<div class="flex">
@@ -164,4 +167,6 @@
 	{/if}
 </section>
 
-<ListPagination listsMeta={lists.meta} />
+{#if lists.meta}
+	<ListPagination listsMeta={lists.meta} />
+{/if}
