@@ -71,7 +71,7 @@
 				>{author}</a
 			>
 		{/if}
-		<span class="text-base text-blue-500">{lists.data.length} total</span>
+		<span class="text-base text-blue-500">{lists.meta?.total ?? lists.data.length} total</span>
 	</h1>
 
 	<div class="flex">
