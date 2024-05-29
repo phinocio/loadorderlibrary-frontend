@@ -31,17 +31,19 @@
 </script>
 
 <section class="mt-4 flex w-full justify-end space-x-2 text-center">
-	<a
-		href="/lists/{list.slug}/edit"
-		class="rounded-full border border-blue-500 px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-		>Edit List</a
-	>
-	<button
-		on:click={() => deleteDialog.showModal()}
-		type="submit"
-		class="rounded-full border border-red-500 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white active:bg-red-500 active:text-white"
-		>Delete list</button
-	>
+	{#if list.author && list.author.name === $page.data.user?.name}
+		<a
+			href="/lists/{list.slug}/edit"
+			class="rounded-full border border-blue-500 px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+			>Edit List</a
+		>
+		<button
+			on:click={() => deleteDialog.showModal()}
+			type="submit"
+			class="rounded-full border border-red-500 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white active:bg-red-500 active:text-white"
+			>Delete list</button
+		>
+	{/if}
 </section>
 
 <dialog
