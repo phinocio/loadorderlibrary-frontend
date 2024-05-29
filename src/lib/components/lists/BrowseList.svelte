@@ -79,7 +79,9 @@
 			</p>
 		{/if}
 		{#if includeManageButtons}
-			<ManageButtons {list} />
+			{#if list.author && list.author.name === $page.data.user?.name}
+				<ManageButtons {list} />
+			{/if}
 		{/if}
 	</section>
 
