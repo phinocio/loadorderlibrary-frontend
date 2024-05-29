@@ -122,7 +122,9 @@
 		{list.description ?? 'No description provided.'}
 	</p>
 
-	<ManageButtons {list} />
+	{#if list.author && list.author.name === $page.data.user?.name}
+		<ManageButtons {list} />
+	{/if}
 
 	<section class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
 		<form class="" method="GET" action={PUBLIC_API_URL + '/v1/lists/' + list.slug + '/download'}>
