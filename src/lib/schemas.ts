@@ -39,6 +39,7 @@ export const loginSchema = z.object({
 		.min(8, { message: 'Password must be 8 characters or more.' })
 		.max(72, { message: 'Password must be 72 characters or less.' })
 		.trim(),
+	remember: z.boolean().optional(),
 });
 
 export const emailUpdateSchema = z.object({

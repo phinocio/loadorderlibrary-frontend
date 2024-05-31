@@ -1,7 +1,7 @@
 import { API_URL } from '$env/static/private';
 import { loginSchema } from '$lib/schemas';
 import { refreshXSRFToken, useSetCookies } from '$lib/utils/useSetCookies';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
