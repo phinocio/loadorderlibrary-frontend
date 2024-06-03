@@ -1,5 +1,25 @@
+<script>
+	import { page } from '$app/stores';
+</script>
+
 <svelte:head>
 	<title>Transparency - Load Order Library</title>
+
+	<meta name="description" content="A modlist files site to help with support." />
+
+	<!-- FB Meta -->
+	<meta property="og:url" content={$page.url.href} />
+	<meta property="og:title" content="Transparency - Load Order Library" />
+	<meta property="og:description" content="A modlist files site to help with support." />
+	<meta property="og:image" content="/images/logo.png" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter Meta -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:url" content={$page.url.href} />
+	<meta name="twitter:title" content="Transparency - Load Order Library" />
+	<meta name="twitter:description" content="A modlist files site to help with support." />
+	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
 
 <div class="mb-4 flex flex-col md:flex-row md:justify-between">
