@@ -122,7 +122,7 @@
 		{list.description ?? 'No description provided.'}
 	</p>
 
-	{#if list.author && list.author.name === $page.data.user?.name}
+	{#if (list.author && list.author.name === $page.data.user?.name) || ($page.data.user?.admin && $page.url.pathname.startsWith('/admin/lists'))}
 		<ManageButtons {list} />
 	{/if}
 
