@@ -4,12 +4,12 @@
 
 <div class="mb-4 flex flex-col md:flex-row md:justify-between">
 	<h1 class="text-3xl font-bold">Transparency</h1>
-	<p>Last Updated: 2024-05-07</p>
+	<p>Last Updated: 2024-06-03</p>
 </div>
 
 <div class="space-y-4">
 	<h2 class="text-2xl font-bold">Expenses</h2>
-	<p><strong>TLDR:</strong> $86.40 USD/yr + $19.94 CAD/yr</p>
+	<p><strong>TLDR:</strong> $403.20 USD/yr + $19.94 CAD/yr</p>
 	<p>NOTE: Prices are listed without applicable taxes.</p>
 	<div class="rounded-xl border border-border-light bg-gray-200 pb-8 dark:border-border-dark dark:bg-[#26263a]">
 		<table class="w-full table-auto border-collapse">
@@ -23,9 +23,9 @@
 			<tbody class="bg-light dark:bg-dark">
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">Digital Ocean</td>
-					<td class="p-2">$7.20 USD/month</td>
+					<td class="p-2">$33.60 USD/month</td>
 					<td class="p-2"
-						>Server for hosting the main site, API, and testing site. $6 for droplet, $1.20 for backup
+						>Server for hosting the main site, API, and testing site. $28 for droplet, $5.60 for backup
 						service.</td
 					>
 				</tr>
@@ -38,7 +38,7 @@
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4 font-bold">Total</td>
-					<td class="p-2">$86.40 USD/yr + $19.94 CAD/yr</td>
+					<td class="p-2">$403.20 USD/yr + $19.94 CAD/yr</td>
 					<td class="p-2"
 						>USD -> CAD conversion varies too much to be 100% accurate, so listing USD + CAD is best.</td
 					>
@@ -64,7 +64,7 @@
 			</thead>
 			<tbody class="bg-light dark:bg-dark">
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
-					<td class="p-2 pl-4">March 2024 - April 2024</td>
+					<td class="p-2 pl-4">March 2024 - May 2024</td>
 					<td class="p-2">$0.00 CAD</td>
 					<td class="p-2">All Sources</td>
 				</tr>
