@@ -16,7 +16,7 @@
 	class="flex flex-col space-y-4 rounded-xl border border-border-light bg-gray-200 p-4 text-text-light dark:border-border-dark dark:bg-[#26263a] dark:text-text-dark"
 >
 	<header>
-		<h1 class="col-span-2 break-all font-bold">
+		<h1 class="col-span-2 break-words font-bold">
 			<a
 				class="text-xl leading-none text-green-600 hover:text-green-500 md:text-2xl md:leading-none"
 				href="/lists/{list.slug}">{list.name}</a
@@ -44,7 +44,7 @@
 		</section>
 	</header>
 
-	<section class="flex flex-1 break-all">
+	<section class="flex flex-1 overflow-clip break-words">
 		<!-- This is better than nested ternary operators and I refuse to hear otherwise :P -->
 		{#if list.description}
 			{#if list.description.length > 300}
@@ -53,7 +53,7 @@
 				{list.description}
 			{/if}
 		{:else}
-			No description provided.
+			<em>No description provided.</em>
 		{/if}
 	</section>
 
