@@ -4,7 +4,7 @@
 	import type { List } from '$lib/types/List';
 	import { format, formatDistanceToNow } from 'date-fns';
 	import DownloadIcon from '../icons/Download.svelte';
-	import EmbedIcon from '../icons/Embed.svelte';
+	import ShareIcon from '../icons/Share.svelte';
 	import ExternalIcon from '../icons/External.svelte';
 	import PlusIcon from '../icons/Plus.svelte';
 	import VerifiedIcon from '../icons/Verified.svelte';
@@ -196,7 +196,7 @@
 									<button
 										class="ml-2 border-r border-border-light bg-blue-500 p-4 text-white dark:border-border-dark"
 										on:click={() => embedToggles[file.clean_name]?.showModal()}
-										><EmbedIcon class="inline h-6 w-6 " /></button
+										><ShareIcon class="inline h-6 w-6 " /></button
 									>
 									<form
 										class="inline"
@@ -324,7 +324,7 @@
 									<button
 										class="ml-2 border-r border-border-light bg-blue-500 p-4 text-white dark:border-border-dark"
 										on:click={() => embedToggles[file.clean_name]?.showModal()}
-										><EmbedIcon class="inline h-6 w-6 " /></button
+										><ShareIcon class="inline h-6 w-6 " /></button
 									>
 									<form
 										class="inline"
