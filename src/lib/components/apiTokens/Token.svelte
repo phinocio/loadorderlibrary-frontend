@@ -4,6 +4,7 @@
 	import type { Token } from '$lib/types/Token';
 	import { format, formatDistanceToNow } from 'date-fns';
 	import toast from 'svelte-french-toast';
+	import Dialog from '../layout/Dialog.svelte';
 
 	export let token: Token;
 
@@ -75,24 +76,15 @@
 	</div>
 </div>
 
-<dialog
-	id="delete-{token.id}"
-	bind:this={deleteDialog}
-	class="absolute max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
->
-	<header class="mb-4 flex justify-between">
-		<h1 class="text-2xl font-bold text-blue-500">Delete {token.name}</h1>
+<Dialog bind:dialog={deleteDialog}>
+	<h1 slot="header" class="text-2xl font-bold text-blue-500">Delete {token.name}</h1>
 
-		<button
-			on:click={() => deleteDialog.close()}
-			class="self-start rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-			>X</button
-		>
-	</header>
-	<p>
-		Are you sure you want to delete this token? <strong>This action is permanent and can not be undone.</strong>
-	</p>
-	<footer class="flex justify-end space-x-2">
+	<article slot="body">
+		<p>
+			Are you sure you want to delete this token? <strong>This action is permanent and can not be undone.</strong>
+		</p>
+	</article>
+	<footer slot="footer" class="flex justify-end space-x-2">
 		<button
 			on:click={() => deleteDialog.close()}
 			class="rounded-full border border-blue-500 px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
@@ -111,4 +103,4 @@
 			>
 		</form>
 	</footer>
-</dialog>
+</Dialog>

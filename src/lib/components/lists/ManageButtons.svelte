@@ -4,6 +4,7 @@
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import type { List } from '$lib/types/List';
 	import toast from 'svelte-french-toast';
+	import Dialog from '../layout/Dialog.svelte';
 
 	export let list: List;
 
@@ -44,25 +45,15 @@
 	>
 </section>
 
-<dialog
-	id="delete-{list.slug}"
-	bind:this={deleteDialog}
-	class="absolute max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
->
-	<header class="mb-4 flex justify-between">
-		<h1 class="text-2xl font-bold text-blue-500">Delete {list.name}</h1>
-
-		<button
-			on:click={() => deleteDialog.close()}
-			class="self-start rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-			>X</button
-		>
-	</header>
-	<p>
-		Are you sure you want to delete this list? <strong>This action is permanent and can not be undone.</strong> Unlike
-		a lot of sites, the list is actually deleted from the database instead of being soft-deleted.
-	</p>
-	<footer class="flex justify-end space-x-2">
+<Dialog bind:dialog={deleteDialog}>
+	<h1 slot="header" class="break-words text-2xl font-bold text-blue-500">Delete {list.name}</h1>
+	<article slot="body">
+		<p>
+			Are you sure you want to delete this list? <strong>This action is permanent and can not be undone.</strong> Unlike
+			a lot of sites, the list is actually deleted from the database instead of being soft-deleted.
+		</p>
+	</article>
+	<footer slot="footer" class="flex justify-end space-x-2">
 		<button
 			on:click={() => deleteDialog.close()}
 			class="rounded-full border border-blue-500 px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
@@ -86,4 +77,4 @@
 			>
 		</form>
 	</footer>
-</dialog>
+</Dialog>

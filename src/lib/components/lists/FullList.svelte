@@ -11,6 +11,7 @@
 	import FileView from './FileView.svelte';
 	import ManageButtons from './ManageButtons.svelte';
 	import CompareIcon from '../icons/Compare.svelte';
+	import Dialog from '../layout/Dialog.svelte';
 
 	export let list: List;
 
@@ -147,7 +148,7 @@
 	{#if list.files && list.files.find((file) => {
 			return ['loadorder.txt', 'modlist.txt', 'plugins.txt'].includes(file.clean_name);
 		})}
-		<section class="flex flex-col space-y-6">
+		<div class="flex flex-col space-y-6">
 			<h2 class="text-2xl font-bold">Load Order Files</h2>
 			{#if list.files}
 				{#each list.files as file}
@@ -177,7 +178,7 @@
 									>
 										<a id={file.clean_name}>{file.clean_name}</a>
 										{#if file.clean_name === 'modlist.txt'}
-											<p class="text-sm text-blue-500 dark:text-blue-400">
+											<p class="hidden text-sm text-blue-500 dark:text-blue-400 sm:block">
 												{file.content.length} total, {file.content.filter((line) => {
 													return line.startsWith('+');
 												}).length} enabled
@@ -187,7 +188,7 @@
 								</section>
 								<section class="flex items-center">
 									<!-- Undefined here uses the user's browser locale -->
-									<span
+									<span class="hidden sm:block"
 										>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
 											minimumFractionDigits: 2,
 											maximumFractionDigits: 2,
@@ -223,54 +224,41 @@
 							/>
 						</section>
 
-						<dialog
-							bind:this={embedToggles[file.clean_name]}
-							class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
-						>
-							<header class="mb-4 flex justify-between">
-								<h1 class="text-2xl font-bold text-blue-500">Share {file.clean_name}</h1>
-								<button
-									on:click={() => embedToggles[file.clean_name]?.close()}
-									class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-									>X</button
-								>
-							</header>
+						<Dialog bind:dialog={embedToggles[file.clean_name]}>
+							<h1 slot="header" class="text-2xl font-bold text-blue-500">Share {file.clean_name}</h1>
 
-							<section class="space-y-4 border-b border-border-light pb-4 dark:border-border-dark">
-								<h2 class="text-xl font-bold">Link</h2>
+							<article class="space-y-4" slot="body">
+								<section class="space-y-4 border-b border-border-light pb-4 dark:border-border-dark">
+									<h2 class="text-xl font-bold">Link</h2>
 
-								<p>Use this link to have the file open when the page is viewed.</p>
+									<p>Use this link to have the file open when the page is viewed.</p>
 
-								<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-									<code class="text-green-500"
-										>{PUBLIC_APP_URL}/lists/{list.slug}#{file.clean_name}</code
-									>
-								</div>
-							</section>
+									<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+										<code class="break-all text-sm text-green-500"
+											>{PUBLIC_APP_URL}/lists/{list.slug}#{file.clean_name}</code
+										>
+									</div>
+								</section>
 
-							<section class="space-y-4">
-								<h2 class="text-xl font-bold">Embed</h2>
-								<p>
-									If you want to have a quick way for users to view your list on your own site or
-									elsewhere, use this iframe.
-								</p>
-								<p>
-									Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to
-									have the theme of the embed match the user's system theme, collapse separators on
-									modlist.txt, and toggle showing of disabled mods on modlist.txt.
-								</p>
-								<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-									<code class="text-green-500"
-										>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
-										width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
-									>
-								</div>
-							</section>
-						</dialog>
+								<section class="space-y-4">
+									<h2 class="text-xl font-bold">Embed</h2>
+									<p>
+										If you want to have a quick way for users to view your list on your own site or
+										elsewhere, use this iframe.
+									</p>
+									<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+										<code class="break-all text-sm text-green-500"
+											>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
+											width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
+										>
+									</div>
+								</section>
+							</article>
+						</Dialog>
 					{/if}
 				{/each}
 			{/if}
-		</section>
+		</div>
 	{/if}
 	{#if list.files && list.files.find((file) => {
 			return !['loadorder.txt', 'modlist.txt', 'plugins.txt'].includes(file.clean_name);
@@ -303,19 +291,12 @@
 											(fileToggles[file.clean_name].hidden =
 												!fileToggles[file.clean_name].hidden)}
 									>
-										<p>{file.clean_name}</p>
-										{#if file.clean_name === 'modlist.txt'}
-											<p class="text-sm text-blue-500 dark:text-blue-400">
-												{file.content.length} total, {file.content.filter((line) => {
-													return line.startsWith('+');
-												}).length} enabled
-											</p>
-										{/if}
+										<a id={file.clean_name}>{file.clean_name}</a>
 									</button>
 								</section>
 								<section class="flex items-center">
 									<!-- Undefined here uses the user's browser locale -->
-									<span
+									<span class="hidden sm:block"
 										>{(Number(file.bytes) / 1024).toLocaleString(undefined, {
 											minimumFractionDigits: 2,
 											maximumFractionDigits: 2,
@@ -351,35 +332,37 @@
 							/>
 						</section>
 
-						<dialog
-							bind:this={embedToggles[file.clean_name]}
-							class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
-						>
-							<header class="mb-4 flex justify-between">
-								<h1 class="text-2xl font-bold text-blue-500">Embed {file.clean_name}</h1>
-								<button
-									on:click={() => embedToggles[file.clean_name]?.close()}
-									class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
-									>X</button
-								>
-							</header>
+						<Dialog bind:dialog={embedToggles[file.clean_name]}>
+							<h1 slot="header" class="text-2xl font-bold text-blue-500">Share {file.clean_name}</h1>
 
-							<p>
-								If you want to have a quick way for users to view your list on your own site or
-								elsewhere, use this iframe.
-							</p>
-							<p>
-								Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to have
-								the theme of the embed match the user's system theme, collapse separators on
-								modlist.txt, and toggle showing of disabled mods on modlist.txt.
-							</p>
-							<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-								<code class="text-green-500"
-									>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
-									width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
-								>
-							</div>
-						</dialog>
+							<article class="space-y-4" slot="body">
+								<section class="space-y-4 border-b border-border-light pb-4 dark:border-border-dark">
+									<h2 class="text-xl font-bold">Link</h2>
+
+									<p>Use this link to have the file open when the page is viewed.</p>
+
+									<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+										<code class="break-all text-sm text-green-500"
+											>{PUBLIC_APP_URL}/lists/{list.slug}#{file.clean_name}</code
+										>
+									</div>
+								</section>
+
+								<section class="space-y-4">
+									<h2 class="text-xl font-bold">Embed</h2>
+									<p>
+										If you want to have a quick way for users to view your list on your own site or
+										elsewhere, use this iframe.
+									</p>
+									<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+										<code class="break-all text-sm text-green-500"
+											>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
+											width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
+										>
+									</div>
+								</section>
+							</article>
+						</Dialog>
 					{/if}
 				{/each}
 			{/if}

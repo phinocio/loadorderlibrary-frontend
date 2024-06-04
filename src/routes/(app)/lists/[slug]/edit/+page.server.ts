@@ -72,11 +72,12 @@ export const actions = {
 
 			if (resp.status === 419) {
 				await refreshXSRFToken(cookies);
-				return message(form, `Error uploading list. Please try again. ERROR: ${err.message}`, {
+				return message(form, `Error updating list. Please try again. ERROR: ${err.message}`, {
 					status: resp.status,
 				});
 			}
 
+			console.log(err);
 			return message(form, err.message, {
 				status: resp.status,
 			});

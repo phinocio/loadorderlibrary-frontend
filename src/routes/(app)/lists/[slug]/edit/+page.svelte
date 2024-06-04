@@ -15,7 +15,7 @@
 
 	export let data: PageData;
 
-	const { form, errors, enhance, constraints } = superForm(data.form, {
+	const { form, errors, message, enhance, constraints } = superForm(data.form, {
 		taintedMessage: null,
 		validators: zodClient(editSchema),
 		validationMethod: 'auto',
@@ -26,6 +26,9 @@
 	<title>Edit {data.list.data.name} - Load Order Library</title>
 </svelte:head>
 
+{#if $message}
+	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">{$message}</div>
+{/if}
 <article class="grid grid-cols-1 gap-10 md:grid-cols-6">
 	<section class="col-span-4 flex flex-col">
 		<h2 class="truncate text-3xl">Editing <span class="font-bold">{data.list.data.name}</span></h2>
