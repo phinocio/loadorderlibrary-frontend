@@ -2,8 +2,9 @@ import { API_URL } from '$env/static/private';
 import { editSchema } from '$lib/schemas';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate, withFiles } from 'sveltekit-superforms/server';
+import { message, setError, superValidate, withFiles } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from './$types';
+import { refreshXSRFToken } from '$lib/utils/useSetCookies';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
 	const route = `${API_URL}/v1/lists/${params.slug}`;
@@ -42,7 +43,7 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 };
 
 export const actions = {
-	default: async ({ request, fetch }) => {
+	default: async ({ cookies, request, fetch }) => {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(editSchema));
 
@@ -52,26 +53,33 @@ export const actions = {
 			return fail(400, withFiles({ form }));
 		}
 
-		try {
-			const files = formData.getAll('files[]') as File[];
-			if (files.length === 1 && files[0].size === 0) {
-				formData.delete('files[]');
-			}
-			const resp = await fetch(`${API_URL}/v1/lists/${formData.get('slug')}`, {
-				method: 'POST',
-				headers: {
-					// 'Content-Type': request.headers.get('content-type'),
-					Accept: 'application/json',
-				},
-				credentials: 'include',
-				body: formData,
-			});
+		const files = formData.getAll('files[]') as File[];
+		if (files.length === 1 && files[0].size === 0) {
+			formData.delete('files[]');
+		}
+		const resp = await fetch(`${API_URL}/v1/lists/${formData.get('slug')}`, {
+			method: 'POST',
+			headers: {
+				// 'Content-Type': request.headers.get('content-type'),
+				Accept: 'application/json',
+			},
+			credentials: 'include',
+			body: formData,
+		});
 
-			if (resp.status !== 200) {
-				return fail(resp.status, withFiles({ form }));
+		if (resp.status !== 201) {
+			const err = await resp.json();
+
+			if (resp.status === 419) {
+				await refreshXSRFToken(cookies);
+				return message(form, `Error uploading list. Please try again. ERROR: ${err.message}`, {
+					status: resp.status,
+				});
 			}
-		} catch (err) {
-			throw error(500, 'Something went wrong editing.');
+
+			return message(form, err.message, {
+				status: resp.status,
+			});
 		}
 
 		redirect(303, `/lists/${formData.get('slug')}`);

@@ -15,11 +15,13 @@
 
 	export let data: PageData;
 
-	const { form, errors, enhance, constraints } = superForm(data.form, {
+	const { form, errors, message, enhance, constraints } = superForm(data.form, {
 		taintedMessage: null,
 		validators: zodClient(uploadSchema),
 		validationMethod: 'auto',
 	});
+
+	$: console.log(message);
 </script>
 
 <svelte:head>
@@ -42,7 +44,9 @@
 	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
 <h1 class="mb-4 text-3xl font-bold">Upload a List</h1>
-
+{#if $message}
+	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">{$message}</div>
+{/if}
 <article class="grid grid-cols-1 gap-10 md:grid-cols-6">
 	<section class="col-span-4 flex flex-col">
 		<h2 class="text-3xl">List Info</h2>

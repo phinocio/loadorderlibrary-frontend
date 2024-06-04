@@ -1,9 +1,10 @@
-import { superValidate, withFiles } from 'sveltekit-superforms/server';
+import { message, setError, superValidate, withFiles } from 'sveltekit-superforms/server';
 import { uploadSchema } from '$lib/schemas';
 import { API_URL } from '$env/static/private';
 import { fail, type Actions, redirect, error } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
+import { refreshXSRFToken } from '$lib/utils/useSetCookies';
 
 // Todo, error if games request fails.
 export const load: PageServerLoad = async () => {
@@ -19,7 +20,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async ({ request, fetch }) => {
+	default: async ({ cookies, request, fetch }) => {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(uploadSchema));
 
@@ -27,28 +28,33 @@ export const actions = {
 			return fail(400, withFiles({ form }));
 		}
 
-		let slug = '';
-		try {
-			const resp = await fetch(`${API_URL}/v1/lists`, {
-				method: 'POST',
-				headers: {
-					// 'Content-Type': request.headers.get('content-type'),
-					Accept: 'application/json',
-				},
-				credentials: 'include',
-				body: formData,
-			});
+		const resp = await fetch(`${API_URL}/v1/lists`, {
+			method: 'POST',
+			headers: {
+				// 'Content-Type': request.headers.get('content-type'),
+				Accept: 'application/json',
+			},
+			credentials: 'include',
+			body: formData,
+		});
 
-			if (resp.status !== 201) {
-				return fail(resp.status, withFiles({ form }));
+		if (resp.status !== 201) {
+			const err = await resp.json();
+
+			if (resp.status === 419) {
+				await refreshXSRFToken(cookies);
+				return message(form, `Error uploading list. Please try again. ERROR: ${err.message}`, {
+					status: resp.status,
+				});
 			}
 
-			const data = await resp.json();
-			slug = data.data.slug;
-		} catch (err) {
-			throw error(500, 'Something went wrong uploading.');
+			return message(form, err.message, {
+				status: resp.status,
+			});
 		}
 
-		redirect(303, `/lists/${slug}`);
+		const data = await resp.json();
+
+		redirect(303, `/lists/${data.data.slug}`);
 	},
 } satisfies Actions;
