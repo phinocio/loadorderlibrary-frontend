@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import FullList from '$lib/components/lists/FullList.svelte';
 	import type { PageData } from './$types';
@@ -6,6 +7,20 @@
 	export let data: PageData;
 
 	const { list } = data;
+
+	if (browser && $page.url.hash) {
+		const el = document.getElementById($page.url.hash.slice(1))?.offsetTop;
+
+		// There's better ways to ensure not undefined but eh, this is fine enough here.
+		if (el && el > 0) {
+			setTimeout(() => {
+				window.scrollTo({
+					top: el,
+					behavior: 'smooth',
+				});
+			}, 500);
+		}
+	}
 </script>
 
 <svelte:head>

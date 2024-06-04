@@ -20,7 +20,7 @@
 	if (list.files) {
 		for (const file of list.files) {
 			fileToggles[file.clean_name] = {
-				hidden: $page.url.searchParams.get('show') === file.clean_name ? false : true,
+				hidden: $page.url.hash.slice(1) === file.clean_name ? false : true,
 			};
 		}
 	}
@@ -175,7 +175,7 @@
 											(fileToggles[file.clean_name].hidden =
 												!fileToggles[file.clean_name].hidden)}
 									>
-										<p>{file.clean_name}</p>
+										<a id={file.clean_name}>{file.clean_name}</a>
 										{#if file.clean_name === 'modlist.txt'}
 											<p class="text-sm text-blue-500 dark:text-blue-400">
 												{file.content.length} total, {file.content.filter((line) => {
@@ -228,7 +228,7 @@
 							class="absolute top-1/4 max-w-3xl space-y-4 rounded-xl border border-border-light bg-light p-4 text-text-light shadow-xl backdrop:bg-black backdrop:opacity-50 backdrop:blur-md dark:border-border-dark dark:bg-dark dark:text-text-dark"
 						>
 							<header class="mb-4 flex justify-between">
-								<h1 class="text-2xl font-bold text-blue-500">Embed {file.clean_name}</h1>
+								<h1 class="text-2xl font-bold text-blue-500">Share {file.clean_name}</h1>
 								<button
 									on:click={() => embedToggles[file.clean_name]?.close()}
 									class="rounded-xl border border-blue-500 px-4 py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
@@ -236,21 +236,36 @@
 								>
 							</header>
 
-							<p>
-								If you want to have a quick way for users to view your list on your own site or
-								elsewhere, use this iframe.
-							</p>
-							<p>
-								Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to have
-								the theme of the embed match the user's system theme, collapse separators on
-								modlist.txt, and toggle showing of disabled mods on modlist.txt.
-							</p>
-							<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
-								<code class="text-green-500"
-									>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
-									width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
-								>
-							</div>
+							<section class="space-y-4 border-b border-border-light pb-4 dark:border-border-dark">
+								<h2 class="text-xl font-bold">Link</h2>
+
+								<p>Use this link to have the file open when the page is viewed.</p>
+
+								<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+									<code class="text-green-500"
+										>{PUBLIC_APP_URL}/lists/{list.slug}#{file.clean_name}</code
+									>
+								</div>
+							</section>
+
+							<section class="space-y-4">
+								<h2 class="text-xl font-bold">Embed</h2>
+								<p>
+									If you want to have a quick way for users to view your list on your own site or
+									elsewhere, use this iframe.
+								</p>
+								<p>
+									Feel free to remove the `allow-scripts` from the sandbox attribute. It's used to
+									have the theme of the embed match the user's system theme, collapse separators on
+									modlist.txt, and toggle showing of disabled mods on modlist.txt.
+								</p>
+								<div class="rounded-xl bg-gray-200 p-4 dark:bg-[#26263a]">
+									<code class="text-green-500"
+										>&lt;iframe title="Load Order Library iframe" src="{PUBLIC_APP_URL}/lists/{list.slug}/embed/{file.clean_name}"
+										width="875" height="1000" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code
+									>
+								</div>
+							</section>
 						</dialog>
 					{/if}
 				{/each}

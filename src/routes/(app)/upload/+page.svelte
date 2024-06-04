@@ -20,8 +20,6 @@
 		validators: zodClient(uploadSchema),
 		validationMethod: 'auto',
 	});
-
-	$: console.log(message);
 </script>
 
 <svelte:head>
