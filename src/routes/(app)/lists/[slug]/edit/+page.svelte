@@ -27,8 +27,19 @@
 </svelte:head>
 
 {#if $message}
-	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">{$message}</div>
+	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">
+		<strong>Server returned error:</strong>
+		{$message.message}
+	</div>
+
+	<p class="text-xl font-bold">All Server Errors</p>
+	<ul class="mb-4">
+		{#each Object.entries($message.errors) as [key, err]}
+			<li class="text-red-600 dark:text-red-500">{key}: {err}</li>
+		{/each}
+	</ul>
 {/if}
+
 <article class="grid grid-cols-1 gap-10 md:grid-cols-6">
 	<section class="col-span-4 flex flex-col">
 		<h2 class="truncate text-3xl">Editing <span class="font-bold">{data.list.data.name}</span></h2>

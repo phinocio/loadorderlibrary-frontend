@@ -48,7 +48,7 @@ export const actions = {
 				});
 			}
 
-			return message(form, err.message, {
+			return message(form, err, {
 				status: resp.status,
 			});
 		}

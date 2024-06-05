@@ -78,7 +78,7 @@ export const actions = {
 			}
 
 			console.log(err);
-			return message(form, err.message, {
+			return message(form, err, {
 				status: resp.status,
 			});
 		}
