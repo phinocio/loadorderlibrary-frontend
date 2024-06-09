@@ -24,10 +24,10 @@
 		// matches the index in the original array, otherwise it's the index in the sliced array, which will
 		// often be below the passed in index value.
 		const nextSep = content.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
-		const listUl = document.getElementById(fileName);
+		const listUl = document.getElementById(`ul-${fileName}`);
 		const listLi = listUl?.getElementsByTagName('li');
 
-		if (!listUl || !listLi) {
+		if (!listUl || !listLi || listLi.length === 0) {
 			return;
 		}
 
@@ -63,7 +63,7 @@
 			</label>
 		{/if}
 	</section>
-	<ul id={fileName}>
+	<ul id="ul-{fileName}">
 		{#each file as line, i}
 			{#if !line.startsWith('#')}
 				<li
