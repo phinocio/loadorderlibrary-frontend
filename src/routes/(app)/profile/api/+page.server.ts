@@ -2,7 +2,7 @@ import { API_URL } from '$env/static/private';
 import { apiTokenSchema } from '$lib/schemas';
 import { error, fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
-import { message, superValidate } from 'sveltekit-superforms/server';
+import { message, setMessage, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
@@ -43,6 +43,10 @@ export const actions = {
 		});
 
 		if (resp.status !== 200) {
+			const err = await resp.json();
+			return message(form, `Error creating token. ERROR: ${err.message}`, {
+				status: resp.status,
+			});
 			return fail(resp.status, { form });
 		}
 

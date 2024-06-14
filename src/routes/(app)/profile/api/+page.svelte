@@ -5,6 +5,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
@@ -22,10 +23,16 @@
 
 <!-- <SuperDebug data={$form} /> -->
 {#if $message}
-	<div class="mb-5 w-full rounded-full bg-green-600 p-5 text-white">
-		Token created. Save it somewhere safe as it will not be shown again.
-		<code class="font-bold">{$message}</code>
-	</div>
+	{#if $page.status === 200}
+		<div class="mb-5 w-full rounded-full bg-green-600 p-5 text-white">
+			Token created. Save it somewhere safe as it will not be shown again.
+			<code class="font-bold">{$message}</code>
+		</div>
+	{:else}
+		<div class="mb-5 w-full rounded-full bg-red-600 p-5 text-white">
+			<code class="font-bold">{$message}</code>
+		</div>
+	{/if}
 {/if}
 
 <article class="grid grid-cols-1 gap-10 md:grid-cols-4">
