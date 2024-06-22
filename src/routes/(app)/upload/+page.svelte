@@ -41,7 +41,9 @@
 	<meta name="twitter:description" content="Upload a list." />
 	<meta name="twitter:image" content="/images/logo.png" />
 </svelte:head>
+
 <h1 class="mb-4 text-3xl font-bold">Upload a List</h1>
+
 {#if $message}
 	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">
 		<strong>Server returned error:</strong>
