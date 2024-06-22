@@ -26,7 +26,7 @@
 	<title>Edit {data.list.data.name} - Load Order Library</title>
 </svelte:head>
 
-<h1 class="truncate text-3xl">Editing <span class="font-bold">{data.list.data.name}</span></h1>
+<h1 class="mb-4 truncate text-3xl">Editing <span class="font-bold">{data.list.data.name}</span></h1>
 
 {#if $message}
 	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">
