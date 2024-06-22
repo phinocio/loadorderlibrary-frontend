@@ -12,7 +12,6 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 		if (resp.status === 404) {
 			error(404, 'List does not exist');
 		}
-		console.log(await resp.text());
 		error(500, 'Something went wrong fetching the list');
 	}
 
