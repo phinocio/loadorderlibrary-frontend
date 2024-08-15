@@ -24,7 +24,7 @@
 
 <div class="mb-4 flex flex-col md:flex-row md:justify-between">
 	<h1 class="text-3xl font-bold">Transparency</h1>
-	<p>Last Updated: 2024-06-03</p>
+	<p>Last Updated: 2024-08-14</p>
 </div>
 
 <div class="space-y-4">
@@ -68,7 +68,7 @@
 	</div>
 
 	<h2 class="text-2xl font-bold">Income</h2>
-	<p><strong>TLDR:</strong> $148.95 CAD lifetime</p>
+	<p><strong>TLDR:</strong> $160.00 CAD lifetime</p>
 	<p>
 		NOTE: Not in the table is 0.0021051 ETH received on July 26, 2021 as I no longer accept cryptocurrency
 		donations.
@@ -83,6 +83,16 @@
 				</tr>
 			</thead>
 			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">July 2024</td>
+					<td class="p-2">$1.05 CAD</td>
+					<td class="p-2">Patreon</td>
+				</tr>
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">June 2024</td>
+					<td class="p-2">$10.00 CAD</td>
+					<td class="p-2">Ko-fi</td>
+				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">March 2024 - May 2024</td>
 					<td class="p-2">$0.00 CAD</td>
@@ -234,7 +244,7 @@
 				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4 font-bold">Total</td>
-					<td class="p-2">$148.95 CAD</td>
+					<td class="p-2">$160.00 CAD</td>
 					<td class="p-2"></td>
 				</tr>
 			</tbody>
