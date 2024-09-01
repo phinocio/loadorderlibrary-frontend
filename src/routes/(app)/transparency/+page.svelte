@@ -24,7 +24,7 @@
 
 <div class="mb-4 flex flex-col md:flex-row md:justify-between">
 	<h1 class="text-3xl font-bold">Transparency</h1>
-	<p>Last Updated: 2024-08-14</p>
+	<p>Last Updated: 2024-09-01</p>
 </div>
 
 <div class="space-y-4">
@@ -83,6 +83,11 @@
 				</tr>
 			</thead>
 			<tbody class="bg-light dark:bg-dark">
+				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
+					<td class="p-2 pl-4">August 2024</td>
+					<td class="p-2">$0.00 CAD</td>
+					<td class="p-2">All Sources</td>
+				</tr>
 				<tr class="even:bg-gray-200 even:dark:bg-[#26263a]">
 					<td class="p-2 pl-4">July 2024</td>
 					<td class="p-2">$1.05 CAD</td>
