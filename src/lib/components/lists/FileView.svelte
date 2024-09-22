@@ -1,29 +1,19 @@
 <script lang="ts">
 	export let content: string[];
-
-	// Need to copy this to a new variable to not mutate the original when filtering.
-	// This allows us to use .filter() on content and also have it show files again
-	// when deleting a search, instead of mutating it with content = content.filter()
-	// and ending up forcing the user to refresh the page to see original lines again.
-	let file: string[] = content;
-
-	let className: string = '';
 	export { className as class };
 	export let fileName: string;
+
+	let className: string = '';
 	let filterText: string;
 	let showDisabled: boolean = false;
-
-	function filterList() {
-		file = content.filter((line) => {
-			return line.toLowerCase().includes(filterText.toLowerCase()) || line.endsWith('_separator');
-		});
-	}
+	let timeoutId: number;
+	let filteredMods: string[] = [];
 
 	function toggleSeparator(index: number) {
 		// We need to add the index of the separator we are working with to the found nextSep index so it
 		// matches the index in the original array, otherwise it's the index in the sliced array, which will
 		// often be below the passed in index value.
-		const nextSep = content.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
+		const nextSep = filteredMods.slice(index + 1).findIndex((line) => line.endsWith('_separator')) + index;
 		const listUl = document.getElementById(`ul-${fileName}`);
 		const listLi = listUl?.getElementsByTagName('li');
 
@@ -37,6 +27,33 @@
 			}
 		}
 	}
+
+	function debounceFilter(callback: () => void, delay: number): void {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(callback, delay);
+	}
+
+	$: {
+		if (!filterText) {
+			filteredMods = content;
+		} else {
+			const lowerFilter: string = filterText.toLowerCase();
+			debounceFilter(() => {
+				const newFilteredMods: string[] = [];
+
+				for (let i = 0; i < content.length; i++) {
+					const line = content[i];
+					if (line.endsWith('_separator') || line.toLowerCase().includes(lowerFilter)) {
+						newFilteredMods.push(line);
+					}
+				}
+
+				if (newFilteredMods !== filteredMods) {
+					filteredMods = newFilteredMods;
+				}
+			}, 200);
+		}
+	}
 </script>
 
 <section class={className}>
@@ -47,7 +64,6 @@
 			placeholder="Filter..."
 			id="filter-{fileName}"
 			bind:value={filterText}
-			on:input={filterList}
 		/>
 		{#if fileName === 'modlist.txt'}
 			<label class="flex items-center p-4">
@@ -64,7 +80,7 @@
 		{/if}
 	</section>
 	<ul id="ul-{fileName}">
-		{#each file as line, i}
+		{#each filteredMods as line, i (i)}
 			{#if !line.startsWith('#')}
 				<li
 					class="{line.startsWith('-') && !line.endsWith('_separator') && !showDisabled
@@ -76,7 +92,9 @@
 							? 'hidden'
 							: ''} min-w-14 select-none self-stretch bg-blue-500 p-2 text-center text-white"
 					>
-						<span>{i + 1}</span>
+						{#if !line.endsWith('_separator')}
+							<span>{i + 1}.</span>
+						{/if}
 					</span>
 
 					<!-- if the line is a separator -->
