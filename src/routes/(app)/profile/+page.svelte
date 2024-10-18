@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import type { Writable } from 'svelte/store';
 	import BrowseList from '$lib/components/lists/BrowseList.svelte';
 	import UpdateEmailForm from '$lib/components/auth/UpdateEmailForm.svelte';
 	import UpdatePasswordForm from '$lib/components/auth/UpdatePasswordForm.svelte';
@@ -12,14 +13,14 @@
 	// When we update the email, this then lets the page reacte to that.
 	$: ({ lists } = data);
 
-	const user: User = getContext('user');
+	const user: Writable<User> = getContext('user');
 </script>
 
 <svelte:head>
 	<title>Profile - Load Order Library</title>
 </svelte:head>
 
-<h1 class="mb-4 text-3xl font-bold">Hello, {user?.name}</h1>
+<h1 class="mb-4 text-3xl font-bold">Hello, {$user?.name}</h1>
 
 <div class="grid gap-10 md:grid-cols-3">
 	<article class="col-span-2">
@@ -44,7 +45,7 @@
 	</article>
 	<article class="col-span-2 space-y-4 md:col-span-1">
 		<h2 class="mb-4 text-2xl font-bold">Manage Account</h2>
-		<p>Your email: {user?.email ?? 'N/A'}</p>
+		<p>Your email: {$user?.email ?? 'N/A'}</p>
 
 		<section>
 			<UpdateEmailForm data={data.emailUpdateForm} />

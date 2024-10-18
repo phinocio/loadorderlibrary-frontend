@@ -15,15 +15,11 @@ export const load = async () => {
 };
 
 export const actions = {
-	updateEmail: async ({ fetch, request, locals }) => {
+	updateEmail: async ({ fetch, request }) => {
 		const emailUpdateForm = await superValidate(request, zod(emailUpdateSchema));
 
 		if (!emailUpdateForm.valid) {
 			return fail(400, { emailUpdateForm });
-		}
-
-		if (emailUpdateForm.data.email == locals.user?.email) {
-			return message(emailUpdateForm, 'This is already your email.');
 		}
 
 		try {
@@ -46,16 +42,13 @@ export const actions = {
 			// response status, an error occurred.
 			if (resp.status !== 200) {
 				// Set the errors as returned from the server. setError is the "proper" way to do this,
-				// but I don't want to loop through multiple things, and username existing is the only
+				// but I don't want to loop through multiple things, and email existing is the only
 				// expected error, but may not be the only returned error in some edges cases I can't
 				// think of atm.
 				emailUpdateForm.errors = respData.errors;
 
 				return fail(resp.status, { emailUpdateForm });
 			}
-
-			// Only need to update the email, saves a request to get all the new data.
-			locals.user!.email = emailUpdateForm.data.email ?? null;
 
 			return message(emailUpdateForm, 'Email successfully updated!');
 		} catch (err: unknown) {
@@ -90,10 +83,6 @@ export const actions = {
 			// HTTP 200 is returned on update, if that's not the
 			// response status, an error occurred.
 			if (resp.status !== 200) {
-				// Set the errors as returned from the server. setError is the "proper" way to do this,
-				// but I don't want to loop through multiple things, and username existing is the only
-				// expected error, but may not be the only returned error in some edges cases I can't
-				// think of atm.
 				passwordUpdateForm.errors = respData.errors;
 
 				// Clear passwords since we shouldn't return them in the response

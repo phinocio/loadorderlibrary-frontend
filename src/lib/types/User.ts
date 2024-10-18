@@ -1,6 +1,6 @@
 export type User = {
 	name: string;
-	email: boolean;
+	email: string | null;
 	verified: boolean;
 	admin: boolean;
 	created: string;

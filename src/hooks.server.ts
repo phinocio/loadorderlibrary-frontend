@@ -6,7 +6,7 @@ import { getUser } from '$lib/auth/user';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (event.url.pathname.startsWith('/login') || event.url.pathname.startsWith('/register')) {
-		const user = await getUser(event);
+		const user = await getUser(event.fetch);
 
 		if (user) {
 			redirect(303, '/profile');
@@ -15,14 +15,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	// Auth protected routes
 	if (event.url.pathname.startsWith('/profile') || event.url.pathname.startsWith('/admin')) {
-		const user = await getUser(event);
+		const user = await getUser(event.fetch);
 		if (!user) {
 			redirect(303, handleLoginRedirect(event.url));
 		}
 	}
 
 	if (event.url.pathname.startsWith('/admin')) {
-		const user = await getUser(event);
+		const user = await getUser(event.fetch);
 
 		if (!user) {
 			redirect(303, handleLoginRedirect(event.url));

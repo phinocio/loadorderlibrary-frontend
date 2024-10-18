@@ -5,8 +5,13 @@
 	import { emailUpdateSchema, type EmailUpdateSchema } from '$lib/schemas';
 	import toast from 'svelte-french-toast';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { getContext } from 'svelte';
+	import type { User } from '$lib/types/User';
+	import type { Writable } from 'svelte/store';
 
 	export let data: SuperValidated<Infer<EmailUpdateSchema>>;
+
+	const user: Writable<User> = getContext('user');
 
 	const { form, errors, enhance, constraints } = superForm(data, {
 		taintedMessage: null,
@@ -17,6 +22,9 @@
 			if (form.message) {
 				// At this point it *should* only be a success.
 				toast.success(form.message);
+			}
+			if (form.valid) {
+				$user.email = form.data.email ?? null;
 			}
 		},
 	});
