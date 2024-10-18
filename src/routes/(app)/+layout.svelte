@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { writable, type Writable } from 'svelte/store';
+	import { setContext } from 'svelte';
 	import '../../app.css';
 
 	import Logo from '$lib/assets/Logo.svelte';
@@ -11,13 +13,22 @@
 	import { enhance } from '$app/forms';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
 	import { Toaster } from 'svelte-french-toast';
+	import type { LayoutData } from './$types';
+	import type { User } from '$lib/types/User';
 
-	export let data;
+	export let data: LayoutData;
 	export let hidden = true;
 	export let userMenuHidden = true;
 
+	const user = writable<User | null>();
+
+	$: user.set(data.user);
+	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	$: $page.url && (hidden = true);
+	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	$: $page.url && (userMenuHidden = true);
+
+	setContext<Writable<User | null>>('user', user);
 </script>
 
 <svelte:head>
@@ -88,13 +99,13 @@
 			</div>
 			<hr class="border-border-light dark:border-border-dark" />
 			<div class="flex flex-col items-center md:flex-row">
-				{#if data.user}
+				{#if $user}
 					<div class="relative hidden sm:block">
 						<button
 							on:click={() => (userMenuHidden = !userMenuHidden)}
 							type="button"
 							class="relative z-20 h-12 w-12 rounded-full border-2 border-green-500 bg-light hover:border-green-400 dark:bg-dark"
-							>{data.user.name.charAt(0)}</button
+							>{$user.name.charAt(0)}</button
 						>
 						<button
 							type="button"
@@ -118,7 +129,7 @@
 								class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
 								href="/profile/api">API Tokens</a
 							>
-							{#if data.user.admin}
+							{#if $user.admin}
 								<a
 									aria-current="page"
 									class="block py-2 hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
@@ -141,12 +152,12 @@
 						<button
 							type="button"
 							class="h-12 w-12 rounded-full border-2 border-green-500 bg-light hover:border-green-400 dark:bg-dark"
-							>{data.user.name.charAt(0)}</button
+							>{$user.name.charAt(0)}</button
 						>
 						<div class="mt-2 rounded-lg">
 							<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/profile">Profile</a>
 							<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/profile/api">API Tokens</a>
-							{#if data.user.admin}
+							{#if $user.admin}
 								<a class="block p-2 hover:bg-blue-500 active:bg-blue-500" href="/admin"
 									>Admin Dashboard</a
 								>

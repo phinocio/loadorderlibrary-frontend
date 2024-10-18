@@ -10,7 +10,10 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	});
 
 	if (resp.status !== 200) {
-		error(500, 'Something went wrong fetching users');
+		if (resp.status === 404) {
+			error(404, 'User not found.');
+		}
+		error(resp.status, await resp.text());
 	}
 
 	return { users: await resp.json() };

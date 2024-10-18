@@ -1,21 +1,36 @@
 import { API_URL } from '$env/static/private';
 import { handleLoginRedirect } from '$lib/utils/handleLoginRedirect';
 import { refreshXSRFToken } from '$lib/utils/useSetCookies';
-import { redirect, type Handle, type HandleFetch, type HandleServerError, error } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
+import { getUser } from '$lib/auth/user';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	if (event.locals.user && (event.url.pathname.startsWith('/login') || event.url.pathname.startsWith('/register'))) {
-		redirect(303, '/profile');
+	if (event.url.pathname.startsWith('/login') || event.url.pathname.startsWith('/register')) {
+		const user = await getUser(event);
+
+		if (user) {
+			redirect(303, '/profile');
+		}
 	}
 
 	// Auth protected routes
-	if (!event.locals.user && (event.url.pathname.startsWith('/profile') || event.url.pathname.startsWith('/admin'))) {
-		redirect(303, handleLoginRedirect(event.url));
+	if (event.url.pathname.startsWith('/profile') || event.url.pathname.startsWith('/admin')) {
+		const user = await getUser(event);
+		if (!user) {
+			redirect(303, handleLoginRedirect(event.url));
+		}
 	}
 
-	if (event.locals.user && !event.locals.user.admin && event.url.pathname.startsWith('/admin')) {
-		redirect(303, '/');
-		// error(403, 'go away');
+	if (event.url.pathname.startsWith('/admin')) {
+		const user = await getUser(event);
+
+		if (!user) {
+			redirect(303, handleLoginRedirect(event.url));
+		}
+
+		if (!user.admin) {
+			redirect(303, '/');
+		}
 	}
 
 	if (/^\/lists\/.+\/embed/i.test(event.url.pathname)) {

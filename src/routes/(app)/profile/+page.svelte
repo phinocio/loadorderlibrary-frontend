@@ -4,11 +4,15 @@
 	import UpdateEmailForm from '$lib/components/auth/UpdateEmailForm.svelte';
 	import UpdatePasswordForm from '$lib/components/auth/UpdatePasswordForm.svelte';
 	import DeleteAccForm from '$lib/components/auth/DeleteAccForm.svelte';
+	import { getContext } from 'svelte';
+	import type { User } from '$lib/types/User';
 
 	export let data: PageData;
 
 	// When we update the email, this then lets the page reacte to that.
-	$: ({ user, lists } = data);
+	$: ({ lists } = data);
+
+	const user: User = getContext('user');
 </script>
 
 <svelte:head>
