@@ -2,11 +2,8 @@ import { API_URL } from '$env/static/private';
 import { handleLoginRedirect } from '$lib/utils/handleLoginRedirect';
 import { refreshXSRFToken } from '$lib/utils/useSetCookies';
 import { redirect, type Handle, type HandleFetch, type HandleServerError, error } from '@sveltejs/kit';
-import { getUser } from './lib/auth/user';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.user = await getUser(event);
-
 	if (event.locals.user && (event.url.pathname.startsWith('/login') || event.url.pathname.startsWith('/register'))) {
 		redirect(303, '/profile');
 	}
@@ -40,7 +37,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 		request.headers.set('cookie', event.request.headers.get('cookie')?.replace('%3D', '=') || '');
 		request.headers.set(
 			'X-XSRF-TOKEN',
-			event.request.headers.get('cookie')?.split(';')[0].replace('XSRF-TOKEN=', '').replace('%3D', '=') || ''
+			event.request.headers.get('cookie')?.split(';')[0].replace('XSRF-TOKEN=', '').replace('%3D', '=') || '',
 		);
 	}
 	return fetch(request);
