@@ -48,19 +48,6 @@ export const GET: RequestHandler = async ({ fetch }) => {
 			<loc>${PUBLIC_APP_URL}/transparency</loc>
 			<lastmod>2024-10-06</lastmod>
 		</url>
-		<url>
-			<loc>${PUBLIC_APP_URL}/compare</loc>
-			<lastmod>${lists.data[0].updated.split('T')[0]}</lastmod>
-		</url>
-		${lists.data
-			.map(
-				(list: List) =>
-					`<url>
-				<loc>${PUBLIC_APP_URL}/compare/${list.slug}</loc>
-				<lastmod>${list.updated.split('T')[0]}</lastmod>
-			</url>`,
-			)
-			.join('')}
 		${lists.data
 			.map(
 				(list: List) =>
