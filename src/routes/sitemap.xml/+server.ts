@@ -46,7 +46,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 		</url>
 		<url>
 			<loc>${PUBLIC_APP_URL}/transparency</loc>
-			<lastmod>2024-05-07</lastmod>
+			<lastmod>2024-10-06</lastmod>
 		</url>
 		<url>
 			<loc>${PUBLIC_APP_URL}/compare</loc>
@@ -58,7 +58,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 					`<url>
 				<loc>${PUBLIC_APP_URL}/compare/${list.slug}</loc>
 				<lastmod>${list.updated.split('T')[0]}</lastmod>
-			</url>`
+			</url>`,
 			)
 			.join('')}
 		${lists.data
@@ -67,7 +67,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 					`<url>
 				<loc>${PUBLIC_APP_URL}/lists/${list.slug}</loc>
 				<lastmod>${list.updated.split('T')[0]}</lastmod>
-			</url>`
+			</url>`,
 			)
 			.join('')}
 		</urlset>`.trim(),
@@ -75,6 +75,6 @@ export const GET: RequestHandler = async ({ fetch }) => {
 			headers: {
 				'Content-Type': 'application/xml',
 			},
-		}
+		},
 	);
 };
