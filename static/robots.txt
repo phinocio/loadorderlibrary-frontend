@@ -1,6 +1,6 @@
 User-agent: *
 Crawl-delay: 20
-Disallow:
+Disallow: /compare
 
 User-agent: Amazonbot
 Disallow: /
@@ -14,7 +14,7 @@ Disallow: /
 User-agent: DataForSeoBot
 Disallow: /
 
-User-agent: Semrush
+User-agent: SemrushBot
 Disallow: /
 
 User-agent: AhrefsBot
