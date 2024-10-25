@@ -12,6 +12,9 @@
 	import BookOpenIcon from '$lib/components/icons/BookOpen.svelte';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import FileIcon from '$lib/components/icons/File.svelte';
+	import { getContext } from 'svelte';
+	import type { User } from '$lib/types/User';
+	import type { Writable } from 'svelte/store';
 
 	export let data: PageData;
 
@@ -20,6 +23,11 @@
 		validators: zodClient(uploadSchema),
 		validationMethod: 'auto',
 	});
+
+	$: if ($message?.includes('CSRF')) {
+		const user: Writable<User | null> = getContext('user');
+		user.set(null);
+	}
 </script>
 
 <svelte:head>
@@ -321,8 +329,9 @@
 					</p>
 				</div>
 				<button
+					disabled={$message}
 					type="submit"
-					class="rounded-full bg-blue-500 px-8 py-3 text-white hover:bg-blue-600 active:bg-blue-700"
+					class="rounded-full bg-blue-500 px-8 py-3 text-white hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300 disabled:dark:bg-blue-800 disabled:dark:text-gray-400"
 					>Upload</button
 				>
 			</section>

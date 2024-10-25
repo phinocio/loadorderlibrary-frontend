@@ -43,9 +43,13 @@ export const actions = {
 
 			if (resp.status === 419) {
 				await refreshXSRFToken(cookies);
-				return message(form, `Error uploading list. Please try again. ERROR: ${err.message}`, {
-					status: resp.status,
-				});
+				return message(
+					form,
+					`Error uploading list. Please clear site data, login again, and try uploading again. Additionally, you have been logged out. ERROR: ${err.message}`,
+					{
+						status: resp.status,
+					},
+				);
 			}
 
 			return message(form, err, {
