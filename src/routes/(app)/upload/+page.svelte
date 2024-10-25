@@ -52,9 +52,11 @@
 
 	<p class="text-xl font-bold">All Server Errors</p>
 	<ul class="mb-4">
-		{#each Object.entries($message.errors) as [key, err]}
-			<li class="text-red-600 dark:text-red-500">{key}: {err}</li>
-		{/each}
+		{#if $message.errors}
+			{#each Object.entries($message.errors) as [key, err]}
+				<li class="text-red-600 dark:text-red-500">{key}: {err}</li>
+			{/each}
+		{/if}
 	</ul>
 {/if}
 

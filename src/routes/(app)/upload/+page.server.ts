@@ -38,6 +38,8 @@ export const actions = {
 			body: formData,
 		});
 
+		console.log(`resp.status: ${resp.status}`);
+
 		if (resp.status !== 201) {
 			const err = await resp.json();
 
