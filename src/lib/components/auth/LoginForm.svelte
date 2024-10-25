@@ -74,16 +74,6 @@
 			/>
 		</label>
 
-		<label for="remember" class="mr-4 flex items-center justify-end space-x-4 text-right">
-			<p>Remember Me</p>
-			<input
-				type="checkbox"
-				id="remember"
-				name="remember"
-				class="h-5 w-5 cursor-pointer text-white accent-green-500"
-			/>
-		</label>
-
 		<section class="flex items-center justify-between">
 			<a class="text-sm text-gray-400 underline hover:text-gray-600" href="/register">Not Registered?</a>
 			<button
