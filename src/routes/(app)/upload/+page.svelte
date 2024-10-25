@@ -47,7 +47,7 @@
 {#if $message}
 	<div class="mb-4 rounded-xl bg-red-500 p-4 text-white">
 		<strong>Server returned error:</strong>
-		{$message.message}
+		{$message}
 	</div>
 
 	<p class="text-xl font-bold">All Server Errors</p>
