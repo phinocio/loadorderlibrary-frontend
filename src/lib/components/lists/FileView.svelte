@@ -28,6 +28,25 @@
 		}
 	}
 
+	function collapseExpandAll(type: 'collapse' | 'expand') {
+		const listUl = document.getElementById(`ul-${fileName}`);
+		const listLi = listUl?.getElementsByTagName('li');
+		if (!listUl || !listLi || listLi.length === 0) {
+			return;
+		}
+		for (let i = 0; i < listLi.length; i++) {
+			if (!listLi[i].classList.contains("disabled")) {
+				const isSeparator = filteredMods[i].endsWith("_separator");
+				if (isSeparator) continue;
+				if (type === 'collapse' && !listLi[i].classList.contains("hidden")) {
+					listLi[i].classList.add('hidden');
+				} else if (type === 'expand' && listLi[i].classList.contains("hidden")) {
+					listLi[i].classList.remove('hidden');
+				}
+			}
+		}
+	}
+
 	function debounceFilter(callback: () => void, delay: number): void {
 		clearTimeout(timeoutId);
 		timeoutId = setTimeout(callback, delay);
