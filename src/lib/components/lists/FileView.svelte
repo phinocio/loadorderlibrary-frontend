@@ -1,4 +1,6 @@
 <script lang="ts">
+	import MenuIcon from "$lib/components/icons/Menu.svelte";
+
 	export let content: string[];
 	export { className as class };
 	export let fileName: string;
@@ -8,6 +10,8 @@
 	let showDisabled: boolean = false;
 	let timeoutId: number;
 	let filteredMods: string[] = [];
+
+    let miscOptionsHidden = true;
 
 	function toggleSeparator(index: number) {
 		// We need to add the index of the separator we are working with to the found nextSep index so it
@@ -24,6 +28,26 @@
 		for (let i = index + 1; i < nextSep + 1; i++) {
 			if (!listLi[i].classList.contains('disabled')) {
 				listLi[i].classList.toggle('hidden');
+			}
+		}
+	}
+
+	function collapseExpandAll(type: 'collapse' | 'expand') {
+		miscOptionsHidden = true;
+		const listUl = document.getElementById(`ul-${fileName}`);
+		const listLi = listUl?.getElementsByTagName('li');
+		if (!listUl || !listLi || listLi.length === 0) {
+			return;
+		}
+		for (let i = 0; i < listLi.length; i++) {
+			if (!listLi[i].classList.contains("disabled")) {
+				const isSeparator = filteredMods[i].endsWith("_separator");
+				if (isSeparator) continue;
+				if (type === 'collapse' && !listLi[i].classList.contains("hidden")) {
+					listLi[i].classList.add('hidden');
+				} else if (type === 'expand' && listLi[i].classList.contains("hidden")) {
+					listLi[i].classList.remove('hidden');
+				}
 			}
 		}
 	}
@@ -77,6 +101,45 @@
 					bind:checked={showDisabled}
 				/>
 			</label>
+			<div class="relative hidden sm:block">
+				<button
+					on:click={() => (miscOptionsHidden = !miscOptionsHidden)}
+					type="button"
+					class="relative z-20 flex px-2 bg-light dark:bg-dark"
+					title="View More Options"
+					aria-label="View More Options"
+					>
+						<MenuIcon class="h-8 w-8" />
+					</button
+				>
+				<button
+					type="button"
+					aria-labelledby="Close Dropdown"
+					class="fixed inset-0 z-10 hidden h-full w-full cursor-default"
+					class:hidden={miscOptionsHidden}
+					on:click={() => (miscOptionsHidden = !miscOptionsHidden)}
+					tabindex="-1"
+				></button>
+				<div
+					class="absolute right-0 z-10 mt-2 w-48 rounded-lg border border-blue-500 bg-light dark:bg-dark"
+					class:hidden={miscOptionsHidden}
+				>
+					<button
+						aria-label="Collapse All"
+						class="py-2 px-2 rounded-lg w-full hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+						on:click={() => collapseExpandAll('collapse')}
+					>
+						Collapse All
+					</button>
+					<button
+						aria-label="Expand All"
+						class="py-2 px-2 rounded-lg w-full hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+						on:click={() => collapseExpandAll('expand')}
+					>
+						Expand All
+					</button>
+				</div>
+			</div>
 		{/if}
 	</section>
 	<ul id="ul-{fileName}">
