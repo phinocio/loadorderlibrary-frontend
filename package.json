@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev --host",
-		"build": "node --max-old-space-size=512 node_modules/vite/bin/vite.js build --sourcemap false",
+		"build": "node --max-old-space-size=128 node_modules/vite/bin/vite.js build --sourcemap false",
 		"preview": "vite preview --host",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
