@@ -24,7 +24,7 @@
 
 <div class="mb-4 flex flex-col md:flex-row md:justify-between">
 	<h1 class="text-3xl font-bold">Transparency</h1>
-	<p>Last Updated: 2024-10-06</p>
+	<p>Laast Updated: 2024-10-06</p>
 </div>
 
 <div class="space-y-4">
