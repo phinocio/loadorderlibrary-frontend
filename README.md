@@ -2,23 +2,23 @@
 
 Load Order Library is a tool mostly intended to help in debugging/supporting Mod Organizer lists for Bethesda games. It's meant to serve as an alternative/replacement for [Modwatch](https://modwat.ch/). The premiere feature being a list comparison tool.
 
-I have a Patreon I guess. Don't feel the need to contribute or anything, I have no intention of doing perks/goals. If anything, the only thing I care about is covering the costs of the site/server. See https://loadorderlibrary.com/transparency for details.
+I have a Patreon I guess. Don't feel the need to contribute or anything, I have no intention of doing perks/goals. If anything, the only thing I care about is covering the costs of the site/server. See <https://loadorderlibrary.com/transparency> for details.
 
-https://www.patreon.com/phinocio
+<https://www.patreon.com/phinocio>
 
-https://ko-fi.com/phinocio
+<https://ko-fi.com/phinocio>
 
 # Table Of Contents
 
 <!-- TOC -->
 
--   [Goal](#goal)
--   [Features](#features)
--   [Planned Features](#planned-features)
--   [Privacy](#privacy)
--   [Transparency](#transparency)
--   [Support/Issues](#supportissues)
--   [Thanks](#thanks)
+- [Goal](#goal)
+- [Features](#features)
+- [Planned Features](#planned-features)
+- [Privacy](#privacy)
+- [Transparency](#transparency)
+- [Support/Issues](#supportissues)
+- [Thanks](#thanks)
 
 <!-- /TOC -->
 
@@ -32,11 +32,11 @@ The goal of Load Order Library is to make the life of people doing support for m
 
 Load Order Library has a slew of features.
 
--   No registration required. Lists can be uploaded anonymously. You do need an account to edit and delete lists, however. Anonymous ones can't be deleted.
--   Private lists. Only people with the link can view them.
--   For users that decide to register, you can have as many lists as you want.
--   Comparison tool.
--   Completely free. No Ads.
+- No registration required. Lists can be uploaded anonymously. You do need an account to edit and delete lists, however. Anonymous ones can't be deleted.
+- Private lists. Only people with the link can view them.
+- For users that decide to register, you can have as many lists as you want.
+- Comparison tool.
+- Completely free. No Ads.
 
 More planned and coming soon!
 
@@ -46,7 +46,11 @@ Working on a better place for this...for now just check the issues tab on this r
 
 # Privacy
 
-Load Order Library uses no analytic services at all, but makes use of Loki/Promtail/Grafana<sup>1</sup> to analyze existing Caddy access logs. Some 3rd party tools are used, but no external requests are made, they are served with the page itself. Files uploaded are on the server until such time they are no longer associated with a list. At which point they are deleted once a week. Files also are in backups until the backup they are in was deleted (backups are created daily and deleted once they are 30 days old).
+Updated: 2025-03-29
+
+Load Order Library uses ~~no analytic services at all~~, Cloudflare for DNS protection with comes with some analytics. Some 3rd party tools are used, but no external requests are made (except Cloudflare Analytics script), they are served with the page itself. Files uploaded are on ~~the server~~ a Cloudflare R2 Bucket until such time they are no longer associated with a list. At which point they are deleted once a week.
+
+Feel free to use UBlock Origin or other ad blockers to block the Cloudflare Analytics script if you wish. It's not necessary for the site to function.
 
 Data provided is entirely for the use of the site, and does not leave the server except in the case of encrypted database backups. Passwords are hashed and never stored in plain text. The server is hosted via a Digital Ocean droplet located in Toronto, Canada.
 
@@ -54,9 +58,9 @@ Data provided is entirely for the use of the site, and does not leave the server
 
 # Transparency
 
-For financial transparency please see https://loadorderlibrary.com/transparency
+For financial transparency please see <https://loadorderlibrary.com/transparency>
 
-For some simple stats about the site, please see https://loadorderlibrary.com/stats
+For some simple stats about the site, please see <https://loadorderlibrary.com/stats>
 
 # Support/Issues
 
