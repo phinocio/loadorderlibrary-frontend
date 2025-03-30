@@ -40,7 +40,9 @@
 	<meta name="msapplication-TileColor" content="#2b5797" />
 	<meta name="theme-color" content="#ffffff" />
 
-	<script>
+	<script
+		integrity="ZDU2MWZjYWE4MzZkY2E0NjE1OWM4M2Y5M2I1ODkwNzI4NDQ0OGFlNzY3NTIyOGFiNjE2ZTQ5YWUwMDYzODNkNWY0YTg5MWVmMmMzMWY2MWRiNTllZDZkOTBkMzk5Nzc4YjYyYmYzNjg3YTc5Yjk1MDIxOWRiOWZiN2YyZmNjMzY="
+	>
 		if (
 			localStorage.theme === 'dark' ||
 			(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
