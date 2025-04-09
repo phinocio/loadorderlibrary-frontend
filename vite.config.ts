@@ -1,20 +1,7 @@
-import { fileURLToPath, URL } from 'node:url';
-
-import tailwindcss from '@tailwindcss/vite';
-import vue from '@vitejs/plugin-vue';
-import { defineConfig } from 'vite';
-import vueDevTools from 'vite-plugin-vue-devtools';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [vue(), vueDevTools(), tailwindcss()],
-	resolve: {
-		alias: {
-			'@': fileURLToPath(new URL('./src', import.meta.url)),
-		},
-	},
-	server: {
-		host: true,
-		allowedHosts: ['lol.wonderland'],
-	},
-});
+  plugins: [react()],
+})
