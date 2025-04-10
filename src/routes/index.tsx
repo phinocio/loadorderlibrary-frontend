@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import logo from "../logo.svg";
+import logo from "@/logo.svg";
 
 export const Route = createFileRoute("/")({
 	component: App,
@@ -16,6 +16,7 @@ function App() {
 				/>
 				<p>
 					Edit <code>src/routes/index.tsx</code> and save to reload.
+					meow
 				</p>
 				<a
 					className="text-[#61dafb] hover:underline"
