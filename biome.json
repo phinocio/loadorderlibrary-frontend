@@ -8,11 +8,18 @@
 	"files": {
 		"ignoreUnknown": false,
 		"ignore": ["src/routeTree.gen.ts"],
-		"include": ["src/*", ".vscode/*", "index.html", "vite.config.js"]
+		"include": [
+			"src/*",
+			".vscode/*",
+			"index.html",
+			"vite.config.js",
+			"*.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "tab",
+		"indentWidth": 4
 	},
 	"organizeImports": {
 		"enabled": true

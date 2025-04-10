@@ -1,6 +1,8 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "version": "1",
+  "manifest_version": 3,
+  "short_name": "Load Order Library",
+  "name": "Load Order Library",
   "icons": [
     {
       "src": "favicon.ico",
