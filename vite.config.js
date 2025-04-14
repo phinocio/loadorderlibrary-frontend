@@ -16,6 +16,10 @@ export default defineConfig({
 		globals: true,
 		environment: "jsdom",
 	},
+	server: {
+		host: true,
+		allowedHosts: ["lol.wonderland.phinoc.io"],
+	},
 	resolve: {
 		alias: {
 			"@": resolve(__dirname, "./src"),

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import logo from "@/logo.svg";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -15,7 +14,6 @@ function App() {
 					className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
 					alt="logo"
 				/>
-				<Button onClick={() => alert("Hi")}>Meow</Button>
 				<p>
 					Edit <code>src/routes/index.tsx</code> and save to reload.
 				</p>

@@ -15,9 +15,11 @@
 	"dependencies": {
 		"@radix-ui/react-slot": "^1.2.0",
 		"@tailwindcss/vite": "^4.0.6",
+		"@tanstack/react-query": "^5.74.0",
 		"@tanstack/react-router": "^1.114.3",
 		"@tanstack/react-router-devtools": "^1.114.3",
 		"@tanstack/router-plugin": "^1.114.3",
+		"axios": "^1.8.4",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.487.0",
@@ -29,6 +31,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@tanstack/react-query-devtools": "^5.74.0",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/react": "^16.2.0",
 		"@types/react": "^19.0.8",
