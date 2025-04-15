@@ -2,7 +2,7 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiVersion = import.meta.env.VITE_API_VERSION;
-const csrfEndpoint = "/sanctum/csrf-cookie";
+const csrfEndpoint = `${apiBaseUrl}/sanctum/csrf-cookie`;
 
 const axiosInstance = axios.create({
 	baseURL: `${apiBaseUrl}/${apiVersion}`,
@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
 		const method = config.method?.toLowerCase();
 
 		if (method && csrfMethods.includes(method)) {
-			await axios.get(`${apiBaseUrl}${csrfEndpoint}`, {
+			await axios.get(csrfEndpoint, {
 				withCredentials: true,
 			});
 		}

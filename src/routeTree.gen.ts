@@ -11,79 +11,149 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
+import { Route as appRouteImport } from './routes/(app)/route'
+import { Route as AdminIndexImport } from './routes/admin/index'
+import { Route as appIndexImport } from './routes/(app)/index'
+import { Route as appAboutImport } from './routes/(app)/about'
+import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const appRouteRoute = appRouteImport.update({
+  id: '/(app)',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const AdminIndexRoute = AdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const appIndexRoute = appIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => appRouteRoute,
+} as any)
+
+const appAboutRoute = appAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
+const appListsIndexRoute = appListsIndexImport.update({
+  id: '/lists/',
+  path: '/lists/',
+  getParentRoute: () => appRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(app)': {
+      id: '/(app)'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+      preLoaderRoute: typeof appRouteImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
+    '/(app)/about': {
+      id: '/(app)/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+      preLoaderRoute: typeof appAboutImport
+      parentRoute: typeof appRouteImport
+    }
+    '/(app)/': {
+      id: '/(app)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof appIndexImport
+      parentRoute: typeof appRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/(app)/lists/': {
+      id: '/(app)/lists/'
+      path: '/lists'
+      fullPath: '/lists'
+      preLoaderRoute: typeof appListsIndexImport
+      parentRoute: typeof appRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface appRouteRouteChildren {
+  appAboutRoute: typeof appAboutRoute
+  appIndexRoute: typeof appIndexRoute
+  appListsIndexRoute: typeof appListsIndexRoute
+}
+
+const appRouteRouteChildren: appRouteRouteChildren = {
+  appAboutRoute: appAboutRoute,
+  appIndexRoute: appIndexRoute,
+  appListsIndexRoute: appListsIndexRoute,
+}
+
+const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
+  appRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/': typeof appIndexRoute
+  '/about': typeof appAboutRoute
+  '/admin': typeof AdminIndexRoute
+  '/lists': typeof appListsIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof appAboutRoute
+  '/': typeof appIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/lists': typeof appListsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/(app)': typeof appRouteRouteWithChildren
+  '/(app)/about': typeof appAboutRoute
+  '/(app)/': typeof appIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/(app)/lists/': typeof appListsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/about' | '/admin' | '/lists'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/about' | '/' | '/admin' | '/lists'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/(app)/about'
+    | '/(app)/'
+    | '/admin/'
+    | '/(app)/lists/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  appRouteRoute: typeof appRouteRouteWithChildren
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  appRouteRoute: appRouteRouteWithChildren,
+  AdminIndexRoute: AdminIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -96,15 +166,32 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/about"
+        "/(app)",
+        "/admin/"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/(app)": {
+      "filePath": "(app)/route.tsx",
+      "children": [
+        "/(app)/about",
+        "/(app)/",
+        "/(app)/lists/"
+      ]
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/(app)/about": {
+      "filePath": "(app)/about.tsx",
+      "parent": "/(app)"
+    },
+    "/(app)/": {
+      "filePath": "(app)/index.tsx",
+      "parent": "/(app)"
+    },
+    "/admin/": {
+      "filePath": "admin/index.tsx"
+    },
+    "/(app)/lists/": {
+      "filePath": "(app)/lists/index.tsx",
+      "parent": "/(app)"
     }
   }
 }
