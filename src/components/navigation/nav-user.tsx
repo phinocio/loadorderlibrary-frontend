@@ -30,27 +30,27 @@ import { useAuth } from "@/hooks/use-auth";
 
 export function NavUser() {
 	const { isMobile } = useSidebar();
-	const { user, logout, isLoading } = useAuth();
+	const { user, logout } = useAuth();
 
-	// Show nothing while loading
-	if (isLoading) {
-		return null;
-	}
-
-	// Show login button if no user
 	if (!user) {
 		return (
 			<SidebarMenu>
-				<SidebarMenuItem>
-					<SidebarMenuButton asChild>
+				<SidebarMenuItem className="flex flex-col gap-2">
+					<SidebarMenuButton
+						asChild
+						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-accent hover:text-accent-foreground"
+					>
 						<Link to="/login">
 							<LogIn className="size-4" />
 							<span>Login</span>
 						</Link>
 					</SidebarMenuButton>
-					<SidebarMenuButton asChild>
+					<SidebarMenuButton
+						asChild
+						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-accent hover:text-accent-foreground"
+					>
 						<Link to="/register">
-							<LogIn className="size-4" />
+							<User className="size-4" />
 							<span>Register</span>
 						</Link>
 					</SidebarMenuButton>
