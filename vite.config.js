@@ -4,6 +4,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
-		allowedHosts: ['testing.lol.wonderland'],
+		allowedHosts: ['lol.wonderland.phinoc.io'],
 	},
 });
