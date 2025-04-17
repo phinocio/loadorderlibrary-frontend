@@ -1,8 +1,8 @@
 import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
 import type * as React from "react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/components/navigation/nav-main";
+import { NavUser } from "@/components/navigation/nav-user";
 import {
 	Sidebar,
 	SidebarContent,

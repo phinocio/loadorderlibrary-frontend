@@ -7,6 +7,7 @@ import * as TanstackQuery from "@/integrations/tanstack-query/root-provider";
 // Import the generated route tree
 import { routeTree } from "@/routeTree.gen";
 
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import reportWebVitals from "@/reportWebVitals.ts";
 import "@/styles.css";
 
@@ -35,9 +36,11 @@ if (rootElement && !rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<StrictMode>
-			<TanstackQuery.Provider>
-				<RouterProvider router={router} />
-			</TanstackQuery.Provider>
+			<ThemeProvider>
+				<TanstackQuery.Provider>
+					<RouterProvider router={router} />
+				</TanstackQuery.Provider>
+			</ThemeProvider>
 		</StrictMode>,
 	);
 }
