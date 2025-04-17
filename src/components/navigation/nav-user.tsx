@@ -2,12 +2,12 @@
 
 import { Link } from "@tanstack/react-router";
 import {
-	BadgeCheck,
 	ChevronsUpDown,
-	CreditCard,
+	Lock,
 	LogIn,
 	LogOut,
 	Settings,
+	User,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -26,11 +26,18 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import type { User } from "@/types/user";
+import { useAuth } from "@/hooks/use-auth";
 
-export function NavUser({ user = null }: { user?: User | null }) {
+export function NavUser() {
 	const { isMobile } = useSidebar();
+	const { user, logout, isLoading } = useAuth();
 
+	// Show nothing while loading
+	if (isLoading) {
+		return null;
+	}
+
+	// Show login button if no user
 	if (!user) {
 		return (
 			<SidebarMenu>
@@ -41,10 +48,18 @@ export function NavUser({ user = null }: { user?: User | null }) {
 							<span>Login</span>
 						</Link>
 					</SidebarMenuButton>
+					<SidebarMenuButton asChild>
+						<Link to="/register">
+							<LogIn className="size-4" />
+							<span>Register</span>
+						</Link>
+					</SidebarMenuButton>
 				</SidebarMenuItem>
 			</SidebarMenu>
 		);
 	}
+
+	const initials = user.name.slice(0, 2).toUpperCase();
 
 	return (
 		<SidebarMenu>
@@ -57,16 +72,18 @@ export function NavUser({ user = null }: { user?: User | null }) {
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
 								<AvatarFallback className="rounded-lg">
-									{user.name.slice(0, 2).toUpperCase()}
+									{initials}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">
 									{user.name}
 								</span>
-								<span className="truncate text-xs">
-									{user.email}
-								</span>
+								{user.email && (
+									<span className="truncate text-xs">
+										{user.email}
+									</span>
+								)}
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>
@@ -81,7 +98,7 @@ export function NavUser({ user = null }: { user?: User | null }) {
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
 									<AvatarFallback className="rounded-lg">
-										{user.name.slice(0, 2).toUpperCase()}
+										{initials}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
@@ -96,24 +113,30 @@ export function NavUser({ user = null }: { user?: User | null }) {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
-								<BadgeCheck className="size-4" />
-								<span>Account</span>
-							</DropdownMenuItem>
+							<Link to="/lists">
+								<DropdownMenuItem>
+									<User className="size-4" />
+									<span>Profile</span>
+								</DropdownMenuItem>
+							</Link>
 							<DropdownMenuItem>
 								<Settings className="size-4" />
 								<span>Settings</span>
 							</DropdownMenuItem>
-							<DropdownMenuSeparator />
-							{!user.admin && (
-								<DropdownMenuItem>
-									<CreditCard className="size-4" />
-									<span>Admin</span>
-								</DropdownMenuItem>
-							)}
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						{user.admin && (
+							<>
+								<DropdownMenuGroup>
+									<DropdownMenuItem>
+										<Lock className="size-4" />
+										<span>Admin Dash</span>
+									</DropdownMenuItem>
+								</DropdownMenuGroup>
+								<DropdownMenuSeparator />
+							</>
+						)}
+						<DropdownMenuItem onClick={() => logout()}>
 							<LogOut className="size-4" />
 							<span>Log out</span>
 						</DropdownMenuItem>

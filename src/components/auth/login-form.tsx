@@ -8,13 +8,38 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 
 export function LoginForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
+	const navigate = useNavigate();
+	const { login, isLoggingIn, loginError } = useAuth();
+	const [formData, setFormData] = useState({
+		name: "",
+		password: "",
+	});
+
+	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		login(formData, {
+			onSuccess: () => {
+				navigate({ to: "/" });
+			},
+		});
+	}
+
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		setFormData((prev) => ({
+			...prev,
+			[e.target.id]: e.target.value,
+		}));
+	}
+
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<Card>
@@ -25,7 +50,14 @@ export function LoginForm({
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form>
+					<form onSubmit={onSubmit}>
+						{loginError && (
+							<div className="mb-4 text-sm text-red-500">
+								{loginError instanceof Error
+									? loginError.message
+									: "Something went wrong. Please try again."}
+							</div>
+						)}
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-3">
 								<Label htmlFor="name">Name</Label>
@@ -34,6 +66,9 @@ export function LoginForm({
 									type="text"
 									placeholder="Enter your name"
 									required
+									value={formData.name}
+									onChange={handleChange}
+									disabled={isLoggingIn}
 								/>
 							</div>
 							<div className="grid gap-3">
@@ -46,11 +81,23 @@ export function LoginForm({
 										Forgot your password?
 									</Link>
 								</div>
-								<Input id="password" type="password" required />
+								<Input
+									id="password"
+									type="password"
+									placeholder="Enter your password"
+									required
+									value={formData.password}
+									onChange={handleChange}
+									disabled={isLoggingIn}
+								/>
 							</div>
 							<div className="flex flex-col gap-3">
-								<Button type="submit" className="w-full">
-									Login
+								<Button
+									type="submit"
+									className="w-full"
+									disabled={isLoggingIn}
+								>
+									{isLoggingIn ? "Logging in..." : "Login"}
 								</Button>
 							</div>
 						</div>

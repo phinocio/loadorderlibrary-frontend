@@ -1,4 +1,3 @@
-import { register } from "@/api/auth";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -9,9 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
 import { useState } from "react";
 
 export function RegisterForm({
@@ -19,8 +18,7 @@ export function RegisterForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const navigate = useNavigate();
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string>();
+	const { register, isRegistering, registerError } = useAuth();
 	const [formData, setFormData] = useState({
 		name: "",
 		password: "",
@@ -29,24 +27,11 @@ export function RegisterForm({
 
 	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		setError(undefined);
-		setIsLoading(true);
-
-		try {
-			await register(formData);
-			navigate({ to: "/" });
-		} catch (err) {
-			console.log(err);
-			setError(
-				err instanceof AxiosError
-					? err.response?.data?.message ||
-							err.response?.data?.error ||
-							err.message
-					: "Something went wrong. Please try again.",
-			);
-		} finally {
-			setIsLoading(false);
-		}
+		register(formData, {
+			onSuccess: () => {
+				navigate({ to: "/" });
+			},
+		});
 	}
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -67,9 +52,11 @@ export function RegisterForm({
 				</CardHeader>
 				<CardContent>
 					<form onSubmit={onSubmit}>
-						{error && (
+						{registerError && (
 							<div className="mb-4 text-sm text-red-500">
-								{error}
+								{registerError instanceof Error
+									? registerError.message
+									: "Something went wrong. Please try again."}
 							</div>
 						)}
 						<div className="flex flex-col gap-6">
@@ -82,7 +69,7 @@ export function RegisterForm({
 									required
 									value={formData.name}
 									onChange={handleChange}
-									disabled={isLoading}
+									disabled={isRegistering}
 								/>
 							</div>
 							<div className="grid gap-3">
@@ -94,7 +81,7 @@ export function RegisterForm({
 									required
 									value={formData.password}
 									onChange={handleChange}
-									disabled={isLoading}
+									disabled={isRegistering}
 								/>
 							</div>
 							<div className="grid gap-3">
@@ -108,16 +95,18 @@ export function RegisterForm({
 									required
 									value={formData.password_confirmation}
 									onChange={handleChange}
-									disabled={isLoading}
+									disabled={isRegistering}
 								/>
 							</div>
 							<div className="flex flex-col gap-3">
 								<Button
 									type="submit"
 									className="w-full"
-									disabled={isLoading}
+									disabled={isRegistering}
 								>
-									{isLoading ? "Registering..." : "Register"}
+									{isRegistering
+										? "Creating account..."
+										: "Create account"}
 								</Button>
 							</div>
 						</div>
