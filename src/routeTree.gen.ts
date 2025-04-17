@@ -14,6 +14,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as appRouteImport } from './routes/(app)/route'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as appIndexImport } from './routes/(app)/index'
+import { Route as authRegisterImport } from './routes/(auth)/register'
+import { Route as authLoginImport } from './routes/(auth)/login'
+import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
 import { Route as appAboutImport } from './routes/(app)/about'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 
@@ -34,6 +37,24 @@ const appIndexRoute = appIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const authRegisterRoute = authRegisterImport.update({
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authLoginRoute = authLoginImport.update({
+  id: '/(auth)/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authForgotPasswordRoute = authForgotPasswordImport.update({
+  id: '/(auth)/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const appAboutRoute = appAboutImport.update({
@@ -65,6 +86,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/about'
       preLoaderRoute: typeof appAboutImport
       parentRoute: typeof appRouteImport
+    }
+    '/(auth)/forgot-password': {
+      id: '/(auth)/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof authForgotPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterImport
+      parentRoute: typeof rootRoute
     }
     '/(app)/': {
       id: '/(app)/'
@@ -111,12 +153,18 @@ const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/about': typeof appAboutRoute
+  '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/admin': typeof AdminIndexRoute
   '/lists': typeof appListsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/about': typeof appAboutRoute
+  '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/': typeof appIndexRoute
   '/admin': typeof AdminIndexRoute
   '/lists': typeof appListsIndexRoute
@@ -126,6 +174,9 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/(app)': typeof appRouteRouteWithChildren
   '/(app)/about': typeof appAboutRoute
+  '/(auth)/forgot-password': typeof authForgotPasswordRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/lists/': typeof appListsIndexRoute
@@ -133,13 +184,30 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/admin' | '/lists'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/admin'
+    | '/lists'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/' | '/admin' | '/lists'
+  to:
+    | '/about'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/'
+    | '/admin'
+    | '/lists'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/about'
+    | '/(auth)/forgot-password'
+    | '/(auth)/login'
+    | '/(auth)/register'
     | '/(app)/'
     | '/admin/'
     | '/(app)/lists/'
@@ -148,11 +216,17 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   appRouteRoute: typeof appRouteRouteWithChildren
+  authForgotPasswordRoute: typeof authForgotPasswordRoute
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
+  authForgotPasswordRoute: authForgotPasswordRoute,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -167,6 +241,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/(app)",
+        "/(auth)/forgot-password",
+        "/(auth)/login",
+        "/(auth)/register",
         "/admin/"
       ]
     },
@@ -181,6 +258,15 @@ export const routeTree = rootRoute
     "/(app)/about": {
       "filePath": "(app)/about.tsx",
       "parent": "/(app)"
+    },
+    "/(auth)/forgot-password": {
+      "filePath": "(auth)/forgot-password.tsx"
+    },
+    "/(auth)/login": {
+      "filePath": "(auth)/login.tsx"
+    },
+    "/(auth)/register": {
+      "filePath": "(auth)/register.tsx"
     },
     "/(app)/": {
       "filePath": "(app)/index.tsx",
