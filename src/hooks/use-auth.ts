@@ -7,9 +7,9 @@ export function useAuth() {
 
 	const { data: user, isLoading } = useQuery<User>({
 		queryKey: ["user"],
-		queryFn: () => getUser().then((res) => res.data.data),
+		queryFn: getUser,
 		retry: false,
-		staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+		staleTime: 5 * 60 * 1000, // 5 minutes
 	});
 
 	const loginMutation = useMutation<
@@ -17,7 +17,7 @@ export function useAuth() {
 		Error,
 		{ name: string; password: string }
 	>({
-		mutationFn: (data) => login(data).then((res) => res.data.data),
+		mutationFn: login,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);
 		},
@@ -32,7 +32,7 @@ export function useAuth() {
 			password_confirmation: string;
 		}
 	>({
-		mutationFn: (data) => register(data).then((res) => res.data.data),
+		mutationFn: register,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);
 		},
@@ -55,5 +55,6 @@ export function useAuth() {
 		isRegistering: registerMutation.isPending,
 		loginError: loginMutation.error,
 		registerError: registerMutation.error,
+		isAuthenticated: !!user,
 	};
 }

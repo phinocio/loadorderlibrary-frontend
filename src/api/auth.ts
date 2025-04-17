@@ -1,19 +1,45 @@
 import axios from "@/lib/axios";
 import type { User } from "@/types/user";
+import { type ApiResponse, handleApiError } from "./utils";
 
-type ApiResponse<T> = {
-	data: T;
-};
-
-export const register = (data: {
+export const register = async (data: {
 	name: string;
 	password: string;
 	password_confirmation: string;
-}) => axios.post<ApiResponse<User>>("/register", data);
+}): Promise<User> => {
+	try {
+		const response = await axios.post<ApiResponse<User>>("/register", data);
+		return response.data.data;
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};
 
-export const login = (data: { name: string; password: string }) =>
-	axios.post<ApiResponse<User>>("/login", data);
+export const login = async (data: {
+	name: string;
+	password: string;
+}): Promise<User> => {
+	try {
+		const response = await axios.post<ApiResponse<User>>("/login", data);
+		return response.data.data;
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};
 
-export const logout = () => axios.post<void>("/logout");
+export const logout = async (): Promise<void> => {
+	try {
+		await axios.post<void>("/logout");
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};
 
-export const getUser = () => axios.get<ApiResponse<User>>("/me");
+export const getUser = async (): Promise<User> => {
+	try {
+		const response = await axios.get<ApiResponse<User>>("/me");
+		return response.data.data;
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};
