@@ -9,7 +9,7 @@ export function useAuth() {
 		queryKey: ["user"],
 		queryFn: getUser,
 		retry: false,
-		staleTime: 5 * 60 * 1000, // 5 minutes
+		staleTime: 5 * 60 * 1000,
 	});
 
 	const loginMutation = useMutation<
@@ -42,6 +42,9 @@ export function useAuth() {
 		mutationFn: logout,
 		onSuccess: () => {
 			queryClient.setQueryData(["user"], null);
+			setTimeout(() => {
+				window.location.href = "/";
+			}, 100);
 		},
 	});
 

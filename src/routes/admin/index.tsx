@@ -1,25 +1,7 @@
 import { useAuth } from "@/hooks/use-auth";
-import type { User } from "@/types/user";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/")({
-	beforeLoad: ({ context }) => {
-		const { queryClient } = context;
-		const user = queryClient.getQueryData<User>(["user"]);
-		if (!user) {
-			throw redirect({
-				to: "/login",
-				search: {
-					redirect: "/admin",
-				},
-			});
-		}
-		if (!user.admin) {
-			throw redirect({
-				to: "/",
-			});
-		}
-	},
 	component: RouteComponent,
 });
 

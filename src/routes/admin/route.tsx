@@ -5,10 +5,35 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { Home, Search, User } from "lucide-react";
+import type { User } from "@/types/user";
+import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
+	beforeLoad: async ({ context }) => {
+		const { queryClient } = context;
+
+		// Wait a brief moment for persistence restore
+		await new Promise((resolve) => setTimeout(resolve, 100));
+		// Try one more time after persistence restore
+		const user = queryClient.getQueryData<User>(["user"]);
+
+		// If no user data, ensure we've actually restored from persistence first
+		if (!user) {
+			throw redirect({
+				to: "/login",
+				search: {
+					redirect: "/admin",
+				},
+			});
+		}
+
+		if (!user.admin) {
+			throw redirect({
+				to: "/",
+			});
+		}
+	},
 	component: RouteComponent,
 });
 
@@ -21,7 +46,7 @@ const navItems = [
 	{
 		title: "Users",
 		url: "/admin/users",
-		icon: User,
+		icon: UserIcon,
 	},
 	{
 		title: "Lists",
