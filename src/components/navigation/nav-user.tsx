@@ -26,9 +26,9 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/queries/use-auth";
-import type { User } from "@/types/user";
+import type { CurrentUser } from "@/types/auth";
 
-export function NavUser({ currentUser }: { currentUser: User }) {
+export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 	const { isMobile } = useSidebar();
 	const { logout } = useAuth();
 

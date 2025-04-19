@@ -1,6 +1,9 @@
 import { getCurrentUser, login, logout, register } from "@/api/auth";
-import type { LoginCredentials, RegisterCredentials } from "@/types/auth";
-import type { User } from "@/types/user";
+import type {
+	CurrentUser,
+	LoginCredentials,
+	RegisterCredentials,
+} from "@/types/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const currentUserQueryOptions = {
@@ -11,14 +14,18 @@ export const currentUserQueryOptions = {
 export function useAuth() {
 	const queryClient = useQueryClient();
 
-	const loginMutation = useMutation<User, Error, LoginCredentials>({
+	const loginMutation = useMutation<CurrentUser, Error, LoginCredentials>({
 		mutationFn: login,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);
 		},
 	});
 
-	const registerMutation = useMutation<User, Error, RegisterCredentials>({
+	const registerMutation = useMutation<
+		CurrentUser,
+		Error,
+		RegisterCredentials
+	>({
 		mutationFn: register,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);

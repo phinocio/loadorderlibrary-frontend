@@ -13,7 +13,7 @@ import {
 	SidebarRail,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import type { User } from "@/types/user";
+import type { CurrentUser } from "@/types/auth";
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 
@@ -23,7 +23,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 		url: string;
 		icon: LucideIcon;
 	}[];
-	currentUser: User | null;
+	currentUser: CurrentUser | null;
 }
 
 export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {

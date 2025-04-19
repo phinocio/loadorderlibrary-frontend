@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import type { User } from "@/types/user";
+import type { CurrentUser } from "@/types/auth";
 import { isAxiosError } from "axios";
 import { type ApiResponse, handleApiError } from "./utils";
 
@@ -7,9 +7,12 @@ export const register = async (data: {
 	name: string;
 	password: string;
 	password_confirmation: string;
-}): Promise<User> => {
+}): Promise<CurrentUser> => {
 	try {
-		const response = await axios.post<ApiResponse<User>>("/register", data);
+		const response = await axios.post<ApiResponse<CurrentUser>>(
+			"/register",
+			data,
+		);
 		return response.data.data;
 	} catch (error) {
 		throw handleApiError(error);
@@ -19,9 +22,12 @@ export const register = async (data: {
 export const login = async (data: {
 	name: string;
 	password: string;
-}): Promise<User> => {
+}): Promise<CurrentUser> => {
 	try {
-		const response = await axios.post<ApiResponse<User>>("/login", data);
+		const response = await axios.post<ApiResponse<CurrentUser>>(
+			"/login",
+			data,
+		);
 		return response.data.data;
 	} catch (error) {
 		throw handleApiError(error);
@@ -36,9 +42,9 @@ export const logout = async (): Promise<void> => {
 	}
 };
 
-export const getCurrentUser = async (): Promise<User | null> => {
+export const getCurrentUser = async (): Promise<CurrentUser | null> => {
 	try {
-		const response = await axios.get<ApiResponse<User>>("/me");
+		const response = await axios.get<ApiResponse<CurrentUser>>("/me");
 		return response.data.data;
 	} catch (error) {
 		if (isAxiosError(error) && error.response?.status === 401) {
