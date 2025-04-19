@@ -1,4 +1,3 @@
-import { updateUser, updateUserProfile } from "@/api/user";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -11,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
+import { useUser } from "@/hooks/queries/use-user";
 import type { UserProfile } from "@/types/user";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
@@ -26,7 +26,7 @@ function RouteComponent() {
 	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
 
 	if (!currentUser) {
-		throw Error("Current User is null on profile page somehow."); // This should never happen with useSuspenseQuery, but satisfies TypeScript
+		throw Error("Current User is null on profile page somehow.");
 	}
 
 	const [email, setEmail] = useState(currentUser.email ?? "");
@@ -40,14 +40,14 @@ function RouteComponent() {
 		},
 	);
 
-	const updateUserMutation = useMutation({
-		mutationFn: () =>
-			updateUser(currentUser.name, { email: email || null }),
-	});
-
-	const updateProfileMutation = useMutation({
-		mutationFn: () => updateUserProfile(currentUser.name, profile),
-	});
+	const {
+		updateUser,
+		updateProfile,
+		isUpdatingUser,
+		isUpdatingProfile,
+		updateUserError,
+		updateProfileError,
+	} = useUser(currentUser.name);
 
 	return (
 		<div className="container mx-auto max-w-2xl space-y-6 p-4">
@@ -60,7 +60,7 @@ function RouteComponent() {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							updateUserMutation.mutate();
+							updateUser({ email: email || null });
 						}}
 						className="space-y-4"
 					>
@@ -74,17 +74,12 @@ function RouteComponent() {
 								placeholder="Enter your email"
 							/>
 						</div>
-						<Button
-							type="submit"
-							disabled={updateUserMutation.isPending}
-						>
-							{updateUserMutation.isPending
-								? "Saving..."
-								: "Save Email"}
+						<Button type="submit" disabled={isUpdatingUser}>
+							{isUpdatingUser ? "Saving..." : "Save Email"}
 						</Button>
-						{updateUserMutation.isError && (
+						{updateUserError && (
 							<p className="text-sm text-destructive">
-								{updateUserMutation.error.message}
+								{updateUserError.message}
 							</p>
 						)}
 					</form>
@@ -102,7 +97,7 @@ function RouteComponent() {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							updateProfileMutation.mutate();
+							updateProfile(profile);
 						}}
 						className="space-y-4"
 					>
@@ -177,17 +172,12 @@ function RouteComponent() {
 								placeholder="Your personal website URL"
 							/>
 						</div>
-						<Button
-							type="submit"
-							disabled={updateProfileMutation.isPending}
-						>
-							{updateProfileMutation.isPending
-								? "Saving..."
-								: "Save Profile"}
+						<Button type="submit" disabled={isUpdatingProfile}>
+							{isUpdatingProfile ? "Saving..." : "Save Profile"}
 						</Button>
-						{updateProfileMutation.isError && (
+						{updateProfileError && (
 							<p className="text-sm text-destructive">
-								{updateProfileMutation.error.message}
+								{updateProfileError.message}
 							</p>
 						)}
 					</form>
