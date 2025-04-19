@@ -128,10 +128,12 @@ export function NavUser() {
 						{user.admin && (
 							<>
 								<DropdownMenuGroup>
-									<DropdownMenuItem>
-										<Lock className="size-4" />
-										<span>Admin Dash</span>
-									</DropdownMenuItem>
+									<Link to="/admin">
+										<DropdownMenuItem>
+											<Lock className="size-4" />
+											<span>Admin</span>
+										</DropdownMenuItem>
+									</Link>
 								</DropdownMenuGroup>
 								<DropdownMenuSeparator />
 							</>

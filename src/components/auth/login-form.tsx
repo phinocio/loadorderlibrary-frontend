@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 
 export function LoginForm({
@@ -18,6 +18,7 @@ export function LoginForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const navigate = useNavigate();
+	const { redirect } = useSearch({ from: "/(auth)/login" });
 	const { login, isLoggingIn, loginError } = useAuth();
 	const [formData, setFormData] = useState({
 		name: "",
@@ -28,7 +29,7 @@ export function LoginForm({
 		e.preventDefault();
 		login(formData, {
 			onSuccess: () => {
-				navigate({ to: "/" });
+				navigate({ to: redirect || "/" });
 			},
 		});
 	}

@@ -6,9 +6,9 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
+import { Home, Search, User } from "lucide-react";
 
-export const Route = createFileRoute("/(app)")({
+export const Route = createFileRoute("/admin")({
 	component: RouteComponent,
 });
 
@@ -19,19 +19,14 @@ const navItems = [
 		icon: Home,
 	},
 	{
-		title: "Upload",
-		url: "/upload",
-		icon: Upload,
+		title: "Users",
+		url: "/admin/users",
+		icon: User,
 	},
 	{
-		title: "Browse",
-		url: "/lists",
+		title: "Lists",
+		url: "/admin/lists",
 		icon: Search,
-	},
-	{
-		title: "Compare",
-		url: "/compare",
-		icon: GitCompareIcon,
 	},
 ];
 

@@ -1,4 +1,3 @@
-import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
 import type * as React from "react";
 
 import { NavMain } from "@/components/navigation/nav-main";
@@ -10,39 +9,22 @@ import {
 	SidebarHeader,
 	SidebarRail,
 } from "@/components/ui/sidebar";
+import type { LucideIcon } from "lucide-react";
 
-// This is sample data.
-const data = {
-	navMain: [
-		{
-			title: "Home",
-			url: "/",
-			icon: Home,
-		},
-		{
-			title: "Upload",
-			url: "/upload",
-			icon: Upload,
-		},
-		{
-			title: "Browse",
-			url: "/lists",
-			icon: Search,
-		},
-		{
-			title: "Compare",
-			url: "/compare",
-			icon: GitCompareIcon,
-		},
-	],
-};
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+	routes: {
+		title: string;
+		url: string;
+		icon: LucideIcon;
+	}[];
+}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ routes, ...props }: AppSidebarProps) {
 	return (
 		<Sidebar collapsible="icon" {...props} variant="inset">
 			<SidebarHeader>Header</SidebarHeader>
 			<SidebarContent>
-				<NavMain items={data.navMain} />
+				<NavMain items={routes} />
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />

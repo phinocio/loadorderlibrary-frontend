@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as appRouteImport } from './routes/(app)/route'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as appIndexImport } from './routes/(app)/index'
@@ -22,15 +23,21 @@ import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 
 // Create/Update Routes
 
+const AdminRouteRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const appRouteRoute = appRouteImport.update({
   id: '/(app)',
   getParentRoute: () => rootRoute,
 } as any)
 
 const AdminIndexRoute = AdminIndexImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 const appIndexRoute = appIndexImport.update({
@@ -80,6 +87,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appRouteImport
       parentRoute: typeof rootRoute
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/(app)/about': {
       id: '/(app)/about'
       path: '/about'
@@ -117,10 +131,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
-      fullPath: '/admin'
+      path: '/'
+      fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AdminRouteImport
     }
     '/(app)/lists/': {
       id: '/(app)/lists/'
@@ -150,13 +164,26 @@ const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
   appRouteRouteChildren,
 )
 
+interface AdminRouteRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof appAboutRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
-  '/admin': typeof AdminIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/lists': typeof appListsIndexRoute
 }
 
@@ -173,6 +200,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/(app)': typeof appRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
   '/(app)/about': typeof appAboutRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/login': typeof authLoginRoute
@@ -186,11 +214,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/about'
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/admin'
+    | '/admin/'
     | '/lists'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -204,6 +233,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(app)'
+    | '/admin'
     | '/(app)/about'
     | '/(auth)/forgot-password'
     | '/(auth)/login'
@@ -216,18 +246,18 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   appRouteRoute: typeof appRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
-  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
-  AdminIndexRoute: AdminIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -241,10 +271,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/(app)",
+        "/admin",
         "/(auth)/forgot-password",
         "/(auth)/login",
-        "/(auth)/register",
-        "/admin/"
+        "/(auth)/register"
       ]
     },
     "/(app)": {
@@ -253,6 +283,12 @@ export const routeTree = rootRoute
         "/(app)/about",
         "/(app)/",
         "/(app)/lists/"
+      ]
+    },
+    "/admin": {
+      "filePath": "admin/route.tsx",
+      "children": [
+        "/admin/"
       ]
     },
     "/(app)/about": {
@@ -273,7 +309,8 @@ export const routeTree = rootRoute
       "parent": "/(app)"
     },
     "/admin/": {
-      "filePath": "admin/index.tsx"
+      "filePath": "admin/index.tsx",
+      "parent": "/admin"
     },
     "/(app)/lists/": {
       "filePath": "(app)/lists/index.tsx",
