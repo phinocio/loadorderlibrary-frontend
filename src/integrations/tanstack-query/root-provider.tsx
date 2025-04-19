@@ -27,7 +27,6 @@ export function getContext() {
 export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
 	return {
 		persistClient: async (client: PersistedClient) => {
-			console.log("persisting client");
 			await set(idbValidKey, client);
 		},
 		restoreClient: async () => {
@@ -40,10 +39,6 @@ export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
 }
 
 const persister = createIDBPersister("load-order-library");
-
-// const persister = createSyncStoragePersister({
-// 	storage: window.localStorage,
-// });
 
 persistQueryClient({
 	queryClient,

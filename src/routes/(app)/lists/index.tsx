@@ -20,7 +20,7 @@ function RouteComponent() {
 	}
 	return (
 		<p className="text-center text-sm text-gray-500">
-			Hello {user.email}, welcome to your lists!
+			Hello {user.name}, welcome to your lists!
 		</p>
 	);
 }

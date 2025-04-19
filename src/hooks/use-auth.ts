@@ -42,9 +42,6 @@ export function useAuth() {
 		mutationFn: logout,
 		onSuccess: () => {
 			queryClient.setQueryData(["user"], null);
-			setTimeout(() => {
-				window.location.href = "/";
-			}, 100);
 		},
 	});
 
