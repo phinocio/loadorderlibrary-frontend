@@ -23,7 +23,10 @@ export function NavMain({
 				{items.map((item) => (
 					<SidebarMenuItem key={item.title}>
 						<SidebarMenuButton asChild>
-							<Link to={item.url}>
+							<Link
+								to={item.url}
+								className="[&.active]:bg-primary [&.active]:text-primary-foreground"
+							>
 								<item.icon />
 								<span>{item.title}</span>
 							</Link>

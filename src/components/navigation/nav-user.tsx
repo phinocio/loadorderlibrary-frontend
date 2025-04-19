@@ -45,7 +45,7 @@ export function NavUser() {
 				<SidebarMenuItem className="flex flex-col gap-2">
 					<SidebarMenuButton
 						asChild
-						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-accent hover:text-accent-foreground"
+						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
 					>
 						<Link to="/login">
 							<LogIn className="size-4" />
@@ -54,7 +54,7 @@ export function NavUser() {
 					</SidebarMenuButton>
 					<SidebarMenuButton
 						asChild
-						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-accent hover:text-accent-foreground"
+						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
 					>
 						<Link to="/register">
 							<User className="size-4" />
