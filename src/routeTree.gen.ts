@@ -16,6 +16,7 @@ import { Route as authRouteImport } from './routes/(auth)/route'
 import { Route as appRouteImport } from './routes/(app)/route'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as appIndexImport } from './routes/(app)/index'
+import { Route as AdminUsersImport } from './routes/admin/users'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
@@ -50,6 +51,12 @@ const appIndexRoute = appIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const AdminUsersRoute = AdminUsersImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 const authRegisterRoute = authRegisterImport.update({
@@ -135,6 +142,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authRegisterImport
       parentRoute: typeof authRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/(app)/': {
       id: '/(app)/'
       path: '/'
@@ -194,10 +208,12 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 interface AdminRouteRouteChildren {
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -212,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/lists': typeof appListsIndexRoute
 }
@@ -222,6 +239,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
+  '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
   '/lists': typeof appListsIndexRoute
 }
@@ -235,6 +253,7 @@ export interface FileRoutesById {
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
+  '/admin/users': typeof AdminUsersRoute
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/lists/': typeof appListsIndexRoute
@@ -249,6 +268,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/admin/users'
     | '/admin/'
     | '/lists'
   fileRoutesByTo: FileRoutesByTo
@@ -258,6 +278,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/admin/users'
     | '/admin'
     | '/lists'
   id:
@@ -269,6 +290,7 @@ export interface FileRouteTypes {
     | '/(auth)/forgot-password'
     | '/(auth)/login'
     | '/(auth)/register'
+    | '/admin/users'
     | '/(app)/'
     | '/admin/'
     | '/(app)/lists/'
@@ -321,6 +343,7 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
+        "/admin/users",
         "/admin/"
       ]
     },
@@ -339,6 +362,10 @@ export const routeTree = rootRoute
     "/(auth)/register": {
       "filePath": "(auth)/register.tsx",
       "parent": "/(auth)"
+    },
+    "/admin/users": {
+      "filePath": "admin/users.tsx",
+      "parent": "/admin"
     },
     "/(app)/": {
       "filePath": "(app)/index.tsx",

@@ -1,37 +1,24 @@
-import { getUser, login, logout, register } from "@/api/auth";
+import { getCurrentUser, login, logout, register } from "@/api/auth";
+import type { LoginCredentials, RegisterCredentials } from "@/types/auth";
 import type { User } from "@/types/user";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+export const currentUserQueryOptions = {
+	queryKey: ["user"],
+	queryFn: getCurrentUser,
+};
 
 export function useAuth() {
 	const queryClient = useQueryClient();
 
-	const { data: user, isLoading } = useQuery<User>({
-		queryKey: ["user"],
-		queryFn: getUser,
-		retry: false,
-		staleTime: 5 * 60 * 1000,
-	});
-
-	const loginMutation = useMutation<
-		User,
-		Error,
-		{ name: string; password: string }
-	>({
+	const loginMutation = useMutation<User, Error, LoginCredentials>({
 		mutationFn: login,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);
 		},
 	});
 
-	const registerMutation = useMutation<
-		User,
-		Error,
-		{
-			name: string;
-			password: string;
-			password_confirmation: string;
-		}
-	>({
+	const registerMutation = useMutation<User, Error, RegisterCredentials>({
 		mutationFn: register,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["user"], data);
@@ -46,8 +33,6 @@ export function useAuth() {
 	});
 
 	return {
-		user,
-		isLoading,
 		login: loginMutation.mutate,
 		register: registerMutation.mutate,
 		logout: logoutMutation.mutate,
@@ -55,6 +40,5 @@ export function useAuth() {
 		isRegistering: registerMutation.isPending,
 		loginError: loginMutation.error,
 		registerError: registerMutation.error,
-		isAuthenticated: !!user,
 	};
 }

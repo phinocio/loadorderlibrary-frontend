@@ -1,12 +1,11 @@
-import type { User } from "@/types/user";
+import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)")({
 	beforeLoad: async ({ context }) => {
-		const { queryClient } = context;
-
-		await new Promise((resolve) => setTimeout(resolve, 100));
-		const user = queryClient.getQueryData<User>(["user"]);
+		const user = await context.queryClient.ensureQueryData(
+			currentUserQueryOptions,
+		);
 
 		if (user) {
 			throw redirect({

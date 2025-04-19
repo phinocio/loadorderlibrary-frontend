@@ -1,6 +1,7 @@
 import logo from "@/assets/images/logo.png";
 import type * as React from "react";
 
+import { NavLoginRegister } from "@/components/navigation/nav-login-register";
 import { NavMain } from "@/components/navigation/nav-main";
 import { NavUser } from "@/components/navigation/nav-user";
 import {
@@ -12,6 +13,7 @@ import {
 	SidebarRail,
 	useSidebar,
 } from "@/components/ui/sidebar";
+import type { User } from "@/types/user";
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 
@@ -21,14 +23,16 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 		url: string;
 		icon: LucideIcon;
 	}[];
+	currentUser: User | null;
 }
 
-export function AppSidebar({ routes, ...props }: AppSidebarProps) {
+export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {
 	const { open } = useSidebar();
+
 	return (
 		<Sidebar collapsible="icon" {...props} variant="inset">
 			<SidebarHeader>
-				<SidebarMenuItem className="my-4 flex h-16 items-center justify-center">
+				<SidebarMenuItem className="flex h-16 items-center justify-center">
 					<Link to="/" className="flex flex-col gap-2 items-center">
 						<img
 							src={logo}
@@ -36,7 +40,7 @@ export function AppSidebar({ routes, ...props }: AppSidebarProps) {
 							className="h-8"
 						/>
 						{open && (
-							<span className="ml-2 text-lg font-bold text-primary">
+							<span className="text-lg font-bold text-primary">
 								Load Order Library
 							</span>
 						)}
@@ -47,7 +51,11 @@ export function AppSidebar({ routes, ...props }: AppSidebarProps) {
 				<NavMain items={routes} />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser />
+				{currentUser ? (
+					<NavUser currentUser={currentUser} />
+				) : (
+					<NavLoginRegister />
+				)}
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>

@@ -1,5 +1,6 @@
 import axios from "@/lib/axios";
 import type { User } from "@/types/user";
+import { isAxiosError } from "axios";
 import { type ApiResponse, handleApiError } from "./utils";
 
 export const register = async (data: {
@@ -35,11 +36,14 @@ export const logout = async (): Promise<void> => {
 	}
 };
 
-export const getUser = async (): Promise<User> => {
+export const getCurrentUser = async (): Promise<User | null> => {
 	try {
 		const response = await axios.get<ApiResponse<User>>("/me");
 		return response.data.data;
 	} catch (error) {
+		if (isAxiosError(error) && error.response?.status === 401) {
+			return null;
+		}
 		throw handleApiError(error);
 	}
 };

@@ -5,10 +5,14 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)")({
+	loader: async ({ context }) =>
+		context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 
@@ -36,10 +40,12 @@ const navItems = [
 ];
 
 function RouteComponent() {
+	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
+
 	return (
 		<>
 			<SidebarProvider>
-				<AppSidebar routes={navItems} />
+				<AppSidebar routes={navItems} currentUser={currentUser} />
 				<SidebarInset>
 					<header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
 						<div className="flex items-center gap-2 px-4">

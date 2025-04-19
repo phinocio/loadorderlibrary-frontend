@@ -4,10 +4,9 @@ import { Link, redirect } from "@tanstack/react-router";
 import {
 	ChevronsUpDown,
 	Lock,
-	LogIn,
 	LogOut,
 	Settings,
-	User,
+	User as UserIcon,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -26,47 +25,21 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/queries/use-auth";
+import type { User } from "@/types/user";
 
-export function NavUser() {
+export function NavUser({ currentUser }: { currentUser: User }) {
 	const { isMobile } = useSidebar();
-	const { user, logout } = useAuth();
+	const { logout } = useAuth();
 
-	function handleLogout() {
+	async function handleLogout() {
 		logout();
 		redirect({
 			to: "/",
 		});
 	}
 
-	if (!user) {
-		return (
-			<SidebarMenu>
-				<SidebarMenuItem className="flex flex-col gap-2">
-					<SidebarMenuButton
-						asChild
-						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
-					>
-						<Link to="/login">
-							<LogIn className="size-4" />
-							<span>Login</span>
-						</Link>
-					</SidebarMenuButton>
-					<SidebarMenuButton
-						asChild
-						className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
-					>
-						<Link to="/register">
-							<User className="size-4" />
-							<span>Register</span>
-						</Link>
-					</SidebarMenuButton>
-				</SidebarMenuItem>
-			</SidebarMenu>
-		);
-	}
-
-	const initials = user.name.slice(0, 2).toUpperCase();
+	const initials = currentUser.name.slice(0, 2).toUpperCase();
 
 	return (
 		<SidebarMenu>
@@ -78,17 +51,17 @@ export function NavUser() {
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarFallback className="rounded-lg">
+								<AvatarFallback className="rounded-full bg-primary text-primary-foreground">
 									{initials}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">
-									{user.name}
+									{currentUser.name}
 								</span>
-								{user.email && (
+								{currentUser.email && (
 									<span className="truncate text-xs">
-										{user.email}
+										{currentUser.email}
 									</span>
 								)}
 							</div>
@@ -104,16 +77,16 @@ export function NavUser() {
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
-									<AvatarFallback className="rounded-lg">
+									<AvatarFallback className="rounded-full bg-primary text-primary-foreground">
 										{initials}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-medium">
-										{user.name}
+										{currentUser.name}
 									</span>
 									<span className="truncate text-xs">
-										{user.email}
+										{currentUser.email}
 									</span>
 								</div>
 							</div>
@@ -122,7 +95,7 @@ export function NavUser() {
 						<DropdownMenuGroup>
 							<Link to="/lists">
 								<DropdownMenuItem>
-									<User className="size-4" />
+									<UserIcon className="size-4" />
 									<span>Profile</span>
 								</DropdownMenuItem>
 							</Link>
@@ -132,7 +105,7 @@ export function NavUser() {
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						{user.admin && (
+						{currentUser.admin && (
 							<>
 								<DropdownMenuGroup>
 									<Link to="/admin">

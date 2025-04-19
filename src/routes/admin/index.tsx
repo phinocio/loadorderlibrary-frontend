@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/queries/use-auth";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/")({
@@ -6,7 +6,7 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function RouteComponent() {
-	const { user } = useAuth();
+	const { currentUser: user } = useAuth();
 	return (
 		<div className="p-4">
 			<h1 className="mb-4 text-2xl font-bold">Admin Dashboard</h1>
