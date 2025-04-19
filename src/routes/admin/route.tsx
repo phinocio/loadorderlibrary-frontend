@@ -1,3 +1,4 @@
+import { getUser } from "@/api/auth";
 import { AppSidebar } from "@/components/navigation/app-sidebar";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import {
@@ -5,20 +6,16 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import type { User } from "@/types/user";
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 import { Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
 	beforeLoad: async ({ context }) => {
-		const { queryClient } = context;
+		const user = await context.queryClient.ensureQueryData({
+			queryKey: ["user"],
+			queryFn: getUser,
+		});
 
-		// Wait a brief moment for persistence restore
-		await new Promise((resolve) => setTimeout(resolve, 100));
-		// Try one more time after persistence restore
-		const user = queryClient.getQueryData<User>(["user"]);
-
-		// If no user data, ensure we've actually restored from persistence first
 		if (!user) {
 			throw redirect({
 				to: "/login",
