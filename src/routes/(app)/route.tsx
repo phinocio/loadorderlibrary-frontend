@@ -12,7 +12,7 @@ import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)")({
 	loader: async ({ context }) =>
-		context.queryClient.ensureQueryData(currentUserQueryOptions),
+		await context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 

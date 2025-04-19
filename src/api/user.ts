@@ -5,7 +5,11 @@ import { type ApiResponse, handleApiError } from "./utils";
 
 export const updateUser = async (
 	userName: string,
-	data: Partial<User>,
+	data: Partial<{
+		email: string | null;
+		password: string;
+		password_confirmation: string;
+	}>,
 ): Promise<User> => {
 	try {
 		const response = await axios.patch<ApiResponse<User>>(

@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/users")({
 	loader: async ({ context }) =>
-		context.queryClient.ensureQueryData(adminUsersListQueryOptions),
+		await context.queryClient.ensureQueryData(adminUsersListQueryOptions),
 	component: RouteComponent,
 });
 

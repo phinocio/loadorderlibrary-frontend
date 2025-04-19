@@ -12,11 +12,11 @@ import { Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
 	beforeLoad: async ({ context }) => {
-		const user = await context.queryClient.ensureQueryData(
+		const currentUser = await context.queryClient.ensureQueryData(
 			currentUserQueryOptions,
 		);
 
-		if (!user) {
+		if (!currentUser) {
 			throw redirect({
 				to: "/login",
 				search: {
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/admin")({
 			});
 		}
 
-		if (!user.admin) {
+		if (!currentUser.admin) {
 			throw redirect({
 				to: "/",
 			});

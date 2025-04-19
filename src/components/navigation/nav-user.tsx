@@ -34,7 +34,7 @@ export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 
 	async function handleLogout() {
 		logout();
-		redirect({
+		throw redirect({
 			to: "/",
 		});
 	}
@@ -93,7 +93,7 @@ export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<Link to="/lists">
+							<Link to="/profile">
 								<DropdownMenuItem>
 									<UserIcon className="size-4" />
 									<span>Profile</span>

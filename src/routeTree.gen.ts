@@ -21,7 +21,9 @@ import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
 import { Route as appAboutImport } from './routes/(app)/about'
+import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
+import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 
 // Create/Update Routes
 
@@ -83,10 +85,21 @@ const appAboutRoute = appAboutImport.update({
   getParentRoute: () => appRouteRoute,
 } as any)
 
+const appAuthenticatedRoute = appAuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
 const appListsIndexRoute = appListsIndexImport.update({
   id: '/lists/',
   path: '/lists/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => appAuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -113,6 +126,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/(app)/_authenticated': {
+      id: '/(app)/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appAuthenticatedImport
+      parentRoute: typeof appRouteImport
     }
     '/(app)/about': {
       id: '/(app)/about'
@@ -163,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof AdminRouteImport
     }
+    '/(app)/_authenticated/profile': {
+      id: '/(app)/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof appAuthenticatedProfileImport
+      parentRoute: typeof appAuthenticatedImport
+    }
     '/(app)/lists/': {
       id: '/(app)/lists/'
       path: '/lists'
@@ -175,13 +202,26 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface appAuthenticatedRouteChildren {
+  appAuthenticatedProfileRoute: typeof appAuthenticatedProfileRoute
+}
+
+const appAuthenticatedRouteChildren: appAuthenticatedRouteChildren = {
+  appAuthenticatedProfileRoute: appAuthenticatedProfileRoute,
+}
+
+const appAuthenticatedRouteWithChildren =
+  appAuthenticatedRoute._addFileChildren(appAuthenticatedRouteChildren)
+
 interface appRouteRouteChildren {
+  appAuthenticatedRoute: typeof appAuthenticatedRouteWithChildren
   appAboutRoute: typeof appAboutRoute
   appIndexRoute: typeof appIndexRoute
   appListsIndexRoute: typeof appListsIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
+  appAuthenticatedRoute: appAuthenticatedRouteWithChildren,
   appAboutRoute: appAboutRoute,
   appIndexRoute: appIndexRoute,
   appListsIndexRoute: appListsIndexRoute,
@@ -224,23 +264,27 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '': typeof appAuthenticatedRouteWithChildren
   '/about': typeof appAboutRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
+  '/profile': typeof appAuthenticatedProfileRoute
   '/lists': typeof appListsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof appIndexRoute
+  '': typeof appAuthenticatedRouteWithChildren
   '/about': typeof appAboutRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
+  '/profile': typeof appAuthenticatedProfileRoute
   '/lists': typeof appListsIndexRoute
 }
 
@@ -249,6 +293,7 @@ export interface FileRoutesById {
   '/(app)': typeof appRouteRouteWithChildren
   '/(auth)': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
+  '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
   '/(app)/about': typeof appAboutRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/login': typeof authLoginRoute
@@ -256,6 +301,7 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
   '/(app)/lists/': typeof appListsIndexRoute
 }
 
@@ -264,28 +310,33 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | ''
     | '/about'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/admin/users'
     | '/admin/'
+    | '/profile'
     | '/lists'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | ''
     | '/about'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/admin/users'
     | '/admin'
+    | '/profile'
     | '/lists'
   id:
     | '__root__'
     | '/(app)'
     | '/(auth)'
     | '/admin'
+    | '/(app)/_authenticated'
     | '/(app)/about'
     | '/(auth)/forgot-password'
     | '/(auth)/login'
@@ -293,6 +344,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/(app)/'
     | '/admin/'
+    | '/(app)/_authenticated/profile'
     | '/(app)/lists/'
   fileRoutesById: FileRoutesById
 }
@@ -327,6 +379,7 @@ export const routeTree = rootRoute
     "/(app)": {
       "filePath": "(app)/route.tsx",
       "children": [
+        "/(app)/_authenticated",
         "/(app)/about",
         "/(app)/",
         "/(app)/lists/"
@@ -345,6 +398,13 @@ export const routeTree = rootRoute
       "children": [
         "/admin/users",
         "/admin/"
+      ]
+    },
+    "/(app)/_authenticated": {
+      "filePath": "(app)/_authenticated.tsx",
+      "parent": "/(app)",
+      "children": [
+        "/(app)/_authenticated/profile"
       ]
     },
     "/(app)/about": {
@@ -374,6 +434,10 @@ export const routeTree = rootRoute
     "/admin/": {
       "filePath": "admin/index.tsx",
       "parent": "/admin"
+    },
+    "/(app)/_authenticated/profile": {
+      "filePath": "(app)/_authenticated.profile.tsx",
+      "parent": "/(app)/_authenticated"
     },
     "/(app)/lists/": {
       "filePath": "(app)/lists/index.tsx",
