@@ -32,7 +32,7 @@ export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {
 	return (
 		<Sidebar collapsible="icon" {...props} variant="inset">
 			<SidebarHeader>
-				<SidebarMenuItem className="flex h-16 items-center justify-center">
+				<SidebarMenuItem className="my-4 flex h-16 items-center justify-center">
 					<Link to="/" className="flex flex-col gap-2 items-center">
 						<img
 							src={logo}
