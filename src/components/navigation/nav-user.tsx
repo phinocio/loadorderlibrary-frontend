@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, redirect } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import {
 	ChevronsUpDown,
 	Lock,
@@ -31,13 +31,6 @@ import type { CurrentUser } from "@/types/auth";
 export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 	const { isMobile } = useSidebar();
 	const { logout } = useAuth();
-
-	async function handleLogout() {
-		logout();
-		throw redirect({
-			to: "/",
-		});
-	}
 
 	const initials = currentUser.name.slice(0, 2).toUpperCase();
 
@@ -118,7 +111,7 @@ export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 								<DropdownMenuSeparator />
 							</>
 						)}
-						<DropdownMenuItem onClick={handleLogout}>
+						<DropdownMenuItem onClick={() => logout()}>
 							<LogOut className="size-4" />
 							<span>Log out</span>
 						</DropdownMenuItem>

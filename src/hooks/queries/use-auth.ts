@@ -5,6 +5,8 @@ import type {
 	RegisterCredentials,
 } from "@/types/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 export const currentUserQueryOptions = {
 	queryKey: ["current-user"],
@@ -13,6 +15,7 @@ export const currentUserQueryOptions = {
 
 export function useAuth() {
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const loginMutation = useMutation<CurrentUser, Error, LoginCredentials>({
 		mutationFn: login,
@@ -35,7 +38,20 @@ export function useAuth() {
 	const logoutMutation = useMutation({
 		mutationFn: logout,
 		onSuccess: () => {
+			navigate({
+				to: "/",
+			});
 			queryClient.setQueryData(["current-user"], null);
+			toast.success("Logged out successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to log out", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to log out", error);
 		},
 	});
 

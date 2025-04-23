@@ -15,7 +15,6 @@ import type { UserProfile } from "@/types/user";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
 	loader: async ({ context }) =>
@@ -50,11 +49,6 @@ function RouteComponent() {
 		updateProfileError,
 	} = useUser(currentUser.name);
 
-	function handleUpdateUser() {
-		updateUser({ email });
-		toast("Email updated successfully");
-	}
-
 	return (
 		<div className="container mx-auto max-w-2xl space-y-6 p-4">
 			<Card>
@@ -66,7 +60,7 @@ function RouteComponent() {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							handleUpdateUser();
+							updateUser({ email: email || null });
 						}}
 						className="space-y-4"
 					>

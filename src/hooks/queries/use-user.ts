@@ -1,6 +1,7 @@
 import { updateUser, updateUserProfile } from "@/api/user";
 import type { UserProfile } from "@/types/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function useUser(userName: string) {
 	const queryClient = useQueryClient();
@@ -10,6 +11,16 @@ export function useUser(userName: string) {
 			updateUser(userName, data),
 		onSuccess: (data) => {
 			queryClient.setQueryData(["current-user"], data);
+			toast.success("User updated successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to update user", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to update user", error);
 		},
 	});
 
@@ -18,6 +29,16 @@ export function useUser(userName: string) {
 			updateUserProfile(userName, profile),
 		onSuccess: (data) => {
 			queryClient.setQueryData(["current-user"], data);
+			toast.success("Profile updated successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to update profile", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to update profile", error);
 		},
 	});
 
