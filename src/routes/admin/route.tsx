@@ -6,30 +6,14 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
+import { requireAdmin } from "@/lib/guards";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
 	beforeLoad: async ({ context }) => {
-		const currentUser = await context.queryClient.ensureQueryData(
-			currentUserQueryOptions,
-		);
-
-		if (!currentUser) {
-			throw redirect({
-				to: "/login",
-				search: {
-					redirect: "/admin",
-				},
-			});
-		}
-
-		if (!currentUser.admin) {
-			throw redirect({
-				to: "/",
-			});
-		}
+		await requireAdmin(context.queryClient);
 	},
 	component: RouteComponent,
 });

@@ -1,17 +1,9 @@
-import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { requireGuest } from "@/lib/guards";
+import { Outlet, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)")({
 	beforeLoad: async ({ context }) => {
-		const currentUser = await context.queryClient.ensureQueryData(
-			currentUserQueryOptions,
-		);
-
-		if (currentUser) {
-			throw redirect({
-				to: "/",
-			});
-		}
+		await requireGuest(context.queryClient);
 	},
 	component: RouteComponent,
 });
