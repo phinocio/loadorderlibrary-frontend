@@ -43,7 +43,7 @@ export function LoginForm({
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<Card>
 				<CardHeader>
-					<CardTitle>Login to your account</CardTitle>
+					<CardTitle>Log in to your account</CardTitle>
 					<CardDescription>
 						Enter your account details below to login.
 					</CardDescription>
@@ -104,7 +104,7 @@ export function LoginForm({
 									className="w-full"
 									disabled={isLoggingIn}
 								>
-									{isLoggingIn ? "Logging in..." : "Login"}
+									Log In
 								</Button>
 							</div>
 						</div>
@@ -114,7 +114,7 @@ export function LoginForm({
 								to="/register"
 								className="underline underline-offset-4"
 							>
-								Sign up
+								Register
 							</Link>
 						</div>
 					</form>

@@ -113,9 +113,7 @@ export function RegisterForm({
 									className="w-full"
 									disabled={isRegistering}
 								>
-									{isRegistering
-										? "Creating account..."
-										: "Create account"}
+									Register
 								</Button>
 							</div>
 						</div>
@@ -125,7 +123,7 @@ export function RegisterForm({
 								to="/login"
 								className="underline underline-offset-4"
 							>
-								Sign in
+								Log In
 							</Link>
 						</div>
 					</form>
