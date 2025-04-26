@@ -119,7 +119,7 @@ export function ProfileInformationForm({
 						/>
 					</div>
 					<Button type="submit" disabled={isUpdatingProfile}>
-						{isUpdatingProfile ? "Saving..." : "Save Profile"}
+						Update Profile
 					</Button>
 					{updateProfileError && (
 						<p className="text-sm text-destructive">

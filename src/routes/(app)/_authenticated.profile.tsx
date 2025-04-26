@@ -58,17 +58,55 @@ function RouteComponent() {
 	}
 
 	return (
-		<div className="flex flex-col gap-4 lg:grid lg:grid-cols-4">
-			<div className="order-2 lg:order-none lg:col-span-3">
-				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{lists.map((list) => (
-						<ListCard key={list.id} {...list} />
-					))}
+		<div className="w-full  mx-auto container">
+			<div className="flex flex-col gap-8">
+				{/* Forms Section */}
+				<div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+					{/* Basic Info Section */}
+					<div className="w-full space-y-6">
+						<div className="space-y-2">
+							<h2 className="text-2xl font-semibold tracking-tight">
+								Basic Info
+							</h2>
+							<p className="text-sm text-muted-foreground">
+								Update your basic account information.
+							</p>
+						</div>
+						<BasicInfoForm currentUser={currentUser} />
+					</div>
+
+					{/* Profile Information Section */}
+					<div className="w-full space-y-6">
+						<div className="space-y-2">
+							<h2 className="text-2xl font-semibold tracking-tight">
+								Profile Information
+							</h2>
+							<p className="text-sm text-muted-foreground">
+								Customize your profile details.
+							</p>
+						</div>
+						<ProfileInformationForm currentUser={currentUser} />
+					</div>
 				</div>
-			</div>
-			<div className="order-1 lg:order-none flex flex-col gap-4">
-				<BasicInfoForm currentUser={currentUser} />
-				<ProfileInformationForm currentUser={currentUser} />
+
+				{/* Lists Section */}
+				<div className="w-full">
+					<div className="space-y-6">
+						<div className="space-y-2">
+							<h2 className="text-2xl font-semibold tracking-tight">
+								Your Load Orders
+							</h2>
+							<p className="text-sm text-muted-foreground">
+								Browse and manage your created load orders.
+							</p>
+						</div>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+							{lists.map((list) => (
+								<ListCard key={list.id} {...list} />
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
