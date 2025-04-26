@@ -48,6 +48,9 @@ export function useUser(name: string) {
 		mutationFn: (profile: UserProfile) => updateUserProfile(name, profile),
 		onSuccess: (data) => {
 			queryClient.setQueryData(["current-user"], data);
+			queryClient.invalidateQueries({
+				queryKey: ["admin-users"],
+			});
 			toast.success("Profile updated successfully", {
 				richColors: true,
 			});
