@@ -1,8 +1,8 @@
 import { adminUsersListQueryOptions } from "@/hooks/queries/use-admin-user";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/admin/users")({
+export const Route = createFileRoute("/admin/users/")({
 	loader: async ({ context }) =>
 		await context.queryClient.ensureQueryData(adminUsersListQueryOptions),
 	component: RouteComponent,
@@ -17,7 +17,12 @@ function RouteComponent() {
 			<div className="flex flex-col gap-2">
 				{users.map((user) => (
 					<div key={user.name} className="flex items-center gap-2">
-						<span>{user.name}</span>
+						<Link
+							to="/admin/users/$name"
+							params={{ name: user.name }}
+						>
+							{user.name}
+						</Link>
 						<span>{user.created}</span>
 					</div>
 				))}

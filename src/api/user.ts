@@ -9,12 +9,12 @@ import type {
 } from "@/types/user";
 
 export const updateUser = async (
-	userName: string,
+	name: string,
 	data: UserUpdateParams,
 ): Promise<User> => {
 	try {
 		const response = await axios.patch<ApiResponse<User>>(
-			`/users/${userName}`,
+			`/users/${name}`,
 			data,
 		);
 		return response.data.data;
@@ -24,28 +24,28 @@ export const updateUser = async (
 };
 
 export const updateUserPassword = async (
-	userName: string,
+	name: string,
 	data: UserPasswordUpdateParams,
 ): Promise<void> => {
 	try {
-		await axios.patch(`/users/${userName}/password`, data);
+		await axios.patch(`/users/${name}/password`, data);
 	} catch (error) {
 		throw handleApiError(error);
 	}
 };
 
-export const deleteUser = async (userName: string): Promise<void> => {
+export const deleteUser = async (name: string): Promise<void> => {
 	try {
-		await axios.delete(`/users/${userName}`);
+		await axios.delete(`/users/${name}`);
 	} catch (error) {
 		throw handleApiError(error);
 	}
 };
 
-export const getUser = async (userName: string): Promise<User> => {
+export const getUser = async (name: string): Promise<User> => {
 	try {
 		const response = await axios.get<ApiResponse<User>>(
-			`/users/${userName}/profile`,
+			`/users/${name}/profile`,
 		);
 		return response.data.data;
 	} catch (error) {
@@ -54,12 +54,12 @@ export const getUser = async (userName: string): Promise<User> => {
 };
 
 export const updateUserProfile = async (
-	userName: string,
+	name: string,
 	data: Partial<UserProfile>,
 ): Promise<CurrentUser> => {
 	try {
 		const response = await axios.patch<ApiResponse<CurrentUser>>(
-			`/users/${userName}/profile`,
+			`/users/${name}/profile`,
 			data,
 		);
 		return response.data.data;

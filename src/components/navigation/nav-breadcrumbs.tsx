@@ -13,7 +13,8 @@ export function NavBreadcrumbs() {
 	const location = useRouterState({ select: (s) => s.location });
 	const pathSegments = location.pathname
 		.split("/")
-		.filter((segment) => segment !== "");
+		.filter((segment) => segment !== "")
+		.map((segment) => decodeURIComponent(segment));
 
 	return (
 		<Breadcrumb>
@@ -24,7 +25,10 @@ export function NavBreadcrumbs() {
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 				{pathSegments.map((segment, index) => {
-					const path = `/${pathSegments.slice(0, index + 1).join("/")}`;
+					const path = `/${pathSegments
+						.slice(0, index + 1)
+						.map((s) => encodeURIComponent(s))
+						.join("/")}`;
 					const isLast = index === pathSegments.length - 1;
 
 					return (

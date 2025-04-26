@@ -16,12 +16,13 @@ import { Route as authRouteImport } from './routes/(auth)/route'
 import { Route as appRouteImport } from './routes/(app)/route'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as appIndexImport } from './routes/(app)/index'
-import { Route as AdminUsersImport } from './routes/admin/users'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
 import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
+import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
+import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 
 // Create/Update Routes
@@ -54,12 +55,6 @@ const appIndexRoute = appIndexImport.update({
   getParentRoute: () => appRouteRoute,
 } as any)
 
-const AdminUsersRoute = AdminUsersImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-
 const authRegisterRoute = authRegisterImport.update({
   id: '/register',
   path: '/register',
@@ -83,10 +78,22 @@ const appAuthenticatedRoute = appAuthenticatedImport.update({
   getParentRoute: () => appRouteRoute,
 } as any)
 
+const AdminUsersIndexRoute = AdminUsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
 const appListsIndexRoute = appListsIndexImport.update({
   id: '/lists/',
   path: '/lists/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const AdminUsersNameRoute = AdminUsersNameImport.update({
+  id: '/users/$name',
+  path: '/users/$name',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
@@ -148,13 +155,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authRegisterImport
       parentRoute: typeof authRouteImport
     }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersImport
-      parentRoute: typeof AdminRouteImport
-    }
     '/(app)/': {
       id: '/(app)/'
       path: '/'
@@ -176,12 +176,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appAuthenticatedProfileImport
       parentRoute: typeof appAuthenticatedImport
     }
+    '/admin/users/$name': {
+      id: '/admin/users/$name'
+      path: '/users/$name'
+      fullPath: '/admin/users/$name'
+      preLoaderRoute: typeof AdminUsersNameImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/(app)/lists/': {
       id: '/(app)/lists/'
       path: '/lists'
       fullPath: '/lists'
       preLoaderRoute: typeof appListsIndexImport
       parentRoute: typeof appRouteImport
+    }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersIndexImport
+      parentRoute: typeof AdminRouteImport
     }
   }
 }
@@ -232,13 +246,15 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 interface AdminRouteRouteChildren {
-  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminUsersNameRoute: typeof AdminUsersNameRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminUsersNameRoute: AdminUsersNameRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
@@ -252,10 +268,11 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
-  '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -264,10 +281,11 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
-  '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -279,11 +297,12 @@ export interface FileRoutesById {
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
-  '/admin/users': typeof AdminUsersRoute
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
   '/(app)/lists/': typeof appListsIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -295,10 +314,11 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/admin/users'
     | '/admin/'
     | '/profile'
+    | '/admin/users/$name'
     | '/lists'
+    | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -306,10 +326,11 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
-    | '/admin/users'
     | '/admin'
     | '/profile'
+    | '/admin/users/$name'
     | '/lists'
+    | '/admin/users'
   id:
     | '__root__'
     | '/(app)'
@@ -319,11 +340,12 @@ export interface FileRouteTypes {
     | '/(auth)/forgot-password'
     | '/(auth)/login'
     | '/(auth)/register'
-    | '/admin/users'
     | '/(app)/'
     | '/admin/'
     | '/(app)/_authenticated/profile'
+    | '/admin/users/$name'
     | '/(app)/lists/'
+    | '/admin/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -373,8 +395,9 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
-        "/admin/users",
-        "/admin/"
+        "/admin/",
+        "/admin/users/$name",
+        "/admin/users/"
       ]
     },
     "/(app)/_authenticated": {
@@ -396,10 +419,6 @@ export const routeTree = rootRoute
       "filePath": "(auth)/register.tsx",
       "parent": "/(auth)"
     },
-    "/admin/users": {
-      "filePath": "admin/users.tsx",
-      "parent": "/admin"
-    },
     "/(app)/": {
       "filePath": "(app)/index.tsx",
       "parent": "/(app)"
@@ -412,9 +431,17 @@ export const routeTree = rootRoute
       "filePath": "(app)/_authenticated.profile.tsx",
       "parent": "/(app)/_authenticated"
     },
+    "/admin/users/$name": {
+      "filePath": "admin/users/$name.tsx",
+      "parent": "/admin"
+    },
     "/(app)/lists/": {
       "filePath": "(app)/lists/index.tsx",
       "parent": "/(app)"
+    },
+    "/admin/users/": {
+      "filePath": "admin/users/index.tsx",
+      "parent": "/admin"
     }
   }
 }

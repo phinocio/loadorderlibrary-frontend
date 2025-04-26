@@ -7,11 +7,11 @@ import type {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export function useUser(userName: string) {
+export function useUser(name: string) {
 	const queryClient = useQueryClient();
 
 	const updateUserMutation = useMutation({
-		mutationFn: (data: UserUpdateParams) => updateUser(userName, data),
+		mutationFn: (data: UserUpdateParams) => updateUser(name, data),
 		onSuccess: (data) => {
 			queryClient.setQueryData(["current-user"], data);
 			toast.success("User updated successfully", {
@@ -29,7 +29,7 @@ export function useUser(userName: string) {
 
 	const updateUserPasswordMutation = useMutation({
 		mutationFn: (data: UserPasswordUpdateParams) =>
-			updateUserPassword(userName, data),
+			updateUserPassword(name, data),
 		onSuccess: () => {
 			toast.success("Password updated successfully", {
 				richColors: true,
@@ -45,8 +45,7 @@ export function useUser(userName: string) {
 	});
 
 	const updateProfileMutation = useMutation({
-		mutationFn: (profile: UserProfile) =>
-			updateUserProfile(userName, profile),
+		mutationFn: (profile: UserProfile) => updateUserProfile(name, profile),
 		onSuccess: (data) => {
 			queryClient.setQueryData(["current-user"], data);
 			toast.success("Profile updated successfully", {
