@@ -10,36 +10,33 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/queries/use-auth";
 import { cn } from "@/lib/utils";
+import { RegisterCredentialsSchema } from "@/schemas/auth-schemas";
+import type { RegisterCredentials } from "@/types/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export function RegisterForm({
 	className,
 	...props
 }: React.ComponentProps<"div">) {
 	const navigate = useNavigate();
-	const { register, isRegistering, registerError } = useAuth();
-	const [formData, setFormData] = useState({
-		name: "",
-		password: "",
-		password_confirmation: "",
+	const { register: registerUser, isRegistering, registerError } = useAuth();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<RegisterCredentials>({
+		resolver: zodResolver(RegisterCredentialsSchema),
 	});
 
-	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		register(formData, {
+	const onSubmit = handleSubmit((data) => {
+		registerUser(data, {
 			onSuccess: () => {
 				navigate({ to: "/" });
 			},
 		});
-	}
-
-	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.id]: e.target.value,
-		}));
-	}
+	});
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -66,11 +63,15 @@ export function RegisterForm({
 									id="name"
 									type="text"
 									placeholder="Enter your name"
-									required
-									value={formData.name}
-									onChange={handleChange}
+									{...register("name")}
 									disabled={isRegistering}
+									required
 								/>
+								{errors.name && (
+									<p className="text-sm text-red-500">
+										{errors.name.message}
+									</p>
+								)}
 							</div>
 							<div className="grid gap-3">
 								<Label htmlFor="password">Password</Label>
@@ -78,11 +79,15 @@ export function RegisterForm({
 									id="password"
 									type="password"
 									placeholder="Enter your password"
-									required
-									value={formData.password}
-									onChange={handleChange}
+									{...register("password")}
 									disabled={isRegistering}
+									required
 								/>
+								{errors.password && (
+									<p className="text-sm text-red-500">
+										{errors.password.message}
+									</p>
+								)}
 							</div>
 							<div className="grid gap-3">
 								<Label htmlFor="password_confirmation">
@@ -92,11 +97,15 @@ export function RegisterForm({
 									id="password_confirmation"
 									type="password"
 									placeholder="Confirm your password"
-									required
-									value={formData.password_confirmation}
-									onChange={handleChange}
+									{...register("password_confirmation")}
 									disabled={isRegistering}
+									required
 								/>
+								{errors.password_confirmation && (
+									<p className="text-sm text-red-500">
+										{errors.password_confirmation.message}
+									</p>
+								)}
 							</div>
 							<div className="flex flex-col gap-3">
 								<Button

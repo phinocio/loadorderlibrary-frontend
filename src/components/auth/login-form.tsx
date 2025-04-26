@@ -10,8 +10,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/queries/use-auth";
 import { cn } from "@/lib/utils";
+import { LoginCredentialsSchema } from "@/schemas/auth-schemas";
+import type { LoginCredentials } from "@/types/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export function LoginForm({
 	className,
@@ -20,26 +23,21 @@ export function LoginForm({
 	const navigate = useNavigate();
 	const { redirect } = useSearch({ from: "/(auth)/login" });
 	const { login, isLoggingIn, loginError } = useAuth();
-	const [formData, setFormData] = useState({
-		name: "",
-		password: "",
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<LoginCredentials>({
+		resolver: zodResolver(LoginCredentialsSchema),
 	});
 
-	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		login(formData, {
+	const onSubmit = handleSubmit((data) => {
+		login(data, {
 			onSuccess: () => {
 				navigate({ to: redirect || "/" });
 			},
 		});
-	}
-
-	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.id]: e.target.value,
-		}));
-	}
+	});
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -47,7 +45,7 @@ export function LoginForm({
 				<CardHeader>
 					<CardTitle>Login to your account</CardTitle>
 					<CardDescription>
-						Enter your account name below to login.
+						Enter your account details below to login.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -66,11 +64,15 @@ export function LoginForm({
 									id="name"
 									type="text"
 									placeholder="Enter your name"
-									required
-									value={formData.name}
-									onChange={handleChange}
+									{...register("name")}
 									disabled={isLoggingIn}
+									required
 								/>
+								{errors.name && (
+									<p className="text-sm text-red-500">
+										{errors.name.message}
+									</p>
+								)}
 							</div>
 							<div className="grid gap-3">
 								<div className="flex items-center">
@@ -86,11 +88,15 @@ export function LoginForm({
 									id="password"
 									type="password"
 									placeholder="Enter your password"
-									required
-									value={formData.password}
-									onChange={handleChange}
+									{...register("password")}
 									disabled={isLoggingIn}
+									required
 								/>
+								{errors.password && (
+									<p className="text-sm text-red-500">
+										{errors.password.message}
+									</p>
+								)}
 							</div>
 							<div className="flex flex-col gap-3">
 								<Button
