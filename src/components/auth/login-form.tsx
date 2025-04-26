@@ -51,30 +51,30 @@ export function LoginForm({
 				<CardContent>
 					<form onSubmit={onSubmit}>
 						{loginError && (
-							<div className="mb-4 text-sm text-red-500">
+							<div className="mb-4 text-sm text-destructive">
 								{loginError instanceof Error
 									? loginError.message
 									: "Something went wrong. Please try again."}
 							</div>
 						)}
 						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
+							<div className="space-y-2">
 								<Label htmlFor="name">Username</Label>
 								<Input
 									id="name"
 									type="text"
 									placeholder="Enter your name"
 									{...register("name")}
-									disabled={isLoggingIn}
+									autoComplete="username"
 									required
 								/>
 								{errors.name && (
-									<p className="text-sm text-red-500">
+									<p className="text-sm text-destructive">
 										{errors.name.message}
 									</p>
 								)}
 							</div>
-							<div className="grid gap-3">
+							<div className="space-y-2">
 								<div className="flex items-center">
 									<Label htmlFor="password">Password</Label>
 									<Link
@@ -89,11 +89,11 @@ export function LoginForm({
 									type="password"
 									placeholder="Enter your password"
 									{...register("password")}
-									disabled={isLoggingIn}
+									autoComplete="current-password"
 									required
 								/>
 								{errors.password && (
-									<p className="text-sm text-red-500">
+									<p className="text-sm text-destructive">
 										{errors.password.message}
 									</p>
 								)}

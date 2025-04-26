@@ -1,11 +1,13 @@
 import { z } from "zod";
 
+const optionalUrl = z.union([z.string().url(), z.literal("")]).optional();
+
 export const UserProfileSchema = z.object({
-	bio: z.string(),
-	discord: z.string(),
-	kofi: z.string(),
-	patreon: z.string(),
-	website: z.string(),
+	bio: z.union([z.string(), z.literal("")]).optional(),
+	discord: optionalUrl,
+	kofi: optionalUrl,
+	patreon: optionalUrl,
+	website: optionalUrl,
 });
 
 // This should match the return for public user profiles, which doesn't include

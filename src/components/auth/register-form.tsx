@@ -50,46 +50,46 @@ export function RegisterForm({
 				<CardContent>
 					<form onSubmit={onSubmit}>
 						{registerError && (
-							<div className="mb-4 text-sm text-red-500">
+							<div className="mb-4 text-sm text-destructive">
 								{registerError instanceof Error
 									? registerError.message
 									: "Something went wrong. Please try again."}
 							</div>
 						)}
 						<div className="flex flex-col gap-6">
-							<div className="grid gap-3">
+							<div className="space-y-2">
 								<Label htmlFor="name">Username</Label>
 								<Input
 									id="name"
 									type="text"
 									placeholder="Enter your name"
 									{...register("name")}
-									disabled={isRegistering}
+									autoComplete="username"
 									required
 								/>
 								{errors.name && (
-									<p className="text-sm text-red-500">
+									<p className="text-sm text-destructive">
 										{errors.name.message}
 									</p>
 								)}
 							</div>
-							<div className="grid gap-3">
+							<div className="space-y-2">
 								<Label htmlFor="password">Password</Label>
 								<Input
 									id="password"
 									type="password"
 									placeholder="Enter your password"
 									{...register("password")}
-									disabled={isRegistering}
+									autoComplete="new-password"
 									required
 								/>
 								{errors.password && (
-									<p className="text-sm text-red-500">
+									<p className="text-sm text-destructive">
 										{errors.password.message}
 									</p>
 								)}
 							</div>
-							<div className="grid gap-3">
+							<div className="space-y-2">
 								<Label htmlFor="password_confirmation">
 									Confirm Password
 								</Label>
@@ -98,11 +98,11 @@ export function RegisterForm({
 									type="password"
 									placeholder="Confirm your password"
 									{...register("password_confirmation")}
-									disabled={isRegistering}
+									autoComplete="new-password"
 									required
 								/>
 								{errors.password_confirmation && (
-									<p className="text-sm text-red-500">
+									<p className="text-sm text-destructive">
 										{errors.password_confirmation.message}
 									</p>
 								)}
