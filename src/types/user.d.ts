@@ -1,29 +1,14 @@
-export type User = {
-	name: string;
-	verified: boolean;
-	profile?: UserProfile | null;
-	created: string;
-	updated: string;
-	links: {
-		self: string;
-		url: string;
-	};
-};
+import type {
+	UserPasswordUpdateParamsSchema,
+	UserProfileSchema,
+	UserSchema,
+	UserUpdateParamsSchema,
+} from "@/schemas/user-schemas";
+import type { z } from "zod";
 
-export type UserUpdateParams = Partial<{
-	email: string | null;
-}>;
-
-export type UserPasswordUpdateParams = {
-	current_password: string;
-	password: string;
-	password_confirmation: string;
-};
-
-export type UserProfile = {
-	bio: string;
-	discord: string;
-	kofi: string;
-	patreon: string;
-	website: string;
-};
+export type User = z.infer<typeof UserSchema>;
+export type UserUpdateParams = z.infer<typeof UserUpdateParamsSchema>;
+export type UserPasswordUpdateParams = z.infer<
+	typeof UserPasswordUpdateParamsSchema
+>;
+export type UserProfile = z.infer<typeof UserProfileSchema>;

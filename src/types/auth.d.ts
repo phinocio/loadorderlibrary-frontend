@@ -1,20 +1,9 @@
-export type LoginCredentials = {
-	name: string;
-	password: string;
-};
+import type {
+	CurrentUserSchema,
+	LoginCredentialsSchema,
+	RegisterCredentialsSchema,
+} from "@/schemas/auth-schemas";
 
-export type RegisterCredentials = {
-	name: string;
-	password: string;
-	password_confirmation: string;
-};
-
-export type CurrentUser = {
-	name: string;
-	email: string | null;
-	verified: boolean;
-	admin: boolean;
-	profile?: UserProfile | null;
-	created: string;
-	updated: string;
-};
+export type LoginCredentials = z.infer<typeof LoginCredentialsSchema>;
+export type RegisterCredentials = z.infer<typeof RegisterCredentialsSchema>;
+export type CurrentUser = z.infer<typeof CurrentUserSchema>;
