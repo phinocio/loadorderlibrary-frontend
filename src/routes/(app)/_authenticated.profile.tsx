@@ -1,26 +1,54 @@
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { ListCard } from "@/components/lists/list-card";
+import { BasicInfoForm } from "@/components/profile/basic-info-form";
+import { ProfileInformationForm } from "@/components/profile/profile-information-form";
 import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
-import { useUser } from "@/hooks/queries/use-user";
-import type { UserProfile } from "@/types/user";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
 	loader: async ({ context }) =>
 		await context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
+
+const lists = [
+	{
+		name: "Skyrim Anniversary Edition - Survival Mode",
+		id: 1,
+		author: "ModGuru",
+		game: "TESV Skyrim SE",
+		lastUpdated: "2025-04-20",
+		description:
+			"A hardcore survival experience with camping, needs, and temperature systems. Optimized for performance and stability.",
+	},
+	{
+		name: "Tale of Two Wastelands - Ultimate Edition",
+		id: 2,
+		author: "WastelandWanderer",
+		game: "Tale of Two Wastelands",
+		lastUpdated: "2025-04-18",
+		description:
+			"Complete TTW setup featuring major quest mods, enhanced graphics, and gameplay overhauls for both FO3 and FNV content.",
+	},
+	{
+		name: "Morrowind 2025 Graphics Overhaul",
+		id: 3,
+		author: "RetroReviver",
+		game: "TESIII Morrowind",
+		lastUpdated: "2025-04-15",
+		description:
+			"Modern graphics with MGE XE, featuring high-res textures and meshes while maintaining the original art style.",
+	},
+	{
+		name: "Fallout 4 Performance Plus",
+		id: 4,
+		author: "FPSMaster",
+		game: "Fallout 4",
+		lastUpdated: "2025-04-12",
+		description:
+			"Heavily optimized setup focused on maximum FPS while enhancing visuals. Perfect for low-end to mid-range PCs.",
+	},
+];
 
 function RouteComponent() {
 	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
@@ -29,160 +57,19 @@ function RouteComponent() {
 		throw Error("Current User is null on profile page somehow.");
 	}
 
-	const [email, setEmail] = useState(currentUser.email ?? "");
-	const [profile, setProfile] = useState<UserProfile>(
-		currentUser.profile ?? {
-			bio: "",
-			discord: "",
-			kofi: "",
-			patreon: "",
-			website: "",
-		},
-	);
-
-	const {
-		updateUser,
-		updateProfile,
-		isUpdatingUser,
-		isUpdatingProfile,
-		updateUserError,
-		updateProfileError,
-	} = useUser(currentUser.name);
-
 	return (
-		<div className="container mx-auto max-w-2xl space-y-6 p-4">
-			<Card>
-				<CardHeader>
-					<CardTitle>Basic Information</CardTitle>
-					<CardDescription>Update your email address</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							updateUser({ email: email || null });
-						}}
-						className="space-y-4"
-					>
-						<div className="space-y-2">
-							<Label htmlFor="email">Email</Label>
-							<Input
-								id="email"
-								type="email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								placeholder="Enter your email"
-							/>
-						</div>
-						<Button type="submit" disabled={isUpdatingUser}>
-							{isUpdatingUser ? "Saving..." : "Save Email"}
-						</Button>
-						{updateUserError && (
-							<p className="text-sm text-destructive">
-								{updateUserError.message}
-							</p>
-						)}
-					</form>
-				</CardContent>
-			</Card>
-
-			<Card>
-				<CardHeader>
-					<CardTitle>Profile Information</CardTitle>
-					<CardDescription>
-						Update your public profile information
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							updateProfile(profile);
-						}}
-						className="space-y-4"
-					>
-						<div className="space-y-2">
-							<Label htmlFor="bio">Bio</Label>
-							<Textarea
-								id="bio"
-								value={profile.bio}
-								onChange={(e) =>
-									setProfile((prev) => ({
-										...prev,
-										bio: e.target.value,
-									}))
-								}
-								placeholder="Tell us about yourself"
-							/>
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="discord">Discord</Label>
-							<Input
-								id="discord"
-								value={profile.discord}
-								onChange={(e) =>
-									setProfile((prev) => ({
-										...prev,
-										discord: e.target.value,
-									}))
-								}
-								placeholder="Your Discord username"
-							/>
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="kofi">Ko-fi</Label>
-							<Input
-								id="kofi"
-								value={profile.kofi}
-								onChange={(e) =>
-									setProfile((prev) => ({
-										...prev,
-										kofi: e.target.value,
-									}))
-								}
-								placeholder="Your Ko-fi page URL"
-							/>
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="patreon">Patreon</Label>
-							<Input
-								id="patreon"
-								value={profile.patreon}
-								onChange={(e) =>
-									setProfile((prev) => ({
-										...prev,
-										patreon: e.target.value,
-									}))
-								}
-								placeholder="Your Patreon page URL"
-							/>
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="website">Website</Label>
-							<Input
-								id="website"
-								type="url"
-								value={profile.website}
-								onChange={(e) =>
-									setProfile((prev) => ({
-										...prev,
-										website: e.target.value,
-									}))
-								}
-								placeholder="Your personal website URL"
-							/>
-						</div>
-						<Button type="submit" disabled={isUpdatingProfile}>
-							{isUpdatingProfile ? "Saving..." : "Save Profile"}
-						</Button>
-						{updateProfileError && (
-							<p className="text-sm text-destructive">
-								{updateProfileError.message}
-							</p>
-						)}
-					</form>
-				</CardContent>
-			</Card>
-		</div>
+		<>
+			<div className="grid grid-cols-4 gap-4">
+				<div className="col-span-3 grid grid-cols-3 gap-4 content-start">
+					{lists.map((list) => (
+						<ListCard key={list.id} {...list} />
+					))}
+				</div>
+				<div className="flex flex-col gap-4">
+					<BasicInfoForm currentUser={currentUser} />
+					<ProfileInformationForm currentUser={currentUser} />
+				</div>
+			</div>
+		</>
 	);
 }

@@ -1,15 +1,16 @@
+import { type ApiResponse, handleApiError } from "@/api/utils";
 import axios from "@/lib/axios";
 import type { CurrentUser } from "@/types/auth";
-import type { User, UserProfile } from "@/types/user";
-import { type ApiResponse, handleApiError } from "./utils";
+import type {
+	User,
+	UserPasswordUpdateParams,
+	UserProfile,
+	UserUpdateParams,
+} from "@/types/user";
 
 export const updateUser = async (
 	userName: string,
-	data: Partial<{
-		email: string | null;
-		password: string;
-		password_confirmation: string;
-	}>,
+	data: UserUpdateParams,
 ): Promise<User> => {
 	try {
 		const response = await axios.patch<ApiResponse<User>>(
@@ -17,6 +18,17 @@ export const updateUser = async (
 			data,
 		);
 		return response.data.data;
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};
+
+export const updateUserPassword = async (
+	userName: string,
+	data: UserPasswordUpdateParams,
+): Promise<void> => {
+	try {
+		await axios.patch(`/users/${userName}/password`, data);
 	} catch (error) {
 		throw handleApiError(error);
 	}

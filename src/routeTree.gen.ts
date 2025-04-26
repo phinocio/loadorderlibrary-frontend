@@ -20,7 +20,6 @@ import { Route as AdminUsersImport } from './routes/admin/users'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
-import { Route as appAboutImport } from './routes/(app)/about'
 import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
@@ -79,12 +78,6 @@ const authForgotPasswordRoute = authForgotPasswordImport.update({
   getParentRoute: () => authRouteRoute,
 } as any)
 
-const appAboutRoute = appAboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
 const appAuthenticatedRoute = appAuthenticatedImport.update({
   id: '/_authenticated',
   getParentRoute: () => appRouteRoute,
@@ -132,13 +125,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof appAuthenticatedImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/about': {
-      id: '/(app)/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof appAboutImport
       parentRoute: typeof appRouteImport
     }
     '/(auth)/forgot-password': {
@@ -215,14 +201,12 @@ const appAuthenticatedRouteWithChildren =
 
 interface appRouteRouteChildren {
   appAuthenticatedRoute: typeof appAuthenticatedRouteWithChildren
-  appAboutRoute: typeof appAboutRoute
   appIndexRoute: typeof appIndexRoute
   appListsIndexRoute: typeof appListsIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appAuthenticatedRoute: appAuthenticatedRouteWithChildren,
-  appAboutRoute: appAboutRoute,
   appIndexRoute: appIndexRoute,
   appListsIndexRoute: appListsIndexRoute,
 }
@@ -265,7 +249,6 @@ export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '': typeof appAuthenticatedRouteWithChildren
-  '/about': typeof appAboutRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
@@ -278,7 +261,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof appIndexRoute
   '': typeof appAuthenticatedRouteWithChildren
-  '/about': typeof appAboutRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
@@ -294,7 +276,6 @@ export interface FileRoutesById {
   '/(auth)': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
   '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
-  '/(app)/about': typeof appAboutRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
@@ -311,7 +292,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | ''
-    | '/about'
     | '/forgot-password'
     | '/login'
     | '/register'
@@ -323,7 +303,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
-    | '/about'
     | '/forgot-password'
     | '/login'
     | '/register'
@@ -337,7 +316,6 @@ export interface FileRouteTypes {
     | '/(auth)'
     | '/admin'
     | '/(app)/_authenticated'
-    | '/(app)/about'
     | '/(auth)/forgot-password'
     | '/(auth)/login'
     | '/(auth)/register'
@@ -380,7 +358,6 @@ export const routeTree = rootRoute
       "filePath": "(app)/route.tsx",
       "children": [
         "/(app)/_authenticated",
-        "/(app)/about",
         "/(app)/",
         "/(app)/lists/"
       ]
@@ -406,10 +383,6 @@ export const routeTree = rootRoute
       "children": [
         "/(app)/_authenticated/profile"
       ]
-    },
-    "/(app)/about": {
-      "filePath": "(app)/about.tsx",
-      "parent": "/(app)"
     },
     "/(auth)/forgot-password": {
       "filePath": "(auth)/forgot-password.tsx",

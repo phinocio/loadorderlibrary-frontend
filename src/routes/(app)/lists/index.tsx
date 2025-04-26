@@ -5,5 +5,5 @@ export const Route = createFileRoute("/(app)/lists/")({
 });
 
 function RouteComponent() {
-	return <p className="text-center text-sm text-gray-500">Lists here!</p>;
+	return <div>Work in progress</div>;
 }

@@ -10,6 +10,16 @@ export type User = {
 	};
 };
 
+export type UserUpdateParams = Partial<{
+	email: string | null;
+}>;
+
+export type UserPasswordUpdateParams = {
+	current_password: string;
+	password: string;
+	password_confirmation: string;
+};
+
 export type UserProfile = {
 	bio: string;
 	discord: string;
