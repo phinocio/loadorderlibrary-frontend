@@ -7,6 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -17,16 +18,15 @@ import {
 	AdminUserUpdateParamsScheme,
 	AdminUserUpdatePasswordParamsSchema,
 } from "@/schemas/admin-user-schemas";
+import type {
+	AdminUserUpdateParams,
+	AdminUserUpdatePasswordParams,
+} from "@/types/admin-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { z } from "zod";
-
-type AdminUpdateUserParams = z.infer<typeof AdminUserUpdateParamsScheme>;
-type AdminUpdateUserPassword = z.infer<
-	typeof AdminUserUpdatePasswordParamsSchema
->;
 
 export const Route = createFileRoute("/admin/users/$name")({
 	loader: async ({ context, params }) => {
@@ -41,6 +41,7 @@ function UserComponent() {
 	const { name } = Route.useParams();
 	const navigate = useNavigate();
 	const { data: user } = useSuspenseQuery(adminUserListQueryOptions(name));
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const {
 		updateUser,
 		verifyUser,
@@ -60,7 +61,7 @@ function UserComponent() {
 		register: registerUser,
 		handleSubmit: handleUserSubmit,
 		formState: { errors: userErrors },
-	} = useForm<AdminUpdateUserParams>({
+	} = useForm<AdminUserUpdateParams>({
 		resolver: zodResolver(AdminUserUpdateParamsScheme),
 		defaultValues: {
 			email: "",
@@ -71,7 +72,7 @@ function UserComponent() {
 		register: registerPassword,
 		handleSubmit: handlePasswordSubmit,
 		formState: { errors: passwordErrors },
-	} = useForm<AdminUpdateUserPassword>({
+	} = useForm<AdminUserUpdatePasswordParams>({
 		resolver: zodResolver(AdminUserUpdatePasswordParamsSchema),
 	});
 
@@ -88,14 +89,8 @@ function UserComponent() {
 	};
 
 	const handleDeleteUser = async () => {
-		if (
-			window.confirm(
-				`Are you sure you want to delete user ${user.name}? This action cannot be undone.`,
-			)
-		) {
-			await deleteUser();
-			navigate({ to: "/admin/users" });
-		}
+		await deleteUser();
+		navigate({ to: "/admin/users" });
 	};
 
 	return (
@@ -107,7 +102,9 @@ function UserComponent() {
 					</h1>
 					<div className="flex items-center gap-2">
 						<Badge
-							variant={user.verified ? "default" : "destructive"}
+							variant={
+								user.verified ? "secondary" : "destructive"
+							}
 							className="text-sm py-1"
 						>
 							{user.verified ? "Verified" : "Unverified"}
@@ -156,7 +153,11 @@ function UserComponent() {
 								)}
 							</div>
 
-							<Button type="submit" disabled={isUpdatingUser}>
+							<Button
+								type="submit"
+								variant="secondary"
+								disabled={isUpdatingUser}
+							>
 								Update Email
 							</Button>
 
@@ -219,7 +220,11 @@ function UserComponent() {
 								)}
 							</div>
 
-							<Button type="submit" disabled={isUpdatingPassword}>
+							<Button
+								type="submit"
+								variant="secondary"
+								disabled={isUpdatingPassword}
+							>
 								Reset Password
 							</Button>
 
@@ -252,7 +257,7 @@ function UserComponent() {
 						</div>
 						<Button
 							variant="destructive"
-							onClick={handleDeleteUser}
+							onClick={() => setIsDeleteDialogOpen(true)}
 							disabled={isDeletingUser}
 						>
 							Delete User
@@ -265,6 +270,17 @@ function UserComponent() {
 					)}
 				</CardContent>
 			</Card>
+
+			<ConfirmDialog
+				open={isDeleteDialogOpen}
+				onOpenChange={setIsDeleteDialogOpen}
+				title={`Delete User ${user.name}`}
+				description={`Are you sure you want to delete user ${user.name}? This action cannot be undone.`}
+				onConfirm={handleDeleteUser}
+				confirmText="Delete"
+				variant="destructive"
+				isLoading={isDeletingUser}
+			/>
 		</div>
 	);
 }
