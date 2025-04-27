@@ -1,4 +1,5 @@
 import {
+	adminDeleteUser,
 	adminGetUser,
 	adminGetUsers,
 	adminUpdateUser,
@@ -94,15 +95,38 @@ export function useAdminUser(name?: string) {
 		},
 	});
 
+	const deleteUserMutation = useMutation({
+		mutationFn: () => {
+			if (!name) throw new Error("Name is required to delete user");
+			return adminDeleteUser(name);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+			toast.success("User deleted successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to delete user", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to delete user", error);
+		},
+	});
+
 	return {
 		updateUser: updateUserMutation.mutate,
 		verifyUser: verifyUserMutation.mutate,
 		updateUserPassword: updateUserPasswordMutation.mutate,
+		deleteUser: deleteUserMutation.mutate,
 		isUpdatingUser: updateUserMutation.isPending,
 		isVerifyingUser: verifyUserMutation.isPending,
 		isUpdatingPassword: updateUserPasswordMutation.isPending,
+		isDeletingUser: deleteUserMutation.isPending,
 		updateUserError: updateUserMutation.error,
 		verifyUserError: verifyUserMutation.error,
 		updateUserPasswordError: updateUserPasswordMutation.error,
+		deleteUserError: deleteUserMutation.error,
 	};
 }

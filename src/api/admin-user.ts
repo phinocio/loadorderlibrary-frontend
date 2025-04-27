@@ -55,3 +55,11 @@ export async function adminUpdateUserPassword(
 		throw handleApiError(error);
 	}
 }
+
+export async function adminDeleteUser(name: string): Promise<void> {
+	try {
+		await axios.delete(`/admin/users/${name}`);
+	} catch (error) {
+		throw handleApiError(error);
+	}
+}

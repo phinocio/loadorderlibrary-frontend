@@ -19,7 +19,7 @@ import {
 } from "@/schemas/admin-user-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -39,17 +39,21 @@ export const Route = createFileRoute("/admin/users/$name")({
 
 function UserComponent() {
 	const { name } = Route.useParams();
+	const navigate = useNavigate();
 	const { data: user } = useSuspenseQuery(adminUserListQueryOptions(name));
 	const {
 		updateUser,
 		verifyUser,
 		updateUserPassword,
+		deleteUser,
 		isUpdatingUser,
 		isVerifyingUser,
 		isUpdatingPassword,
+		isDeletingUser,
 		updateUserError,
 		verifyUserError,
 		updateUserPasswordError,
+		deleteUserError,
 	} = useAdminUser(name);
 
 	const {
@@ -81,6 +85,17 @@ function UserComponent() {
 
 	const handleVerificationToggle = () => {
 		verifyUser(!user.verified);
+	};
+
+	const handleDeleteUser = async () => {
+		if (
+			window.confirm(
+				`Are you sure you want to delete user ${user.name}? This action cannot be undone.`,
+			)
+		) {
+			await deleteUser();
+			navigate({ to: "/admin/users" });
+		}
 	};
 
 	return (
@@ -217,6 +232,39 @@ function UserComponent() {
 					</CardContent>
 				</Card>
 			</div>
+
+			<Card className="border-destructive">
+				<CardHeader className="border-b border-destructive">
+					<CardTitle className="text-xl text-destructive">
+						Danger Zone
+					</CardTitle>
+					<CardDescription>
+						Actions in this section can't be undone
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					<div className="flex items-center justify-between py-3">
+						<div>
+							<h3 className="font-medium">Delete User Account</h3>
+							<p className="text-sm text-muted-foreground">
+								Permanently delete this user and all their data
+							</p>
+						</div>
+						<Button
+							variant="destructive"
+							onClick={handleDeleteUser}
+							disabled={isDeletingUser}
+						>
+							Delete User
+						</Button>
+					</div>
+					{deleteUserError && (
+						<p className="text-sm text-destructive">
+							{deleteUserError.message}
+						</p>
+					)}
+				</CardContent>
+			</Card>
 		</div>
 	);
 }
