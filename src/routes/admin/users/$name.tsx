@@ -25,6 +25,7 @@ import type {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { format, parseISO } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -102,9 +103,7 @@ function UserComponent() {
 					</h1>
 					<div className="flex items-center gap-2">
 						<Badge
-							variant={
-								user.verified ? "secondary" : "destructive"
-							}
+							variant={user.verified ? "secondary" : "outline"}
 							className="text-sm py-1"
 						>
 							{user.verified ? "Verified" : "Unverified"}
@@ -123,6 +122,12 @@ function UserComponent() {
 							{verifyUserError.message}
 						</p>
 					)}
+				</div>
+				<div className="flex flex-col gap-2 text-sm text-muted-foreground">
+					<p>Created: {format(parseISO(user.created), "PPpp")}</p>
+					<p>
+						Last Updated: {format(parseISO(user.updated), "PPpp")}
+					</p>
 				</div>
 			</div>
 

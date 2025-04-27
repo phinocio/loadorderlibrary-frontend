@@ -29,6 +29,7 @@ function RouteComponent() {
 					<TableRow>
 						<TableHead className="font-bold">Username</TableHead>
 						<TableHead className="font-bold">Verified</TableHead>
+						<TableHead className="font-bold">Admin</TableHead>
 						<TableHead className="font-bold">
 							Created Date
 						</TableHead>
@@ -52,12 +53,19 @@ function RouteComponent() {
 							<TableCell>
 								<Badge
 									variant={
-										user.verified
-											? "default"
-											: "destructive"
+										user.verified ? "secondary" : "outline"
 									}
 								>
 									{user.verified ? "Verified" : "Unverified"}
+								</Badge>
+							</TableCell>
+							<TableCell>
+								<Badge
+									variant={
+										user.admin ? "default" : "secondary"
+									}
+								>
+									{user.admin ? "Admin" : "User"}
 								</Badge>
 							</TableCell>
 							<TableCell>
