@@ -153,7 +153,11 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 							</p>
 						)}
 					</div>
-					<Button type="submit" disabled={isUpdatingPassword}>
+					<Button
+						type="submit"
+						variant="secondary"
+						disabled={isUpdatingPassword}
+					>
 						Update Password
 					</Button>
 					{updateUserPasswordError && (

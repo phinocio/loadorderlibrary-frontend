@@ -118,7 +118,11 @@ export function ProfileInformationForm({
 							</p>
 						)}
 					</div>
-					<Button type="submit" disabled={isUpdatingProfile}>
+					<Button
+						type="submit"
+						variant="secondary"
+						disabled={isUpdatingProfile}
+					>
 						Update Profile
 					</Button>
 					{updateProfileError && (

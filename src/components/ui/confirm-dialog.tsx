@@ -1,6 +1,5 @@
 import {
 	AlertDialog,
-	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
@@ -48,15 +47,13 @@ export function ConfirmDialog({
 							{cancelText}
 						</Button>
 					</AlertDialogCancel>
-					<AlertDialogAction asChild className={`bg-${variant}`}>
-						<Button
-							variant={variant}
-							onClick={onConfirm}
-							disabled={isLoading}
-						>
-							{confirmText}
-						</Button>
-					</AlertDialogAction>
+					<Button
+						variant={variant}
+						onClick={onConfirm}
+						disabled={isLoading}
+					>
+						{confirmText}
+					</Button>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>

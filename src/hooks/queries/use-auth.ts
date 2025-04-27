@@ -37,8 +37,8 @@ export function useAuth() {
 
 	const logoutMutation = useMutation({
 		mutationFn: logout,
-		onSuccess: () => {
-			navigate({
+		onSuccess: async () => {
+			await navigate({
 				to: "/",
 			});
 			queryClient.setQueryData(["current-user"], null);

@@ -1,14 +1,21 @@
-import { updateUser, updateUserPassword, updateUserProfile } from "@/api/user";
+import {
+	deleteUser,
+	updateUser,
+	updateUserPassword,
+	updateUserProfile,
+} from "@/api/user";
 import type {
 	UserPasswordUpdateParams,
 	UserProfile,
 	UserUpdateParams,
 } from "@/types/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export function useUser(name: string) {
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const updateUserMutation = useMutation({
 		mutationFn: (data: UserUpdateParams) => updateUser(name, data),
@@ -64,15 +71,36 @@ export function useUser(name: string) {
 		},
 	});
 
+	const deleteUserMutation = useMutation({
+		mutationFn: () => deleteUser(name),
+		onSuccess: async () => {
+			await navigate({ to: "/" });
+			queryClient.setQueryData(["current-user"], null);
+			toast.success("Account deleted successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to delete account", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to delete account", error);
+		},
+	});
+
 	return {
 		updateUser: updateUserMutation.mutate,
 		updateUserPassword: updateUserPasswordMutation.mutate,
 		updateProfile: updateProfileMutation.mutate,
+		deleteUser: deleteUserMutation.mutate,
 		isUpdatingUser: updateUserMutation.isPending,
 		isUpdatingPassword: updateUserPasswordMutation.isPending,
 		isUpdatingProfile: updateProfileMutation.isPending,
+		isDeletingUser: deleteUserMutation.isPending,
 		updateUserError: updateUserMutation.error,
 		updateUserPasswordError: updateUserPasswordMutation.error,
 		updateProfileError: updateProfileMutation.error,
+		deleteUserError: deleteUserMutation.error,
 	};
 }
