@@ -15,17 +15,14 @@ export const UserProfileSchema = z.object({
 export const UserSchema = z.object({
 	name: z.string(),
 	verified: z.boolean(),
+	admin: z.boolean().optional(),
 	profile: z.union([UserProfileSchema, z.null()]).optional(),
 	created: z.string(),
 	updated: z.string(),
-	links: z.object({
-		self: z.string(),
-		url: z.string(),
-	}),
 });
 
 export const UserUpdateParamsSchema = z.object({
-	email: z.string().nullable().optional(),
+	email: z.union([z.string().email(), z.literal("")]).optional(),
 });
 
 export const UserPasswordUpdateParamsSchema = z.object({

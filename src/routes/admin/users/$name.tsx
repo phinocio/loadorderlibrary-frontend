@@ -1,6 +1,32 @@
-import { adminUserListQueryOptions } from "@/hooks/queries/use-admin-user";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+	adminUserListQueryOptions,
+	useAdminUser,
+} from "@/hooks/queries/use-admin-user";
+import {
+	AdminUserUpdateParamsScheme,
+	AdminUserUpdatePasswordParamsSchema,
+} from "@/schemas/admin-user-schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+
+type AdminUpdateUserParams = z.infer<typeof AdminUserUpdateParamsScheme>;
+type AdminUpdateUserPassword = z.infer<
+	typeof AdminUserUpdatePasswordParamsSchema
+>;
 
 export const Route = createFileRoute("/admin/users/$name")({
 	loader: async ({ context, params }) => {
@@ -14,6 +40,183 @@ export const Route = createFileRoute("/admin/users/$name")({
 function UserComponent() {
 	const { name } = Route.useParams();
 	const { data: user } = useSuspenseQuery(adminUserListQueryOptions(name));
+	const {
+		updateUser,
+		verifyUser,
+		updateUserPassword,
+		isUpdatingUser,
+		isVerifyingUser,
+		isUpdatingPassword,
+		updateUserError,
+		verifyUserError,
+		updateUserPasswordError,
+	} = useAdminUser(name);
 
-	return <div>Hello {user?.name}</div>;
+	const {
+		register: registerUser,
+		handleSubmit: handleUserSubmit,
+		formState: { errors: userErrors },
+	} = useForm<AdminUpdateUserParams>({
+		resolver: zodResolver(AdminUserUpdateParamsScheme),
+		defaultValues: {
+			email: "",
+		},
+	});
+
+	const {
+		register: registerPassword,
+		handleSubmit: handlePasswordSubmit,
+		formState: { errors: passwordErrors },
+	} = useForm<AdminUpdateUserPassword>({
+		resolver: zodResolver(AdminUserUpdatePasswordParamsSchema),
+	});
+
+	const onUserSubmit = handleUserSubmit((data) => {
+		updateUser(data);
+	});
+
+	const onPasswordSubmit = handlePasswordSubmit((data) => {
+		updateUserPassword(data);
+	});
+
+	const handleVerificationToggle = () => {
+		verifyUser(!user.verified);
+	};
+
+	return (
+		<div className="container mx-auto py-6 space-y-6">
+			<div className="flex items-center justify-between">
+				<div className="flex items-center gap-3">
+					<h1 className="text-3xl font-bold tracking-tight">
+						{user.name}
+					</h1>
+					<div className="flex items-center gap-2">
+						<Badge
+							variant={user.verified ? "default" : "destructive"}
+							className="text-sm py-1"
+						>
+							{user.verified ? "Verified" : "Unverified"}
+						</Badge>
+						<Button
+							onClick={handleVerificationToggle}
+							disabled={isVerifyingUser}
+							variant="ghost"
+							className="text-sm hover:text-muted-foreground"
+						>
+							{user.verified ? "Revoke" : "Verify"}
+						</Button>
+					</div>
+					{verifyUserError && (
+						<p className="text-sm text-destructive ml-2">
+							{verifyUserError.message}
+						</p>
+					)}
+				</div>
+			</div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<Card>
+					<CardHeader className="border-b">
+						<CardTitle className="text-xl">
+							Email Management
+						</CardTitle>
+						<CardDescription>
+							Update the user's email address
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<form onSubmit={onUserSubmit} className="space-y-4">
+							<div className="space-y-2">
+								<Label htmlFor="email">Email</Label>
+								<Input
+									id="email"
+									type="email"
+									placeholder="Enter user's email"
+									{...registerUser("email")}
+								/>
+								{userErrors.email && (
+									<p className="text-sm text-destructive">
+										{userErrors.email.message}
+									</p>
+								)}
+							</div>
+
+							<Button type="submit" disabled={isUpdatingUser}>
+								Update Email
+							</Button>
+
+							{updateUserError && (
+								<p className="text-sm text-destructive">
+									{updateUserError.message}
+								</p>
+							)}
+						</form>
+					</CardContent>
+				</Card>
+
+				<Card>
+					<CardHeader className="border-b">
+						<CardTitle className="text-xl">
+							Reset Password
+						</CardTitle>
+						<CardDescription>
+							Set a new password for the user
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<form onSubmit={onPasswordSubmit} className="space-y-4">
+							<div className="space-y-2">
+								<Label htmlFor="password">New Password</Label>
+								<Input
+									id="password"
+									type="password"
+									placeholder="Enter new password"
+									{...registerPassword("password")}
+									autoComplete="new-password"
+								/>
+								{passwordErrors.password && (
+									<p className="text-sm text-destructive">
+										{passwordErrors.password.message}
+									</p>
+								)}
+							</div>
+
+							<div className="space-y-2">
+								<Label htmlFor="password_confirmation">
+									Confirm Password
+								</Label>
+								<Input
+									id="password_confirmation"
+									type="password"
+									placeholder="Confirm new password"
+									{...registerPassword(
+										"password_confirmation",
+									)}
+									autoComplete="new-password"
+								/>
+								{passwordErrors.password_confirmation && (
+									<p className="text-sm text-destructive">
+										{
+											passwordErrors.password_confirmation
+												.message
+										}
+									</p>
+								)}
+							</div>
+
+							<Button type="submit" disabled={isUpdatingPassword}>
+								Reset Password
+							</Button>
+
+							{updateUserPasswordError && (
+								<p className="text-sm text-destructive">
+									{updateUserPasswordError.message}
+								</p>
+							)}
+						</form>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	);
 }

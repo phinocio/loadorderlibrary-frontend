@@ -57,7 +57,7 @@ function RouteComponent() {
 											: "destructive"
 									}
 								>
-									{user.verified ? "Yes" : "No"}
+									{user.verified ? "Verified" : "Unverified"}
 								</Badge>
 							</TableCell>
 							<TableCell>
