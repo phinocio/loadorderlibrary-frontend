@@ -9,13 +9,17 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarRail,
+	SidebarSeparator,
 	useSidebar,
 } from "@/components/ui/sidebar";
 import type { CurrentUser } from "@/types/auth";
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
+import { Heart } from "lucide-react";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 	routes: {
@@ -56,6 +60,17 @@ export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {
 				) : (
 					<NavLoginRegister />
 				)}
+				<SidebarSeparator />
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<SidebarMenuButton asChild>
+							<Link to="/support" className="justify-center">
+								<Heart className="text-primary" />
+								<span>Support the Site</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+				</SidebarMenu>
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
