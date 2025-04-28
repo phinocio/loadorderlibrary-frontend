@@ -60,11 +60,14 @@ export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {
 				) : (
 					<NavLoginRegister />
 				)}
-				<SidebarSeparator />
+				{open && <SidebarSeparator />}
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild>
-							<Link to="/support" className="justify-center">
+							<Link
+								to="/support"
+								className={open ? "justify-center" : ""}
+							>
 								<Heart className="text-primary" />
 								<span>Support the Site</span>
 							</Link>
