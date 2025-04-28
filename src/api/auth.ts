@@ -61,3 +61,16 @@ export const forgotPassword = async (data: ForgotPassword): Promise<void> => {
 		throw handleApiError(error);
 	}
 };
+
+export const resetPassword = async (data: {
+	token: string;
+	email: string;
+	password: string;
+	password_confirmation: string;
+}): Promise<void> => {
+	try {
+		await axios.post<void>("/reset-password", data);
+	} catch (error) {
+		throw handleApiError(error);
+	}
+};

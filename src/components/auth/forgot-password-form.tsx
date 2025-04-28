@@ -33,6 +33,7 @@ export function ForgotPasswordForm({
 	});
 
 	const onSubmit = handleSubmit((data) => {
+		setIsSuccess(false);
 		forgotPassword(data, {
 			onSuccess: () => {
 				setIsSuccess(true);

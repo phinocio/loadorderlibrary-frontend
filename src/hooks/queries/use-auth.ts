@@ -4,6 +4,7 @@ import {
 	login,
 	logout,
 	register,
+	resetPassword,
 } from "@/api/auth";
 import type {
 	CurrentUser,
@@ -77,16 +78,39 @@ export function useAuth() {
 		},
 	});
 
+	const resetPasswordMutation = useMutation({
+		mutationFn: resetPassword,
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+			await navigate({
+				to: "/",
+			});
+			toast.success("Password reset successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to reset password", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to reset password", error);
+		},
+	});
+
 	return {
 		login: loginMutation.mutate,
 		register: registerMutation.mutate,
 		logout: logoutMutation.mutate,
 		forgotPassword: forgotPasswordMutation.mutate,
+		resetPassword: resetPasswordMutation.mutate,
 		isLoggingIn: loginMutation.isPending,
 		isRegistering: registerMutation.isPending,
 		isForgotPassword: forgotPasswordMutation.isPending,
+		isResettingPassword: resetPasswordMutation.isPending,
 		loginError: loginMutation.error,
 		registerError: registerMutation.error,
 		forgotPasswordError: forgotPasswordMutation.error,
+		resetPasswordError: resetPasswordMutation.error,
 	};
 }
