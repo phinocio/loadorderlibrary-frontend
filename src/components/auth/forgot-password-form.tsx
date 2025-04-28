@@ -1,3 +1,4 @@
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -14,6 +15,7 @@ import { ForgotPasswordSchema } from "@/schemas/auth-schemas";
 import type { ForgotPassword } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
+import { InfoIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -44,6 +46,28 @@ export function ForgotPasswordForm({
 
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
+			<Alert variant="info">
+				<InfoIcon className="size-4" />
+				<AlertDescription className="space-y-2">
+					<p>
+						Since emails are optional, if the account does not have
+						an email, passwords can not be reset this way.
+					</p>
+					<p>
+						Load Order Library uses{" "}
+						<a
+							href="https://resend.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="underline"
+						>
+							Resend
+						</a>{" "}
+						to handle email, this means that Resend will end up
+						receiving the email address when a reset link is sent.
+					</p>
+				</AlertDescription>
+			</Alert>
 			<Card>
 				<CardHeader>
 					<CardTitle>Reset your password</CardTitle>

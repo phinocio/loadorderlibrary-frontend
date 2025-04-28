@@ -1,3 +1,4 @@
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -16,6 +17,7 @@ import {
 } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { InfoIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
@@ -73,6 +75,25 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
+				<Alert variant="info">
+					<InfoIcon className="size-4" />
+					<AlertDescription>
+						<p>
+							Load Order Library uses Load Order Library uses{" "}
+							<a
+								href="https://resend.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline"
+							>
+								Resend
+							</a>{" "}
+							to handle email, this means that Resend will end up
+							receiving the email address in the event you need to
+							reset your password.
+						</p>
+					</AlertDescription>
+				</Alert>
 				<form onSubmit={onEmailSubmit} className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="email">Email</Label>
