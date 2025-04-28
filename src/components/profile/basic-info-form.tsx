@@ -79,7 +79,7 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 					<InfoIcon className="size-4" />
 					<AlertDescription>
 						<p>
-							Load Order Library uses Load Order Library uses{" "}
+							Load Order Library uses{" "}
 							<a
 								href="https://resend.com"
 								target="_blank"
@@ -111,7 +111,7 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 					</div>
 					<Button
 						type="submit"
-						variant="secondary"
+						variant="tertiary"
 						disabled={isUpdatingUser}
 					>
 						Update Email
@@ -180,7 +180,7 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 					</div>
 					<Button
 						type="submit"
-						variant="secondary"
+						variant="tertiary"
 						disabled={isUpdatingPassword}
 					>
 						Update Password

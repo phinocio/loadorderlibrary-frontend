@@ -120,7 +120,7 @@ export function ProfileInformationForm({
 					</div>
 					<Button
 						type="submit"
-						variant="secondary"
+						variant="tertiary"
 						disabled={isUpdatingProfile}
 					>
 						Update Profile
