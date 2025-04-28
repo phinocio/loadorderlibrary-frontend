@@ -110,7 +110,7 @@ export function RegisterForm({
 							<div className="flex flex-col gap-3">
 								<Button
 									type="submit"
-									variant="secondary"
+									variant="tertiary"
 									className="w-full"
 									disabled={isRegistering}
 								>
@@ -122,7 +122,7 @@ export function RegisterForm({
 							Already have an account?{" "}
 							<Link
 								to="/login"
-								className="underline underline-offset-4"
+								className="underline underline-offset-4 text-primary hover:text-primary/80"
 							>
 								Log In
 							</Link>

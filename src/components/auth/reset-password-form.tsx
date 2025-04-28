@@ -104,7 +104,7 @@ export function ResetPasswordForm({
 							</div>
 							<Button
 								type="submit"
-								variant="secondary"
+								variant="tertiary"
 								className="w-full"
 								disabled={isResettingPassword}
 							>

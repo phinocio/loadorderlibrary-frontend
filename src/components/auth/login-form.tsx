@@ -101,7 +101,7 @@ export function LoginForm({
 							<div className="flex flex-col gap-3">
 								<Button
 									type="submit"
-									variant="secondary"
+									variant="tertiary"
 									className="w-full"
 									disabled={isLoggingIn}
 								>
@@ -113,7 +113,7 @@ export function LoginForm({
 							Don&apos;t have an account?{" "}
 							<Link
 								to="/register"
-								className="underline underline-offset-4"
+								className="underline underline-offset-4 text-primary hover:text-primary/80"
 							>
 								Register
 							</Link>

@@ -160,7 +160,7 @@ function UserComponent() {
 
 							<Button
 								type="submit"
-								variant="secondary"
+								variant="tertiary"
 								disabled={isUpdatingUser}
 							>
 								Update Email
@@ -227,7 +227,7 @@ function UserComponent() {
 
 							<Button
 								type="submit"
-								variant="secondary"
+								variant="tertiary"
 								disabled={isUpdatingPassword}
 							>
 								Reset Password

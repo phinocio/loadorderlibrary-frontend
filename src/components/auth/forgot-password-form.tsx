@@ -111,7 +111,7 @@ export function ForgotPasswordForm({
 							<div className="flex flex-col gap-3">
 								<Button
 									type="submit"
-									variant="secondary"
+									variant="tertiary"
 									className="w-full"
 									disabled={isForgotPassword}
 								>
@@ -123,7 +123,7 @@ export function ForgotPasswordForm({
 							Remember your password?{" "}
 							<Link
 								to="/login"
-								className="underline underline-offset-4"
+								className="underline underline-offset-4 text-primary hover:text-primary/80"
 							>
 								Log In
 							</Link>
