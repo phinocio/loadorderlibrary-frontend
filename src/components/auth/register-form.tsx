@@ -110,6 +110,7 @@ export function RegisterForm({
 							<div className="flex flex-col gap-3">
 								<Button
 									type="submit"
+									variant="secondary"
 									className="w-full"
 									disabled={isRegistering}
 								>

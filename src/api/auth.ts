@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import type { CurrentUser } from "@/types/auth";
+import type { CurrentUser, ForgotPassword } from "@/types/auth";
 import { isAxiosError } from "axios";
 import { type ApiResponse, handleApiError } from "./utils";
 
@@ -50,6 +50,14 @@ export const getCurrentUser = async (): Promise<CurrentUser | null> => {
 		if (isAxiosError(error) && error.response?.status === 401) {
 			return null;
 		}
+		throw handleApiError(error);
+	}
+};
+
+export const forgotPassword = async (data: ForgotPassword): Promise<void> => {
+	try {
+		await axios.post<void>("/forgot-password", data);
+	} catch (error) {
 		throw handleApiError(error);
 	}
 };

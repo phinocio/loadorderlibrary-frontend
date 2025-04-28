@@ -1,4 +1,10 @@
-import { getCurrentUser, login, logout, register } from "@/api/auth";
+import {
+	forgotPassword,
+	getCurrentUser,
+	login,
+	logout,
+	register,
+} from "@/api/auth";
 import type {
 	CurrentUser,
 	LoginCredentials,
@@ -55,13 +61,32 @@ export function useAuth() {
 		},
 	});
 
+	const forgotPasswordMutation = useMutation({
+		mutationFn: forgotPassword,
+		onSuccess: () => {
+			toast.success("Password reset link sent to your email", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to send password reset link", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to send password reset link", error);
+		},
+	});
+
 	return {
 		login: loginMutation.mutate,
 		register: registerMutation.mutate,
 		logout: logoutMutation.mutate,
+		forgotPassword: forgotPasswordMutation.mutate,
 		isLoggingIn: loginMutation.isPending,
 		isRegistering: registerMutation.isPending,
+		isForgotPassword: forgotPasswordMutation.isPending,
 		loginError: loginMutation.error,
 		registerError: registerMutation.error,
+		forgotPasswordError: forgotPasswordMutation.error,
 	};
 }
