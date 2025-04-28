@@ -84,7 +84,7 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 								href="https://resend.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="underline"
+								className="underline text-primary"
 							>
 								Resend
 							</a>{" "}

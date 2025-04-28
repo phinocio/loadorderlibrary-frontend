@@ -111,7 +111,7 @@ function RouteComponent() {
 								Browse and manage your created load orders.
 							</p>
 						</div>
-						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+						<div className="grid grid-cols-1 gap-6 lg:grid-cols-[repeat(2,1fr)] xl:grid-cols-[repeat(3,1fr)]">
 							{lists.map((list) => (
 								<ListCard key={list.id} {...list} />
 							))}
