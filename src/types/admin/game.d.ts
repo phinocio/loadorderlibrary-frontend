@@ -1,4 +1,4 @@
-import type { AdminGameUpdateSchema } from "@/schemas/admin/game-schemas";
+import type { AdminGameCreateSchema } from "@/schemas/admin/game-schemas";
 import type { z } from "zod";
 
-export type AdminGameUpdateParams = z.infer<typeof AdminGameUpdateSchema>;
+export type AdminGameCreateParams = z.infer<typeof AdminGameCreateSchema>;

@@ -1,34 +1,29 @@
-import { adminUpdateGame } from "@/api/admin/game";
-import type { AdminGameUpdateParams } from "@/types/admin/game";
+import { adminCreateGame } from "@/api/admin/game";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export function adminUseGame(name: string) {
+export function adminUseGames() {
 	const queryClient = useQueryClient();
-	const updateGameMutation = useMutation({
-		mutationFn: (data: AdminGameUpdateParams) => {
-			if (!name) throw new Error("Name is required to update game");
-			return adminUpdateGame(name, data);
-		},
+
+	const createGameMutation = useMutation({
+		mutationFn: (name: string) => adminCreateGame(name),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["games"] });
-			queryClient.invalidateQueries({ queryKey: ["game", name] });
-			toast.success("Game updated successfully", {
+			toast.success("Game created successfully", {
 				richColors: true,
 			});
 		},
 		onError: (error) => {
-			toast.error("Failed to update game", {
+			toast.error("Failed to create game", {
 				richColors: true,
 				description: error.message,
 			});
-			console.error("Failed to update game", error);
 		},
 	});
 
 	return {
-		updateGame: updateGameMutation.mutate,
-		isUpdatingGame: updateGameMutation.isPending,
-		updateGameError: updateGameMutation.error,
+		createGame: createGameMutation.mutate,
+		isCreatingGame: createGameMutation.isPending,
+		createGameError: createGameMutation.error,
 	};
 }

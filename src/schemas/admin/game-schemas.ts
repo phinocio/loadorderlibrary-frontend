@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-export const AdminGameUpdateSchema = z.object({
-	name: z.string(),
+export const AdminGameCreateSchema = z.object({
+	name: z.string().min(1, "Game name is required"),
 });

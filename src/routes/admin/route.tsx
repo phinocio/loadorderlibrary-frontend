@@ -9,7 +9,7 @@ import { requireAdmin } from "@/lib/guards";
 import { currentUserQueryOptions } from "@/queries/use-auth";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { Home, Search, User as UserIcon } from "lucide-react";
+import { Gamepad2, Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
 	beforeLoad: async ({ context }) => {
@@ -28,6 +28,11 @@ const navItems = [
 		title: "Users",
 		url: "/admin/users",
 		icon: UserIcon,
+	},
+	{
+		title: "Games",
+		url: "/admin/games",
+		icon: Gamepad2,
 	},
 	{
 		title: "Lists",

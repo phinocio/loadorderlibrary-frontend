@@ -22,7 +22,7 @@ function RouteComponent() {
 	const { data: users } = useSuspenseQuery(adminUsersListQueryOptions);
 
 	return (
-		<div className="flex h-full w-full flex-col gap-4 p-4">
+		<div className="container mx-auto p-4 gap-4">
 			<h1 className="text-2xl font-bold">Users</h1>
 			<Table>
 				<TableHeader>

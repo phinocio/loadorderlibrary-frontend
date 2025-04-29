@@ -23,6 +23,7 @@ import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-passwo
 import { Route as appSupportImport } from './routes/(app)/support'
 import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
+import { Route as AdminGamesIndexImport } from './routes/admin/games/index'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
@@ -95,6 +96,12 @@ const appAuthenticatedRoute = appAuthenticatedImport.update({
 const AdminUsersIndexRoute = AdminUsersIndexImport.update({
   id: '/users/',
   path: '/users/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const AdminGamesIndexRoute = AdminGamesIndexImport.update({
+  id: '/games/',
+  path: '/games/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 
@@ -218,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appListsIndexImport
       parentRoute: typeof appRouteImport
     }
+    '/admin/games/': {
+      id: '/admin/games/'
+      path: '/games'
+      fullPath: '/admin/games'
+      preLoaderRoute: typeof AdminGamesIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/admin/users/': {
       id: '/admin/users/'
       path: '/users'
@@ -280,12 +294,14 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminUsersNameRoute: typeof AdminUsersNameRoute
+  AdminGamesIndexRoute: typeof AdminGamesIndexRoute
   AdminUsersIndexRoute: typeof AdminUsersIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminUsersNameRoute: AdminUsersNameRoute,
+  AdminGamesIndexRoute: AdminGamesIndexRoute,
   AdminUsersIndexRoute: AdminUsersIndexRoute,
 }
 
@@ -306,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof appAuthenticatedProfileRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
+  '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 
@@ -321,6 +338,7 @@ export interface FileRoutesByTo {
   '/profile': typeof appAuthenticatedProfileRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
+  '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 
@@ -340,6 +358,7 @@ export interface FileRoutesById {
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/(app)/lists/': typeof appListsIndexRoute
+  '/admin/games/': typeof AdminGamesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
 
@@ -358,6 +377,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/admin/users/$name'
     | '/lists'
+    | '/admin/games'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -372,6 +392,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/admin/users/$name'
     | '/lists'
+    | '/admin/games'
     | '/admin/users'
   id:
     | '__root__'
@@ -389,6 +410,7 @@ export interface FileRouteTypes {
     | '/(app)/_authenticated/profile'
     | '/admin/users/$name'
     | '/(app)/lists/'
+    | '/admin/games/'
     | '/admin/users/'
   fileRoutesById: FileRoutesById
 }
@@ -443,6 +465,7 @@ export const routeTree = rootRoute
       "children": [
         "/admin/",
         "/admin/users/$name",
+        "/admin/games/",
         "/admin/users/"
       ]
     },
@@ -492,6 +515,10 @@ export const routeTree = rootRoute
     "/(app)/lists/": {
       "filePath": "(app)/lists/index.tsx",
       "parent": "/(app)"
+    },
+    "/admin/games/": {
+      "filePath": "admin/games/index.tsx",
+      "parent": "/admin"
     },
     "/admin/users/": {
       "filePath": "admin/users/index.tsx",
