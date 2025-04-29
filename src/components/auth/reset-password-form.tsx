@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "@/hooks/queries/use-auth";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/queries/use-auth";
 import { ResetPasswordSchema } from "@/schemas/auth-schemas";
 import type { ResetPassword } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";

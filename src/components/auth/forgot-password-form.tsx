@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "@/hooks/queries/use-auth";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/queries/use-auth";
 import { ForgotPasswordSchema } from "@/schemas/auth-schemas";
 import type { ForgotPassword } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";

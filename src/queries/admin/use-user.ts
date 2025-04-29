@@ -4,11 +4,11 @@ import {
 	adminGetUsers,
 	adminUpdateUser,
 	adminUpdateUserPassword,
-} from "@/api/admin-user";
+} from "@/api/admin/user";
 import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
-} from "@/types/admin-user";
+} from "@/types/admin/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

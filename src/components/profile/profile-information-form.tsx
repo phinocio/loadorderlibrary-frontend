@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/hooks/queries/use-user";
+import { useUser } from "@/queries/use-user";
 import { UserProfileSchema } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
 import type { UserProfile } from "@/types/user";

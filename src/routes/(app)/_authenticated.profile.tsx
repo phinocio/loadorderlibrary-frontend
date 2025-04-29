@@ -10,8 +10,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
-import { useUser } from "@/hooks/queries/use-user";
+import { currentUserQueryOptions } from "@/queries/use-auth";
+import { useUser } from "@/queries/use-user";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";

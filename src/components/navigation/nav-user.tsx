@@ -25,7 +25,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/queries/use-auth";
+import { useAuth } from "@/queries/use-auth";
 import type { CurrentUser } from "@/types/auth";
 
 export function NavUser({ currentUser }: { currentUser: CurrentUser }) {

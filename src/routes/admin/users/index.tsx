@@ -7,7 +7,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { adminUsersListQueryOptions } from "@/hooks/queries/use-admin-user";
+import { adminUsersListQueryOptions } from "@/queries/admin/use-user";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";

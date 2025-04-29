@@ -13,15 +13,15 @@ import { Label } from "@/components/ui/label";
 import {
 	adminUserListQueryOptions,
 	useAdminUser,
-} from "@/hooks/queries/use-admin-user";
+} from "@/queries/admin/use-user";
 import {
 	AdminUserUpdateParamsScheme,
 	AdminUserUpdatePasswordParamsSchema,
-} from "@/schemas/admin-user-schemas";
+} from "@/schemas/admin/user-schemas";
 import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
-} from "@/types/admin-user";
+} from "@/types/admin/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";

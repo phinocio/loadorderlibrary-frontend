@@ -5,8 +5,8 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
 import { requireAdmin } from "@/lib/guards";
+import { currentUserQueryOptions } from "@/queries/use-auth";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { Home, Search, User as UserIcon } from "lucide-react";

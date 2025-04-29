@@ -5,7 +5,7 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
+import { currentUserQueryOptions } from "@/queries/use-auth";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { GitCompareIcon, Home, Search, Upload } from "lucide-react";

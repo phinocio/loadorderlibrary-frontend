@@ -1,4 +1,4 @@
-import { currentUserQueryOptions } from "@/hooks/queries/use-auth";
+import { currentUserQueryOptions } from "@/queries/use-auth";
 import type { QueryClient } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
 

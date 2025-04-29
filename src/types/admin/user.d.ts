@@ -1,7 +1,7 @@
 import type {
 	AdminUserUpdateParamsScheme,
 	AdminUserUpdatePasswordParamsSchema,
-} from "@/schemas/admin-user-schemas";
+} from "@/schemas/admin/user-schemas";
 import type { z } from "zod";
 
 export type AdminUserUpdateParams = z.infer<typeof AdminUserUpdateParamsScheme>;

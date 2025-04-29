@@ -3,7 +3,7 @@ import axios from "@/lib/axios";
 import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
-} from "@/types/admin-user";
+} from "@/types/admin/user";
 import type { User } from "@/types/user";
 
 export async function adminGetUsers(): Promise<User[]> {
