@@ -29,6 +29,9 @@ export function LoginForm({
 		formState: { errors },
 	} = useForm<LoginCredentials>({
 		resolver: zodResolver(LoginCredentialsSchema),
+		defaultValues: {
+			remember: false,
+		},
 	});
 
 	const onSubmit = handleSubmit((data) => {
@@ -97,6 +100,20 @@ export function LoginForm({
 										{errors.password.message}
 									</p>
 								)}
+							</div>
+							<div className="flex items-center space-x-2">
+								<input
+									type="checkbox"
+									id="remember"
+									className="h-4 w-4 rounded border-input bg-background text-primary ring-offset-background"
+									{...register("remember")}
+								/>
+								<Label
+									htmlFor="remember"
+									className="text-sm font-normal"
+								>
+									Remember me
+								</Label>
 							</div>
 							<div className="flex flex-col gap-3">
 								<Button

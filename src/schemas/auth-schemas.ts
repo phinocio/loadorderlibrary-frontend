@@ -4,6 +4,7 @@ import { z } from "zod";
 export const LoginCredentialsSchema = z.object({
 	name: z.string().min(1, "Username is required"),
 	password: z.string().min(1, "Password is required"),
+	remember: z.boolean().optional().default(false),
 });
 
 export const RegisterCredentialsSchema = z
