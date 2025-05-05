@@ -7,5 +7,5 @@ export const gamesQueryOptions = {
 
 export const gameQueryOptions = (name: string) => ({
 	queryKey: ["game", name],
-	queryFn: getGame(name),
+	queryFn: () => getGame(name),
 });
