@@ -27,6 +27,7 @@ import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminGamesIndexImport } from './routes/admin/games/index'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
+import { Route as appListsSlugImport } from './routes/(app)/lists/$slug'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 
 // Create/Update Routes
@@ -122,6 +123,12 @@ const AdminUsersNameRoute = AdminUsersNameImport.update({
   id: '/users/$name',
   path: '/users/$name',
   getParentRoute: () => AdminRouteRoute,
+} as any)
+
+const appListsSlugRoute = appListsSlugImport.update({
+  id: '/lists/$slug',
+  path: '/lists/$slug',
+  getParentRoute: () => appRouteRoute,
 } as any)
 
 const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
@@ -225,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appAuthenticatedProfileImport
       parentRoute: typeof appAuthenticatedImport
     }
+    '/(app)/lists/$slug': {
+      id: '/(app)/lists/$slug'
+      path: '/lists/$slug'
+      fullPath: '/lists/$slug'
+      preLoaderRoute: typeof appListsSlugImport
+      parentRoute: typeof appRouteImport
+    }
     '/admin/users/$name': {
       id: '/admin/users/$name'
       path: '/users/$name'
@@ -274,6 +288,7 @@ interface appRouteRouteChildren {
   appSupportRoute: typeof appSupportRoute
   appUploadRoute: typeof appUploadRoute
   appIndexRoute: typeof appIndexRoute
+  appListsSlugRoute: typeof appListsSlugRoute
   appListsIndexRoute: typeof appListsIndexRoute
 }
 
@@ -282,6 +297,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   appSupportRoute: appSupportRoute,
   appUploadRoute: appUploadRoute,
   appIndexRoute: appIndexRoute,
+  appListsSlugRoute: appListsSlugRoute,
   appListsIndexRoute: appListsIndexRoute,
 }
 
@@ -337,6 +353,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof authResetPasswordRoute
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/lists/$slug': typeof appListsSlugRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
@@ -354,6 +371,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof authResetPasswordRoute
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/lists/$slug': typeof appListsSlugRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
@@ -375,6 +393,7 @@ export interface FileRoutesById {
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
+  '/(app)/lists/$slug': typeof appListsSlugRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/(app)/lists/': typeof appListsIndexRoute
   '/admin/games/': typeof AdminGamesIndexRoute
@@ -395,6 +414,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/'
     | '/profile'
+    | '/lists/$slug'
     | '/admin/users/$name'
     | '/lists'
     | '/admin/games'
@@ -411,6 +431,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin'
     | '/profile'
+    | '/lists/$slug'
     | '/admin/users/$name'
     | '/lists'
     | '/admin/games'
@@ -430,6 +451,7 @@ export interface FileRouteTypes {
     | '/(app)/'
     | '/admin/'
     | '/(app)/_authenticated/profile'
+    | '/(app)/lists/$slug'
     | '/admin/users/$name'
     | '/(app)/lists/'
     | '/admin/games/'
@@ -471,6 +493,7 @@ export const routeTree = rootRoute
         "/(app)/support",
         "/(app)/upload",
         "/(app)/",
+        "/(app)/lists/$slug",
         "/(app)/lists/"
       ]
     },
@@ -534,6 +557,10 @@ export const routeTree = rootRoute
     "/(app)/_authenticated/profile": {
       "filePath": "(app)/_authenticated.profile.tsx",
       "parent": "/(app)/_authenticated"
+    },
+    "/(app)/lists/$slug": {
+      "filePath": "(app)/lists/$slug.tsx",
+      "parent": "/(app)"
     },
     "/admin/users/$name": {
       "filePath": "admin/users/$name.tsx",
