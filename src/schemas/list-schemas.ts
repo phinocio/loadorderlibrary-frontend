@@ -19,7 +19,7 @@ export const ListSchema = z.object({
 	author: UserSchema.pick({
 		name: true,
 		verified: true,
-	}),
+	}).optional(),
 	game: GameSchema,
 	files: z.array(FileSchema).optional(),
 	links: z.object({
@@ -37,9 +37,7 @@ export const ListCreateParamsSchema = z.object({
 	readme: z.union([z.string(), z.literal("")]).optional(),
 	private: z.boolean().optional(),
 	expires: z.union([z.string().datetime(), z.literal("")]).optional(),
-	game: GameSchema.pick({
-		id: true,
-	}),
+	game: z.string(),
 	files: FileUploadSchema,
 });
 
@@ -52,6 +50,6 @@ export const ListUpdateParamsSchema = z.object({
 	readme: z.union([z.string(), z.literal("")]).optional(),
 	private: z.boolean().optional(),
 	expires: z.union([z.string().datetime(), z.literal("")]).optional(),
-	game: z.number().optional(),
+	game: z.string().optional(),
 	files: FileUploadSchema.optional(),
 });

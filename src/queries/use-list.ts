@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 export const listsQueryOptions = queryOptions({
 	queryKey: ["lists"],
-	queryFn: () => getLists,
+	queryFn: getLists,
 });
 
 export const listQueryOptions = (slug: string) =>
