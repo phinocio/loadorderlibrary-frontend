@@ -91,16 +91,19 @@ export function useUser(name: string) {
 
 	return {
 		updateUser: updateUserMutation.mutate,
-		updateUserPassword: updateUserPasswordMutation.mutate,
-		updateProfile: updateProfileMutation.mutate,
-		deleteUser: deleteUserMutation.mutate,
 		isUpdatingUser: updateUserMutation.isPending,
-		isUpdatingPassword: updateUserPasswordMutation.isPending,
-		isUpdatingProfile: updateProfileMutation.isPending,
-		isDeletingUser: deleteUserMutation.isPending,
 		updateUserError: updateUserMutation.error,
+
+		updateUserPassword: updateUserPasswordMutation.mutate,
+		isUpdatingPassword: updateUserPasswordMutation.isPending,
 		updateUserPasswordError: updateUserPasswordMutation.error,
+
+		updateProfile: updateProfileMutation.mutate,
+		isUpdatingProfile: updateProfileMutation.isPending,
 		updateProfileError: updateProfileMutation.error,
+
+		deleteUser: deleteUserMutation.mutate,
+		isDeletingUser: deleteUserMutation.isPending,
 		deleteUserError: deleteUserMutation.error,
 	};
 }
