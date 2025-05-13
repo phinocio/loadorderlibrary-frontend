@@ -62,7 +62,7 @@ function RouteComponent() {
 							<TableCell>
 								<Badge
 									variant={
-										user.admin ? "default" : "secondary"
+										user.admin ? "secondary" : "outline"
 									}
 								>
 									{user.admin ? "Admin" : "User"}
