@@ -1,8 +1,14 @@
-import { useCurrentUser } from "@/queries/use-auth";
+import { currentUserQueryOptions } from "@/queries/use-auth";
+import type { QueryClient } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
 
-export async function requireAuth(redirectTo?: string) {
-	const { data: currentUser } = useCurrentUser();
+export async function requireAuth(
+	queryClient: QueryClient,
+	redirectTo?: string,
+) {
+	const currentUser = await queryClient.ensureQueryData(
+		currentUserQueryOptions,
+	);
 
 	if (!currentUser) {
 		throw redirect({
@@ -18,8 +24,8 @@ export async function requireAuth(redirectTo?: string) {
 	return currentUser;
 }
 
-export async function requireAdmin() {
-	const currentUser = await requireAuth("/admin");
+export async function requireAdmin(queryClient: QueryClient) {
+	const currentUser = await requireAuth(queryClient, "/admin");
 
 	if (!currentUser.admin) {
 		throw redirect({
@@ -30,8 +36,10 @@ export async function requireAdmin() {
 	return currentUser;
 }
 
-export async function requireGuest() {
-	const currentUser = useCurrentUser();
+export async function requireGuest(queryClient: QueryClient) {
+	const currentUser = await queryClient.ensureQueryData(
+		currentUserQueryOptions,
+	);
 
 	if (currentUser) {
 		throw redirect({
