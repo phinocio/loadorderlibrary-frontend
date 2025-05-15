@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/queries/use-auth";
+import { useRegister } from "@/queries/use-auth";
 import { RegisterCredentialsSchema } from "@/schemas/auth-schemas";
 import type { RegisterCredentials } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,11 @@ export function RegisterForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const navigate = useNavigate();
-	const { register: registerUser, isRegistering, registerError } = useAuth();
+	const {
+		register: registerUser,
+		isRegistering,
+		registerError,
+	} = useRegister();
 	const {
 		register,
 		handleSubmit,

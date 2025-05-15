@@ -1,28 +1,36 @@
-import {
-	forgotPassword,
-	getCurrentUser,
-	login,
-	logout,
-	register,
-	resetPassword,
-} from "@/api/auth";
+import { useAuthApi } from "@/api/auth";
 import type {
 	CurrentUser,
 	LoginCredentials,
 	RegisterCredentials,
 } from "@/types/auth";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	queryOptions,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export const currentUserQueryOptions = {
-	queryKey: ["current-user"],
-	queryFn: getCurrentUser,
-};
+export function useCurrentUserQueryOptions() {
+	const { getCurrentUser } = useAuthApi();
 
-export function useAuth() {
+	return queryOptions({
+		queryKey: ["current-user"],
+		queryFn: getCurrentUser,
+	});
+}
+
+export function useCurrentUser() {
+	const currentUserQueryOptions = useCurrentUserQueryOptions();
+
+	return useSuspenseQuery(currentUserQueryOptions);
+}
+
+export function useLogin() {
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
+	const { login } = useAuthApi();
 
 	const loginMutation = useMutation<CurrentUser, Error, LoginCredentials>({
 		mutationFn: login,
@@ -31,23 +39,20 @@ export function useAuth() {
 		},
 	});
 
-	const registerMutation = useMutation<
-		CurrentUser,
-		Error,
-		RegisterCredentials
-	>({
-		mutationFn: register,
-		onSuccess: (data) => {
-			queryClient.setQueryData(["current-user"], data);
-		},
-	});
+	return {
+		login: loginMutation.mutate,
+		isLoggingIn: loginMutation.isPending,
+		loginError: loginMutation.error,
+	};
+}
+
+export function useLogout() {
+	const queryClient = useQueryClient();
+	const { logout } = useAuthApi();
 
 	const logoutMutation = useMutation({
 		mutationFn: logout,
-		onSuccess: async () => {
-			await navigate({
-				to: "/",
-			});
+		onSuccess: () => {
 			queryClient.setQueryData(["current-user"], null);
 			toast.success("Logged out successfully", {
 				richColors: true,
@@ -61,6 +66,36 @@ export function useAuth() {
 			console.error("Failed to log out", error);
 		},
 	});
+
+	return {
+		logout: logoutMutation.mutate,
+		isLoggingOut: logoutMutation.isPending,
+		logoutError: logoutMutation.error,
+	};
+}
+
+export function useRegister() {
+	const queryClient = useQueryClient();
+	const { register } = useAuthApi();
+	const registerMutation = useMutation<
+		CurrentUser,
+		Error,
+		RegisterCredentials
+	>({
+		mutationFn: register,
+		onSuccess: (data) => {
+			queryClient.setQueryData(["current-user"], data);
+		},
+	});
+	return {
+		register: registerMutation.mutate,
+		isRegistering: registerMutation.isPending,
+		registerError: registerMutation.error,
+	};
+}
+
+export function useForgotPassword() {
+	const { forgotPassword } = useAuthApi();
 
 	const forgotPasswordMutation = useMutation({
 		mutationFn: forgotPassword,
@@ -77,6 +112,18 @@ export function useAuth() {
 			console.error("Failed to send password reset link", error);
 		},
 	});
+
+	return {
+		forgotPassword: forgotPasswordMutation.mutate,
+		isForgotPassword: forgotPasswordMutation.isPending,
+		forgotPasswordError: forgotPasswordMutation.error,
+	};
+}
+
+export function useResetPassword() {
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
+	const { resetPassword } = useAuthApi();
 
 	const resetPasswordMutation = useMutation({
 		mutationFn: resetPassword,
@@ -99,18 +146,8 @@ export function useAuth() {
 	});
 
 	return {
-		login: loginMutation.mutate,
-		register: registerMutation.mutate,
-		logout: logoutMutation.mutate,
-		forgotPassword: forgotPasswordMutation.mutate,
 		resetPassword: resetPasswordMutation.mutate,
-		isLoggingIn: loginMutation.isPending,
-		isRegistering: registerMutation.isPending,
-		isForgotPassword: forgotPasswordMutation.isPending,
 		isResettingPassword: resetPasswordMutation.isPending,
-		loginError: loginMutation.error,
-		registerError: registerMutation.error,
-		forgotPasswordError: forgotPasswordMutation.error,
 		resetPasswordError: resetPasswordMutation.error,
 	};
 }

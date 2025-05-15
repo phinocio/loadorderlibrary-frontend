@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { useUser } from "@/queries/use-user";
+import { useUpdateUser, useUpdateUserPassword } from "@/queries/use-user";
 import {
 	UserPasswordUpdateParamsSchema,
 	UserUpdateParamsSchema,
@@ -25,14 +25,11 @@ type UserUpdateParams = z.infer<typeof UserUpdateParamsSchema>;
 type UserPasswordUpdateParams = z.infer<typeof UserPasswordUpdateParamsSchema>;
 
 export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
-	const {
-		updateUser,
-		updateUserPassword,
-		isUpdatingUser,
-		isUpdatingPassword,
-		updateUserError,
-		updateUserPasswordError,
-	} = useUser(currentUser.name);
+	const { updateUser, isUpdatingUser, updateUserError } = useUpdateUser(
+		currentUser.name,
+	);
+	const { updateUserPassword, isUpdatingPassword, updateUserPasswordError } =
+		useUpdateUserPassword(currentUser.name);
 
 	const {
 		register: registerEmail,

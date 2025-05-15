@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/queries/use-auth";
+import { useForgotPassword } from "@/queries/use-auth";
 import { ForgotPasswordSchema } from "@/schemas/auth-schemas";
 import type { ForgotPassword } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +24,8 @@ export function ForgotPasswordForm({
 	...props
 }: React.ComponentProps<"div">) {
 	const [isSuccess, setIsSuccess] = useState(false);
-	const { forgotPassword, isForgotPassword, forgotPasswordError } = useAuth();
+	const { forgotPassword, isForgotPassword, forgotPasswordError } =
+		useForgotPassword();
 	const {
 		register,
 		handleSubmit,

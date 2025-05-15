@@ -1,9 +1,4 @@
-import {
-	deleteUser,
-	updateUser,
-	updateUserPassword,
-	updateUserProfile,
-} from "@/api/user";
+import { useUserApi } from "@/api/user";
 import type {
 	UserPasswordUpdateParams,
 	UserProfile,
@@ -13,9 +8,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export function useUser(name: string) {
+export function useUpdateUser(name: string) {
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
+	const { updateUser } = useUserApi();
 
 	const updateUserMutation = useMutation({
 		mutationFn: (data: UserUpdateParams) => updateUser(name, data),
@@ -34,6 +29,16 @@ export function useUser(name: string) {
 		},
 	});
 
+	return {
+		updateUser: updateUserMutation.mutate,
+		isUpdatingUser: updateUserMutation.isPending,
+		updateUserError: updateUserMutation.error,
+	};
+}
+
+export function useUpdateUserPassword(name: string) {
+	const { updateUserPassword } = useUserApi();
+
 	const updateUserPasswordMutation = useMutation({
 		mutationFn: (data: UserPasswordUpdateParams) =>
 			updateUserPassword(name, data),
@@ -50,6 +55,17 @@ export function useUser(name: string) {
 			console.error("Failed to update password", error);
 		},
 	});
+
+	return {
+		updateUserPassword: updateUserPasswordMutation.mutate,
+		isUpdatingPassword: updateUserPasswordMutation.isPending,
+		updateUserPasswordError: updateUserPasswordMutation.error,
+	};
+}
+
+export function useUpdateUserProfile(name: string) {
+	const queryClient = useQueryClient();
+	const { updateUserProfile } = useUserApi();
 
 	const updateProfileMutation = useMutation({
 		mutationFn: (profile: UserProfile) => updateUserProfile(name, profile),
@@ -71,8 +87,20 @@ export function useUser(name: string) {
 		},
 	});
 
+	return {
+		updateProfile: updateProfileMutation.mutate,
+		isUpdatingProfile: updateProfileMutation.isPending,
+		updateProfileError: updateProfileMutation.error,
+	};
+}
+
+export function useDeleteUser() {
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
+	const { deleteUser } = useUserApi();
+
 	const deleteUserMutation = useMutation({
-		mutationFn: () => deleteUser(name),
+		mutationFn: (name: string) => deleteUser(name),
 		onSuccess: async () => {
 			await navigate({ to: "/" });
 			queryClient.setQueryData(["current-user"], null);
@@ -90,18 +118,6 @@ export function useUser(name: string) {
 	});
 
 	return {
-		updateUser: updateUserMutation.mutate,
-		isUpdatingUser: updateUserMutation.isPending,
-		updateUserError: updateUserMutation.error,
-
-		updateUserPassword: updateUserPasswordMutation.mutate,
-		isUpdatingPassword: updateUserPasswordMutation.isPending,
-		updateUserPasswordError: updateUserPasswordMutation.error,
-
-		updateProfile: updateProfileMutation.mutate,
-		isUpdatingProfile: updateProfileMutation.isPending,
-		updateProfileError: updateProfileMutation.error,
-
 		deleteUser: deleteUserMutation.mutate,
 		isDeletingUser: deleteUserMutation.isPending,
 		deleteUserError: deleteUserMutation.error,

@@ -1,6 +1,11 @@
-import { getFile } from "@/api/file";
+import { useFileApi } from "@/api/file";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-export const fileQueryOptions = (name: string) => ({
-	queryKey: ["files", name],
-	queryFn: () => getFile(name),
-});
+export function useFile(name: string) {
+	const { getFile } = useFileApi();
+
+	return useSuspenseQuery({
+		queryKey: ["files", name],
+		queryFn: () => getFile(name),
+	});
+}

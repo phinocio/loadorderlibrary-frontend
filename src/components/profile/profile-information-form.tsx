@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/queries/use-user";
+import { useUpdateUserProfile } from "@/queries/use-user";
 import { UserProfileSchema } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
 import type { UserProfile } from "@/types/user";
@@ -19,9 +19,8 @@ import { useForm } from "react-hook-form";
 export function ProfileInformationForm({
 	currentUser,
 }: { currentUser: CurrentUser }) {
-	const { updateProfile, isUpdatingProfile, updateProfileError } = useUser(
-		currentUser.name,
-	);
+	const { updateProfile, isUpdatingProfile, updateProfileError } =
+		useUpdateUserProfile(currentUser.name);
 
 	const {
 		register,

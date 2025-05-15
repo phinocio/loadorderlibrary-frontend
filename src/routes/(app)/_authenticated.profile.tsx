@@ -10,63 +10,22 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { currentUserQueryOptions } from "@/queries/use-auth";
-import { useUser } from "@/queries/use-user";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useCurrentUser } from "@/queries/use-auth";
+import { useDeleteUser } from "@/queries/use-user";
+import type { List } from "@/types/list";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
-	loader: async ({ context }) =>
-		await context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 
-const lists = [
-	{
-		name: "Skyrim Anniversary Edition - Survival Mode",
-		id: 1,
-		author: "ModGuru",
-		game: "TESV Skyrim SE",
-		lastUpdated: "2025-04-20",
-		description:
-			"A hardcore survival experience with camping, needs, and temperature systems. Optimized for performance and stability.",
-	},
-	{
-		name: "Tale of Two Wastelands - Ultimate Edition",
-		id: 2,
-		author: "WastelandWanderer",
-		game: "Tale of Two Wastelands",
-		lastUpdated: "2025-04-18",
-		description:
-			"Complete TTW setup featuring major quest mods, enhanced graphics, and gameplay overhauls for both FO3 and FNV content.",
-	},
-	{
-		name: "Morrowind 2025 Graphics Overhaul",
-		id: 3,
-		author: "RetroReviver",
-		game: "TESIII Morrowind",
-		lastUpdated: "2025-04-15",
-		description:
-			"Modern graphics with MGE XE, featuring high-res textures and meshes while maintaining the original art style.",
-	},
-	{
-		name: "Fallout 4 Performance Plus",
-		id: 4,
-		author: "FPSMaster",
-		game: "Fallout 4",
-		lastUpdated: "2025-04-12",
-		description:
-			"Heavily optimized setup focused on maximum FPS while enhancing visuals. Perfect for low-end to mid-range PCs.",
-	},
-];
+const lists: List[] = [];
 
 function RouteComponent() {
-	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
+	const { data: currentUser } = useCurrentUser();
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-	const { deleteUser, isDeletingUser, deleteUserError } = useUser(
-		currentUser.name,
-	);
+	const { deleteUser, isDeletingUser, deleteUserError } = useDeleteUser();
 
 	return (
 		<div className="w-full mx-auto container">
@@ -112,9 +71,15 @@ function RouteComponent() {
 							</p>
 						</div>
 						<div className="grid grid-cols-1 gap-6 lg:grid-cols-[repeat(2,1fr)] xl:grid-cols-[repeat(3,1fr)]">
-							{lists.map((list) => (
-								<ListCard key={list.id} {...list} />
-							))}
+							{lists.length > 0 ? (
+								lists.map((list) => (
+									<ListCard key={list.slug} list={list} />
+								))
+							) : (
+								<p className="text-sm text-muted-foreground">
+									No lists found.
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
@@ -177,7 +142,7 @@ function RouteComponent() {
 				onOpenChange={setIsDeleteDialogOpen}
 				title="Delete Your Account"
 				description="Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data, including your load orders and profile information."
-				onConfirm={deleteUser}
+				onConfirm={() => deleteUser(currentUser.name)}
 				confirmText="Delete Account"
 				variant="destructive"
 				isLoading={isDeletingUser}

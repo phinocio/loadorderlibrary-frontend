@@ -5,14 +5,11 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { currentUserQueryOptions } from "@/queries/use-auth";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useCurrentUser } from "@/queries/use-auth";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { GitCompareIcon, Home, Search, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)")({
-	loader: async ({ context }) =>
-		await context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 
@@ -40,7 +37,7 @@ const navItems = [
 ];
 
 function RouteComponent() {
-	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
+	const { data: currentUser } = useCurrentUser();
 
 	return (
 		<>

@@ -6,14 +6,13 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { requireAdmin } from "@/lib/guards";
-import { currentUserQueryOptions } from "@/queries/use-auth";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useCurrentUser } from "@/queries/use-auth";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { Gamepad2, Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
-	beforeLoad: async ({ context }) => {
-		await requireAdmin(context.queryClient);
+	beforeLoad: async () => {
+		await requireAdmin();
 	},
 	component: RouteComponent,
 });
@@ -42,7 +41,7 @@ const navItems = [
 ];
 
 function RouteComponent() {
-	const { data: currentUser } = useSuspenseQuery(currentUserQueryOptions);
+	const { data: currentUser } = useCurrentUser();
 
 	return (
 		<>

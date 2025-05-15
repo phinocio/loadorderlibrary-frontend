@@ -1,17 +1,13 @@
 import { ListCard } from "@/components/lists/list-card";
-import { listsQueryOptions } from "@/queries/use-list";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useLists } from "@/queries/use-list";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/lists/")({
-	loader: async ({ context }) => {
-		await context.queryClient.ensureQueryData(listsQueryOptions);
-	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data } = useSuspenseQuery(listsQueryOptions);
+	const { data } = useLists();
 
 	return (
 		<div className="container mx-auto py-6">

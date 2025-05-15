@@ -1,26 +1,34 @@
-import { createList, getList, getLists } from "@/api/list";
+import { useListApi } from "@/api/list";
 import type { ListCreateParams } from "@/types/list";
 import {
-	queryOptions,
 	useMutation,
 	useQueryClient,
+	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export const listsQueryOptions = queryOptions({
-	queryKey: ["lists"],
-	queryFn: getLists,
-});
+export function useLists() {
+	const { getLists } = useListApi();
 
-export const listQueryOptions = (slug: string) =>
-	queryOptions({
+	return useSuspenseQuery({
+		queryKey: ["lists"],
+		queryFn: getLists,
+	});
+}
+
+export function useList(slug: string) {
+	const { getList } = useListApi();
+
+	return useSuspenseQuery({
 		queryKey: ["lists", slug],
 		queryFn: () => getList(slug),
 	});
+}
 
-export function useList() {
+export function useCreateList() {
 	const queryClient = useQueryClient();
+	const { createList } = useListApi();
 	const navigate = useNavigate();
 
 	const createListMutation = useMutation({

@@ -1,31 +1,36 @@
-import {
-	adminDeleteUser,
-	adminGetUser,
-	adminGetUsers,
-	adminUpdateUser,
-	adminUpdateUserPassword,
-} from "@/api/admin/user";
+import { useAdminUserApi } from "@/api/admin/user";
 import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
 } from "@/types/admin/user";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const adminUsersListQueryOptions = {
-	queryKey: ["admin-users"],
-	queryFn: adminGetUsers,
-};
+export function useAdminUsers() {
+	const { adminGetUsers } = useAdminUserApi();
 
-export function adminUserListQueryOptions(name: string) {
-	return {
-		queryKey: ["admin-users", name],
-		queryFn: () => adminGetUser(name),
-	};
+	return useSuspenseQuery({
+		queryKey: ["admin-users"],
+		queryFn: adminGetUsers,
+	});
 }
 
-export function useAdminUser(name?: string) {
+export function useAdminUser(name: string) {
+	const { adminGetUser } = useAdminUserApi();
+
+	return useSuspenseQuery({
+		queryKey: ["admin-users", name],
+		queryFn: () => adminGetUser(name),
+	});
+}
+
+export function useAdminUpdateUser(name: string) {
 	const queryClient = useQueryClient();
+	const { adminUpdateUser } = useAdminUserApi();
 
 	const updateUserMutation = useMutation({
 		mutationFn: (data: AdminUserUpdateParams) => {
@@ -52,6 +57,17 @@ export function useAdminUser(name?: string) {
 		},
 	});
 
+	return {
+		updateUser: updateUserMutation.mutate,
+		isUpdatingUser: updateUserMutation.isPending,
+		updateUserError: updateUserMutation.error,
+	};
+}
+
+export function useAdminVerifyUser(name: string) {
+	const queryClient = useQueryClient();
+	const { adminUpdateUser } = useAdminUserApi();
+
 	const verifyUserMutation = useMutation({
 		mutationFn: (verified: boolean) => {
 			if (!name)
@@ -76,11 +92,19 @@ export function useAdminUser(name?: string) {
 		},
 	});
 
+	return {
+		verifyUser: verifyUserMutation.mutate,
+		isVerifyingUser: verifyUserMutation.isPending,
+		verifyUserError: verifyUserMutation.error,
+	};
+}
+
+export function useAdminUpdateUserPassword(name: string) {
+	const { adminUpdateUserPassword } = useAdminUserApi();
+
 	const updateUserPasswordMutation = useMutation({
-		mutationFn: (data: AdminUserUpdatePasswordParams) => {
-			if (!name) throw new Error("Name is required to update password");
-			return adminUpdateUserPassword(name, data);
-		},
+		mutationFn: (data: AdminUserUpdatePasswordParams) =>
+			adminUpdateUserPassword(name, data),
 		onSuccess: () => {
 			toast.success("Password updated successfully", {
 				richColors: true,
@@ -95,11 +119,19 @@ export function useAdminUser(name?: string) {
 		},
 	});
 
+	return {
+		updateUserPassword: updateUserPasswordMutation.mutate,
+		isUpdatingPassword: updateUserPasswordMutation.isPending,
+		updateUserPasswordError: updateUserPasswordMutation.error,
+	};
+}
+
+export function useAdminDeleteUser() {
+	const queryClient = useQueryClient();
+	const { adminDeleteUser } = useAdminUserApi();
+
 	const deleteUserMutation = useMutation({
-		mutationFn: () => {
-			if (!name) throw new Error("Name is required to delete user");
-			return adminDeleteUser(name);
-		},
+		mutationFn: (name: string) => adminDeleteUser(name),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-users"] });
 			toast.success("User deleted successfully", {
@@ -116,17 +148,8 @@ export function useAdminUser(name?: string) {
 	});
 
 	return {
-		updateUser: updateUserMutation.mutate,
-		verifyUser: verifyUserMutation.mutate,
-		updateUserPassword: updateUserPasswordMutation.mutate,
 		deleteUser: deleteUserMutation.mutate,
-		isUpdatingUser: updateUserMutation.isPending,
-		isVerifyingUser: verifyUserMutation.isPending,
-		isUpdatingPassword: updateUserPasswordMutation.isPending,
 		isDeletingUser: deleteUserMutation.isPending,
-		updateUserError: updateUserMutation.error,
-		verifyUserError: verifyUserMutation.error,
-		updateUserPasswordError: updateUserPasswordMutation.error,
 		deleteUserError: deleteUserMutation.error,
 	};
 }

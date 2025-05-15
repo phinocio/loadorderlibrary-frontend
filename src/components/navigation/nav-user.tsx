@@ -25,12 +25,12 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/queries/use-auth";
+import { useLogout } from "@/queries/use-auth";
 import type { CurrentUser } from "@/types/auth";
 
 export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 	const { isMobile } = useSidebar();
-	const { logout } = useAuth();
+	const { logout } = useLogout();
 
 	const initials = currentUser.name.slice(0, 2).toUpperCase();
 

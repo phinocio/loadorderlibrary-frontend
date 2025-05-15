@@ -1,11 +1,25 @@
-import { getGame, getGames } from "@/api/game";
+import { useGameApi } from "@/api/game";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
-export const gamesQueryOptions = {
-	queryKey: ["games"],
-	queryFn: getGames,
-};
+export function useGamesQueryOptions() {
+	const { getGames } = useGameApi();
+	return queryOptions({
+		queryKey: ["games"],
+		queryFn: getGames,
+	});
+}
 
-export const gameQueryOptions = (name: string) => ({
-	queryKey: ["games", name],
-	queryFn: () => getGame(name),
-});
+export function useGames() {
+	const gamesQueryOptions = useGamesQueryOptions();
+
+	return useSuspenseQuery(gamesQueryOptions);
+}
+
+export function useGame(name: string) {
+	const { getGame } = useGameApi();
+
+	return useSuspenseQuery({
+		queryKey: ["games", name],
+		queryFn: () => getGame(name),
+	});
+}

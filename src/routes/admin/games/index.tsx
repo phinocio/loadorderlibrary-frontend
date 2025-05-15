@@ -18,13 +18,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { adminUseGames } from "@/queries/admin/use-game";
-import { gamesQueryOptions } from "@/queries/use-game";
+import { useAdminCreateGame } from "@/queries/admin/use-game";
+import { useGames } from "@/queries/use-game";
 import { AdminGameCreateSchema } from "@/schemas/admin/game-schemas";
 import type { AdminGameCreateParams } from "@/types/admin/game";
-import type { Game } from "@/types/game";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
@@ -36,8 +34,8 @@ export const Route = createFileRoute("/admin/games/")({
 
 function RouteComponent() {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-	const { data: games } = useQuery<Game[]>(gamesQueryOptions);
-	const { createGame, isCreatingGame } = adminUseGames();
+	const { data: games } = useGames();
+	const { createGame, isCreatingGame } = useAdminCreateGame();
 
 	const {
 		register,

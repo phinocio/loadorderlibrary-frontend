@@ -1,16 +1,12 @@
-import { gamesQueryOptions } from "@/queries/use-game";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useGames } from "@/queries/use-game";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/upload")({
-	loader: async ({ context }) => {
-		await context.queryClient.ensureQueryData(gamesQueryOptions);
-	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data: games } = useSuspenseQuery(gamesQueryOptions);
+	const { data: games } = useGames();
 
 	return (
 		<div className="container mx-auto p-4 gap-4">

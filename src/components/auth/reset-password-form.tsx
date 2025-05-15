@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/queries/use-auth";
+import { useResetPassword } from "@/queries/use-auth";
 import { ResetPasswordSchema } from "@/schemas/auth-schemas";
 import type { ResetPassword } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ export function ResetPasswordForm({
 }: React.ComponentProps<"div">) {
 	const { token, email } = useSearch({ from: "/(auth)/reset-password" });
 	const { resetPassword, isResettingPassword, resetPasswordError } =
-		useAuth();
+		useResetPassword();
 	const {
 		register,
 		handleSubmit,

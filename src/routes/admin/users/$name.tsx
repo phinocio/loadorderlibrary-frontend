@@ -11,8 +11,11 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-	adminUserListQueryOptions,
+	useAdminDeleteUser,
+	useAdminUpdateUser,
+	useAdminUpdateUserPassword,
 	useAdminUser,
+	useAdminVerifyUser,
 } from "@/queries/admin/use-user";
 import {
 	AdminUserUpdateParamsScheme,
@@ -23,40 +26,28 @@ import type {
 	AdminUserUpdatePasswordParams,
 } from "@/types/admin/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/admin/users/$name")({
-	loader: async ({ context, params }) => {
-		await context.queryClient.ensureQueryData(
-			adminUserListQueryOptions(params.name),
-		);
-	},
 	component: UserComponent,
 });
 
 function UserComponent() {
 	const { name } = Route.useParams();
 	const navigate = useNavigate();
-	const { data: user } = useSuspenseQuery(adminUserListQueryOptions(name));
+	const { data: user } = useAdminUser(name);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-	const {
-		updateUser,
-		verifyUser,
-		updateUserPassword,
-		deleteUser,
-		isUpdatingUser,
-		isVerifyingUser,
-		isUpdatingPassword,
-		isDeletingUser,
-		updateUserError,
-		verifyUserError,
-		updateUserPasswordError,
-		deleteUserError,
-	} = useAdminUser(name);
+	const { updateUser, isUpdatingUser, updateUserError } =
+		useAdminUpdateUser(name);
+	const { verifyUser, isVerifyingUser, verifyUserError } =
+		useAdminVerifyUser(name);
+	const { updateUserPassword, isUpdatingPassword, updateUserPasswordError } =
+		useAdminUpdateUserPassword(name);
+	const { deleteUser, isDeletingUser, deleteUserError } =
+		useAdminDeleteUser();
 
 	const {
 		register: registerUser,
@@ -89,8 +80,8 @@ function UserComponent() {
 		verifyUser(!user.verified);
 	};
 
-	const handleDeleteUser = async () => {
-		await deleteUser();
+	const handleDeleteUser = () => {
+		deleteUser(name);
 		navigate({ to: "/admin/users" });
 	};
 

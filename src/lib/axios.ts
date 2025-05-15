@@ -1,35 +1,58 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { redirect } from "@tanstack/react-router";
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const apiVersion = import.meta.env.VITE_API_VERSION;
-const csrfEndpoint = `${apiBaseUrl}/sanctum/csrf-cookie`;
+export function useAxios() {
+	const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+	const apiVersion = import.meta.env.VITE_API_VERSION;
+	const csrfEndpoint = `${apiBaseUrl}/sanctum/csrf-cookie`;
 
-const axiosInstance = axios.create({
-	baseURL: `${apiBaseUrl}/${apiVersion}`,
-	withCredentials: true,
-	withXSRFToken: true,
-	headers: {
-		"Content-Type": "application/json",
-		Accept: "application/json",
-	},
-});
+	const queryClient = useQueryClient();
 
-// Utility: List of HTTP methods that require CSRF
-const csrfMethods = ["post", "put", "patch", "delete"];
+	const axiosInstance = axios.create({
+		baseURL: `${apiBaseUrl}/${apiVersion}`,
+		withCredentials: true,
+		withXSRFToken: true,
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	});
 
-// Hit sanctum CSRF endpoint if needed before certain requests
-axiosInstance.interceptors.request.use(
-	async (config: InternalAxiosRequestConfig) => {
-		const method = config.method?.toLowerCase();
+	// Utility: List of HTTP methods that require CSRF
+	const csrfMethods = ["post", "put", "patch", "delete"];
 
-		if (method && csrfMethods.includes(method)) {
-			await axios.get(csrfEndpoint, {
-				withCredentials: true,
-			});
-		}
+	axiosInstance.interceptors.request.use(
+		async (config: InternalAxiosRequestConfig) => {
+			const method = config.method?.toLowerCase();
 
-		return config;
-	},
-);
+			if (method && csrfMethods.includes(method)) {
+				await axios.get(csrfEndpoint, {
+					withCredentials: true,
+				});
+			}
 
-export default axiosInstance;
+			return config;
+		},
+	);
+
+	axiosInstance.interceptors.response.use(
+		(response) => response,
+		(error) => {
+			if (error.response?.status === 401) {
+				queryClient.setQueryData(["current-user"], null);
+
+				const currentPath = window.location.pathname;
+				throw redirect({
+					to: "/login",
+					search: {
+						redirect: currentPath,
+					},
+				});
+			}
+			return Promise.reject(error);
+		},
+	);
+
+	return axiosInstance;
+}

@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/queries/use-auth";
+import { useLogin } from "@/queries/use-auth";
 import { LoginCredentialsSchema } from "@/schemas/auth-schemas";
 import type { LoginCredentials } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
 	const navigate = useNavigate();
 	const { redirect } = useSearch({ from: "/(auth)/login" });
-	const { login, isLoggingIn, loginError } = useAuth();
+	const { login, isLoggingIn, loginError } = useLogin();
 	const {
 		register,
 		handleSubmit,

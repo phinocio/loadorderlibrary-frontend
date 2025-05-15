@@ -1,9 +1,10 @@
-import { adminCreateGame } from "@/api/admin/game";
+import { useAdminGameApi } from "@/api/admin/game";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export function adminUseGames() {
+export function useAdminCreateGame() {
 	const queryClient = useQueryClient();
+	const { adminCreateGame } = useAdminGameApi();
 
 	const createGameMutation = useMutation({
 		mutationFn: (name: string) => adminCreateGame(name),

@@ -7,19 +7,16 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { adminUsersListQueryOptions } from "@/queries/admin/use-user";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useAdminUsers } from "@/queries/admin/use-user";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
 
 export const Route = createFileRoute("/admin/users/")({
-	loader: async ({ context }) =>
-		await context.queryClient.ensureQueryData(adminUsersListQueryOptions),
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data: users } = useSuspenseQuery(adminUsersListQueryOptions);
+	const { data: users } = useAdminUsers();
 
 	return (
 		<div className="container mx-auto p-4 gap-4">
