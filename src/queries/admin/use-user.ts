@@ -10,17 +10,20 @@ import type {
 	AdminUserUpdatePasswordParams,
 } from "@/types/admin/user";
 import {
+	queryOptions,
 	useMutation,
 	useQueryClient,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+export const adminUserQueryOptions = queryOptions({
+	queryKey: ["admin-users"],
+	queryFn: adminGetUsers,
+});
+
 export function useAdminUsers() {
-	return useSuspenseQuery({
-		queryKey: ["admin-users"],
-		queryFn: adminGetUsers,
-	});
+	return useSuspenseQuery(adminUserQueryOptions);
 }
 
 export function useAdminUser(name: string) {

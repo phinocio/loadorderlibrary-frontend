@@ -19,7 +19,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { useAdminCreateGame } from "@/queries/admin/use-game";
-import { useGames } from "@/queries/use-game";
+import { gamesQueryOptions, useGames } from "@/queries/use-game";
 import { AdminGameCreateSchema } from "@/schemas/admin/game-schemas";
 import type { AdminGameCreateParams } from "@/types/admin/game";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/admin/games/")({
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(gamesQueryOptions),
 	component: RouteComponent,
 });
 

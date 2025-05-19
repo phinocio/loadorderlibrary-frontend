@@ -7,11 +7,13 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useAdminUsers } from "@/queries/admin/use-user";
+import { adminUserQueryOptions, useAdminUsers } from "@/queries/admin/use-user";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
 
 export const Route = createFileRoute("/admin/users/")({
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(adminUserQueryOptions),
 	component: RouteComponent,
 });
 

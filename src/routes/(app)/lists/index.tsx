@@ -1,19 +1,21 @@
 import { ListCard } from "@/components/lists/list-card";
-import { useLists } from "@/queries/use-list";
+import { listsQueryOptions, useLists } from "@/queries/use-list";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/lists/")({
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(listsQueryOptions),
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data } = useLists();
+	const { data: lists } = useLists();
 
 	return (
 		<div className="container mx-auto py-6">
 			<h1 className="text-3xl font-bold mb-6">All Lists</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{data.map((list) => (
+				{lists.map((list) => (
 					<ListCard key={list.slug} list={list} />
 				))}
 			</div>
