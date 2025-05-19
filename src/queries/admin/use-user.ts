@@ -1,4 +1,10 @@
-import { useAdminUserApi } from "@/api/admin/user";
+import {
+	adminDeleteUser,
+	adminGetUser,
+	adminGetUsers,
+	adminUpdateUser,
+	adminUpdateUserPassword,
+} from "@/api/admin/user";
 import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
@@ -11,8 +17,6 @@ import {
 import { toast } from "sonner";
 
 export function useAdminUsers() {
-	const { adminGetUsers } = useAdminUserApi();
-
 	return useSuspenseQuery({
 		queryKey: ["admin-users"],
 		queryFn: adminGetUsers,
@@ -20,8 +24,6 @@ export function useAdminUsers() {
 }
 
 export function useAdminUser(name: string) {
-	const { adminGetUser } = useAdminUserApi();
-
 	return useSuspenseQuery({
 		queryKey: ["admin-users", name],
 		queryFn: () => adminGetUser(name),
@@ -30,7 +32,6 @@ export function useAdminUser(name: string) {
 
 export function useAdminUpdateUser(name: string) {
 	const queryClient = useQueryClient();
-	const { adminUpdateUser } = useAdminUserApi();
 
 	const updateUserMutation = useMutation({
 		mutationFn: (data: AdminUserUpdateParams) => {
@@ -66,7 +67,6 @@ export function useAdminUpdateUser(name: string) {
 
 export function useAdminVerifyUser(name: string) {
 	const queryClient = useQueryClient();
-	const { adminUpdateUser } = useAdminUserApi();
 
 	const verifyUserMutation = useMutation({
 		mutationFn: (verified: boolean) => {
@@ -100,8 +100,6 @@ export function useAdminVerifyUser(name: string) {
 }
 
 export function useAdminUpdateUserPassword(name: string) {
-	const { adminUpdateUserPassword } = useAdminUserApi();
-
 	const updateUserPasswordMutation = useMutation({
 		mutationFn: (data: AdminUserUpdatePasswordParams) =>
 			adminUpdateUserPassword(name, data),
@@ -128,7 +126,6 @@ export function useAdminUpdateUserPassword(name: string) {
 
 export function useAdminDeleteUser() {
 	const queryClient = useQueryClient();
-	const { adminDeleteUser } = useAdminUserApi();
 
 	const deleteUserMutation = useMutation({
 		mutationFn: (name: string) => adminDeleteUser(name),

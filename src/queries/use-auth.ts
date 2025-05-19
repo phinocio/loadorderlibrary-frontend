@@ -1,4 +1,11 @@
-import { useAuthApi } from "@/api/auth";
+import {
+	forgotPassword,
+	getCurrentUser,
+	login,
+	logout,
+	register,
+	resetPassword,
+} from "@/api/auth";
 import type {
 	CurrentUser,
 	LoginCredentials,
@@ -13,24 +20,17 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export function useCurrentUserQueryOptions() {
-	const { getCurrentUser } = useAuthApi();
-
-	return queryOptions({
-		queryKey: ["current-user"],
-		queryFn: getCurrentUser,
-	});
-}
+export const currentUserQueryOptions = queryOptions({
+	queryKey: ["current-user"],
+	queryFn: getCurrentUser,
+});
 
 export function useCurrentUser() {
-	const currentUserQueryOptions = useCurrentUserQueryOptions();
-
 	return useSuspenseQuery(currentUserQueryOptions);
 }
 
 export function useLogin() {
 	const queryClient = useQueryClient();
-	const { login } = useAuthApi();
 
 	const loginMutation = useMutation<CurrentUser, Error, LoginCredentials>({
 		mutationFn: login,
@@ -48,7 +48,6 @@ export function useLogin() {
 
 export function useLogout() {
 	const queryClient = useQueryClient();
-	const { logout } = useAuthApi();
 
 	const logoutMutation = useMutation({
 		mutationFn: logout,
@@ -76,7 +75,6 @@ export function useLogout() {
 
 export function useRegister() {
 	const queryClient = useQueryClient();
-	const { register } = useAuthApi();
 	const registerMutation = useMutation<
 		CurrentUser,
 		Error,
@@ -95,8 +93,6 @@ export function useRegister() {
 }
 
 export function useForgotPassword() {
-	const { forgotPassword } = useAuthApi();
-
 	const forgotPasswordMutation = useMutation({
 		mutationFn: forgotPassword,
 		onSuccess: () => {
@@ -123,7 +119,6 @@ export function useForgotPassword() {
 export function useResetPassword() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const { resetPassword } = useAuthApi();
 
 	const resetPasswordMutation = useMutation({
 		mutationFn: resetPassword,

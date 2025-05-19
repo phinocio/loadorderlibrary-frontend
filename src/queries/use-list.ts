@@ -1,4 +1,4 @@
-import { useListApi } from "@/api/list";
+import { createList, getList, getLists } from "@/api/list";
 import type { ListCreateParams } from "@/types/list";
 import {
 	useMutation,
@@ -9,8 +9,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export function useLists() {
-	const { getLists } = useListApi();
-
 	return useSuspenseQuery({
 		queryKey: ["lists"],
 		queryFn: getLists,
@@ -18,8 +16,6 @@ export function useLists() {
 }
 
 export function useList(slug: string) {
-	const { getList } = useListApi();
-
 	return useSuspenseQuery({
 		queryKey: ["lists", slug],
 		queryFn: () => getList(slug),
@@ -28,7 +24,6 @@ export function useList(slug: string) {
 
 export function useCreateList() {
 	const queryClient = useQueryClient();
-	const { createList } = useListApi();
 	const navigate = useNavigate();
 
 	const createListMutation = useMutation({

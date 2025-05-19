@@ -1,4 +1,9 @@
-import { useUserApi } from "@/api/user";
+import {
+	deleteUser,
+	updateUser,
+	updateUserPassword,
+	updateUserProfile,
+} from "@/api/user";
 import type {
 	UserPasswordUpdateParams,
 	UserProfile,
@@ -10,7 +15,6 @@ import { toast } from "sonner";
 
 export function useUpdateUser(name: string) {
 	const queryClient = useQueryClient();
-	const { updateUser } = useUserApi();
 
 	const updateUserMutation = useMutation({
 		mutationFn: (data: UserUpdateParams) => updateUser(name, data),
@@ -37,8 +41,6 @@ export function useUpdateUser(name: string) {
 }
 
 export function useUpdateUserPassword(name: string) {
-	const { updateUserPassword } = useUserApi();
-
 	const updateUserPasswordMutation = useMutation({
 		mutationFn: (data: UserPasswordUpdateParams) =>
 			updateUserPassword(name, data),
@@ -65,7 +67,6 @@ export function useUpdateUserPassword(name: string) {
 
 export function useUpdateUserProfile(name: string) {
 	const queryClient = useQueryClient();
-	const { updateUserProfile } = useUserApi();
 
 	const updateProfileMutation = useMutation({
 		mutationFn: (profile: UserProfile) => updateUserProfile(name, profile),
@@ -97,7 +98,6 @@ export function useUpdateUserProfile(name: string) {
 export function useDeleteUser() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const { deleteUser } = useUserApi();
 
 	const deleteUserMutation = useMutation({
 		mutationFn: (name: string) => deleteUser(name),

@@ -11,8 +11,8 @@ import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { Gamepad2, Home, Search, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
-	beforeLoad: async () => {
-		await requireAdmin();
+	beforeLoad: async ({ context }) => {
+		await requireAdmin(context.queryClient);
 	},
 	component: RouteComponent,
 });
