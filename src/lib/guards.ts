@@ -32,8 +32,6 @@ export async function requireAdmin(queryClient: QueryClient) {
 			to: "/",
 		});
 	}
-
-	return currentUser;
 }
 
 export async function requireGuest(queryClient: QueryClient) {

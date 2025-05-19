@@ -27,6 +27,10 @@ function RouteComponent() {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const { deleteUser, isDeletingUser, deleteUserError } = useDeleteUser();
 
+	if (!currentUser) {
+		return <p>Loading...</p>;
+	}
+
 	return (
 		<div className="w-full mx-auto container">
 			<div className="flex flex-col gap-8">

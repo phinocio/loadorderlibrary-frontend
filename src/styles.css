@@ -22,6 +22,7 @@
 	--color-tertiary-foreground: var(--tertiary-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
+	--color-placeholder: var(--placeholder);
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-destructive: var(--destructive);
@@ -60,6 +61,8 @@
 	--tertiary: #b846b2;
 	--tertiary-foreground: #ffffff;
 	--muted: #e6e9ef;
+	--muted-foreground: #4c4f69;
+	--placeholder: #8c8fa1;
 	--accent: #e6e9ef;
 	--accent-foreground: #4c4f69;
 	--destructive: #d20f39;
@@ -94,6 +97,7 @@
 	--tertiary-foreground: #11111b;
 	--muted: #45475a;
 	--muted-foreground: #a6adc8;
+	--placeholder: #7f849c;
 	--accent: #45475a;
 	--accent-foreground: #cdd6f4;
 	--destructive: #e64553;
