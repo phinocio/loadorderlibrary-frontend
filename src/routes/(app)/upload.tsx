@@ -36,9 +36,10 @@ function RouteComponent() {
 						10,
 					);
 					if (
-						(newStep === 2 && isStep1Done) ||
-						(newStep === 3 && isStep2Done) ||
-						(newStep === 4 && isStep3Done) ||
+						(isStep1Done &&
+							(newStep === 2 ||
+								newStep === 3 ||
+								newStep === 4)) ||
 						newStep < step
 					) {
 						setStep(newStep);
