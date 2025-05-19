@@ -14,18 +14,26 @@ interface ListFilesProps {
 
 export function ListFiles({ files }: ListFilesProps) {
 	return (
-		<Card className="py-1 px-2">
+		<Card className="p-0">
 			{files && files.length > 0 ? (
 				<div className="space-y-3">
 					{files.map((file) => (
 						<Collapsible key={file.name}>
 							<CollapsibleTrigger asChild>
-								<div className="flex items-center justify-between p-3 bg-muted rounded-md hover:bg-muted/80 cursor-pointer">
+								<div className="flex items-center justify-between hover:bg-accent p-3 rounded-lg cursor-pointer">
 									<div className="flex items-center gap-2">
-										<FileText className="h-4 w-4 text-muted-foreground" />
-										<span className="font-bold text-primary">
-											{file.clean_name}
-										</span>
+										<FileText className="h-6 w-6 text-muted-foreground" />
+										<div className="flex flex-col">
+											<span className="font-bold text-primary">
+												{file.clean_name}
+											</span>
+											<span className="text-sm text-muted-foreground">
+												{(
+													file.size_in_bytes / 1024
+												).toFixed(2)}{" "}
+												KiB
+											</span>
+										</div>
 									</div>
 									<div className="flex items-center gap-2">
 										<Button
@@ -37,9 +45,9 @@ export function ListFiles({ files }: ListFilesProps) {
 												alert("Download file");
 											}}
 										>
-											<Download className="h-4 w-4" />
+											<Download className="h-6 w-6" />
 										</Button>
-										<ChevronDown className="h-4 w-4" />
+										<ChevronDown className="h-6 w-6" />
 									</div>
 								</div>
 							</CollapsibleTrigger>

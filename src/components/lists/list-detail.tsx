@@ -19,7 +19,6 @@ interface ListDetailProps {
 export function ListDetail({ list }: ListDetailProps) {
 	return (
 		<div className="space-y-6">
-			{/* Header Section */}
 			<ListHeader list={list} />
 
 			{/* Main Content */}

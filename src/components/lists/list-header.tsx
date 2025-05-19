@@ -63,7 +63,7 @@ export function ListHeader({ list }: ListHeaderProps) {
 								size="sm"
 							>
 								<Download className="h-4 w-4" />
-								Download
+								Download Files
 							</Button>
 							<Button
 								variant="outline"
