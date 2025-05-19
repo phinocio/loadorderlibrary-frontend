@@ -8,7 +8,7 @@ export const FileSchema = z.object({
 });
 
 export const FileUploadSchema = z.object({
-	"files[]": z.array(
+	files: z.array(
 		z
 			.instanceof(File)
 			.refine(

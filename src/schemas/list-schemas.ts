@@ -1,4 +1,4 @@
-import { FileSchema, FileUploadSchema } from "@/schemas/file-schemas";
+import { FileSchema } from "@/schemas/file-schemas";
 import { GameSchema } from "@/schemas/game-schemas";
 import { UserSchema } from "@/schemas/user-schemas";
 import { z } from "zod";
@@ -41,22 +41,17 @@ export const ListCreateParamsSchema = z.object({
 	discord: z.union([z.string().url(), z.literal("")]).optional(),
 	readme: z.union([z.string(), z.literal("")]).optional(),
 	private: z.boolean().optional(),
-	expires: z.union([z.string().datetime(), z.literal("")]).optional(),
+	expires: z
+		.union([
+			z.enum(["never", "3h", "24h", "3d", "1w", "1m"]),
+			z.literal(""),
+		])
+		.optional(),
 	game: z.string().nonempty({
 		message: "Game is required",
 	}),
-	files: FileUploadSchema,
+	// files: FileUploadSchema, // Handled in the upload form
 });
 
-export const ListUpdateParamsSchema = z.object({
-	name: z.string().optional(),
-	version: z.string().optional(),
-	description: z.union([z.string(), z.literal("")]).optional(),
-	website: z.union([z.string().url(), z.literal("")]).optional(),
-	discord: z.union([z.string().url(), z.literal("")]).optional(),
-	readme: z.union([z.string(), z.literal("")]).optional(),
-	private: z.boolean().optional(),
-	expires: z.union([z.string().datetime(), z.literal("")]).optional(),
-	game: z.string().optional(),
-	files: FileUploadSchema.optional(),
-});
+export const ListUpdateParamsSchema =
+	ListCreateParamsSchema.partial().optional();

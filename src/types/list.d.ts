@@ -10,13 +10,10 @@ export type ListCreateParams = z.infer<typeof ListCreateParamsSchema>;
 export type ListUpdateParams = z.infer<typeof ListUpdateParamsSchema>;
 
 export type ListUploadStore = {
-	// Form data
-	formData: Partial<ListUploadFormData>;
-	// Current step
+	formData: ListCreateParams;
 	step: number;
-	// Actions
 	actions: {
-		setFormData: (data: Partial<ListUploadFormData>) => void;
+		setFormData: (data: Partial<ListCreateParams>) => void;
 		setStep: (step: number) => void;
 		reset: () => void;
 	};

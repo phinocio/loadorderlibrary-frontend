@@ -1,5 +1,4 @@
 import { createList, getList, getLists } from "@/api/list";
-import type { ListCreateParams } from "@/types/list";
 import {
 	queryOptions,
 	useMutation,
@@ -34,7 +33,7 @@ export function useCreateList() {
 	const navigate = useNavigate();
 
 	const createListMutation = useMutation({
-		mutationFn: (data: ListCreateParams) => createList(data),
+		mutationFn: (data: FormData) => createList(data),
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({
 				queryKey: ["lists"],

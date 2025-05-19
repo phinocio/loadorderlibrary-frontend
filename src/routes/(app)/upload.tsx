@@ -1,4 +1,7 @@
 import { ListUploadStep1 } from "@/components/lists/upload/list-upload-step-1";
+import { ListUploadStep2 } from "@/components/lists/upload/list-upload-step-2";
+import { ListUploadStep3 } from "@/components/lists/upload/list-upload-step-3";
+import { ListUploadStep4 } from "@/components/lists/upload/list-upload-step-4";
 import { useListUploadStep } from "@/stores/list-upload-store";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -23,11 +26,15 @@ function RouteComponent() {
 				<span
 					className={`h-2 flex-1 rounded-full ${step >= 3 ? "bg-primary" : "bg-muted"}`}
 				/>
+				<span
+					className={`h-2 flex-1 rounded-full ${step >= 4 ? "bg-primary" : "bg-muted"}`}
+				/>
 			</div>
 
 			{step === 1 && <ListUploadStep1 />}
-			{/* {step === 2 && <ListUploadStep2 />}
-			{step === 3 && <ListUploadStep3 />} */}
+			{step === 2 && <ListUploadStep2 />}
+			{step === 3 && <ListUploadStep3 />}
+			{step === 4 && <ListUploadStep4 />}
 		</div>
 	);
 }

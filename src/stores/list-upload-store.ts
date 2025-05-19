@@ -15,9 +15,6 @@ const useListUploadStore = create<ListUploadStore>()(
 				private: false,
 				expires: "",
 				game: "",
-				files: {
-					"files[]": [],
-				},
 			},
 			step: 1,
 			actions: {
@@ -38,9 +35,6 @@ const useListUploadStore = create<ListUploadStore>()(
 							private: false,
 							expires: "",
 							game: "",
-							files: {
-								"files[]": [],
-							},
 						},
 						step: 1,
 					}),
