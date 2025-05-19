@@ -11,7 +11,7 @@ export const ListSchema = z.object({
 	description: z.string().nullable(),
 	website: z.string().url().nullable(),
 	discord: z.string().url().nullable(),
-	readme: z.string().nullable(),
+	readme: z.string().url().nullable(),
 	private: z.boolean(),
 	expires: z.string().datetime().nullable(),
 	created: z.string().datetime(),
