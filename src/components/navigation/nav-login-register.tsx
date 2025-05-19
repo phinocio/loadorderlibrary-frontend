@@ -12,7 +12,7 @@ export function NavLoginRegister() {
 			<SidebarMenuItem className="flex flex-col gap-2">
 				<SidebarMenuButton
 					asChild
-					className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
+					className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-tertiary hover:text-primary-foreground"
 				>
 					<Link to="/login">
 						<LogIn className="size-4" />
@@ -21,7 +21,7 @@ export function NavLoginRegister() {
 				</SidebarMenuButton>
 				<SidebarMenuButton
 					asChild
-					className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-primary hover:text-primary-foreground"
+					className="w-full justify-center gap-2 rounded-lg border border-input hover:bg-tertiary hover:text-primary-foreground"
 				>
 					<Link to="/register">
 						<User className="size-4" />

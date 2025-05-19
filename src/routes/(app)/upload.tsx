@@ -1,4 +1,5 @@
-import { useGames } from "@/queries/use-game";
+import { ListUploadStep1 } from "@/components/lists/upload/list-upload-step-1";
+import { useListUploadStep } from "@/stores/list-upload-store";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/upload")({
@@ -6,19 +7,27 @@ export const Route = createFileRoute("/(app)/upload")({
 });
 
 function RouteComponent() {
-	const { data: games } = useGames();
+	const step = useListUploadStep();
 
 	return (
-		<div className="container mx-auto p-4 gap-4">
-			<h1 className="text-2xl font-bold">Upload</h1>
-			<p>Upload your game here</p>
-			<div className="flex flex-col gap-4">
-				{games.map((game) => (
-					<div key={game.id} className="p-4 border rounded-md">
-						<h2 className="text-xl font-bold">{game.name}</h2>
-					</div>
-				))}
+		<div className="container mx-auto p-4">
+			<h1 className="text-2xl font-bold mb-6">Upload a List</h1>
+
+			<div className="flex gap-2 mb-8">
+				<span
+					className={`h-2 flex-1 rounded-full ${step >= 1 ? "bg-primary" : "bg-muted"}`}
+				/>
+				<span
+					className={`h-2 flex-1 rounded-full ${step >= 2 ? "bg-primary" : "bg-muted"}`}
+				/>
+				<span
+					className={`h-2 flex-1 rounded-full ${step >= 3 ? "bg-primary" : "bg-muted"}`}
+				/>
 			</div>
+
+			{step === 1 && <ListUploadStep1 />}
+			{/* {step === 2 && <ListUploadStep2 />}
+			{step === 3 && <ListUploadStep3 />} */}
 		</div>
 	);
 }

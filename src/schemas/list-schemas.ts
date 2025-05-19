@@ -29,15 +29,22 @@ export const ListSchema = z.object({
 });
 
 export const ListCreateParamsSchema = z.object({
-	name: z.string(),
+	name: z.string().min(1, { message: "Name is required" }),
 	version: z.string().optional(),
-	description: z.union([z.string(), z.literal("")]).optional(),
+	description: z
+		.union([
+			z.string().max(1000, { message: "Maximum of 1000 characters." }),
+			z.literal(""),
+		])
+		.optional(),
 	website: z.union([z.string().url(), z.literal("")]).optional(),
 	discord: z.union([z.string().url(), z.literal("")]).optional(),
 	readme: z.union([z.string(), z.literal("")]).optional(),
 	private: z.boolean().optional(),
 	expires: z.union([z.string().datetime(), z.literal("")]).optional(),
-	game: z.string(),
+	game: z.string().nonempty({
+		message: "Game is required",
+	}),
 	files: FileUploadSchema,
 });
 

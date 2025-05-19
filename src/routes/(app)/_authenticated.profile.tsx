@@ -10,13 +10,15 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { useCurrentUser } from "@/queries/use-auth";
+import { currentUserQueryOptions, useCurrentUser } from "@/queries/use-auth";
 import { useDeleteUser } from "@/queries/use-user";
 import type { List } from "@/types/list";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 

@@ -10,7 +10,6 @@ export const Route = createFileRoute("/(app)/lists/")({
 
 function RouteComponent() {
 	const { data: lists } = useLists();
-
 	return (
 		<div className="container mx-auto py-6">
 			<h1 className="text-3xl font-bold mb-6">All Lists</h1>

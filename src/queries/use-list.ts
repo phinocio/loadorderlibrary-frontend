@@ -42,7 +42,7 @@ export function useCreateList() {
 			toast.success("List created successfully", {
 				richColors: true,
 			});
-			navigate({ to: `/lists/${data.name}` });
+			navigate({ to: `/lists/${data.slug}` });
 		},
 		onError: (error) => {
 			toast.error("Failed to create list", {
