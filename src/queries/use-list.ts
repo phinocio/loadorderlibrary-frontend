@@ -1,4 +1,5 @@
 import { createList, getList, getLists } from "@/api/list";
+import { useListUploadActions } from "@/stores/list-upload-store";
 import {
 	queryOptions,
 	useMutation,
@@ -31,6 +32,7 @@ export function useList(slug: string) {
 export function useCreateList() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	const { reset } = useListUploadActions();
 
 	const createListMutation = useMutation({
 		mutationFn: (data: FormData) => createList(data),
@@ -42,6 +44,7 @@ export function useCreateList() {
 				richColors: true,
 			});
 			navigate({ to: `/lists/${data.slug}` });
+			reset();
 		},
 		onError: (error) => {
 			toast.error("Failed to create list", {

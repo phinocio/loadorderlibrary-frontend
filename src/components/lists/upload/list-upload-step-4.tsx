@@ -44,6 +44,7 @@ export function ListUploadStep4() {
 	};
 
 	const onSubmit = async (data: FileFormData) => {
+		console.log("Submitting files", data);
 		const newList = new FormData();
 
 		// Required data
@@ -120,9 +121,15 @@ export function ListUploadStep4() {
 													onChange={(
 														e: React.ChangeEvent<HTMLInputElement>,
 													) => {
-														onChange(
-															e.target.files,
-														);
+														// Convert FileList to array for validation
+														const filesArray = e
+															.target.files
+															? Array.from(
+																	e.target
+																		.files,
+																)
+															: [];
+														onChange(filesArray);
 														handleFileChange(e);
 													}}
 													{...field}

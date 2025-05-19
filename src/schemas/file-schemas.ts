@@ -29,7 +29,7 @@ export const FileUploadSchema = z.object({
 			)
 			.refine(
 				(file) => {
-					[
+					return [
 						"text/plain",
 						"application/x-wine-extension-ini",
 						"application/octet-stream",
