@@ -56,3 +56,16 @@ export const useListUploadStep = () =>
 	useListUploadStore((state) => state.step);
 export const useListUploadActions = () =>
 	useListUploadStore((state) => state.actions);
+
+// Derived state
+export const step1Completed = () =>
+	useListUploadStore((state) => {
+		const { name, game } = state.formData;
+		return !!name && !!game;
+	});
+
+// These steps are always completed because they are optional
+export const step2Completed = () =>
+	useListUploadStore((state) => state.step > 1);
+export const step3Completed = () =>
+	useListUploadStore((state) => state.step > 2);
