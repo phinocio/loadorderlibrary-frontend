@@ -8,6 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import type { List } from "@/types/list";
+import { Link } from "@tanstack/react-router";
 import { CheckCircleIcon, Clock } from "lucide-react";
 
 interface ListCardProps {
@@ -20,7 +21,13 @@ export function ListCard({ list }: ListCardProps) {
 			<CardHeader className="border-b pb-3">
 				<div className="flex items-start justify-between">
 					<CardTitle className="text-xl font-bold line-clamp-1 text-primary">
-						{list.name}
+						<Link
+							to="/lists/$slug"
+							params={{ slug: list.slug }}
+							className="hover:underline"
+						>
+							{list.name}
+						</Link>
 					</CardTitle>
 					{list.version && (
 						<Badge
@@ -34,12 +41,28 @@ export function ListCard({ list }: ListCardProps) {
 				<CardDescription className="text-base">
 					<div className="flex items-center justify-between mt-2">
 						<span className="text-secondary font-bold">
-							{list.game.name}
+							<Link
+								to="/games/$slug"
+								params={{ slug: list.game.slug }}
+								className="hover:underline"
+							>
+								{list.game.name}
+							</Link>
 						</span>
 						<span className="text-sm flex items-center gap-1">
 							by{" "}
 							<span className="text-primary font-bold inline-flex items-center gap-1">
-								{list.author?.name || "Anonymous"}
+								{list.author?.name ? (
+									<Link
+										to="/users/$username"
+										params={{ username: list.author.name }}
+										className="hover:underline"
+									>
+										{list.author.name}
+									</Link>
+								) : (
+									<span>Anonymous</span>
+								)}
 								{list.author?.verified && (
 									<CheckCircleIcon className="h-3.5 w-3.5 text-secondary" />
 								)}
