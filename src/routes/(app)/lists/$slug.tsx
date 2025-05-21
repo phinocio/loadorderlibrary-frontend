@@ -1,15 +1,17 @@
 import { ListDetail } from "@/components/lists/list-detail";
+import { ListDetailSkeleton } from "@/components/skeletons/list-detail-skeleton";
 import { listQueryOptions, useList } from "@/queries/use-list";
 import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/(app)/lists/$slug")({
 	loader: ({ context, params }) => {
-		context.queryClient.ensureQueryData(listQueryOptions(params.slug));
+		return context.queryClient.prefetchQuery(listQueryOptions(params.slug));
 	},
 	component: RouteComponent,
 });
 
-function RouteComponent() {
+function ListDetailComponent() {
 	const { slug } = Route.useParams();
 	const { data: list, isError } = useList(slug);
 
@@ -29,5 +31,13 @@ function RouteComponent() {
 		<div className="container mx-auto py-6">
 			<ListDetail list={list} />
 		</div>
+	);
+}
+
+function RouteComponent() {
+	return (
+		<Suspense fallback={<ListDetailSkeleton />}>
+			<ListDetailComponent />
+		</Suspense>
 	);
 }

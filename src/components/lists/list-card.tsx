@@ -54,8 +54,8 @@ export function ListCard({ list }: ListCardProps) {
 							<span className="text-primary font-bold inline-flex items-center gap-1">
 								{list.author?.name ? (
 									<Link
-										to="/users/$username"
-										params={{ username: list.author.name }}
+										to="/users/$name"
+										params={{ name: list.author.name }}
 										className="hover:underline"
 									>
 										{list.author.name}

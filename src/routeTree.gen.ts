@@ -26,6 +26,7 @@ import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminGamesIndexImport } from './routes/admin/games/index'
 import { Route as appListsIndexImport } from './routes/(app)/lists/index'
+import { Route as appGamesIndexImport } from './routes/(app)/games/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appUsersNameImport } from './routes/(app)/users/$name'
 import { Route as appListsSlugImport } from './routes/(app)/lists/$slug'
@@ -118,6 +119,12 @@ const AdminGamesIndexRoute = AdminGamesIndexImport.update({
 const appListsIndexRoute = appListsIndexImport.update({
   id: '/lists/',
   path: '/lists/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
+const appGamesIndexRoute = appGamesIndexImport.update({
+  id: '/games/',
+  path: '/games/',
   getParentRoute: () => appRouteRoute,
 } as any)
 
@@ -274,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersNameImport
       parentRoute: typeof AdminRouteImport
     }
+    '/(app)/games/': {
+      id: '/(app)/games/'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof appGamesIndexImport
+      parentRoute: typeof appRouteImport
+    }
     '/(app)/lists/': {
       id: '/(app)/lists/'
       path: '/lists'
@@ -319,6 +333,7 @@ interface appRouteRouteChildren {
   appGamesSlugRoute: typeof appGamesSlugRoute
   appListsSlugRoute: typeof appListsSlugRoute
   appUsersNameRoute: typeof appUsersNameRoute
+  appGamesIndexRoute: typeof appGamesIndexRoute
   appListsIndexRoute: typeof appListsIndexRoute
 }
 
@@ -330,6 +345,7 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   appGamesSlugRoute: appGamesSlugRoute,
   appListsSlugRoute: appListsSlugRoute,
   appUsersNameRoute: appUsersNameRoute,
+  appGamesIndexRoute: appGamesIndexRoute,
   appListsIndexRoute: appListsIndexRoute,
 }
 
@@ -389,6 +405,7 @@ export interface FileRoutesByFullPath {
   '/lists/$slug': typeof appListsSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
+  '/games': typeof appGamesIndexRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
@@ -409,6 +426,7 @@ export interface FileRoutesByTo {
   '/lists/$slug': typeof appListsSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
+  '/games': typeof appGamesIndexRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
@@ -433,6 +451,7 @@ export interface FileRoutesById {
   '/(app)/lists/$slug': typeof appListsSlugRoute
   '/(app)/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
+  '/(app)/games/': typeof appGamesIndexRoute
   '/(app)/lists/': typeof appListsIndexRoute
   '/admin/games/': typeof AdminGamesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
@@ -456,6 +475,7 @@ export interface FileRouteTypes {
     | '/lists/$slug'
     | '/users/$name'
     | '/admin/users/$name'
+    | '/games'
     | '/lists'
     | '/admin/games'
     | '/admin/users'
@@ -475,6 +495,7 @@ export interface FileRouteTypes {
     | '/lists/$slug'
     | '/users/$name'
     | '/admin/users/$name'
+    | '/games'
     | '/lists'
     | '/admin/games'
     | '/admin/users'
@@ -497,6 +518,7 @@ export interface FileRouteTypes {
     | '/(app)/lists/$slug'
     | '/(app)/users/$name'
     | '/admin/users/$name'
+    | '/(app)/games/'
     | '/(app)/lists/'
     | '/admin/games/'
     | '/admin/users/'
@@ -540,6 +562,7 @@ export const routeTree = rootRoute
         "/(app)/games/$slug",
         "/(app)/lists/$slug",
         "/(app)/users/$name",
+        "/(app)/games/",
         "/(app)/lists/"
       ]
     },
@@ -619,6 +642,10 @@ export const routeTree = rootRoute
     "/admin/users/$name": {
       "filePath": "admin/users/$name.tsx",
       "parent": "/admin"
+    },
+    "/(app)/games/": {
+      "filePath": "(app)/games/index.tsx",
+      "parent": "/(app)"
     },
     "/(app)/lists/": {
       "filePath": "(app)/lists/index.tsx",

@@ -30,6 +30,11 @@ const navItems = [
 		icon: Search,
 	},
 	{
+		title: "Games",
+		url: "/games",
+		icon: Search,
+	},
+	{
 		title: "Compare",
 		url: "/compare",
 		icon: GitCompareIcon,

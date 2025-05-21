@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -14,13 +14,20 @@ interface ListFilesProps {
 
 export function ListFiles({ files }: ListFilesProps) {
 	return (
-		<Card className="p-0">
+		<Card className="pb-0">
+			<CardHeader>
+				<div className="flex items-center gap-2">
+					<FileText className="h-5 w-5" />
+					<span className="text-lg font-semibold">Files</span>
+				</div>
+			</CardHeader>
+
 			{files && files.length > 0 ? (
 				<div className="space-y-3">
 					{files.map((file) => (
 						<Collapsible key={file.name}>
 							<CollapsibleTrigger asChild>
-								<div className="flex items-center justify-between hover:bg-accent p-3 rounded-lg cursor-pointer">
+								<div className="flex items-center justify-between hover:bg-accent px-4 py-2 rounded-lg cursor-pointer">
 									<div className="flex items-center gap-2">
 										<FileText className="h-6 w-6 text-muted-foreground" />
 										<div className="flex flex-col">
