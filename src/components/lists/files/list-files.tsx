@@ -27,7 +27,7 @@ export function ListFiles({ files }: ListFilesProps) {
 					{files.map((file) => (
 						<Collapsible key={file.name}>
 							<CollapsibleTrigger asChild>
-								<div className="flex items-center justify-between hover:bg-accent px-4 py-2 rounded-lg cursor-pointer">
+								<div className="flex items-center justify-between hover:bg-accent px-4 py-2 rounded-xl cursor-pointer">
 									<div className="flex items-center gap-2">
 										<FileText className="h-6 w-6 text-muted-foreground" />
 										<div className="flex flex-col">

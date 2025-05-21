@@ -1,3 +1,4 @@
+import { ListSchema } from "@/schemas/list-schemas";
 import { z } from "zod";
 
 const optionalUrl = z.union([z.string().url(), z.literal("")]).optional();
@@ -17,6 +18,7 @@ export const UserSchema = z.object({
 	verified: z.boolean(),
 	admin: z.boolean().optional(),
 	profile: z.union([UserProfileSchema, z.null()]).optional(),
+	lists: z.array(ListSchema).optional(),
 	created: z.string(),
 	updated: z.string(),
 });

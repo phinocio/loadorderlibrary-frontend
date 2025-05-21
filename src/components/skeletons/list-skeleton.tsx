@@ -30,11 +30,16 @@ export function ListSkeleton() {
 
 export function ListSkeletonGrid() {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-			{Array.from({ length: 6 }).map((_, index) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-				<ListSkeleton key={index} />
-			))}
+		<div className="container mx-auto py-6">
+			<h1 className="text-3xl font-bold mb-6">
+				<Skeleton className="h-8 w-1/4" />
+			</h1>
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+				{Array.from({ length: 6 }).map((_, index) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+					<ListSkeleton key={index} />
+				))}
+			</div>
 		</div>
 	);
 }

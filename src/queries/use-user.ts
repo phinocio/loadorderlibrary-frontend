@@ -1,5 +1,6 @@
 import {
 	deleteUser,
+	getUser,
 	updateUser,
 	updateUserPassword,
 	updateUserProfile,
@@ -9,9 +10,25 @@ import type {
 	UserProfile,
 	UserUpdateParams,
 } from "@/types/user";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	queryOptions,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+
+export const userQueryOptions = (name: string) => {
+	return queryOptions({
+		queryKey: ["users", name],
+		queryFn: () => getUser(name),
+	});
+};
+
+export function useUser(name: string) {
+	return useSuspenseQuery(userQueryOptions(name));
+}
 
 export function useUpdateUser(name: string) {
 	const queryClient = useQueryClient();

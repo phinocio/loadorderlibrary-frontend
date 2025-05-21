@@ -1,6 +1,5 @@
 import { FileSchema } from "@/schemas/file-schemas";
 import { GameSchema } from "@/schemas/game-schemas";
-import { UserSchema } from "@/schemas/user-schemas";
 import { z } from "zod";
 
 export const ListSchema = z.object({
@@ -16,10 +15,12 @@ export const ListSchema = z.object({
 	expires: z.string().datetime().nullable(),
 	created: z.string().datetime(),
 	updated: z.string().datetime(),
-	author: UserSchema.pick({
-		name: true,
-		verified: true,
-	}).optional(),
+	author: z
+		.object({
+			name: z.string(),
+			verified: z.boolean(),
+		})
+		.optional(),
 	game: GameSchema,
 	files: z.array(FileSchema).optional(),
 	links: z.object({
