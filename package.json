@@ -11,7 +11,8 @@
 		"format:fix": "biome format --fix",
 		"lint": "biome lint",
 		"lint:fix": "biome lint --fix",
-		"check": "biome check"
+		"check": "biome check",
+		"ts:lint": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.0.1",
