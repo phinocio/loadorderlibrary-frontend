@@ -33,6 +33,9 @@ export function ListUploadStep4() {
 		resolver: zodResolver(FileUploadSchema),
 	});
 
+	// Debug form errors
+	console.log("Form errors:", form.formState.errors);
+
 	// Update file names when files change
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {

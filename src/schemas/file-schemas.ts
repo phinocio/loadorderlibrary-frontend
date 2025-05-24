@@ -26,18 +26,6 @@ export const FileUploadSchema = z.object({
 				{
 					message: "File size must be less than or equal to 512KB",
 				},
-			)
-			.refine(
-				(file) => {
-					return [
-						"text/plain",
-						"application/x-wine-extension-ini",
-						"application/octet-stream",
-					].includes(file.type);
-				},
-				{
-					message: "Invalid file type - must be .ini or .txt",
-				},
 			),
 	),
 });

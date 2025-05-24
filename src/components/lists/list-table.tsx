@@ -12,13 +12,9 @@ import { Link } from "@tanstack/react-router";
 import { Upload } from "lucide-react";
 import { ListTableRow } from "./list-table-row";
 
-interface ListsTableProps {
-	lists: List[];
-}
-
-export function ListTable({ lists }: ListsTableProps) {
+export function ListTable({ lists }: { lists: List[] }) {
 	return (
-		<Card className="px-3 py-2">
+		<Card className="px-4 py-2">
 			<Table>
 				<TableHeader>
 					<TableRow>
@@ -28,7 +24,9 @@ export function ListTable({ lists }: ListsTableProps) {
 						<TableHead className="font-semibold">Created</TableHead>
 						<TableHead className="font-semibold">Updated</TableHead>
 						<TableHead className="font-semibold">Status</TableHead>
-						<TableHead className="font-semibold">Actions</TableHead>
+						<TableHead className="font-semibold text-right">
+							Actions
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>

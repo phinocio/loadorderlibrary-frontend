@@ -4,22 +4,23 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useDeleteList } from "@/queries/use-list";
 import type { List } from "@/types/list";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-interface ListTableRowProps {
-	list: List;
-}
-
-export function ListTableRow({ list }: ListTableRowProps) {
+export function ListTableRow({ list }: { list: List }) {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const { deleteList, isDeletingList } = useDeleteList();
+	const navigate = useNavigate();
 
 	const handleEditList = () => {
-		// TODO: Implement edit functionality - navigate to edit page or open edit modal
-		console.log("Edit list:", list.slug);
+		navigate({
+			to: "/lists/$slug/edit",
+			params: {
+				slug: list.slug,
+			},
+		});
 	};
 
 	const handleDeleteList = () => {
@@ -118,7 +119,7 @@ export function ListTableRow({ list }: ListTableRowProps) {
 						)}
 					</div>
 				</TableCell>
-				<TableCell>
+				<TableCell className="flex justify-end">
 					<div className="space-x-3">
 						<Button
 							variant="ghost"
