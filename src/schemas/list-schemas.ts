@@ -15,12 +15,10 @@ export const ListSchema = z.object({
 	expires: z.string().datetime().nullable(),
 	created: z.string().datetime(),
 	updated: z.string().datetime(),
-	author: z
-		.object({
-			name: z.string(),
-			verified: z.boolean(),
-		})
-		.optional(),
+	author: z.object({
+		name: z.string(),
+		verified: z.boolean(),
+	}),
 	game: GameSchema,
 	files: z.array(FileSchema).optional(),
 	links: z.object({

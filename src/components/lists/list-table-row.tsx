@@ -1,0 +1,157 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { useDeleteList } from "@/queries/use-list";
+import type { List } from "@/types/list";
+import { Link } from "@tanstack/react-router";
+import { format } from "date-fns";
+import { Edit, Trash2 } from "lucide-react";
+import { useState } from "react";
+
+interface ListTableRowProps {
+	list: List;
+}
+
+export function ListTableRow({ list }: ListTableRowProps) {
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+	const { deleteList, isDeletingList } = useDeleteList();
+
+	const handleEditList = () => {
+		// TODO: Implement edit functionality - navigate to edit page or open edit modal
+		console.log("Edit list:", list.slug);
+	};
+
+	const handleDeleteList = () => {
+		setIsDeleteDialogOpen(true);
+	};
+
+	const confirmDeleteList = () => {
+		deleteList(list.slug);
+		setIsDeleteDialogOpen(false);
+	};
+
+	return (
+		<>
+			<TableRow className="">
+				<TableCell>
+					<div className="space-y-1">
+						<Link
+							to="/lists/$slug"
+							params={{
+								slug: list.slug,
+							}}
+							className="font-medium text-primary hover:underline"
+						>
+							{list.name}
+						</Link>
+						{list.description && (
+							<p className="text-sm text-muted-foreground line-clamp-1">
+								{list.description}
+							</p>
+						)}
+					</div>
+				</TableCell>
+				<TableCell>
+					<Link
+						to="/games/$slug"
+						params={{
+							slug: list.game.slug,
+						}}
+						className="text-secondary hover:underline font-medium"
+					>
+						{list.game.name}
+					</Link>
+				</TableCell>
+				<TableCell>
+					{list.version ? (
+						<Badge
+							variant="outline"
+							className="border-secondary text-secondary"
+						>
+							v{list.version}
+						</Badge>
+					) : (
+						<span className="text-muted-foreground text-sm">—</span>
+					)}
+				</TableCell>
+				<TableCell>
+					<div className="flex items-center gap-1 text-sm text-muted-foreground">
+						{format(new Date(list.created), "MMM d, yyyy")}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div className="flex items-center gap-1 text-sm text-muted-foreground">
+						{format(new Date(list.updated), "MMM d, yyyy")}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div className="flex items-center gap-2">
+						{list.private && (
+							<Badge variant="secondary" className="text-xs">
+								Private
+							</Badge>
+						)}
+						{list.expires &&
+							new Date(list.expires) < new Date() && (
+								<Badge
+									variant="destructive"
+									className="text-xs"
+								>
+									Expired
+								</Badge>
+							)}
+						{list.expires &&
+							new Date(list.expires) > new Date() && (
+								<Badge variant="outline" className="text-xs">
+									Expires{" "}
+									{format(new Date(list.expires), "MMM d")}
+								</Badge>
+							)}
+						{!list.private && !list.expires && (
+							<Badge
+								variant="outline"
+								className="text-xs text-green-600 border-green-600"
+							>
+								Public
+							</Badge>
+						)}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div className="space-x-3">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="size-5 text-secondary hover:text-secondary cursor-pointer"
+							onClick={handleEditList}
+						>
+							<Edit className="size-5" />
+							<span className="sr-only">Edit list</span>
+						</Button>
+						<Button
+							variant="ghost"
+							size="icon"
+							className="size-5 text-destructive hover:text-destructive cursor-pointer"
+							onClick={handleDeleteList}
+						>
+							<Trash2 className="size-5" />
+							<span className="sr-only">Delete list</span>
+						</Button>
+					</div>
+				</TableCell>
+			</TableRow>
+
+			<ConfirmDialog
+				open={isDeleteDialogOpen}
+				onOpenChange={setIsDeleteDialogOpen}
+				title={`Delete ${list.name}`}
+				description="Are you sure you want to delete this list? This action cannot be undone."
+				onConfirm={confirmDeleteList}
+				confirmText="Delete List"
+				variant="destructive"
+				isLoading={isDeletingList}
+			/>
+		</>
+	);
+}

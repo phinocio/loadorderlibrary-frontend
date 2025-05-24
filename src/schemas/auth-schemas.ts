@@ -31,7 +31,7 @@ export const CurrentUserSchema = z.object({
 	verified: z.boolean(),
 	admin: z.boolean(),
 	profile: z.union([UserProfileSchema, z.null()]).optional(),
-	lists: z.array(ListSchema).optional(),
+	lists: z.array(ListSchema),
 	created: z.string(),
 	updated: z.string(),
 });
