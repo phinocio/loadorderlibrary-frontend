@@ -16,6 +16,8 @@ interface ListHeaderProps {
 }
 
 export function ListHeader({ list }: ListHeaderProps) {
+	const downloadLink = `${import.meta.env.VITE_API_BASE_URL}/${import.meta.env.VITE_API_VERSION}/lists/${list.slug}/download`;
+
 	return (
 		<Card>
 			<CardHeader>
@@ -57,14 +59,16 @@ export function ListHeader({ list }: ListHeaderProps) {
 
 					<CardAction>
 						<div className="flex flex-wrap gap-2">
-							<Button
-								variant="outline"
-								className="gap-2"
-								size="sm"
-							>
-								<Download className="h-4 w-4" />
-								Download Files
-							</Button>
+							<form action={downloadLink}>
+								<Button
+									variant="outline"
+									className="gap-2"
+									size="sm"
+								>
+									<Download className="h-4 w-4" />
+									Download Files
+								</Button>
+							</form>
 							<Button
 								variant="outline"
 								className="gap-2"

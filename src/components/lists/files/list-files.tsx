@@ -1,33 +1,32 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import type { List } from "@/types/list";
+import type { File, Files } from "@/types/file";
 import { ChevronDown, Download, FileText } from "lucide-react";
 
-interface ListFilesProps {
-	files: List["files"];
-}
+export function ListFiles({ files }: { files: Files | undefined }) {
+	function downloadLink(file: File) {
+		return [
+			import.meta.env.VITE_API_BASE_URL,
+			import.meta.env.VITE_API_VERSION,
+			"files",
+			file.name,
+			"download",
+		].join("/");
+	}
 
-export function ListFiles({ files }: ListFilesProps) {
 	return (
-		<Card className="pb-0">
-			<CardHeader>
-				<div className="flex items-center gap-2">
-					<FileText className="h-5 w-5" />
-					<span className="text-lg font-semibold">Files</span>
-				</div>
-			</CardHeader>
-
+		<Card className="py-0">
 			{files && files.length > 0 ? (
-				<div className="space-y-3">
+				<div>
 					{files.map((file) => (
 						<Collapsible key={file.name}>
 							<CollapsibleTrigger asChild>
-								<div className="flex items-center justify-between hover:bg-accent px-4 py-2 rounded-xl cursor-pointer">
+								<div className="flex items-center justify-between hover:bg-accent px-4 py-3 rounded-xl ">
 									<div className="flex items-center gap-2">
 										<FileText className="h-6 w-6 text-muted-foreground" />
 										<div className="flex flex-col">
@@ -43,18 +42,22 @@ export function ListFiles({ files }: ListFilesProps) {
 										</div>
 									</div>
 									<div className="flex items-center gap-2">
-										<Button
-											variant="ghost"
-											size="sm"
-											className="h-8 w-8 p-0"
-											onClick={(e) => {
-												e.stopPropagation();
-												alert("Download file");
-											}}
+										<form
+											className="flex "
+											action={downloadLink(file)}
 										>
-											<Download className="h-6 w-6" />
-										</Button>
-										<ChevronDown className="h-6 w-6" />
+											<Button
+												type="submit"
+												variant="ghost"
+												className="size-5 p-0 cursor-pointer hover:text-secondary"
+												onClick={(e) => {
+													e.stopPropagation();
+												}}
+											>
+												<Download className="size-5" />
+											</Button>
+										</form>
+										<ChevronDown className="size-4" />
 									</div>
 								</div>
 							</CollapsibleTrigger>
