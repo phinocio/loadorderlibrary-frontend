@@ -12,8 +12,7 @@ import {
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { currentUserQueryOptions, useCurrentUser } from "@/queries/use-auth";
 import { useDeleteUser } from "@/queries/use-user";
-import type { List } from "@/types/list";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
@@ -21,8 +20,6 @@ export const Route = createFileRoute("/(app)/_authenticated/profile")({
 		context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
-
-const lists: List[] = [];
 
 function RouteComponent() {
 	const { data: currentUser } = useCurrentUser();
@@ -77,14 +74,22 @@ function RouteComponent() {
 							</p>
 						</div>
 						<div className="grid grid-cols-1 gap-6 lg:grid-cols-[repeat(2,1fr)] xl:grid-cols-[repeat(3,1fr)]">
-							{lists.length > 0 ? (
-								lists.map((list) => (
+							{!currentUser.lists ||
+							currentUser.lists.length === 0 ? (
+								<p className="text-sm text-muted-foreground">
+									No lists found.{" "}
+									<Link
+										to="/upload"
+										className="text-primary hover:underline"
+									>
+										Create one
+									</Link>{" "}
+									to get started.
+								</p>
+							) : (
+								currentUser.lists.map((list) => (
 									<ListCard key={list.slug} list={list} />
 								))
-							) : (
-								<p className="text-sm text-muted-foreground">
-									No lists found.
-								</p>
 							)}
 						</div>
 					</div>

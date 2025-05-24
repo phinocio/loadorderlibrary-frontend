@@ -1,3 +1,4 @@
+import { ListSchema } from "@/schemas/list-schemas";
 import { UserProfileSchema } from "@/schemas/user-schemas";
 import { z } from "zod";
 
@@ -30,6 +31,7 @@ export const CurrentUserSchema = z.object({
 	verified: z.boolean(),
 	admin: z.boolean(),
 	profile: z.union([UserProfileSchema, z.null()]).optional(),
+	lists: z.array(ListSchema).optional(),
 	created: z.string(),
 	updated: z.string(),
 });

@@ -40,6 +40,10 @@ export function useCreateList() {
 			queryClient.invalidateQueries({
 				queryKey: ["lists"],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["current-user"],
+			});
+
 			toast.success("List created successfully", {
 				richColors: true,
 			});
