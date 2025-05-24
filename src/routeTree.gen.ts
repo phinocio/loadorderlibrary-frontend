@@ -29,9 +29,10 @@ import { Route as appListsIndexImport } from './routes/(app)/lists/index'
 import { Route as appGamesIndexImport } from './routes/(app)/games/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appUsersNameImport } from './routes/(app)/users/$name'
-import { Route as appListsSlugImport } from './routes/(app)/lists/$slug'
 import { Route as appGamesSlugImport } from './routes/(app)/games/$slug'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
+import { Route as appListsSlugIndexImport } from './routes/(app)/lists/$slug/index'
+import { Route as appListsSlugEditImport } from './routes/(app)/lists/$slug/edit'
 
 // Create/Update Routes
 
@@ -140,12 +141,6 @@ const appUsersNameRoute = appUsersNameImport.update({
   getParentRoute: () => appRouteRoute,
 } as any)
 
-const appListsSlugRoute = appListsSlugImport.update({
-  id: '/lists/$slug',
-  path: '/lists/$slug',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
 const appGamesSlugRoute = appGamesSlugImport.update({
   id: '/games/$slug',
   path: '/games/$slug',
@@ -156,6 +151,18 @@ const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => appAuthenticatedRoute,
+} as any)
+
+const appListsSlugIndexRoute = appListsSlugIndexImport.update({
+  id: '/lists/$slug/',
+  path: '/lists/$slug/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
+const appListsSlugEditRoute = appListsSlugEditImport.update({
+  id: '/lists/$slug/edit',
+  path: '/lists/$slug/edit',
+  getParentRoute: () => appRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -260,13 +267,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appGamesSlugImport
       parentRoute: typeof appRouteImport
     }
-    '/(app)/lists/$slug': {
-      id: '/(app)/lists/$slug'
-      path: '/lists/$slug'
-      fullPath: '/lists/$slug'
-      preLoaderRoute: typeof appListsSlugImport
-      parentRoute: typeof appRouteImport
-    }
     '/(app)/users/$name': {
       id: '/(app)/users/$name'
       path: '/users/$name'
@@ -309,6 +309,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersIndexImport
       parentRoute: typeof AdminRouteImport
     }
+    '/(app)/lists/$slug/edit': {
+      id: '/(app)/lists/$slug/edit'
+      path: '/lists/$slug/edit'
+      fullPath: '/lists/$slug/edit'
+      preLoaderRoute: typeof appListsSlugEditImport
+      parentRoute: typeof appRouteImport
+    }
+    '/(app)/lists/$slug/': {
+      id: '/(app)/lists/$slug/'
+      path: '/lists/$slug'
+      fullPath: '/lists/$slug'
+      preLoaderRoute: typeof appListsSlugIndexImport
+      parentRoute: typeof appRouteImport
+    }
   }
 }
 
@@ -331,10 +345,11 @@ interface appRouteRouteChildren {
   appUploadRoute: typeof appUploadRoute
   appIndexRoute: typeof appIndexRoute
   appGamesSlugRoute: typeof appGamesSlugRoute
-  appListsSlugRoute: typeof appListsSlugRoute
   appUsersNameRoute: typeof appUsersNameRoute
   appGamesIndexRoute: typeof appGamesIndexRoute
   appListsIndexRoute: typeof appListsIndexRoute
+  appListsSlugEditRoute: typeof appListsSlugEditRoute
+  appListsSlugIndexRoute: typeof appListsSlugIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
@@ -343,10 +358,11 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   appUploadRoute: appUploadRoute,
   appIndexRoute: appIndexRoute,
   appGamesSlugRoute: appGamesSlugRoute,
-  appListsSlugRoute: appListsSlugRoute,
   appUsersNameRoute: appUsersNameRoute,
   appGamesIndexRoute: appGamesIndexRoute,
   appListsIndexRoute: appListsIndexRoute,
+  appListsSlugEditRoute: appListsSlugEditRoute,
+  appListsSlugIndexRoute: appListsSlugIndexRoute,
 }
 
 const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
@@ -402,13 +418,14 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
   '/games/$slug': typeof appGamesSlugRoute
-  '/lists/$slug': typeof appListsSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/games': typeof appGamesIndexRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
+  '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug': typeof appListsSlugIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -423,13 +440,14 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
   '/games/$slug': typeof appGamesSlugRoute
-  '/lists/$slug': typeof appListsSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/games': typeof appGamesIndexRoute
   '/lists': typeof appListsIndexRoute
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
+  '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug': typeof appListsSlugIndexRoute
 }
 
 export interface FileRoutesById {
@@ -448,13 +466,14 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
   '/(app)/games/$slug': typeof appGamesSlugRoute
-  '/(app)/lists/$slug': typeof appListsSlugRoute
   '/(app)/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
   '/(app)/games/': typeof appGamesIndexRoute
   '/(app)/lists/': typeof appListsIndexRoute
   '/admin/games/': typeof AdminGamesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
+  '/(app)/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/(app)/lists/$slug/': typeof appListsSlugIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -472,13 +491,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/profile'
     | '/games/$slug'
-    | '/lists/$slug'
     | '/users/$name'
     | '/admin/users/$name'
     | '/games'
     | '/lists'
     | '/admin/games'
     | '/admin/users'
+    | '/lists/$slug/edit'
+    | '/lists/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -492,13 +512,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/profile'
     | '/games/$slug'
-    | '/lists/$slug'
     | '/users/$name'
     | '/admin/users/$name'
     | '/games'
     | '/lists'
     | '/admin/games'
     | '/admin/users'
+    | '/lists/$slug/edit'
+    | '/lists/$slug'
   id:
     | '__root__'
     | '/(app)'
@@ -515,13 +536,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/(app)/_authenticated/profile'
     | '/(app)/games/$slug'
-    | '/(app)/lists/$slug'
     | '/(app)/users/$name'
     | '/admin/users/$name'
     | '/(app)/games/'
     | '/(app)/lists/'
     | '/admin/games/'
     | '/admin/users/'
+    | '/(app)/lists/$slug/edit'
+    | '/(app)/lists/$slug/'
   fileRoutesById: FileRoutesById
 }
 
@@ -560,10 +582,11 @@ export const routeTree = rootRoute
         "/(app)/upload",
         "/(app)/",
         "/(app)/games/$slug",
-        "/(app)/lists/$slug",
         "/(app)/users/$name",
         "/(app)/games/",
-        "/(app)/lists/"
+        "/(app)/lists/",
+        "/(app)/lists/$slug/edit",
+        "/(app)/lists/$slug/"
       ]
     },
     "/(auth)": {
@@ -631,10 +654,6 @@ export const routeTree = rootRoute
       "filePath": "(app)/games/$slug.tsx",
       "parent": "/(app)"
     },
-    "/(app)/lists/$slug": {
-      "filePath": "(app)/lists/$slug.tsx",
-      "parent": "/(app)"
-    },
     "/(app)/users/$name": {
       "filePath": "(app)/users/$name.tsx",
       "parent": "/(app)"
@@ -658,6 +677,14 @@ export const routeTree = rootRoute
     "/admin/users/": {
       "filePath": "admin/users/index.tsx",
       "parent": "/admin"
+    },
+    "/(app)/lists/$slug/edit": {
+      "filePath": "(app)/lists/$slug/edit.tsx",
+      "parent": "/(app)"
+    },
+    "/(app)/lists/$slug/": {
+      "filePath": "(app)/lists/$slug/index.tsx",
+      "parent": "/(app)"
     }
   }
 }

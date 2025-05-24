@@ -1,5 +1,12 @@
-import { createList, getList, getLists } from "@/api/list";
+import {
+	createList,
+	deleteList,
+	getList,
+	getLists,
+	updateList,
+} from "@/api/list";
 import { useListUploadActions } from "@/stores/list-upload-store";
+import type { ListUpdateParams } from "@/types/list";
 import {
 	queryOptions,
 	useMutation,
@@ -63,5 +70,80 @@ export function useCreateList() {
 		createList: createListMutation.mutate,
 		isCreatingList: createListMutation.isPending,
 		createListError: createListMutation.error,
+	};
+}
+
+export function useUpdateList() {
+	const queryClient = useQueryClient();
+
+	const updateListMutation = useMutation({
+		mutationFn: ({
+			slug,
+			data,
+		}: { slug: string; data: ListUpdateParams }) => updateList(slug, data),
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["lists"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["lists", variables.slug],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["current-user"],
+			});
+
+			toast.success("List updated successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to update list", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to update list", error);
+		},
+	});
+
+	return {
+		updateList: updateListMutation.mutate,
+		isUpdatingList: updateListMutation.isPending,
+		updateListError: updateListMutation.error,
+	};
+}
+
+export function useDeleteList() {
+	const queryClient = useQueryClient();
+
+	const deleteListMutation = useMutation({
+		mutationFn: (slug: string) => deleteList(slug),
+		onSuccess: (_, slug) => {
+			queryClient.invalidateQueries({
+				queryKey: ["lists"],
+			});
+			queryClient.removeQueries({
+				queryKey: ["lists", slug],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["current-user"],
+			});
+
+			toast.success("List deleted successfully", {
+				richColors: true,
+			});
+		},
+		onError: (error) => {
+			toast.error("Failed to delete list", {
+				richColors: true,
+				description: error.message,
+			});
+			console.error("Failed to delete list", error);
+		},
+	});
+
+	return {
+		deleteList: deleteListMutation.mutate,
+		isDeletingList: deleteListMutation.isPending,
+		deleteListError: deleteListMutation.error,
 	};
 }

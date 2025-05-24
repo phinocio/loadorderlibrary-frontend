@@ -4,7 +4,7 @@ import { listQueryOptions, useList } from "@/queries/use-list";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
-export const Route = createFileRoute("/(app)/lists/$slug")({
+export const Route = createFileRoute("/(app)/lists/$slug/")({
 	loader: ({ context, params }) => {
 		return context.queryClient.prefetchQuery(listQueryOptions(params.slug));
 	},
