@@ -42,7 +42,7 @@ export function useCreateList() {
 
 	const createListMutation = useMutation({
 		mutationFn: (data: FormData) => createList(data),
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			queryClient.invalidateQueries({
 				queryKey: ["lists"],
 			});
@@ -53,7 +53,7 @@ export function useCreateList() {
 			toast.success("List created successfully", {
 				richColors: true,
 			});
-			navigate({ to: `/lists/${data.slug}` });
+			await navigate({ to: `/lists/${data.slug}` });
 			reset();
 		},
 		onError: (error) => {

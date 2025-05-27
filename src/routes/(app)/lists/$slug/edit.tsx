@@ -6,7 +6,7 @@ import {
 	useListEditFormData,
 } from "@/stores/list-edit-store";
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/(app)/lists/$slug/edit")({
 	loader: ({ context, params }) =>
@@ -30,9 +30,7 @@ function RouteComponent() {
 
 	return (
 		<div className="container mx-auto p-4">
-			<Suspense fallback={<ListDetailSkeleton />}>
-				<ListEditForm list={list} />
-			</Suspense>
+			<ListEditForm list={list} />
 		</div>
 	);
 }

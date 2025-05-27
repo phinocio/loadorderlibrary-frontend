@@ -34,9 +34,9 @@ export function ListTableRow({ list }: { list: List }) {
 
 	return (
 		<>
-			<TableRow className="">
+			<TableRow>
 				<TableCell>
-					<div className="space-y-1">
+					<div className="py-2 space-y-1">
 						<Link
 							to="/lists/$slug"
 							params={{

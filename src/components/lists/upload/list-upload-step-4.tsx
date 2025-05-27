@@ -1,15 +1,8 @@
+import { FileUploadArea } from "@/components/lists/files/file-upload-area";
+import { SelectedFilesDisplay } from "@/components/lists/files/selected-files-display";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormField } from "@/components/ui/form";
 import { useCreateList } from "@/queries/use-list";
 import { FileUploadSchema } from "@/schemas/file-schemas";
 import {
@@ -27,7 +20,9 @@ export function ListUploadStep4() {
 	const formData = useListUploadFormData();
 	const { setStep, reset } = useListUploadActions();
 	const { createList, isCreatingList, createListError } = useCreateList();
-	const [fileNames, setFileNames] = useState<string[]>([]);
+	const [fileInfo, setFileInfo] = useState<
+		Array<{ name: string; size: number; type: string }>
+	>([]);
 
 	const form = useForm<FileFormData>({
 		resolver: zodResolver(FileUploadSchema),
@@ -36,14 +31,32 @@ export function ListUploadStep4() {
 	// Debug form errors
 	console.log("Form errors:", form.formState.errors);
 
-	// Update file names when files change
+	// Update file info when files change
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
-			const newFileNames = Array.from(e.target.files).map(
-				(file) => file.name,
-			);
-			setFileNames(newFileNames);
+			const newFileInfo = Array.from(e.target.files).map((file) => ({
+				name: file.name,
+				size: file.size,
+				type: file.type || (file.name.endsWith(".ini") ? "ini" : "txt"),
+			}));
+			setFileInfo(newFileInfo);
 		}
+	};
+
+	// Handle removing a single file
+	const handleRemoveFile = (index: number) => {
+		const newFileInfo = fileInfo.filter((_, i) => i !== index);
+		setFileInfo(newFileInfo);
+		// Also update the form
+		const currentFiles = form.getValues("files") || [];
+		const newFiles = currentFiles.filter((_, i) => i !== index);
+		form.setValue("files", newFiles);
+	};
+
+	// Handle removing all files
+	const handleRemoveAllFiles = () => {
+		setFileInfo([]);
+		form.setValue("files", []);
 	};
 
 	const onSubmit = async (data: FileFormData) => {
@@ -88,77 +101,22 @@ export function ListUploadStep4() {
 							<FormField
 								control={form.control}
 								name="files"
-								render={({
-									field: { onChange, value, ...field },
-								}) => (
-									<FormItem>
-										<FormLabel>Upload Files</FormLabel>
-										<FormDescription className="text-sm text-muted-foreground">
-											Upload your mod list files in INI or
-											TXT format
-										</FormDescription>
-										<FormControl>
-											<label
-												htmlFor="files"
-												className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50"
-											>
-												<div className="flex flex-col items-center justify-center pt-5 pb-6">
-													<p className="mb-2 text-sm text-muted-foreground">
-														<span className="font-semibold">
-															Click to upload
-														</span>
-													</p>
-													<p className="text-xs text-muted-foreground">
-														INI or TXT files (max
-														512KB each)
-													</p>
-												</div>
-												<Input
-													id="files"
-													type="file"
-													className="hidden"
-													multiple
-													accept=".ini,.txt,text/plain,application/x-wine-extension-ini,application/octet-stream"
-													onChange={(
-														e: React.ChangeEvent<HTMLInputElement>,
-													) => {
-														// Convert FileList to array for validation
-														const filesArray = e
-															.target.files
-															? Array.from(
-																	e.target
-																		.files,
-																)
-															: [];
-														onChange(filesArray);
-														handleFileChange(e);
-													}}
-													{...field}
-												/>
-											</label>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
+								render={({ field }) => (
+									<FileUploadArea
+										field={field}
+										onFileChange={handleFileChange}
+										disabled={isCreatingList}
+									/>
 								)}
 							/>
 
-							{fileNames.length > 0 && (
-								<div className="space-y-2 p-4 bg-muted/30 rounded-lg">
-									<h3 className="text-sm font-medium">
-										Selected Files:
-									</h3>
-									<ul className="list-disc pl-5 space-y-1">
-										{fileNames.map((name, i) => (
-											<li
-												key={`file-${i}-${name}`}
-												className="text-sm"
-											>
-												{name}
-											</li>
-										))}
-									</ul>
-								</div>
-							)}
+							<SelectedFilesDisplay
+								files={fileInfo}
+								onRemoveFile={handleRemoveFile}
+								onRemoveAll={handleRemoveAllFiles}
+								showRemoveAll={true}
+								disabled={isCreatingList}
+							/>
 
 							{createListError && (
 								<div className="p-3 bg-destructive/15 text-destructive rounded-md">
@@ -181,7 +139,7 @@ export function ListUploadStep4() {
 								<Button
 									type="submit"
 									disabled={
-										isCreatingList || fileNames.length === 0
+										isCreatingList || fileInfo.length === 0
 									}
 									variant="tertiary"
 								>
