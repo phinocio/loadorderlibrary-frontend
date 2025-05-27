@@ -38,7 +38,9 @@ export const updateList = async (
 	data: FormData,
 ): Promise<List> => {
 	try {
-		const response = await axios.patch<ApiResponse<List>>(
+		// This seems to be needed when sending formdata.
+		data.append("_method", "PATCH");
+		const response = await axios.post<ApiResponse<List>>(
 			`/lists/${slug}`,
 			data,
 			{

@@ -74,18 +74,28 @@ export function ListEditStep4() {
 			updatedList.append("version", formData.version);
 		}
 		if (
-			formData.description &&
-			originalList.description !== formData.description
+			(formData.description &&
+				originalList.description !== formData.description) ||
+			formData.description === ""
 		) {
 			updatedList.append("description", formData.description);
 		}
-		if (formData.website && originalList.website !== formData.website) {
+		if (
+			(formData.website && originalList.website !== formData.website) ||
+			formData.website === ""
+		) {
 			updatedList.append("website", formData.website);
 		}
-		if (formData.discord && originalList.discord !== formData.discord) {
+		if (
+			(formData.discord && originalList.discord !== formData.discord) ||
+			formData.discord === ""
+		) {
 			updatedList.append("discord", formData.discord);
 		}
-		if (formData.readme && originalList.readme !== formData.readme) {
+		if (
+			(formData.readme && originalList.readme !== formData.readme) ||
+			formData.readme === ""
+		) {
 			updatedList.append("readme", formData.readme);
 		}
 		if (formData.private !== originalList.private) {
@@ -187,8 +197,7 @@ export function ListEditStep4() {
 													<p className="mb-2 text-sm text-muted-foreground">
 														<span className="font-semibold">
 															Click to upload
-														</span>{" "}
-														or drag and drop
+														</span>
 													</p>
 													<p className="text-xs text-muted-foreground">
 														INI or TXT files (max
@@ -216,7 +225,6 @@ export function ListEditStep4() {
 														handleFileChange(e);
 													}}
 													{...field}
-													disabled={isUpdatingList}
 												/>
 											</label>
 										</FormControl>

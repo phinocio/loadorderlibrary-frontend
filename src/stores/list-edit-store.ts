@@ -30,11 +30,7 @@ const useListEditStore = create<ListEditStore>()(
 							discord: list.discord || "",
 							readme: list.readme || "",
 							private: list.private || false,
-							expires: list.expires
-								? new Date(list.expires) > new Date()
-									? "never" // If it has a valid expiry date, show "never" for simplicity
-									: "never"
-								: "never",
+							expires: "never", //TODO: Properly handle expiration
 							game: String(list.game.id),
 						},
 					}),

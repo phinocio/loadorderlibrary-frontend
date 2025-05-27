@@ -12,19 +12,13 @@ import {
 } from "@/stores/list-edit-store";
 import type { List } from "@/types/list";
 import { CheckIcon } from "lucide-react";
-import { useEffect } from "react";
 
 export function ListEditForm({ list }: { list: List }) {
 	const currentStep = useListEditStep();
-	const { setOriginalList, setStep } = useListEditActions();
+	const { setStep } = useListEditActions();
 	const isStep1Done = editStep1Completed();
 	const isStep2Done = editStep2Completed();
 	const isStep3Done = editStep3Completed();
-
-	// Initialize the store with the list data when the component mounts
-	useEffect(() => {
-		setOriginalList(list);
-	}, [list, setOriginalList]);
 
 	return (
 		<div className="space-y-6">

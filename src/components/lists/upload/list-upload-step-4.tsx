@@ -106,8 +106,7 @@ export function ListUploadStep4() {
 													<p className="mb-2 text-sm text-muted-foreground">
 														<span className="font-semibold">
 															Click to upload
-														</span>{" "}
-														or drag and drop
+														</span>
 													</p>
 													<p className="text-xs text-muted-foreground">
 														INI or TXT files (max
