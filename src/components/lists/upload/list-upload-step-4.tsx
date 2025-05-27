@@ -47,7 +47,6 @@ export function ListUploadStep4() {
 	};
 
 	const onSubmit = async (data: FileFormData) => {
-		console.log("Submitting files", data);
 		const newList = new FormData();
 
 		// Required data

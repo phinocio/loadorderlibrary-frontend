@@ -52,5 +52,4 @@ export const ListCreateParamsSchema = z.object({
 	// files: FileUploadSchema, // Handled in the upload form
 });
 
-export const ListUpdateParamsSchema =
-	ListCreateParamsSchema.partial().optional();
+export const ListUpdateParamsSchema = ListCreateParamsSchema.partial();

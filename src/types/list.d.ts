@@ -18,3 +18,15 @@ export type ListUploadStore = {
 		reset: () => void;
 	};
 };
+
+export type ListEditStore = {
+	originalList: List | null;
+	formData: ListUpdateParams;
+	step: number;
+	actions: {
+		setOriginalList: (list: List) => void;
+		setFormData: (data: Partial<ListUpdateParams>) => void;
+		setStep: (step: number) => void;
+		reset: () => void;
+	};
+};

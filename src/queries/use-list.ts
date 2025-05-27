@@ -6,7 +6,6 @@ import {
 	updateList,
 } from "@/api/list";
 import { useListUploadActions } from "@/stores/list-upload-store";
-import type { ListUpdateParams } from "@/types/list";
 import {
 	queryOptions,
 	useMutation,
@@ -77,16 +76,11 @@ export function useUpdateList() {
 	const queryClient = useQueryClient();
 
 	const updateListMutation = useMutation({
-		mutationFn: ({
-			slug,
-			data,
-		}: { slug: string; data: ListUpdateParams }) => updateList(slug, data),
-		onSuccess: (_, variables) => {
+		mutationFn: ({ slug, data }: { slug: string; data: FormData }) =>
+			updateList(slug, data),
+		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ["lists"],
-			});
-			queryClient.invalidateQueries({
-				queryKey: ["lists", variables.slug],
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["current-user"],
