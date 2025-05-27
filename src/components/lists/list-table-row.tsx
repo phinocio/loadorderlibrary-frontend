@@ -121,8 +121,8 @@ export function ListTableRow({ list }: { list: List }) {
 						)}
 					</div>
 				</TableCell>
-				<TableCell className="flex justify-end">
-					<div className="space-x-3">
+				<TableCell className="text-right align-middle">
+					<div className="inline-flex space-x-3">
 						<Button
 							variant="ghost"
 							size="icon"

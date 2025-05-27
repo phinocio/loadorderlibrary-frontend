@@ -1,5 +1,6 @@
 import { ListCard } from "@/components/lists/list-card";
 import { GameDetailSkeleton } from "@/components/skeletons/game-detail-skeleton";
+import { ErrorFallback } from "@/components/ui/error-fallback";
 import {
 	gameListsQueryOptions,
 	gameQueryOptions,
@@ -8,6 +9,7 @@ import {
 } from "@/queries/use-game";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/(app)/games/$slug")({
 	loader: ({ context, params }) => {
@@ -34,10 +36,35 @@ function GameComponent() {
 	);
 }
 
+function GameErrorFallback({
+	error,
+	resetErrorBoundary,
+}: { error: Error; resetErrorBoundary?: () => void }) {
+	return (
+		<ErrorFallback
+			error={error}
+			resetErrorBoundary={resetErrorBoundary}
+			title404="Game Not Found"
+			description404="Could not find this game. It may not exist or may not be supported yet."
+			titleGeneric="Error Loading Game"
+			descriptionGeneric="An error occurred while loading the game page. Please try again later."
+		/>
+	);
+}
+
 function RouteComponent() {
 	return (
-		<Suspense fallback={<GameDetailSkeleton />}>
-			<GameComponent />
-		</Suspense>
+		<ErrorBoundary
+			fallbackRender={({ error, resetErrorBoundary }) => (
+				<GameErrorFallback
+					error={error}
+					resetErrorBoundary={resetErrorBoundary}
+				/>
+			)}
+		>
+			<Suspense fallback={<GameDetailSkeleton />}>
+				<GameComponent />
+			</Suspense>
+		</ErrorBoundary>
 	);
 }

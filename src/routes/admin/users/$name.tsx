@@ -8,6 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { ErrorFallback } from "@/components/ui/error-fallback";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -28,14 +29,15 @@ import type {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { format, parseISO } from "date-fns";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/admin/users/$name")({
-	component: UserComponent,
+	component: RouteComponent,
 });
 
-function UserComponent() {
+function UserDetailComponent() {
 	const { name } = Route.useParams();
 	const navigate = useNavigate();
 	const { data: user } = useAdminUser(name);
@@ -278,5 +280,44 @@ function UserComponent() {
 				isLoading={isDeletingUser}
 			/>
 		</div>
+	);
+}
+
+function AdminUserErrorFallback({
+	error,
+	resetErrorBoundary,
+}: { error: Error; resetErrorBoundary?: () => void }) {
+	return (
+		<ErrorFallback
+			error={error}
+			resetErrorBoundary={resetErrorBoundary}
+			title404="User Not Found"
+			description404="Could not find this user in the admin panel."
+			titleGeneric="Error Loading User"
+			descriptionGeneric="An error occurred while loading the user. Please try again later."
+		/>
+	);
+}
+
+function RouteComponent() {
+	return (
+		<ErrorBoundary
+			fallbackRender={({ error, resetErrorBoundary }) => (
+				<AdminUserErrorFallback
+					error={error}
+					resetErrorBoundary={resetErrorBoundary}
+				/>
+			)}
+		>
+			<Suspense
+				fallback={
+					<div className="container mx-auto py-6">
+						Loading user...
+					</div>
+				}
+			>
+				<UserDetailComponent />
+			</Suspense>
+		</ErrorBoundary>
 	);
 }

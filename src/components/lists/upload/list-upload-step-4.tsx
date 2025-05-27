@@ -79,7 +79,11 @@ export function ListUploadStep4() {
 			newList.append("private", formData.private ? "1" : "0");
 		formData.expires && newList.append("expires", formData.expires);
 
-		createList(newList);
+		createList(newList, {
+			onSuccess: (data) => {
+				console.log(data);
+			},
+		});
 	};
 
 	const goBack = () => {

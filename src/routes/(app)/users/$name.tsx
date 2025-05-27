@@ -2,6 +2,7 @@ import { ListCard } from "@/components/lists/list-card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ErrorFallback } from "@/components/ui/error-fallback";
 import { useUser, userQueryOptions } from "@/queries/use-user";
 import { createFileRoute } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
@@ -12,6 +13,8 @@ import {
 	GlobeIcon,
 	MessageCircle,
 } from "lucide-react";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/(app)/users/$name")({
 	loader: ({ context, params }) => {
@@ -20,7 +23,7 @@ export const Route = createFileRoute("/(app)/users/$name")({
 	component: RouteComponent,
 });
 
-function RouteComponent() {
+function UserDetailComponent() {
 	const { name } = Route.useParams();
 	const { data: user } = useUser(name);
 
@@ -156,5 +159,44 @@ function RouteComponent() {
 				</Card>
 			)}
 		</div>
+	);
+}
+
+function UserErrorFallback({
+	error,
+	resetErrorBoundary,
+}: { error: Error; resetErrorBoundary?: () => void }) {
+	return (
+		<ErrorFallback
+			error={error}
+			resetErrorBoundary={resetErrorBoundary}
+			title404="User Not Found"
+			description404="Could not find this user. They may not exist or the profile may be private."
+			titleGeneric="Error Loading User"
+			descriptionGeneric="An error occurred while loading the user profile. Please try again later."
+		/>
+	);
+}
+
+function RouteComponent() {
+	return (
+		<ErrorBoundary
+			fallbackRender={({ error, resetErrorBoundary }) => (
+				<UserErrorFallback
+					error={error}
+					resetErrorBoundary={resetErrorBoundary}
+				/>
+			)}
+		>
+			<Suspense
+				fallback={
+					<div className="container mx-auto py-6">
+						Loading user...
+					</div>
+				}
+			>
+				<UserDetailComponent />
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
