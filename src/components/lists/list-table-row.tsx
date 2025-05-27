@@ -48,7 +48,9 @@ export function ListTableRow({ list }: { list: List }) {
 						</Link>
 						{list.description && (
 							<p className="text-sm text-muted-foreground line-clamp-1">
-								{list.description}
+								{list.description.length > 50
+									? `${list.description.slice(0, 50)}...`
+									: list.description}
 							</p>
 						)}
 					</div>

@@ -36,8 +36,8 @@ export const ListCreateParamsSchema = z.object({
 			z.literal(""),
 		])
 		.optional(),
-	website: z.union([z.string().url(), z.literal("")]).optional(),
-	discord: z.union([z.string().url(), z.literal("")]).optional(),
+	website: z.union([z.string(), z.literal("")]).optional(),
+	discord: z.union([z.string(), z.literal("")]).optional(),
 	readme: z.union([z.string(), z.literal("")]).optional(),
 	private: z.boolean().optional(),
 	expires: z
