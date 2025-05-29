@@ -1,5 +1,10 @@
 import { getGame, getGameLists, getGames } from "@/api/game";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import {
+	infiniteQueryOptions,
+	queryOptions,
+	useSuspenseInfiniteQuery,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 
 export const gamesQueryOptions = queryOptions({
 	queryKey: ["games"],
@@ -26,6 +31,21 @@ export const gameListsQueryOptions = (slug: string, query?: string) =>
 		queryFn: () => getGameLists(slug, query),
 	});
 
+export const gameListsInfiniteQueryOptions = (slug: string, query?: string) =>
+	infiniteQueryOptions({
+		queryKey: ["games", slug, "lists", "infinite", { query }],
+		queryFn: ({ pageParam }) => getGameLists(slug, query, pageParam),
+		initialPageParam: 1,
+		getNextPageParam: (lastPage) => {
+			const nextPage = lastPage.meta.current_page + 1;
+			return nextPage <= lastPage.meta.last_page ? nextPage : undefined;
+		},
+	});
+
 export function useGameLists(slug: string, query?: string) {
 	return useSuspenseQuery(gameListsQueryOptions(slug, query));
+}
+
+export function useGameListsInfinite(slug: string, query?: string) {
+	return useSuspenseInfiniteQuery(gameListsInfiniteQueryOptions(slug, query));
 }

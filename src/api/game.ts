@@ -1,4 +1,8 @@
-import { type ApiResponse, handleApiError } from "@/api/utils";
+import {
+	type ApiResponse,
+	type PaginatedApiResponse,
+	handleApiError,
+} from "@/api/utils";
 import axios from "@/lib/axios";
 
 import type { Game } from "@/types/game";
@@ -21,16 +25,19 @@ export const getGame = async (name: string): Promise<Game> => {
 	}
 };
 
-export const getGameLists = async (slug: string, query?: string) => {
+export const getGameLists = async (slug: string, query?: string, page = 1) => {
 	try {
-		const params = new URLSearchParams({ "filter[game]": slug });
+		const params = new URLSearchParams({
+			"filter[game]": slug,
+			page: page.toString(),
+		});
 		if (query) {
 			params.append("query", query);
 		}
-		const response = await axios.get<ApiResponse<List[]>>(
+		const response = await axios.get<PaginatedApiResponse<List>>(
 			`/lists?${params.toString()}`,
 		);
-		return response.data.data;
+		return response.data;
 	} catch (error) {
 		throw handleApiError(error);
 	}

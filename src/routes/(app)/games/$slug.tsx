@@ -1,5 +1,6 @@
 import { ListCard } from "@/components/lists/list-card";
 import { GameDetailSkeleton } from "@/components/skeletons/game-detail-skeleton";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -11,10 +12,10 @@ import {
 import { ErrorFallback } from "@/components/ui/error-fallback";
 import { Input } from "@/components/ui/input";
 import {
-	gameListsQueryOptions,
+	gameListsInfiniteQueryOptions,
 	gameQueryOptions,
 	useGame,
-	useGameLists,
+	useGameListsInfinite,
 } from "@/queries/use-game";
 import {
 	createFileRoute,
@@ -34,8 +35,8 @@ export const Route = createFileRoute("/(app)/games/$slug")({
 	validateSearch: searchSchema,
 	loader: ({ context, params, location }) => {
 		const search = searchSchema.parse(location.search);
-		context.queryClient.prefetchQuery(
-			gameListsQueryOptions(params.slug, search.query),
+		context.queryClient.prefetchInfiniteQuery(
+			gameListsInfiniteQueryOptions(params.slug, search.query),
 		);
 		context.queryClient.prefetchQuery(gameQueryOptions(params.slug));
 	},
@@ -45,10 +46,18 @@ export const Route = createFileRoute("/(app)/games/$slug")({
 function GameComponent() {
 	const { slug } = Route.useParams();
 	const search = useSearch({ from: "/(app)/games/$slug" });
-	const { data: lists } = useGameLists(slug, search.query);
+	const {
+		data: listsData,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+	} = useGameListsInfinite(slug, search.query);
 	const { data: game } = useGame(slug);
 	const navigate = useNavigate();
 	const [searchValue, setSearchValue] = useState(search.query || "");
+
+	// Flatten the paginated data into a single array
+	const lists = listsData.pages.flatMap((page) => page.data);
 
 	// Update local state when URL search changes
 	useEffect(() => {
@@ -88,6 +97,9 @@ function GameComponent() {
 			<header className="mb-6">
 				<section className="flex items-center mb-4 space-x-4">
 					<h1 className="text-3xl font-bold">{game.name} Lists</h1>
+					<Badge variant="secondary">
+						{listsData.pages[0]?.meta.total ?? 0}
+					</Badge>
 				</section>
 				<div>
 					<Card>
@@ -160,6 +172,18 @@ function GameComponent() {
 					))
 				)}
 			</div>
+			{/* Load More Button */}
+			{hasNextPage && (
+				<div className="flex justify-center mt-8">
+					<Button
+						onClick={() => fetchNextPage()}
+						disabled={isFetchingNextPage}
+						size="lg"
+					>
+						{isFetchingNextPage ? "Loading..." : "Load More Lists"}
+					</Button>
+				</div>
+			)}
 		</article>
 	);
 }

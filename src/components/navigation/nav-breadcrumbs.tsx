@@ -37,7 +37,7 @@ export function NavBreadcrumbs() {
 							<BreadcrumbItem>
 								{isLast ? (
 									<BreadcrumbPage className="capitalize">
-										{segment}
+										{segment.replace(/-/g, " ")}
 									</BreadcrumbPage>
 								) : (
 									<BreadcrumbLink asChild>

@@ -7,9 +7,11 @@ import {
 } from "@/api/list";
 import { useListUploadActions } from "@/stores/list-upload-store";
 import {
+	infiniteQueryOptions,
 	queryOptions,
 	useMutation,
 	useQueryClient,
+	useSuspenseInfiniteQuery,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
@@ -21,6 +23,17 @@ export const listsQueryOptions = (query?: string) =>
 		queryFn: () => getLists(query),
 	});
 
+export const listsInfiniteQueryOptions = (query?: string) =>
+	infiniteQueryOptions({
+		queryKey: ["lists", "infinite", { query }],
+		queryFn: ({ pageParam }) => getLists(query, pageParam),
+		initialPageParam: 1,
+		getNextPageParam: (lastPage) => {
+			const nextPage = lastPage.meta.current_page + 1;
+			return nextPage <= lastPage.meta.last_page ? nextPage : undefined;
+		},
+	});
+
 export const listQueryOptions = (slug: string) => {
 	return queryOptions({
 		queryKey: ["lists", slug],
@@ -30,6 +43,10 @@ export const listQueryOptions = (slug: string) => {
 
 export function useLists(query?: string) {
 	return useSuspenseQuery(listsQueryOptions(query));
+}
+
+export function useListsInfinite(query?: string) {
+	return useSuspenseInfiniteQuery(listsInfiniteQueryOptions(query));
 }
 
 export function useList(slug: string) {

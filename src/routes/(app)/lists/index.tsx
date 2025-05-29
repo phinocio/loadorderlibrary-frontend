@@ -1,5 +1,6 @@
 import { ListCard } from "@/components/lists/list-card";
 import { ListSkeletonGrid } from "@/components/skeletons/list-skeleton";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -9,8 +10,12 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { listsQueryOptions, useLists } from "@/queries/use-list";
 import {
+	listsInfiniteQueryOptions,
+	useListsInfinite,
+} from "@/queries/use-list";
+import {
+	Link,
 	createFileRoute,
 	useNavigate,
 	useSearch,
@@ -27,8 +32,8 @@ export const Route = createFileRoute("/(app)/lists/")({
 	validateSearch: searchSchema,
 	loader: async ({ context, location }) => {
 		const search = searchSchema.parse(location.search);
-		return context.queryClient.prefetchQuery(
-			listsQueryOptions(search.query),
+		return context.queryClient.prefetchInfiniteQuery(
+			listsInfiniteQueryOptions(search.query),
 		);
 	},
 	component: RouteComponent,
@@ -37,8 +42,16 @@ export const Route = createFileRoute("/(app)/lists/")({
 function ListIndexComponent() {
 	const search = useSearch({ from: "/(app)/lists/" });
 	const navigate = useNavigate();
-	const { data: lists } = useLists(search.query);
+	const {
+		data: listsData,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+	} = useListsInfinite(search.query);
 	const [searchValue, setSearchValue] = useState(search.query || "");
+
+	// Flatten the paginated data into a single array
+	const lists = listsData.pages.flatMap((page) => page.data);
 
 	// Update local state when URL search changes
 	useEffect(() => {
@@ -73,6 +86,9 @@ function ListIndexComponent() {
 			<header className="mb-6">
 				<section className="flex items-center mb-4 space-x-4">
 					<h1 className="text-3xl font-bold">All Lists</h1>
+					<Badge variant="secondary">
+						{listsData.pages[0]?.meta.total ?? 0}
+					</Badge>
 				</section>
 				<div>
 					<Card>
@@ -115,9 +131,28 @@ function ListIndexComponent() {
 				*/}
 				{lists.length === 0 ? (
 					searchValue ? (
-						<div>No lists found for "{searchValue}".</div>
+						<div className="col-span-full text-center py-12">
+							<p className="text-lg text-muted-foreground">
+								No lists found for{" "}
+								<span className="font-semibold">
+									"{searchValue}"
+								</span>{" "}
+								.
+							</p>
+						</div>
 					) : (
-						<div>No lists available.</div>
+						<div className="col-span-full text-center py-12">
+							<p className="text-lg text-muted-foreground">
+								No lists available yet. Why not{" "}
+								<Link
+									to="/upload"
+									className="font-semibold text-primary"
+								>
+									create one
+								</Link>
+								?
+							</p>
+						</div>
 					)
 				) : (
 					lists.map((list) => (
@@ -125,6 +160,18 @@ function ListIndexComponent() {
 					))
 				)}
 			</div>
+			{/* Load More Button */}
+			{hasNextPage && (
+				<div className="flex justify-center mt-8">
+					<Button
+						onClick={() => fetchNextPage()}
+						disabled={isFetchingNextPage}
+						size="lg"
+					>
+						{isFetchingNextPage ? "Loading..." : "Load More Lists"}
+					</Button>
+				</div>
+			)}
 		</article>
 	);
 }

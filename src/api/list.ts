@@ -1,14 +1,21 @@
-import { type ApiResponse, handleApiError } from "@/api/utils";
+import {
+	type ApiResponse,
+	type PaginatedApiResponse,
+	handleApiError,
+} from "@/api/utils";
 import axios from "@/lib/axios";
 import type { List } from "@/types/list";
 
-export const getLists = async (query?: string): Promise<List[]> => {
+export const getLists = async (query?: string, page = 1) => {
 	try {
-		const params = query ? { query } : {};
-		const response = await axios.get<ApiResponse<List[]>>("/lists", {
+		const params: Record<string, string> = { page: page.toString() };
+		if (query) {
+			params.query = query;
+		}
+		const response = await axios.get<PaginatedApiResponse<List>>("/lists", {
 			params,
 		});
-		return response.data.data;
+		return response.data;
 	} catch (error) {
 		throw handleApiError(error);
 	}
