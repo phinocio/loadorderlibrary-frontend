@@ -15,10 +15,11 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export const listsQueryOptions = queryOptions({
-	queryKey: ["lists"],
-	queryFn: getLists,
-});
+export const listsQueryOptions = (query?: string) =>
+	queryOptions({
+		queryKey: ["lists", { query }],
+		queryFn: () => getLists(query),
+	});
 
 export const listQueryOptions = (slug: string) => {
 	return queryOptions({
@@ -27,8 +28,8 @@ export const listQueryOptions = (slug: string) => {
 	});
 };
 
-export function useLists() {
-	return useSuspenseQuery(listsQueryOptions);
+export function useLists(query?: string) {
+	return useSuspenseQuery(listsQueryOptions(query));
 }
 
 export function useList(slug: string) {

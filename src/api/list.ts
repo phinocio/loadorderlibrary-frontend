@@ -2,9 +2,12 @@ import { type ApiResponse, handleApiError } from "@/api/utils";
 import axios from "@/lib/axios";
 import type { List } from "@/types/list";
 
-export const getLists = async (): Promise<List[]> => {
+export const getLists = async (query?: string): Promise<List[]> => {
 	try {
-		const response = await axios.get<ApiResponse<List[]>>("/lists");
+		const params = query ? { query } : {};
+		const response = await axios.get<ApiResponse<List[]>>("/lists", {
+			params,
+		});
 		return response.data.data;
 	} catch (error) {
 		throw handleApiError(error);
