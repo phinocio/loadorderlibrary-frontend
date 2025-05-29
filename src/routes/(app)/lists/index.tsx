@@ -86,7 +86,7 @@ function ListIndexComponent() {
 			<header className="mb-6">
 				<section className="flex items-center mb-4 space-x-4">
 					<h1 className="text-3xl font-bold">All Lists</h1>
-					<Badge variant="secondary">
+					<Badge variant="secondary" className="font-bold">
 						{listsData.pages[0]?.meta.total ?? 0}
 					</Badge>
 				</section>
