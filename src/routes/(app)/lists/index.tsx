@@ -1,6 +1,5 @@
 import { ListCard } from "@/components/lists/list-card";
 import { ListSkeletonGrid } from "@/components/skeletons/list-skeleton";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -74,7 +73,6 @@ function ListIndexComponent() {
 			<header className="mb-6">
 				<section className="flex items-center mb-4 space-x-4">
 					<h1 className="text-3xl font-bold">All Lists</h1>
-					<Badge variant="secondary">{lists.length}</Badge>
 				</section>
 				<div>
 					<Card>

@@ -21,10 +21,14 @@ export const getGame = async (name: string): Promise<Game> => {
 	}
 };
 
-export const getGameLists = async (slug: string) => {
+export const getGameLists = async (slug: string, query?: string) => {
 	try {
+		const params = new URLSearchParams({ "filter[game]": slug });
+		if (query) {
+			params.append("query", query);
+		}
 		const response = await axios.get<ApiResponse<List[]>>(
-			`/lists?filter[game]=${slug}`,
+			`/lists?${params.toString()}`,
 		);
 		return response.data.data;
 	} catch (error) {

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { List } from "@/types/list";
+import { Link } from "@tanstack/react-router";
 import { CheckCircleIcon, Download, Share2 } from "lucide-react";
 
 interface ListHeaderProps {
@@ -41,17 +42,31 @@ export function ListHeader({ list }: ListHeaderProps) {
 						</div>
 
 						<div className="flex items-center gap-2 text-muted-foreground">
-							<span className="font-medium text-secondary">
+							<Link
+								to="/games/$slug"
+								params={{ slug: list.game.slug }}
+								className="font-bold text-secondary"
+							>
 								{list.game.name}
-							</span>
+							</Link>
 						</div>
 
 						<div className="flex items-center gap-1 text-muted-foreground">
 							<span>by </span>
-							<span className="text-primary font-medium inline-flex items-center gap-1">
-								{list.author?.name || "Anonymous"}
+							<span className="text-primary font-bold inline-flex items-center gap-1">
+								{list.author?.name ? (
+									<Link
+										to="/users/$name"
+										params={{ name: list.author.name }}
+										className="hover:underline"
+									>
+										{list.author.name}
+									</Link>
+								) : (
+									<span>Anonymous</span>
+								)}
 								{list.author?.verified && (
-									<CheckCircleIcon className="h-4 w-4 text-secondary" />
+									<CheckCircleIcon className="h-3.5 w-3.5 text-secondary" />
 								)}
 							</span>
 						</div>

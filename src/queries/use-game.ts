@@ -20,12 +20,12 @@ export function useGame(slug: string) {
 	return useSuspenseQuery(gameQueryOptions(slug));
 }
 
-export const gameListsQueryOptions = (slug: string) =>
+export const gameListsQueryOptions = (slug: string, query?: string) =>
 	queryOptions({
-		queryKey: ["games", slug, "lists"],
-		queryFn: () => getGameLists(slug),
+		queryKey: ["games", slug, "lists", { query }],
+		queryFn: () => getGameLists(slug, query),
 	});
 
-export function useGameLists(slug: string) {
-	return useSuspenseQuery(gameListsQueryOptions(slug));
+export function useGameLists(slug: string, query?: string) {
+	return useSuspenseQuery(gameListsQueryOptions(slug, query));
 }

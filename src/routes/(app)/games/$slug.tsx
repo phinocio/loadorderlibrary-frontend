@@ -1,19 +1,42 @@
 import { ListCard } from "@/components/lists/list-card";
 import { GameDetailSkeleton } from "@/components/skeletons/game-detail-skeleton";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import { ErrorFallback } from "@/components/ui/error-fallback";
+import { Input } from "@/components/ui/input";
 import {
 	gameListsQueryOptions,
 	gameQueryOptions,
 	useGame,
 	useGameLists,
 } from "@/queries/use-game";
-import { createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
+import {
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
+import { Search, X } from "lucide-react";
+import { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { z } from "zod";
+
+const searchSchema = z.object({
+	query: z.string().optional(),
+});
 
 export const Route = createFileRoute("/(app)/games/$slug")({
-	loader: ({ context, params }) => {
-		context.queryClient.prefetchQuery(gameListsQueryOptions(params.slug));
+	validateSearch: searchSchema,
+	loader: ({ context, params, location }) => {
+		const search = searchSchema.parse(location.search);
+		context.queryClient.prefetchQuery(
+			gameListsQueryOptions(params.slug, search.query),
+		);
 		context.queryClient.prefetchQuery(gameQueryOptions(params.slug));
 	},
 	component: RouteComponent,
@@ -21,18 +44,123 @@ export const Route = createFileRoute("/(app)/games/$slug")({
 
 function GameComponent() {
 	const { slug } = Route.useParams();
-	const { data: lists } = useGameLists(slug);
+	const search = useSearch({ from: "/(app)/games/$slug" });
+	const { data: lists } = useGameLists(slug, search.query);
 	const { data: game } = useGame(slug);
+	const navigate = useNavigate();
+	const [searchValue, setSearchValue] = useState(search.query || "");
+
+	// Update local state when URL search changes
+	useEffect(() => {
+		setSearchValue(search.query || "");
+	}, [search.query]);
+
+	const handleSearch = () => {
+		navigate({
+			to: "/games/$slug",
+			params: { slug },
+			search: searchValue ? { query: searchValue } : {},
+			replace: true,
+		});
+	};
+
+	const resetSearch = () => {
+		setSearchValue("");
+		navigate({
+			to: "/games/$slug",
+			params: { slug },
+			replace: true,
+		});
+	};
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchValue(e.target.value);
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			handleSearch();
+		}
+	};
 
 	return (
-		<div className="container mx-auto py-6">
-			<h1 className="text-3xl font-bold mb-6">{game.name} Lists</h1>
+		<article className="container mx-auto py-6">
+			<header className="mb-6">
+				<section className="flex items-center mb-4 space-x-4">
+					<h1 className="text-3xl font-bold">{game.name} Lists</h1>
+				</section>
+				<div>
+					<Card>
+						<CardHeader>
+							<CardTitle>Search Lists</CardTitle>
+							<CardDescription>
+								Find lists by name, author, or description.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="flex gap-2">
+								<Input
+									type="text"
+									placeholder="Search lists..."
+									value={searchValue}
+									onChange={handleSearchChange}
+									onKeyDown={handleKeyDown}
+									className="flex-1"
+								/>
+								<Button onClick={handleSearch} size="icon">
+									<Search className="h-4 w-4" />
+								</Button>
+								{searchValue && (
+									<Button
+										onClick={() => resetSearch()}
+										size="icon"
+										variant="destructive"
+									>
+										<X className="h-4 w-4" />
+									</Button>
+								)}
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+			</header>
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{lists.map((list) => (
-					<ListCard key={list.slug} list={list} />
-				))}
+				{/*
+					Show no lists found message if lists is empty, and query if search is not empty
+				*/}
+				{lists.length === 0 ? (
+					searchValue ? (
+						<div className="col-span-full text-center py-12">
+							<p className="text-lg text-muted-foreground">
+								No lists found for{" "}
+								<span className="font-semibold">
+									"{searchValue}"
+								</span>{" "}
+								in{" "}
+								<span className="font-semibold">
+									{game.name}
+								</span>
+								.
+							</p>
+						</div>
+					) : (
+						<div className="col-span-full text-center py-12">
+							<p className="text-lg text-muted-foreground">
+								No lists available for{" "}
+								<span className="font-semibold">
+									{game.name}
+								</span>{" "}
+								yet.
+							</p>
+						</div>
+					)
+				) : (
+					lists.map((list) => (
+						<ListCard key={list.slug} list={list} />
+					))
+				)}
 			</div>
-		</div>
+		</article>
 	);
 }
 
