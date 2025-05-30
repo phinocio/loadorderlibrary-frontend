@@ -2,16 +2,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { useDeleteList } from "@/queries/use-list";
 import type { List } from "@/types/list";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-export function ListTableRow({ list }: { list: List }) {
+type ListTableRowProps = {
+	list: List;
+	showAuthor?: boolean;
+	showEdit?: boolean;
+	deleteListFunction?: (slug: string) => void;
+	isDeletingList?: boolean;
+};
+
+export function ListTableRow({
+	list,
+	showAuthor = false, // @ts-ignore - Reserved for future use
+	showEdit = true,
+	deleteListFunction,
+	isDeletingList = false,
+}: ListTableRowProps) {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-	const { deleteList, isDeletingList } = useDeleteList();
 	const navigate = useNavigate();
 
 	const handleEditList = () => {
@@ -28,7 +40,9 @@ export function ListTableRow({ list }: { list: List }) {
 	};
 
 	const confirmDeleteList = () => {
-		deleteList(list.slug);
+		if (deleteListFunction) {
+			deleteListFunction(list.slug);
+		}
 		setIsDeleteDialogOpen(false);
 	};
 
@@ -123,24 +137,29 @@ export function ListTableRow({ list }: { list: List }) {
 				</TableCell>
 				<TableCell className="text-right align-middle">
 					<div className="inline-flex space-x-3">
-						<Button
-							variant="ghost"
-							size="icon"
-							className="size-5 text-secondary hover:text-secondary cursor-pointer"
-							onClick={handleEditList}
-						>
-							<Edit className="size-5" />
-							<span className="sr-only">Edit list</span>
-						</Button>
-						<Button
-							variant="ghost"
-							size="icon"
-							className="size-5 text-destructive hover:text-destructive cursor-pointer"
-							onClick={handleDeleteList}
-						>
-							<Trash2 className="size-5" />
-							<span className="sr-only">Delete list</span>
-						</Button>
+						{showEdit && (
+							<Button
+								variant="ghost"
+								size="icon"
+								className="size-5 text-secondary hover:text-secondary cursor-pointer"
+								onClick={handleEditList}
+							>
+								<Edit className="size-5" />
+								<span className="sr-only">Edit list</span>
+							</Button>
+						)}
+						{deleteListFunction && (
+							<Button
+								variant="ghost"
+								size="icon"
+								className="size-5 text-destructive hover:text-destructive cursor-pointer"
+								onClick={handleDeleteList}
+								disabled={isDeletingList}
+							>
+								<Trash2 className="size-5" />
+								<span className="sr-only">Delete list</span>
+							</Button>
+						)}
 					</div>
 				</TableCell>
 			</TableRow>

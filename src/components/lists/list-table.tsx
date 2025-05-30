@@ -12,7 +12,21 @@ import { Link } from "@tanstack/react-router";
 import { Upload } from "lucide-react";
 import { ListTableRow } from "./list-table-row";
 
-export function ListTable({ lists }: { lists: List[] }) {
+type ListTableProps = {
+	lists: List[];
+	showAuthor?: boolean;
+	showEdit?: boolean;
+	deleteListFunction?: (slug: string) => void;
+	isDeletingList?: boolean;
+};
+
+export function ListTable({
+	lists,
+	showAuthor = false,
+	showEdit = true,
+	deleteListFunction,
+	isDeletingList = false,
+}: ListTableProps) {
 	return (
 		<Card className="px-4 py-2">
 			<Table>
@@ -31,8 +45,15 @@ export function ListTable({ lists }: { lists: List[] }) {
 				</TableHeader>
 				<TableBody>
 					{lists.length > 0 ? (
-						lists.map((list) => (
-							<ListTableRow key={list.slug} list={list} />
+						lists.map((list, index) => (
+							<ListTableRow
+								key={`${list.slug}-${index}`}
+								list={list}
+								showAuthor={showAuthor}
+								showEdit={showEdit}
+								deleteListFunction={deleteListFunction}
+								isDeletingList={isDeletingList}
+							/>
 						))
 					) : (
 						<TableRow>

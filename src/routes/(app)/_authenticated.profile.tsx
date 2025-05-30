@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { currentUserQueryOptions, useCurrentUser } from "@/queries/use-auth";
+import { useDeleteList } from "@/queries/use-list";
 import { useDeleteUser } from "@/queries/use-user";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
@@ -26,6 +27,7 @@ function RouteComponent() {
 	const { data: currentUser } = useCurrentUser();
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const { deleteUser, isDeletingUser, deleteUserError } = useDeleteUser();
+	const { deleteList, isDeletingList, deleteListError } = useDeleteList();
 
 	if (!currentUser) {
 		return <p>Loading...</p>;
@@ -79,7 +81,16 @@ function RouteComponent() {
 						</p>
 					</div>
 
-					<ListTable lists={currentUser.lists} />
+					{deleteListError && (
+						<p className="text-sm text-destructive">
+							{deleteListError.message}
+						</p>
+					)}
+					<ListTable
+						lists={currentUser.lists}
+						deleteListFunction={deleteList}
+						isDeletingList={isDeletingList}
+					/>
 				</div>
 
 				{/* Danger Zone */}

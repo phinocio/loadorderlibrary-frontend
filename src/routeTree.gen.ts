@@ -16,6 +16,7 @@ import { Route as authRouteImport } from './routes/(auth)/route'
 import { Route as appRouteImport } from './routes/(app)/route'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as appIndexImport } from './routes/(app)/index'
+import { Route as AdminListsImport } from './routes/admin/lists'
 import { Route as authResetPasswordImport } from './routes/(auth)/reset-password'
 import { Route as authRegisterImport } from './routes/(auth)/register'
 import { Route as authLoginImport } from './routes/(auth)/login'
@@ -62,6 +63,12 @@ const appIndexRoute = appIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const AdminListsRoute = AdminListsImport.update({
+  id: '/lists',
+  path: '/lists',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 const authResetPasswordRoute = authResetPasswordImport.update({
@@ -239,6 +246,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authResetPasswordImport
       parentRoute: typeof authRouteImport
     }
+    '/admin/lists': {
+      id: '/admin/lists'
+      path: '/lists'
+      fullPath: '/admin/lists'
+      preLoaderRoute: typeof AdminListsImport
+      parentRoute: typeof AdminRouteImport
+    }
     '/(app)/': {
       id: '/(app)/'
       path: '/'
@@ -388,6 +402,7 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 interface AdminRouteRouteChildren {
+  AdminListsRoute: typeof AdminListsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminUsersNameRoute: typeof AdminUsersNameRoute
   AdminGamesIndexRoute: typeof AdminGamesIndexRoute
@@ -395,6 +410,7 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminListsRoute: AdminListsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminUsersNameRoute: AdminUsersNameRoute,
   AdminGamesIndexRoute: AdminGamesIndexRoute,
@@ -415,6 +431,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
   '/games/$slug': typeof appGamesSlugRoute
@@ -437,6 +454,7 @@ export interface FileRoutesByTo {
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
   '/games/$slug': typeof appGamesSlugRoute
@@ -462,6 +480,7 @@ export interface FileRoutesById {
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/(auth)/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
@@ -488,6 +507,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin/lists'
     | '/admin/'
     | '/profile'
     | '/games/$slug'
@@ -509,6 +529,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin/lists'
     | '/admin'
     | '/profile'
     | '/games/$slug'
@@ -532,6 +553,7 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/(auth)/register'
     | '/(auth)/reset-password'
+    | '/admin/lists'
     | '/(app)/'
     | '/admin/'
     | '/(app)/_authenticated/profile'
@@ -601,6 +623,7 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin/route.tsx",
       "children": [
+        "/admin/lists",
         "/admin/",
         "/admin/users/$name",
         "/admin/games/",
@@ -637,6 +660,10 @@ export const routeTree = rootRoute
     "/(auth)/reset-password": {
       "filePath": "(auth)/reset-password.tsx",
       "parent": "/(auth)"
+    },
+    "/admin/lists": {
+      "filePath": "admin/lists.tsx",
+      "parent": "/admin"
     },
     "/(app)/": {
       "filePath": "(app)/index.tsx",
