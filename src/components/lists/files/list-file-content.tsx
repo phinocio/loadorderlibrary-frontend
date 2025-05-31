@@ -4,9 +4,10 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { ExpandIcon, ShrinkIcon } from "lucide-react";
+import { ExpandIcon, Search, ShrinkIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type ListFileContentProps = {
@@ -14,25 +15,26 @@ type ListFileContentProps = {
 	filename?: string;
 };
 
-interface ParsedLine {
+type ParsedLine = {
 	original: string;
 	lineNumber: number;
 	isSeparator: boolean;
 	isEnabled: boolean | null; // null for separators and non-modlist files
 	isComment: boolean; // lines starting with #
 	text: string;
-}
+};
 
-interface SeparatorSection {
+type SeparatorSection = {
 	separator: ParsedLine | null;
 	lines: ParsedLine[];
 	isOpen: boolean;
-}
+};
 
 export function ListFileContent({ content, filename }: ListFileContentProps) {
 	const [showEnabled, setShowEnabled] = useState(true);
 	const [showDisabled, setShowDisabled] = useState(false);
 	const [expandAll, setExpandAll] = useState(true);
+	const [searchQuery, setSearchQuery] = useState("");
 	const [separatorStates, setSeparatorStates] = useState<
 		Record<number, boolean>
 	>({});
@@ -142,10 +144,19 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 		return sections;
 	}, [parsedLines, separatorStates, expandAll]);
 
-	// Filter lines based on visibility settings
+	// Filter lines based on visibility settings and search query
 	const shouldShowLine = (line: ParsedLine) => {
 		if (line.isSeparator) return true; // Always show separators
 		if (line.isComment) return false; // Ignore lines starting with #
+
+		// Apply search filter
+		if (
+			searchQuery.trim() &&
+			!line.text.toLowerCase().includes(searchQuery.toLowerCase())
+		) {
+			return false;
+		}
+
 		if (!isModlist) return true; // Show all lines for non-modlist files
 		if (line.isEnabled === null) return true; // Show lines that don't have +/- prefix
 		if (line.isEnabled && !showEnabled) return false;
@@ -184,7 +195,7 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 									htmlFor="show-enabled"
 									className="text-sm font-medium"
 								>
-									Show Enabled (+)
+									Show Enabled
 								</label>
 							</div>
 							<div className="flex items-center gap-2">
@@ -197,7 +208,7 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 									htmlFor="show-disabled"
 									className="text-sm font-medium"
 								>
-									Show Disabled (-)
+									Show Disabled
 								</label>
 							</div>
 						</>
@@ -225,6 +236,20 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 					)}
 				</div>
 			)}
+
+			{/* Search Filter */}
+			<div className="p-3 border-b">
+				<div className="relative">
+					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+					<Input
+						type="text"
+						placeholder="Search content..."
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						className="pl-10"
+					/>
+				</div>
+			</div>
 
 			{/* File content */}
 			<div className="text-sm">
