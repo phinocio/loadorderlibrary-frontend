@@ -405,24 +405,28 @@ export function ApiTokenManagement() {
 			)}
 
 			{/* Tokens Table */}
-			<Card>
-				<CardHeader>
-					<CardTitle>Your API Tokens</CardTitle>
-					<CardDescription>
-						Manage your existing API tokens.
-					</CardDescription>
-				</CardHeader>
+			<Card className="py-2">
 				<CardContent>
 					{tokens && tokens.length > 0 ? (
 						<Table>
 							<TableHeader>
 								<TableRow>
-									<TableHead>Name</TableHead>
-									<TableHead>Permissions</TableHead>
-									<TableHead>Last Used</TableHead>
-									<TableHead>Expires</TableHead>
-									<TableHead>Created</TableHead>
-									<TableHead className="w-[100px]">
+									<TableHead className="font-semibold">
+										Name
+									</TableHead>
+									<TableHead className="font-semibold">
+										Permissions
+									</TableHead>
+									<TableHead className="font-semibold">
+										Last Used
+									</TableHead>
+									<TableHead className="font-semibold">
+										Expires
+									</TableHead>
+									<TableHead className="font-semibold">
+										Created
+									</TableHead>
+									<TableHead className="font-semibold text-right w-[100px]">
 										Actions
 									</TableHead>
 								</TableRow>
@@ -507,10 +511,10 @@ export function ApiTokenManagement() {
 												</TooltipContent>
 											</Tooltip>
 										</TableCell>
-										<TableCell>
+										<TableCell className="text-right">
 											<Button
 												size="icon"
-												variant="outline"
+												variant="destructive"
 												onClick={() =>
 													handleDeleteToken(token.id)
 												}
