@@ -93,10 +93,12 @@ export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 									<span>Profile</span>
 								</DropdownMenuItem>
 							</Link>
-							<DropdownMenuItem>
-								<Settings className="size-4" />
-								<span>Settings</span>
-							</DropdownMenuItem>
+							<Link to="/settings">
+								<DropdownMenuItem>
+									<Settings className="size-4" />
+									<span>Settings</span>
+								</DropdownMenuItem>
+							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						{currentUser.admin && (

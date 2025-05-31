@@ -32,6 +32,7 @@ import { Route as appGamesIndexImport } from './routes/(app)/games/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appUsersNameImport } from './routes/(app)/users/$name'
 import { Route as appGamesSlugImport } from './routes/(app)/games/$slug'
+import { Route as appAuthenticatedSettingsImport } from './routes/(app)/_authenticated.settings'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 import { Route as appListsSlugIndexImport } from './routes/(app)/lists/$slug/index'
 import { Route as ListsSlugEmbedFilenameImport } from './routes/lists/$slug/embed/$filename'
@@ -160,6 +161,12 @@ const appGamesSlugRoute = appGamesSlugImport.update({
   id: '/games/$slug',
   path: '/games/$slug',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const appAuthenticatedSettingsRoute = appAuthenticatedSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => appAuthenticatedRoute,
 } as any)
 
 const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
@@ -295,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appAuthenticatedProfileImport
       parentRoute: typeof appAuthenticatedImport
     }
+    '/(app)/_authenticated/settings': {
+      id: '/(app)/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof appAuthenticatedSettingsImport
+      parentRoute: typeof appAuthenticatedImport
+    }
     '/(app)/games/$slug': {
       id: '/(app)/games/$slug'
       path: '/games/$slug'
@@ -372,10 +386,12 @@ declare module '@tanstack/react-router' {
 
 interface appAuthenticatedRouteChildren {
   appAuthenticatedProfileRoute: typeof appAuthenticatedProfileRoute
+  appAuthenticatedSettingsRoute: typeof appAuthenticatedSettingsRoute
 }
 
 const appAuthenticatedRouteChildren: appAuthenticatedRouteChildren = {
   appAuthenticatedProfileRoute: appAuthenticatedProfileRoute,
+  appAuthenticatedSettingsRoute: appAuthenticatedSettingsRoute,
 }
 
 const appAuthenticatedRouteWithChildren =
@@ -465,6 +481,7 @@ export interface FileRoutesByFullPath {
   '/admin/lists': typeof AdminListsRoute
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/settings': typeof appAuthenticatedSettingsRoute
   '/games/$slug': typeof appGamesSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -490,6 +507,7 @@ export interface FileRoutesByTo {
   '/admin/lists': typeof AdminListsRoute
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
+  '/settings': typeof appAuthenticatedSettingsRoute
   '/games/$slug': typeof appGamesSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -519,6 +537,7 @@ export interface FileRoutesById {
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
+  '/(app)/_authenticated/settings': typeof appAuthenticatedSettingsRoute
   '/(app)/games/$slug': typeof appGamesSlugRoute
   '/(app)/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -547,6 +566,7 @@ export interface FileRouteTypes {
     | '/admin/lists'
     | '/admin/'
     | '/profile'
+    | '/settings'
     | '/games/$slug'
     | '/users/$name'
     | '/admin/users/$name'
@@ -571,6 +591,7 @@ export interface FileRouteTypes {
     | '/admin/lists'
     | '/admin'
     | '/profile'
+    | '/settings'
     | '/games/$slug'
     | '/users/$name'
     | '/admin/users/$name'
@@ -598,6 +619,7 @@ export interface FileRouteTypes {
     | '/(app)/'
     | '/admin/'
     | '/(app)/_authenticated/profile'
+    | '/(app)/_authenticated/settings'
     | '/(app)/games/$slug'
     | '/(app)/users/$name'
     | '/admin/users/$name'
@@ -680,7 +702,8 @@ export const routeTree = rootRoute
       "filePath": "(app)/_authenticated.tsx",
       "parent": "/(app)",
       "children": [
-        "/(app)/_authenticated/profile"
+        "/(app)/_authenticated/profile",
+        "/(app)/_authenticated/settings"
       ]
     },
     "/(app)/compare": {
@@ -725,6 +748,10 @@ export const routeTree = rootRoute
     },
     "/(app)/_authenticated/profile": {
       "filePath": "(app)/_authenticated.profile.tsx",
+      "parent": "/(app)/_authenticated"
+    },
+    "/(app)/_authenticated/settings": {
+      "filePath": "(app)/_authenticated.settings.tsx",
       "parent": "/(app)/_authenticated"
     },
     "/(app)/games/$slug": {
