@@ -9,10 +9,42 @@ import {
 import { cn } from "@/lib/utils";
 import type { File, Files } from "@/types/file";
 import { ChevronDown, Download, FileText } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ListFiles({ files }: { files: Files | undefined }) {
 	const [openFiles, setOpenFiles] = useState<Set<string>>(new Set());
+
+	// Effect to handle URL hash for auto-expanding files
+	useEffect(() => {
+		if (!files) return;
+
+		const hash = window.location.hash.replace("#", "");
+		if (hash) {
+			// Find if any file matches the hash (case insensitive)
+			const matchingFile = files.find(
+				(file) =>
+					file.name.toLowerCase() === hash.toLowerCase() ||
+					file.clean_name.toLowerCase() === hash.toLowerCase(),
+			);
+
+			if (matchingFile) {
+				setOpenFiles((prev) => new Set([...prev, matchingFile.name]));
+
+				// Scroll to the file after a short delay to ensure rendering
+				setTimeout(() => {
+					const element = document.getElementById(
+						`file-${matchingFile.name}`,
+					);
+					if (element) {
+						element.scrollIntoView({
+							behavior: "smooth",
+							block: "start",
+						});
+					}
+				}, 100);
+			}
+		}
+	}, [files]);
 
 	function downloadLink(file: File) {
 		return [
@@ -82,9 +114,11 @@ export function ListFiles({ files }: { files: Files | undefined }) {
 						return (
 							<Collapsible
 								key={file.name}
+								open={isOpen}
 								onOpenChange={(open) =>
 									handleOpenChange(file.name, open)
 								}
+								id={`file-${file.name}`}
 							>
 								<CollapsibleTrigger asChild>
 									<div
