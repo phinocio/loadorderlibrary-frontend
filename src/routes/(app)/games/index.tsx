@@ -32,7 +32,10 @@ function GameIndexComponent() {
 								>
 									{game.name}
 								</Link>
-								<Badge variant="secondary" className="ml-2">
+								<Badge
+									variant="secondary"
+									className="ml-2 font-bold"
+								>
 									{game.lists_count} lists
 								</Badge>
 							</CardTitle>

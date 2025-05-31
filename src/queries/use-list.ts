@@ -17,16 +17,16 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-export const listsQueryOptions = (query?: string) =>
+export const listsQueryOptions = (query?: string, sort?: string) =>
 	queryOptions({
-		queryKey: ["lists", { query }],
-		queryFn: () => getLists(query),
+		queryKey: ["lists", { query, sort }],
+		queryFn: () => getLists(query, 1, sort),
 	});
 
-export const listsInfiniteQueryOptions = (query?: string) =>
+export const listsInfiniteQueryOptions = (query?: string, sort?: string) =>
 	infiniteQueryOptions({
-		queryKey: ["lists", "infinite", { query }],
-		queryFn: ({ pageParam }) => getLists(query, pageParam),
+		queryKey: ["lists", "infinite", { query, sort }],
+		queryFn: ({ pageParam }) => getLists(query, pageParam, sort),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage) => {
 			const nextPage = lastPage.meta.current_page + 1;
@@ -41,12 +41,12 @@ export const listQueryOptions = (slug: string) => {
 	});
 };
 
-export function useLists(query?: string) {
-	return useSuspenseQuery(listsQueryOptions(query));
+export function useLists(query?: string, sort?: string) {
+	return useSuspenseQuery(listsQueryOptions(query, sort));
 }
 
-export function useListsInfinite(query?: string) {
-	return useSuspenseInfiniteQuery(listsInfiniteQueryOptions(query));
+export function useListsInfinite(query?: string, sort?: string) {
+	return useSuspenseInfiniteQuery(listsInfiniteQueryOptions(query, sort));
 }
 
 export function useList(slug: string) {

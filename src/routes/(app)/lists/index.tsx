@@ -11,6 +11,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
 	listsInfiniteQueryOptions,
 	useListsInfinite,
 } from "@/queries/use-list";
@@ -26,6 +33,10 @@ import { z } from "zod";
 
 const searchSchema = z.object({
 	query: z.string().optional(),
+	sort: z
+		.enum(["-created", "-updated", "created"])
+		.optional()
+		.default("-created"),
 });
 
 export const Route = createFileRoute("/(app)/lists/")({
@@ -33,7 +44,7 @@ export const Route = createFileRoute("/(app)/lists/")({
 	loader: async ({ context, location }) => {
 		const search = searchSchema.parse(location.search);
 		return context.queryClient.prefetchInfiniteQuery(
-			listsInfiniteQueryOptions(search.query),
+			listsInfiniteQueryOptions(search.query, search.sort),
 		);
 	},
 	component: RouteComponent,
@@ -47,7 +58,7 @@ function ListIndexComponent() {
 		fetchNextPage,
 		hasNextPage,
 		isFetchingNextPage,
-	} = useListsInfinite(search.query);
+	} = useListsInfinite(search.query, search.sort);
 	const [searchValue, setSearchValue] = useState(search.query || "");
 
 	// Flatten the paginated data into a single array
@@ -61,14 +72,32 @@ function ListIndexComponent() {
 	const handleSearch = () => {
 		navigate({
 			to: "/lists",
-			search: searchValue ? { query: searchValue } : {},
+			search: {
+				...(searchValue ? { query: searchValue } : {}),
+				...(search.sort ? { sort: search.sort } : {}),
+			},
 			replace: true,
 		});
 	};
 
 	const resetSearch = () => {
 		setSearchValue("");
-		navigate({ to: "/lists", replace: true });
+		navigate({
+			to: "/lists",
+			search: search.sort ? { sort: search.sort } : {},
+			replace: true,
+		});
+	};
+
+	const handleSortChange = (value: string) => {
+		navigate({
+			to: "/lists",
+			search: {
+				...(search.query ? { query: search.query } : {}),
+				sort: value as "-created" | "-updated" | "created",
+			},
+			replace: true,
+		});
 	};
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,6 +152,32 @@ function ListIndexComponent() {
 							</div>
 						</CardContent>
 					</Card>
+				</div>
+				<div className="mt-4">
+					<div className="flex items-center gap-2">
+						<span className="text-sm font-medium text-muted-foreground">
+							Sort by:
+						</span>
+						<Select
+							value={search.sort || "-created"}
+							onValueChange={handleSortChange}
+						>
+							<SelectTrigger className="w-48">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="-created">
+									Newest First
+								</SelectItem>
+								<SelectItem value="-updated">
+									Updated First
+								</SelectItem>
+								<SelectItem value="created">
+									Oldest First
+								</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
 				</div>
 			</header>
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
