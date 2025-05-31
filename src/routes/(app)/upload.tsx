@@ -3,6 +3,7 @@ import { ListUploadStep2 } from "@/components/lists/upload/list-upload-step-2";
 import { ListUploadStep3 } from "@/components/lists/upload/list-upload-step-3";
 import { ListUploadStep4 } from "@/components/lists/upload/list-upload-step-4";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { gamesQueryOptions } from "@/queries/use-game";
 import {
 	step1Completed,
 	step2Completed,
@@ -14,6 +15,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CheckIcon } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/upload")({
+	loader: ({ context }) => {
+		context.queryClient.prefetchQuery(gamesQueryOptions);
+	},
 	component: RouteComponent,
 });
 
