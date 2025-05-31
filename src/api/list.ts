@@ -6,14 +6,25 @@ import {
 import axios from "@/lib/axios";
 import type { List } from "@/types/list";
 
-export const getLists = async (query?: string, page = 1, sort?: string) => {
+export const getLists = async (
+	options: {
+		query?: string;
+		page?: number;
+		sort?: string;
+		pageSize?: number;
+	} = {},
+) => {
 	try {
+		const { query, page = 1, sort, pageSize } = options;
 		const params: Record<string, string> = { page: page.toString() };
 		if (query) {
 			params.query = query;
 		}
 		if (sort) {
 			params.sort = sort;
+		}
+		if (pageSize) {
+			params["page[size]"] = pageSize.toString();
 		}
 		const response = await axios.get<PaginatedApiResponse<List>>("/lists", {
 			params,

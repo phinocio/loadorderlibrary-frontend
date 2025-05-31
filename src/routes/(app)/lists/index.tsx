@@ -44,7 +44,10 @@ export const Route = createFileRoute("/(app)/lists/")({
 	loader: async ({ context, location }) => {
 		const search = searchSchema.parse(location.search);
 		return context.queryClient.prefetchInfiniteQuery(
-			listsInfiniteQueryOptions(search.query, search.sort),
+			listsInfiniteQueryOptions({
+				query: search.query,
+				sort: search.sort,
+			}),
 		);
 	},
 	component: RouteComponent,
@@ -58,7 +61,7 @@ function ListIndexComponent() {
 		fetchNextPage,
 		hasNextPage,
 		isFetchingNextPage,
-	} = useListsInfinite(search.query, search.sort);
+	} = useListsInfinite({ query: search.query, sort: search.sort });
 	const [searchValue, setSearchValue] = useState(search.query || "");
 
 	// Flatten the paginated data into a single array
