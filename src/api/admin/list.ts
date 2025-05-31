@@ -8,9 +8,12 @@ export const adminGetLists = async (query?: string, page = 1) => {
 		if (query) {
 			params.query = query;
 		}
-		const response = await axios.get<PaginatedApiResponse<List>>("/lists", {
-			params,
-		});
+		const response = await axios.get<PaginatedApiResponse<List>>(
+			"/admin/lists",
+			{
+				params,
+			},
+		);
 		return response.data;
 	} catch (error) {
 		throw handleApiError(error);

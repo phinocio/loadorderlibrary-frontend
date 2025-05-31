@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import type { List } from "@/types/list";
 import { Link } from "@tanstack/react-router";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import { CheckCircleIcon, Clock } from "lucide-react";
 
 interface ListCardProps {
@@ -81,25 +82,37 @@ export function ListCard({ list }: ListCardProps) {
 					<div className="space-y-1">
 						<div className="flex items-center gap-1">
 							<Clock className="h-3 w-3" />
-							<span>
+							<span
+								title={new Date(list.updated).toLocaleString()}
+							>
 								Updated{" "}
-								{new Date(list.updated).toLocaleDateString()}
+								{formatDistanceToNow(parseISO(list.updated), {
+									addSuffix: true,
+								})}
 							</span>
 						</div>
 						<div className="flex items-center gap-1">
 							<Clock className="h-3 w-3" />
-							<span>
+							<span
+								title={new Date(list.created).toLocaleString()}
+							>
 								Created{" "}
-								{new Date(list.created).toLocaleDateString()}
+								{formatDistanceToNow(parseISO(list.created), {
+									addSuffix: true,
+								})}
 							</span>
 						</div>
 					</div>
 					{list.expires && (
 						<div className="flex items-center gap-1 justify-end">
 							<Clock className="h-3 w-3" />
-							<span>
+							<span
+								title={new Date(list.expires).toLocaleString()}
+							>
 								Expires{" "}
-								{new Date(list.expires).toLocaleDateString()}
+								{formatDistanceToNow(parseISO(list.expires), {
+									addSuffix: true,
+								})}
 							</span>
 						</div>
 					)}

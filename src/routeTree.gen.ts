@@ -23,6 +23,7 @@ import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
 import { Route as appUploadImport } from './routes/(app)/upload'
 import { Route as appSupportImport } from './routes/(app)/support'
+import { Route as appCompareImport } from './routes/(app)/compare'
 import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
 import { Route as AdminGamesIndexImport } from './routes/admin/games/index'
@@ -104,6 +105,12 @@ const appUploadRoute = appUploadImport.update({
 const appSupportRoute = appSupportImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
+const appCompareRoute = appCompareImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => appRouteRoute,
 } as any)
 
@@ -202,6 +209,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof appAuthenticatedImport
+      parentRoute: typeof appRouteImport
+    }
+    '/(app)/compare': {
+      id: '/(app)/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof appCompareImport
       parentRoute: typeof appRouteImport
     }
     '/(app)/support': {
@@ -355,6 +369,7 @@ const appAuthenticatedRouteWithChildren =
 
 interface appRouteRouteChildren {
   appAuthenticatedRoute: typeof appAuthenticatedRouteWithChildren
+  appCompareRoute: typeof appCompareRoute
   appSupportRoute: typeof appSupportRoute
   appUploadRoute: typeof appUploadRoute
   appIndexRoute: typeof appIndexRoute
@@ -368,6 +383,7 @@ interface appRouteRouteChildren {
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appAuthenticatedRoute: appAuthenticatedRouteWithChildren,
+  appCompareRoute: appCompareRoute,
   appSupportRoute: appSupportRoute,
   appUploadRoute: appUploadRoute,
   appIndexRoute: appIndexRoute,
@@ -425,6 +441,7 @@ export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '': typeof appAuthenticatedRouteWithChildren
+  '/compare': typeof appCompareRoute
   '/support': typeof appSupportRoute
   '/upload': typeof appUploadRoute
   '/forgot-password': typeof authForgotPasswordRoute
@@ -448,6 +465,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof appIndexRoute
   '': typeof appAuthenticatedRouteWithChildren
+  '/compare': typeof appCompareRoute
   '/support': typeof appSupportRoute
   '/upload': typeof appUploadRoute
   '/forgot-password': typeof authForgotPasswordRoute
@@ -474,6 +492,7 @@ export interface FileRoutesById {
   '/(auth)': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
   '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
+  '/(app)/compare': typeof appCompareRoute
   '/(app)/support': typeof appSupportRoute
   '/(app)/upload': typeof appUploadRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
@@ -501,6 +520,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | ''
+    | '/compare'
     | '/support'
     | '/upload'
     | '/forgot-password'
@@ -523,6 +543,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/compare'
     | '/support'
     | '/upload'
     | '/forgot-password'
@@ -547,6 +568,7 @@ export interface FileRouteTypes {
     | '/(auth)'
     | '/admin'
     | '/(app)/_authenticated'
+    | '/(app)/compare'
     | '/(app)/support'
     | '/(app)/upload'
     | '/(auth)/forgot-password'
@@ -600,6 +622,7 @@ export const routeTree = rootRoute
       "filePath": "(app)/route.tsx",
       "children": [
         "/(app)/_authenticated",
+        "/(app)/compare",
         "/(app)/support",
         "/(app)/upload",
         "/(app)/",
@@ -636,6 +659,10 @@ export const routeTree = rootRoute
       "children": [
         "/(app)/_authenticated/profile"
       ]
+    },
+    "/(app)/compare": {
+      "filePath": "(app)/compare.tsx",
+      "parent": "/(app)"
     },
     "/(app)/support": {
       "filePath": "(app)/support.tsx",
