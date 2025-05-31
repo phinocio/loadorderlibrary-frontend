@@ -40,7 +40,7 @@ export function ListCard({ list }: ListCardProps) {
 							variant="outline"
 							className="ml-2 border-secondary text-secondary"
 						>
-							v{list.version}
+							{list.version}
 						</Badge>
 					)}
 				</div>

@@ -23,6 +23,7 @@ import { Route as authLoginImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
 import { Route as appUploadImport } from './routes/(app)/upload'
 import { Route as appSupportImport } from './routes/(app)/support'
+import { Route as appSettingsImport } from './routes/(app)/settings'
 import { Route as appCompareImport } from './routes/(app)/compare'
 import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
 import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
@@ -32,7 +33,6 @@ import { Route as appGamesIndexImport } from './routes/(app)/games/index'
 import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
 import { Route as appUsersNameImport } from './routes/(app)/users/$name'
 import { Route as appGamesSlugImport } from './routes/(app)/games/$slug'
-import { Route as appAuthenticatedSettingsImport } from './routes/(app)/_authenticated.settings'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 import { Route as appListsSlugIndexImport } from './routes/(app)/lists/$slug/index'
 import { Route as ListsSlugEmbedFilenameImport } from './routes/lists/$slug/embed/$filename'
@@ -110,6 +110,12 @@ const appSupportRoute = appSupportImport.update({
   getParentRoute: () => appRouteRoute,
 } as any)
 
+const appSettingsRoute = appSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => appRouteRoute,
+} as any)
+
 const appCompareRoute = appCompareImport.update({
   id: '/compare',
   path: '/compare',
@@ -161,12 +167,6 @@ const appGamesSlugRoute = appGamesSlugImport.update({
   id: '/games/$slug',
   path: '/games/$slug',
   getParentRoute: () => appRouteRoute,
-} as any)
-
-const appAuthenticatedSettingsRoute = appAuthenticatedSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => appAuthenticatedRoute,
 } as any)
 
 const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
@@ -230,6 +230,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof appCompareImport
+      parentRoute: typeof appRouteImport
+    }
+    '/(app)/settings': {
+      id: '/(app)/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof appSettingsImport
       parentRoute: typeof appRouteImport
     }
     '/(app)/support': {
@@ -300,13 +307,6 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof appAuthenticatedProfileImport
-      parentRoute: typeof appAuthenticatedImport
-    }
-    '/(app)/_authenticated/settings': {
-      id: '/(app)/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof appAuthenticatedSettingsImport
       parentRoute: typeof appAuthenticatedImport
     }
     '/(app)/games/$slug': {
@@ -386,12 +386,10 @@ declare module '@tanstack/react-router' {
 
 interface appAuthenticatedRouteChildren {
   appAuthenticatedProfileRoute: typeof appAuthenticatedProfileRoute
-  appAuthenticatedSettingsRoute: typeof appAuthenticatedSettingsRoute
 }
 
 const appAuthenticatedRouteChildren: appAuthenticatedRouteChildren = {
   appAuthenticatedProfileRoute: appAuthenticatedProfileRoute,
-  appAuthenticatedSettingsRoute: appAuthenticatedSettingsRoute,
 }
 
 const appAuthenticatedRouteWithChildren =
@@ -400,6 +398,7 @@ const appAuthenticatedRouteWithChildren =
 interface appRouteRouteChildren {
   appAuthenticatedRoute: typeof appAuthenticatedRouteWithChildren
   appCompareRoute: typeof appCompareRoute
+  appSettingsRoute: typeof appSettingsRoute
   appSupportRoute: typeof appSupportRoute
   appUploadRoute: typeof appUploadRoute
   appIndexRoute: typeof appIndexRoute
@@ -414,6 +413,7 @@ interface appRouteRouteChildren {
 const appRouteRouteChildren: appRouteRouteChildren = {
   appAuthenticatedRoute: appAuthenticatedRouteWithChildren,
   appCompareRoute: appCompareRoute,
+  appSettingsRoute: appSettingsRoute,
   appSupportRoute: appSupportRoute,
   appUploadRoute: appUploadRoute,
   appIndexRoute: appIndexRoute,
@@ -472,6 +472,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '': typeof appAuthenticatedRouteWithChildren
   '/compare': typeof appCompareRoute
+  '/settings': typeof appSettingsRoute
   '/support': typeof appSupportRoute
   '/upload': typeof appUploadRoute
   '/forgot-password': typeof authForgotPasswordRoute
@@ -481,7 +482,6 @@ export interface FileRoutesByFullPath {
   '/admin/lists': typeof AdminListsRoute
   '/admin/': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
-  '/settings': typeof appAuthenticatedSettingsRoute
   '/games/$slug': typeof appGamesSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -498,6 +498,7 @@ export interface FileRoutesByTo {
   '/': typeof appIndexRoute
   '': typeof appAuthenticatedRouteWithChildren
   '/compare': typeof appCompareRoute
+  '/settings': typeof appSettingsRoute
   '/support': typeof appSupportRoute
   '/upload': typeof appUploadRoute
   '/forgot-password': typeof authForgotPasswordRoute
@@ -507,7 +508,6 @@ export interface FileRoutesByTo {
   '/admin/lists': typeof AdminListsRoute
   '/admin': typeof AdminIndexRoute
   '/profile': typeof appAuthenticatedProfileRoute
-  '/settings': typeof appAuthenticatedSettingsRoute
   '/games/$slug': typeof appGamesSlugRoute
   '/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -527,6 +527,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
   '/(app)/compare': typeof appCompareRoute
+  '/(app)/settings': typeof appSettingsRoute
   '/(app)/support': typeof appSupportRoute
   '/(app)/upload': typeof appUploadRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
@@ -537,7 +538,6 @@ export interface FileRoutesById {
   '/(app)/': typeof appIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
-  '/(app)/_authenticated/settings': typeof appAuthenticatedSettingsRoute
   '/(app)/games/$slug': typeof appGamesSlugRoute
   '/(app)/users/$name': typeof appUsersNameRoute
   '/admin/users/$name': typeof AdminUsersNameRoute
@@ -557,6 +557,7 @@ export interface FileRouteTypes {
     | '/admin'
     | ''
     | '/compare'
+    | '/settings'
     | '/support'
     | '/upload'
     | '/forgot-password'
@@ -566,7 +567,6 @@ export interface FileRouteTypes {
     | '/admin/lists'
     | '/admin/'
     | '/profile'
-    | '/settings'
     | '/games/$slug'
     | '/users/$name'
     | '/admin/users/$name'
@@ -582,6 +582,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/compare'
+    | '/settings'
     | '/support'
     | '/upload'
     | '/forgot-password'
@@ -591,7 +592,6 @@ export interface FileRouteTypes {
     | '/admin/lists'
     | '/admin'
     | '/profile'
-    | '/settings'
     | '/games/$slug'
     | '/users/$name'
     | '/admin/users/$name'
@@ -609,6 +609,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/(app)/_authenticated'
     | '/(app)/compare'
+    | '/(app)/settings'
     | '/(app)/support'
     | '/(app)/upload'
     | '/(auth)/forgot-password'
@@ -619,7 +620,6 @@ export interface FileRouteTypes {
     | '/(app)/'
     | '/admin/'
     | '/(app)/_authenticated/profile'
-    | '/(app)/_authenticated/settings'
     | '/(app)/games/$slug'
     | '/(app)/users/$name'
     | '/admin/users/$name'
@@ -668,6 +668,7 @@ export const routeTree = rootRoute
       "children": [
         "/(app)/_authenticated",
         "/(app)/compare",
+        "/(app)/settings",
         "/(app)/support",
         "/(app)/upload",
         "/(app)/",
@@ -702,12 +703,15 @@ export const routeTree = rootRoute
       "filePath": "(app)/_authenticated.tsx",
       "parent": "/(app)",
       "children": [
-        "/(app)/_authenticated/profile",
-        "/(app)/_authenticated/settings"
+        "/(app)/_authenticated/profile"
       ]
     },
     "/(app)/compare": {
       "filePath": "(app)/compare.tsx",
+      "parent": "/(app)"
+    },
+    "/(app)/settings": {
+      "filePath": "(app)/settings.tsx",
       "parent": "/(app)"
     },
     "/(app)/support": {
@@ -748,10 +752,6 @@ export const routeTree = rootRoute
     },
     "/(app)/_authenticated/profile": {
       "filePath": "(app)/_authenticated.profile.tsx",
-      "parent": "/(app)/_authenticated"
-    },
-    "/(app)/_authenticated/settings": {
-      "filePath": "(app)/_authenticated.settings.tsx",
       "parent": "/(app)/_authenticated"
     },
     "/(app)/games/$slug": {

@@ -7,7 +7,14 @@ import {
 } from "@/components/ui/sidebar";
 import { useCurrentUser } from "@/queries/use-auth";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { Gamepad2, GitCompareIcon, Home, Search, Upload } from "lucide-react";
+import {
+	Gamepad2,
+	GitCompareIcon,
+	Home,
+	Search,
+	Settings,
+	Upload,
+} from "lucide-react";
 
 export const Route = createFileRoute("/(app)")({
 	component: RouteComponent,
@@ -38,6 +45,11 @@ const navItems = [
 		title: "Compare",
 		url: "/compare",
 		icon: GitCompareIcon,
+	},
+	{
+		title: "Settings",
+		url: "/settings",
+		icon: Settings,
 	},
 ];
 

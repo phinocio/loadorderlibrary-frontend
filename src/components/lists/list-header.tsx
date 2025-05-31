@@ -36,7 +36,7 @@ export function ListHeader({ list }: ListHeaderProps) {
 									variant="outline"
 									className="border-secondary text-secondary"
 								>
-									v{list.version}
+									{list.version}
 								</Badge>
 							)}
 							{list.private && (

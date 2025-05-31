@@ -8,16 +8,13 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { currentUserQueryOptions } from "@/queries/use-auth";
 import { createFileRoute } from "@tanstack/react-router";
 import { Monitor, Moon, Sun } from "lucide-react";
 
-export const Route = createFileRoute("/(app)/_authenticated/settings")({
+export const Route = createFileRoute("/(app)/settings")({
 	head: () => ({
 		meta: [{ title: "Settings - Load Order Library" }],
 	}),
-	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,
 });
 
@@ -58,7 +55,7 @@ function RouteComponent() {
 						Settings
 					</h1>
 					<p className="text-muted-foreground">
-						Manage your account settings and preferences.
+						Customize your preferences and appearance.
 					</p>
 				</div>
 
