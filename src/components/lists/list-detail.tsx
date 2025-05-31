@@ -2,6 +2,11 @@ import { ListFiles } from "@/components/lists/files/list-files";
 import { ListHeader } from "@/components/lists/list-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { List } from "@/types/list";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -44,32 +49,38 @@ export function ListDetail({ list }: ListDetailProps) {
 										<Clock className="h-4 w-4" />
 										Created
 									</span>
-									<span
-										title={new Date(
-											list.created,
-										).toLocaleString()}
-									>
-										{formatDistanceToNow(
-											parseISO(list.created),
-											{ addSuffix: true },
-										)}
-									</span>
+									<Tooltip>
+										<TooltipTrigger>
+											{formatDistanceToNow(
+												parseISO(list.created),
+												{ addSuffix: true },
+											)}
+										</TooltipTrigger>
+										<TooltipContent>
+											{new Date(
+												list.created,
+											).toLocaleString()}
+										</TooltipContent>
+									</Tooltip>
 								</div>
 								<div className="flex items-center justify-between text-sm">
 									<span className="flex items-center gap-2 text-muted-foreground">
 										<CalendarIcon className="h-4 w-4" />
 										Last updated
 									</span>
-									<span
-										title={new Date(
-											list.updated,
-										).toLocaleString()}
-									>
-										{formatDistanceToNow(
-											parseISO(list.updated),
-											{ addSuffix: true },
-										)}
-									</span>
+									<Tooltip>
+										<TooltipTrigger>
+											{formatDistanceToNow(
+												parseISO(list.updated),
+												{ addSuffix: true },
+											)}
+										</TooltipTrigger>
+										<TooltipContent>
+											{new Date(
+												list.updated,
+											).toLocaleString()}
+										</TooltipContent>
+									</Tooltip>
 								</div>
 								{list.expires && (
 									<div className="flex items-center justify-between text-sm">
@@ -77,16 +88,19 @@ export function ListDetail({ list }: ListDetailProps) {
 											<Clock className="h-4 w-4" />
 											Expires
 										</span>
-										<span
-											title={new Date(
-												list.expires,
-											).toLocaleString()}
-										>
-											{formatDistanceToNow(
-												parseISO(list.expires),
-												{ addSuffix: true },
-											)}
-										</span>
+										<Tooltip>
+											<TooltipTrigger>
+												{formatDistanceToNow(
+													parseISO(list.expires),
+													{ addSuffix: true },
+												)}
+											</TooltipTrigger>
+											<TooltipContent>
+												{new Date(
+													list.expires,
+												).toLocaleString()}
+											</TooltipContent>
+										</Tooltip>
 									</div>
 								)}
 							</div>

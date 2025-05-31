@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorFallback } from "@/components/ui/error-fallback";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useUser, userQueryOptions } from "@/queries/use-user";
 import { createFileRoute } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
@@ -54,9 +55,16 @@ function UserDetailComponent() {
 							</CardTitle>
 							<div className="text-muted-foreground text-sm">
 								Member since{" "}
-								{formatDistanceToNow(new Date(user.created), {
-									addSuffix: true,
-								})}
+								<Tooltip>
+									<TooltipTrigger>
+										{formatDistanceToNow(new Date(user.created), {
+											addSuffix: true,
+										})}
+									</TooltipTrigger>
+									<TooltipContent>
+										{new Date(user.created).toLocaleString()}
+									</TooltipContent>
+								</Tooltip>
 							</div>
 						</div>
 					</div>

@@ -7,6 +7,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { List } from "@/types/list";
 import { Link } from "@tanstack/react-router";
 import { formatDistanceToNow, parseISO } from "date-fns";
@@ -82,38 +87,56 @@ export function ListCard({ list }: ListCardProps) {
 					<div className="space-y-1">
 						<div className="flex items-center gap-1">
 							<Clock className="h-3 w-3" />
-							<span
-								title={new Date(list.updated).toLocaleString()}
-							>
-								Updated{" "}
-								{formatDistanceToNow(parseISO(list.updated), {
-									addSuffix: true,
-								})}
-							</span>
+							<Tooltip>
+								<TooltipTrigger>
+									Updated{" "}
+									{formatDistanceToNow(
+										parseISO(list.updated),
+										{
+											addSuffix: true,
+										},
+									)}
+								</TooltipTrigger>
+								<TooltipContent>
+									{new Date(list.updated).toLocaleString()}
+								</TooltipContent>
+							</Tooltip>
 						</div>
 						<div className="flex items-center gap-1">
 							<Clock className="h-3 w-3" />
-							<span
-								title={new Date(list.created).toLocaleString()}
-							>
-								Created{" "}
-								{formatDistanceToNow(parseISO(list.created), {
-									addSuffix: true,
-								})}
-							</span>
+							<Tooltip>
+								<TooltipTrigger>
+									Created{" "}
+									{formatDistanceToNow(
+										parseISO(list.created),
+										{
+											addSuffix: true,
+										},
+									)}
+								</TooltipTrigger>
+								<TooltipContent>
+									{new Date(list.created).toLocaleString()}
+								</TooltipContent>
+							</Tooltip>
 						</div>
 					</div>
 					{list.expires && (
 						<div className="flex items-center gap-1 justify-end">
 							<Clock className="h-3 w-3" />
-							<span
-								title={new Date(list.expires).toLocaleString()}
-							>
-								Expires{" "}
-								{formatDistanceToNow(parseISO(list.expires), {
-									addSuffix: true,
-								})}
-							</span>
+							<Tooltip>
+								<TooltipTrigger>
+									Expires{" "}
+									{formatDistanceToNow(
+										parseISO(list.expires),
+										{
+											addSuffix: true,
+										},
+									)}
+								</TooltipTrigger>
+								<TooltipContent>
+									{new Date(list.expires).toLocaleString()}
+								</TooltipContent>
+							</Tooltip>
 						</div>
 					)}
 				</div>
