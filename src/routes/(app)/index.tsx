@@ -1,19 +1,17 @@
 import { ListCard } from "@/components/lists/list-card";
+import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { listsQueryOptions, useLists } from "@/queries/use-list";
+import { useListsWithLoading } from "@/queries/use-list";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { FileText, Heart, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/")({
-	loader: ({ context }) => {
-		context.queryClient.prefetchQuery(listsQueryOptions({ pageSize: 6 }));
-	},
 	component: HomePage,
 });
 
 function HomePage() {
-	const { data: listsData } = useLists({ pageSize: 6 });
+	const { data: listsData, isLoading } = useListsWithLoading({ pageSize: 6 });
 
 	return (
 		<div className="space-y-6 container mx-auto">
@@ -82,21 +80,34 @@ function HomePage() {
 			</Card>
 
 			{/* Recent Lists Section */}
-			{listsData.data.length > 0 && (
-				<>
-					<h2 className="text-3xl font-bold">Recent Lists</h2>
+			<>
+				<h2 className="text-3xl font-bold">Recent Lists</h2>
+				{isLoading ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{listsData.data.map((list) => (
-							<ListCard key={list.slug} list={list} />
+						{Array.from({ length: 6 }).map((_, index) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
+							<ListSkeleton key={index} />
 						))}
 					</div>
-					<div className="mt-6 text-center">
-						<Button asChild variant="outline">
-							<Link to="/lists">View All Lists</Link>
-						</Button>
+				) : listsData && listsData.data.length > 0 ? (
+					<>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+							{listsData.data.map((list) => (
+								<ListCard key={list.slug} list={list} />
+							))}
+						</div>
+						<div className="mt-6 text-center">
+							<Button asChild variant="outline">
+								<Link to="/lists">View All Lists</Link>
+							</Button>
+						</div>
+					</>
+				) : (
+					<div className="text-center py-8 text-muted-foreground">
+						No lists available yet.
 					</div>
-				</>
-			)}
+				)}
+			</>
 		</div>
 	);
 }

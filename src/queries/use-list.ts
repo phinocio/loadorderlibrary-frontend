@@ -10,6 +10,7 @@ import {
 	infiniteQueryOptions,
 	queryOptions,
 	useMutation,
+	useQuery,
 	useQueryClient,
 	useSuspenseInfiniteQuery,
 	useSuspenseQuery,
@@ -61,6 +62,16 @@ export function useLists(
 	} = {},
 ) {
 	return useSuspenseQuery(listsQueryOptions(options));
+}
+
+export function useListsWithLoading(
+	options: {
+		query?: string;
+		sort?: string;
+		pageSize?: number;
+	} = {},
+) {
+	return useQuery(listsQueryOptions(options));
 }
 
 export function useListsInfinite(
