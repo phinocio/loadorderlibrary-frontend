@@ -24,6 +24,40 @@ export function ListFiles({ files }: { files: Files | undefined }) {
 		].join("/");
 	}
 
+	const getModlistStats = (file: File) => {
+		if (!file.name.toLowerCase().includes("modlist.txt") || !file.content) {
+			return null;
+		}
+
+		let totalMods = 0;
+		let enabledMods = 0;
+
+		for (const line of file.content) {
+			const trimmedLine = line.trim();
+			// Skip empty lines, comments, and separators
+			if (
+				!trimmedLine ||
+				trimmedLine.startsWith("#") ||
+				trimmedLine.endsWith("_separator")
+			) {
+				continue;
+			}
+
+			if (trimmedLine.startsWith("+")) {
+				totalMods++;
+				enabledMods++;
+			} else if (trimmedLine.startsWith("-")) {
+				totalMods++;
+			} else if (trimmedLine.length > 0) {
+				// Lines without +/- prefix are treated as enabled
+				totalMods++;
+				enabledMods++;
+			}
+		}
+
+		return { totalMods, enabledMods };
+	};
+
 	const handleOpenChange = (fileName: string, isOpen: boolean) => {
 		setOpenFiles((prev) => {
 			const newSet = new Set(prev);
@@ -71,11 +105,16 @@ export function ListFiles({ files }: { files: Files | undefined }) {
 													{file.clean_name}
 												</span>
 												<span className="text-sm text-muted-foreground">
-													{(
-														file.size_in_bytes /
-														1024
-													).toFixed(2)}{" "}
-													KiB
+													{(() => {
+														const modStats =
+															getModlistStats(
+																file,
+															);
+														if (modStats) {
+															return `${(file.size_in_bytes / 1024).toFixed(2)} KiB • ${modStats.enabledMods}/${modStats.totalMods} mods enabled`;
+														}
+														return `${(file.size_in_bytes / 1024).toFixed(2)} KiB`;
+													})()}
 												</span>
 											</div>
 										</div>
