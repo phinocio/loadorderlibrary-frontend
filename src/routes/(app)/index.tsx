@@ -106,7 +106,14 @@ function HomePage() {
 					</>
 				) : (
 					<div className="text-center py-8 text-muted-foreground">
-						No lists available yet.
+						No lists available yet. Why not{" "}
+						<Link
+							to="/upload"
+							className="hover:underline text-primary font-bold"
+						>
+							create one
+						</Link>
+						?
 					</div>
 				)}
 			</>
