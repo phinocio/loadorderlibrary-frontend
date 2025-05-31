@@ -41,8 +41,10 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 
 	// Parse lines to determine their type and status
 	const parsedLines = useMemo(() => {
+		let modLineNumber = 0; // Counter for mod lines only
+
 		return content.map((line, index): ParsedLine => {
-			const lineNumber = index + 1;
+			const originalLineNumber = index + 1;
 			const isSeparator = line.trim().endsWith("_separator");
 
 			let isEnabled: boolean | null = null;
@@ -65,15 +67,33 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 				} else if (line.startsWith("-")) {
 					isEnabled = false;
 					text = line.substring(1);
+				} else if (line.trim().length > 0) {
+					// Lines without +/- prefix are treated as enabled (matches stats calculation)
+					isEnabled = true;
 				}
 			}
 
 			// Check if line starts with # (comment/ignore)
 			const isComment = text.trim().startsWith("#");
 
+			// Determine if this line should be counted as a mod line for numbering
+			// This logic should match exactly with getModlistStats in list-files.tsx
+			const isModLine =
+				isModlist &&
+				!isSeparator &&
+				!isComment &&
+				line.trim().length > 0;
+			if (isModLine) {
+				modLineNumber++;
+			}
+
+			// For modlist files, use mod line number; for others, use original line number
+			const displayLineNumber =
+				isModlist && isModLine ? modLineNumber : originalLineNumber;
+
 			return {
 				original: line,
-				lineNumber,
+				lineNumber: displayLineNumber,
 				isSeparator,
 				isEnabled,
 				isComment,
