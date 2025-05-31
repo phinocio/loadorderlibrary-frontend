@@ -83,45 +83,37 @@ export function ListCard({ list }: ListCardProps) {
 				</p>
 			</CardContent>
 			<CardFooter className="border-t pt-3">
-				<div className="grid w-full grid-cols-2 gap-2 text-xs text-muted-foreground">
-					<div className="space-y-1">
-						<div className="flex items-center gap-1">
-							<Clock className="h-3 w-3" />
-							<Tooltip>
-								<TooltipTrigger>
-									Updated{" "}
-									{formatDistanceToNow(
-										parseISO(list.updated),
-										{
-											addSuffix: true,
-										},
-									)}
-								</TooltipTrigger>
-								<TooltipContent>
-									{new Date(list.updated).toLocaleString()}
-								</TooltipContent>
-							</Tooltip>
-						</div>
-						<div className="flex items-center gap-1">
-							<Clock className="h-3 w-3" />
-							<Tooltip>
-								<TooltipTrigger>
-									Created{" "}
-									{formatDistanceToNow(
-										parseISO(list.created),
-										{
-											addSuffix: true,
-										},
-									)}
-								</TooltipTrigger>
-								<TooltipContent>
-									{new Date(list.created).toLocaleString()}
-								</TooltipContent>
-							</Tooltip>
-						</div>
+				<div className="space-y-2 w-full text-xs text-muted-foreground">
+					<div className="flex items-center gap-1">
+						<Clock className="h-3 w-3" />
+						<Tooltip>
+							<TooltipTrigger>
+								Updated{" "}
+								{formatDistanceToNow(parseISO(list.updated), {
+									addSuffix: true,
+								})}
+							</TooltipTrigger>
+							<TooltipContent>
+								{new Date(list.updated).toLocaleString()}
+							</TooltipContent>
+						</Tooltip>
+					</div>
+					<div className="flex items-center gap-1">
+						<Clock className="h-3 w-3" />
+						<Tooltip>
+							<TooltipTrigger>
+								Created{" "}
+								{formatDistanceToNow(parseISO(list.created), {
+									addSuffix: true,
+								})}
+							</TooltipTrigger>
+							<TooltipContent>
+								{new Date(list.created).toLocaleString()}
+							</TooltipContent>
+						</Tooltip>
 					</div>
 					{list.expires && (
-						<div className="flex items-center gap-1 justify-end">
+						<div className="flex items-center gap-1 ">
 							<Clock className="h-3 w-3" />
 							<Tooltip>
 								<TooltipTrigger>
