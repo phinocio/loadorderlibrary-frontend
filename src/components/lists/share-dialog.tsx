@@ -228,7 +228,7 @@ export function ShareDialog({
 									<div>
 										<Label
 											htmlFor="width"
-											className="text-xs"
+											className="text-xs mb-1"
 										>
 											Width
 										</Label>
@@ -247,7 +247,7 @@ export function ShareDialog({
 									<div>
 										<Label
 											htmlFor="height"
-											className="text-xs"
+											className="text-xs mb-1"
 										>
 											Height
 										</Label>
@@ -272,7 +272,7 @@ export function ShareDialog({
 									<Textarea
 										value={getEmbedCode()}
 										readOnly
-										className="min-h-[100px] font-mono text-xs"
+										className="min-h-[150px] font-mono text-xs"
 									/>
 									<div className="flex space-x-2">
 										<Button
