@@ -42,7 +42,7 @@ function UserDetailComponent() {
 						</Avatar>
 						<div>
 							<CardTitle className="text-2xl font-bold flex items-center gap-2">
-								{name}
+								{user.name}
 								{user.verified && (
 									<Badge
 										variant="outline"

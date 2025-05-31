@@ -14,6 +14,7 @@ import { UserProfileSchema } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
 import type { UserProfile } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 
 export function ProfileInformationForm({
@@ -47,6 +48,13 @@ export function ProfileInformationForm({
 				<CardTitle className="text-xl">Profile Information</CardTitle>
 				<CardDescription>
 					Update your public profile information
+					<Link
+						to="/users/$name"
+						params={{ name: currentUser.name }}
+						className="ml-2 text-primary hover:underline font-bold"
+					>
+						View public profile.
+					</Link>
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

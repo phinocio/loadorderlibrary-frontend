@@ -153,7 +153,7 @@ function ListIndexComponent() {
 						</CardContent>
 					</Card>
 				</div>
-				<div className="mt-4">
+				<div className="mt-6">
 					<div className="flex items-center gap-2">
 						<span className="text-sm font-medium text-muted-foreground">
 							Sort by:
@@ -162,7 +162,7 @@ function ListIndexComponent() {
 							value={search.sort || "-created"}
 							onValueChange={handleSortChange}
 						>
-							<SelectTrigger className="w-48">
+							<SelectTrigger className="w-48 bg-card">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>

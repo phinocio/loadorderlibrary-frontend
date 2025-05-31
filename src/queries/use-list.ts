@@ -67,6 +67,9 @@ export function useCreateList() {
 			queryClient.invalidateQueries({
 				queryKey: ["current-user"],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["users"],
+			});
 
 			toast.success("List created successfully", {
 				richColors: true,
