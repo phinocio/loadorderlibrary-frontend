@@ -10,8 +10,10 @@ export const Route = createFileRoute("/(app)/")({
 	component: HomePage,
 });
 
+const pageSize = 6;
+
 function HomePage() {
-	const { data: listsData, isLoading } = useListsWithLoading({ pageSize: 6 });
+	const { data: listsData, isLoading } = useListsWithLoading({ pageSize });
 
 	return (
 		<div className="space-y-6 container mx-auto">
@@ -84,7 +86,7 @@ function HomePage() {
 				<h2 className="text-3xl font-bold">Recent Lists</h2>
 				{isLoading ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{Array.from({ length: 6 }).map((_, index) => (
+						{Array.from({ length: pageSize }).map((_, index) => (
 							// biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
 							<ListSkeleton key={index} />
 						))}
