@@ -19,6 +19,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
+	head: () => ({
+		meta: [{ title: "My Profile - Load Order Library" }],
+	}),
 	loader: ({ context }) =>
 		context.queryClient.ensureQueryData(currentUserQueryOptions),
 	component: RouteComponent,

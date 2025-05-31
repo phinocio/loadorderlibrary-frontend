@@ -32,6 +32,9 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/(app)/games/$slug")({
+	head: () => ({
+		meta: [{ title: "View Game - Load Order Library" }],
+	}),
 	validateSearch: searchSchema,
 	loader: ({ context, params, location }) => {
 		const search = searchSchema.parse(location.search);

@@ -9,6 +9,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/(app)/lists/$slug/edit")({
+	head: () => ({
+		meta: [{ title: "Edit List - Load Order Library" }],
+	}),
 	loader: ({ context, params }) =>
 		context.queryClient.ensureQueryData(listQueryOptions(params.slug)),
 	component: RouteComponent,

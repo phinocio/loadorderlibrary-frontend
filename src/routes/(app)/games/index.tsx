@@ -6,6 +6,9 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 export const Route = createFileRoute("/(app)/games/")({
+	head: () => ({
+		meta: [{ title: "Games - Load Order Library" }],
+	}),
 	loader: ({ context }) =>
 		context.queryClient.prefetchQuery(gamesQueryOptions),
 	component: RouteComponent,

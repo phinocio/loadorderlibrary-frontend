@@ -7,6 +7,9 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { FileText, Heart, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/")({
+	head: () => ({
+		meta: [{ title: "Home - Load Order Library" }],
+	}),
 	component: HomePage,
 });
 

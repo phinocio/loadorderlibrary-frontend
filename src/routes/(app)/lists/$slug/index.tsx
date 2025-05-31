@@ -7,6 +7,9 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/(app)/lists/$slug/")({
+	head: () => ({
+		meta: [{ title: "View List - Load Order Library" }],
+	}),
 	loader: ({ context, params }) => {
 		return context.queryClient.prefetchQuery(listQueryOptions(params.slug));
 	},

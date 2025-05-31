@@ -22,6 +22,9 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/(app)/users/$name")({
+	head: () => ({
+		meta: [{ title: "Profile - Load Order Library" }],
+	}),
 	loader: ({ context, params }) => {
 		context.queryClient.prefetchQuery(userQueryOptions(params.name));
 	},

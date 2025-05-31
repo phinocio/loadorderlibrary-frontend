@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/support")({
+	head: () => ({
+		meta: [{ title: "Support - Load Order Library" }],
+	}),
 	component: RouteComponent,
 });
 

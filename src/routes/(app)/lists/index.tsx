@@ -40,6 +40,9 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/(app)/lists/")({
+	head: () => ({
+		meta: [{ title: "Lists - Load Order Library" }],
+	}),
 	validateSearch: searchSchema,
 	loader: async ({ context, location }) => {
 		const search = searchSchema.parse(location.search);

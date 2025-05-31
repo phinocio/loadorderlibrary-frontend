@@ -11,6 +11,9 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Clock, Construction } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/compare")({
+	head: () => ({
+		meta: [{ title: "Compare - Load Order Library" }],
+	}),
 	component: RouteComponent,
 });
 

@@ -15,6 +15,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CheckIcon } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/upload")({
+	head: () => ({
+		meta: [{ title: "Upload - Load Order Library" }],
+	}),
 	loader: ({ context }) => {
 		context.queryClient.prefetchQuery(gamesQueryOptions);
 	},
