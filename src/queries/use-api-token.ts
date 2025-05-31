@@ -41,7 +41,7 @@ export function useCreateApiToken() {
 	});
 
 	return {
-		createApiToken: createApiTokenMutation.mutate,
+		createApiToken: createApiTokenMutation.mutateAsync,
 		isCreatingApiToken: createApiTokenMutation.isPending,
 		createApiTokenError: createApiTokenMutation.error,
 	};

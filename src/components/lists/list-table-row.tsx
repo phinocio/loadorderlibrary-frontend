@@ -2,6 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { List } from "@/types/list";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
@@ -116,12 +121,26 @@ export function ListTableRow({
 				</TableCell>
 				<TableCell>
 					<div className="flex items-center gap-1 text-sm text-muted-foreground">
-						{format(new Date(list.created), "MMM d, yyyy")}
+						<Tooltip>
+							<TooltipTrigger>
+								{format(new Date(list.created), "MMM d, yyyy")}
+							</TooltipTrigger>
+							<TooltipContent>
+								{new Date(list.created).toLocaleString()}
+							</TooltipContent>
+						</Tooltip>
 					</div>
 				</TableCell>
 				<TableCell>
 					<div className="flex items-center gap-1 text-sm text-muted-foreground">
-						{format(new Date(list.updated), "MMM d, yyyy")}
+						<Tooltip>
+							<TooltipTrigger>
+								{format(new Date(list.updated), "MMM d, yyyy")}
+							</TooltipTrigger>
+							<TooltipContent>
+								{new Date(list.updated).toLocaleString()}
+							</TooltipContent>
+						</Tooltip>
 					</div>
 				</TableCell>
 				<TableCell>
@@ -142,10 +161,25 @@ export function ListTableRow({
 							)}
 						{list.expires &&
 							new Date(list.expires) > new Date() && (
-								<Badge variant="outline" className="text-xs">
-									Expires{" "}
-									{format(new Date(list.expires), "MMM d")}
-								</Badge>
+								<Tooltip>
+									<TooltipTrigger>
+										<Badge
+											variant="outline"
+											className="text-xs"
+										>
+											Expires{" "}
+											{format(
+												new Date(list.expires),
+												"MMM d",
+											)}
+										</Badge>
+									</TooltipTrigger>
+									<TooltipContent>
+										{new Date(
+											list.expires,
+										).toLocaleString()}
+									</TooltipContent>
+								</Tooltip>
 							)}
 						{!list.private && !list.expires && (
 							<Badge

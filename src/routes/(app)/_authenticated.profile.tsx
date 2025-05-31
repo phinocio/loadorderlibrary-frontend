@@ -1,4 +1,5 @@
 import { ListTable } from "@/components/lists/list-table";
+import { ApiTokenManagement } from "@/components/profile/api-token-management";
 import { BasicInfoForm } from "@/components/profile/basic-info-form";
 import { ProfileInformationForm } from "@/components/profile/profile-information-form";
 import { Badge } from "@/components/ui/badge";
@@ -91,6 +92,11 @@ function RouteComponent() {
 						deleteListFunction={deleteList}
 						isDeletingList={isDeletingList}
 					/>
+				</div>
+
+				{/* API Token Management Section */}
+				<div className="w-full space-y-6">
+					<ApiTokenManagement />
 				</div>
 
 				{/* Danger Zone */}
