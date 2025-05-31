@@ -1,3 +1,4 @@
+import { ShareDialog } from "@/components/lists/share-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +12,14 @@ import { Separator } from "@/components/ui/separator";
 import type { List } from "@/types/list";
 import { Link } from "@tanstack/react-router";
 import { CheckCircleIcon, Download, Share2 } from "lucide-react";
+import { useState } from "react";
 
 interface ListHeaderProps {
 	list: List;
 }
 
 export function ListHeader({ list }: ListHeaderProps) {
+	const [shareDialogOpen, setShareDialogOpen] = useState(false);
 	const downloadLink = `${import.meta.env.VITE_API_BASE_URL}/${import.meta.env.VITE_API_VERSION}/lists/${list.slug}/download`;
 
 	return (
@@ -88,6 +91,7 @@ export function ListHeader({ list }: ListHeaderProps) {
 								variant="outline"
 								className="gap-2"
 								size="sm"
+								onClick={() => setShareDialogOpen(true)}
 							>
 								<Share2 className="h-4 w-4" />
 								Share
@@ -104,6 +108,13 @@ export function ListHeader({ list }: ListHeaderProps) {
 					{list.description || "No description provided."}
 				</div>
 			</CardContent>
+
+			<ShareDialog
+				open={shareDialogOpen}
+				onOpenChange={setShareDialogOpen}
+				list={list}
+				files={list.files}
+			/>
 		</Card>
 	);
 }

@@ -34,6 +34,7 @@ import { Route as appUsersNameImport } from './routes/(app)/users/$name'
 import { Route as appGamesSlugImport } from './routes/(app)/games/$slug'
 import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
 import { Route as appListsSlugIndexImport } from './routes/(app)/lists/$slug/index'
+import { Route as ListsSlugEmbedFilenameImport } from './routes/lists/$slug/embed/$filename'
 import { Route as appListsSlugEditImport } from './routes/(app)/lists/$slug/edit'
 
 // Create/Update Routes
@@ -171,6 +172,12 @@ const appListsSlugIndexRoute = appListsSlugIndexImport.update({
   id: '/lists/$slug/',
   path: '/lists/$slug/',
   getParentRoute: () => appRouteRoute,
+} as any)
+
+const ListsSlugEmbedFilenameRoute = ListsSlugEmbedFilenameImport.update({
+  id: '/lists/$slug/embed/$filename',
+  path: '/lists/$slug/embed/$filename',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const appListsSlugEditRoute = appListsSlugEditImport.update({
@@ -344,6 +351,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appListsSlugEditImport
       parentRoute: typeof appRouteImport
     }
+    '/lists/$slug/embed/$filename': {
+      id: '/lists/$slug/embed/$filename'
+      path: '/lists/$slug/embed/$filename'
+      fullPath: '/lists/$slug/embed/$filename'
+      preLoaderRoute: typeof ListsSlugEmbedFilenameImport
+      parentRoute: typeof rootRoute
+    }
     '/(app)/lists/$slug/': {
       id: '/(app)/lists/$slug/'
       path: '/lists/$slug'
@@ -459,6 +473,7 @@ export interface FileRoutesByFullPath {
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
   '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
   '/lists/$slug': typeof appListsSlugIndexRoute
 }
 
@@ -483,6 +498,7 @@ export interface FileRoutesByTo {
   '/admin/games': typeof AdminGamesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
   '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
   '/lists/$slug': typeof appListsSlugIndexRoute
 }
 
@@ -511,6 +527,7 @@ export interface FileRoutesById {
   '/admin/games/': typeof AdminGamesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
   '/(app)/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
   '/(app)/lists/$slug/': typeof appListsSlugIndexRoute
 }
 
@@ -538,6 +555,7 @@ export interface FileRouteTypes {
     | '/admin/games'
     | '/admin/users'
     | '/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
     | '/lists/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -561,6 +579,7 @@ export interface FileRouteTypes {
     | '/admin/games'
     | '/admin/users'
     | '/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
     | '/lists/$slug'
   id:
     | '__root__'
@@ -587,6 +606,7 @@ export interface FileRouteTypes {
     | '/admin/games/'
     | '/admin/users/'
     | '/(app)/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
     | '/(app)/lists/$slug/'
   fileRoutesById: FileRoutesById
 }
@@ -595,12 +615,14 @@ export interface RootRouteChildren {
   appRouteRoute: typeof appRouteRouteWithChildren
   authRouteRoute: typeof authRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  ListsSlugEmbedFilenameRoute: typeof ListsSlugEmbedFilenameRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  ListsSlugEmbedFilenameRoute: ListsSlugEmbedFilenameRoute,
 }
 
 export const routeTree = rootRoute
@@ -615,7 +637,8 @@ export const routeTree = rootRoute
       "children": [
         "/(app)",
         "/(auth)",
-        "/admin"
+        "/admin",
+        "/lists/$slug/embed/$filename"
       ]
     },
     "/(app)": {
@@ -735,6 +758,9 @@ export const routeTree = rootRoute
     "/(app)/lists/$slug/edit": {
       "filePath": "(app)/lists/$slug/edit.tsx",
       "parent": "/(app)"
+    },
+    "/lists/$slug/embed/$filename": {
+      "filePath": "lists/$slug/embed/$filename.tsx"
     },
     "/(app)/lists/$slug/": {
       "filePath": "(app)/lists/$slug/index.tsx",
