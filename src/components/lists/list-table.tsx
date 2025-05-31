@@ -33,6 +33,11 @@ export function ListTable({
 				<TableHeader>
 					<TableRow>
 						<TableHead className="font-semibold">Name</TableHead>
+						{showAuthor && (
+							<TableHead className="font-semibold">
+								Author
+							</TableHead>
+						)}
 						<TableHead className="font-semibold">Game</TableHead>
 						<TableHead className="font-semibold">Version</TableHead>
 						<TableHead className="font-semibold">Created</TableHead>
@@ -57,7 +62,10 @@ export function ListTable({
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={7} className="h-64">
+							<TableCell
+								colSpan={showAuthor ? 8 : 7}
+								className="h-64"
+							>
 								<div className="flex flex-col items-center justify-center space-y-4 text-center py-8">
 									<div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
 										<Upload className="w-8 h-8 text-muted-foreground" />
@@ -67,9 +75,15 @@ export function ListTable({
 											No lists found
 										</h3>
 										<p className="text-sm text-muted-foreground max-w-sm">
-											You haven't created any mod lists
-											yet. Get started by uploading your
-											first list.
+											There are currently no lists to
+											show. Why not{" "}
+											<Link
+												to="/upload"
+												className="text-primary hover:underline"
+											>
+												create one
+											</Link>
+											?
 										</p>
 									</div>
 									<Link

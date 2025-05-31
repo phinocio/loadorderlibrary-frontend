@@ -5,7 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import type { List } from "@/types/list";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
-import { Edit, Trash2 } from "lucide-react";
+import { CheckCircleIcon, Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 type ListTableRowProps = {
@@ -18,7 +18,7 @@ type ListTableRowProps = {
 
 export function ListTableRow({
 	list,
-	showAuthor = false, // @ts-ignore - Reserved for future use
+	showAuthor = false,
 	showEdit = true,
 	deleteListFunction,
 	isDeletingList = false,
@@ -69,6 +69,28 @@ export function ListTableRow({
 						)}
 					</div>
 				</TableCell>
+				{showAuthor && (
+					<TableCell>
+						<div className="flex items-center gap-1">
+							{list.author?.name ? (
+								<Link
+									to="/users/$name"
+									params={{ name: list.author.name }}
+									className="text-primary hover:underline font-medium inline-flex items-center gap-1"
+								>
+									{list.author.name}
+									{list.author.verified && (
+										<CheckCircleIcon className="h-3.5 w-3.5 text-secondary" />
+									)}
+								</Link>
+							) : (
+								<span className="text-muted-foreground text-sm">
+									Anonymous
+								</span>
+							)}
+						</div>
+					</TableCell>
+				)}
 				<TableCell>
 					<Link
 						to="/games/$slug"
