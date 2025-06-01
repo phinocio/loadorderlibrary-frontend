@@ -79,7 +79,7 @@ export function ShareDialog({
 		const embedUrl = getEmbedUrl();
 		if (!embedUrl) return "";
 
-		return `<iframe title="Load Order Library iframe" src="${embedUrl}" width="${embedDimensions.width}" height="${embedDimensions.height}" sandbox="allow-scripts"></iframe>`;
+		return `<iframe title="Load Order Library iframe" src="${embedUrl}" width="${embedDimensions.width}" height="${embedDimensions.height}" sandbox="allow-scripts allow-same-origin"></iframe>`;
 	};
 
 	// Copy to clipboard function
