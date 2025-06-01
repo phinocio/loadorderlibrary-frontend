@@ -88,7 +88,7 @@ function HomePage() {
 			<>
 				<h2 className="text-3xl font-bold">Recent Lists</h2>
 				{isLoading ? (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 						{Array.from({ length: pageSize }).map((_, index) => (
 							// biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
 							<ListSkeleton key={index} />
@@ -96,7 +96,7 @@ function HomePage() {
 					</div>
 				) : listsData && listsData.data.length > 0 ? (
 					<>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+						<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 							{listsData.data.map((list) => (
 								<ListCard key={list.slug} list={list} />
 							))}
