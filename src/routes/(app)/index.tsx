@@ -57,7 +57,7 @@ function HomePage() {
 						size="lg"
 						className="gap-2"
 					>
-						<Link to="/lists">
+						<Link to="/support">
 							<Heart className="h-5 w-5" />
 							Support the Site
 						</Link>
