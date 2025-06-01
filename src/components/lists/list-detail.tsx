@@ -7,6 +7,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ensureHttpProtocol } from "@/lib/utils";
 import type { List } from "@/types/list";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -119,7 +120,9 @@ export function ListDetail({ list }: ListDetailProps) {
 
 									{list.readme && (
 										<a
-											href={`https://${list.readme}`}
+											href={ensureHttpProtocol(
+												list.readme,
+											)}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="text-sm hover:text-primary rounded-sm flex transition-colors"
@@ -133,7 +136,9 @@ export function ListDetail({ list }: ListDetailProps) {
 
 									{list.website && (
 										<a
-											href={`https://${list.website}`}
+											href={ensureHttpProtocol(
+												list.website,
+											)}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="flex text-sm hover:text-primary rounded-sm transition-colors"
@@ -147,7 +152,9 @@ export function ListDetail({ list }: ListDetailProps) {
 
 									{list.discord && (
 										<a
-											href={`https://${list.discord}`}
+											href={ensureHttpProtocol(
+												list.discord,
+											)}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="flex text-sm hover:text-primary rounded-sm transition-colors"

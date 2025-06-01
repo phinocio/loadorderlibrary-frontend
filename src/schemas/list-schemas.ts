@@ -1,5 +1,6 @@
 import { FileSchema } from "@/schemas/file-schemas";
 import { GameSchema } from "@/schemas/game-schemas";
+import { optionalUrl } from "@/schemas/utils";
 import { z } from "zod";
 
 export const ListSchema = z.object({
@@ -36,9 +37,9 @@ export const ListCreateParamsSchema = z.object({
 			z.literal(""),
 		])
 		.optional(),
-	website: z.union([z.string(), z.literal("")]).optional(),
-	discord: z.union([z.string(), z.literal("")]).optional(),
-	readme: z.union([z.string(), z.literal("")]).optional(),
+	website: optionalUrl,
+	discord: optionalUrl,
+	readme: optionalUrl,
 	private: z.boolean().optional(),
 	expires: z
 		.union([
