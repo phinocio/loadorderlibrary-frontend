@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-tertiary: var(--tertiary);
+	--color-tertiary-foreground: var(--tertiary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-placeholder: var(--placeholder);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+	--radius: 0.625rem;
+
+	/* Catppuccin Latte (Light) theme */
+	--background: #eff1f5;
+	--foreground: #4c4f69;
+	--card: #e6e9ef;
+	--card-foreground: #4c4f69;
+	--popover: #eff1f5;
+	--popover-foreground: #4c4f69;
+	--primary: #40a02b;
+	--primary-foreground: #eff1f5;
+	--secondary: #1e66f5;
+	--secondary-foreground: #ffffff;
+	--tertiary: #b846b2;
+	--tertiary-foreground: #ffffff;
+	--muted: #dce0e8;
+	--muted-foreground: #4c4f69;
+	--placeholder: #8c8fa1;
+	--accent: #dce0e8;
+	--accent-foreground: #4c4f69;
+	--destructive: #d20f39;
+	--border: #ccd0da;
+	--input: #ccd0da;
+	--ring: #1e66f5;
+
+	/* Sidebar colors - Light */
+	--sidebar: #e6e9ef;
+	--sidebar-foreground: #4c4f69;
+	--sidebar-primary: #40a02b;
+	--sidebar-primary-foreground: #eff1f5;
+	--sidebar-accent: #dce0e8;
+	--sidebar-accent-foreground: #4c4f69;
+	--sidebar-border: #ccd0da;
+	--sidebar-ring: #40a02b;
+}
+
+.dark {
+	/* Catppuccin Mocha (Dark) theme */
+	--background: #1e1e2e;
+	--foreground: #cdd6f4;
+	--card: #313244;
+	--card-foreground: #cdd6f4;
+	--popover: #313244;
+	--popover-foreground: #cdd6f4;
+	--primary: #a6e3a1;
+	--primary-foreground: #313244;
+	--secondary: #74c7ec;
+	--secondary-foreground: #11111b;
+	--tertiary: #f5c2e7;
+	--tertiary-foreground: #11111b;
+	--muted: #45475a;
+	--muted-foreground: #a6adc8;
+	--placeholder: #7f849c;
+	--accent: #45475a;
+	--accent-foreground: #cdd6f4;
+	--destructive: #e64553;
+	--border: #45475a;
+	--input: #45475a;
+	--ring: #74c7ec;
+
+	/* Sidebar colors - Dark */
+	--sidebar: #313244;
+	--sidebar-foreground: #cdd6f4;
+	--sidebar-primary: #a6e3a1;
+	--sidebar-primary-foreground: #313244;
+	--sidebar-accent: #45475a;
+	--sidebar-accent-foreground: #cdd6f4;
+	--sidebar-border: #45475a;
+	--sidebar-ring: #a6e3a1;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
