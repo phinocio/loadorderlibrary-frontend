@@ -76,7 +76,7 @@ export function ProfileInformationForm({
 						<Label htmlFor="discord">Discord</Label>
 						<Input
 							id="discord"
-							placeholder="Your Discord username"
+							placeholder="Your Discord server invite"
 							{...register("discord")}
 						/>
 						{errors.discord && (
