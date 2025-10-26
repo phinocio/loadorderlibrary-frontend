@@ -19,7 +19,6 @@ import {
 import type { CurrentUser } from "@/types/auth";
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
-import { Heart } from "lucide-react";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 	routes: {
@@ -68,7 +67,7 @@ export function AppSidebar({ currentUser, routes, ...props }: AppSidebarProps) {
 								to="/support"
 								className={open ? "justify-center" : ""}
 							>
-								<Heart className="text-primary" />
+								<span>🏳️‍⚧️</span>
 								<span>Support the Site</span>
 							</Link>
 						</SidebarMenuButton>
