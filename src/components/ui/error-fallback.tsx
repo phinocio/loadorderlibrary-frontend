@@ -8,9 +8,10 @@ import {
 } from "@/components/ui/card";
 import { Link, useRouter } from "@tanstack/react-router";
 import { AlertTriangle, ArrowLeft, Home, RefreshCw } from "lucide-react";
+import type { FallbackProps } from "react-error-boundary";
 
 export interface ErrorFallbackProps {
-	error: Error;
+	error: FallbackProps['error'];
 	resetErrorBoundary?: () => void;
 	title404?: string;
 	description404?: string;
