@@ -1,3 +1,7 @@
+allowBuilds:
+  '@biomejs/biome': true
+  '@tailwindcss/oxide': true
+  esbuild: false
 onlyBuiltDependencies:
   - '@biomejs/biome'
   - '@tailwindcss/oxide'
