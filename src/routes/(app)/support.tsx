@@ -132,7 +132,7 @@ function RouteComponent() {
 					</CardHeader>
 					<CardContent className="mt-auto">
 						<a
-							href="https://discord.com/invite/K3KnEgrQE4"
+							href="https://discord.com/invite/mwKHEMYatr"
 							className="text-primary hover:underline"
 							target="_blank"
 							rel="noopener noreferrer"
