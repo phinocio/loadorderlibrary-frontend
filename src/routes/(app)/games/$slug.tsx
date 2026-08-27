@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { z } from "zod";
 import { ListCard } from "@/components/lists/list-card";
 import { GameDetailSkeleton } from "@/components/skeletons/game-detail-skeleton";
@@ -195,7 +195,7 @@ function GameErrorFallback({
 	error,
 	resetErrorBoundary,
 }: {
-	error: Error;
+	error: FallbackProps["error"];
 	resetErrorBoundary?: () => void;
 }) {
 	return (

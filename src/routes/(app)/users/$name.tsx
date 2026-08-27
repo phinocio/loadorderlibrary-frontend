@@ -8,7 +8,7 @@ import {
 	MessageCircle,
 } from "lucide-react";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { ListCard } from "@/components/lists/list-card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +40,7 @@ function UserDetailComponent() {
 	return (
 		<div className="container mx-auto py-6 space-y-8">
 			<Card className="overflow-hidden">
-				<div className="bg-gradient-to-r from-primary/20 to-secondary/20 h-32" />
+				<div className="bg-linear-to-r from-primary/20 to-secondary/20 h-32" />
 				<CardHeader className="relative pt-0">
 					<div className="-mt-12 flex items-end space-x-4">
 						<Avatar className="size-24 border-4 border-background">
@@ -185,7 +185,7 @@ function UserErrorFallback({
 	error,
 	resetErrorBoundary,
 }: {
-	error: Error;
+	error: FallbackProps["error"];
 	resetErrorBoundary?: () => void;
 }) {
 	return (

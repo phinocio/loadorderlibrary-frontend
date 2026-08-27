@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { ListDetail } from "@/components/lists/list-detail";
 import { ListDetailSkeleton } from "@/components/skeletons/list-detail-skeleton";
 import { ErrorFallback } from "@/components/ui/error-fallback";
@@ -31,7 +31,7 @@ function ListErrorFallback({
 	error,
 	resetErrorBoundary,
 }: {
-	error: Error;
+	error: FallbackProps["error"];
 	resetErrorBoundary?: () => void;
 }) {
 	return (

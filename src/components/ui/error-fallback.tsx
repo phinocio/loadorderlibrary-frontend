@@ -36,9 +36,11 @@ export function ErrorFallback({
 	homeRoute = "/",
 }: ErrorFallbackProps) {
 	const router = useRouter();
+
+	const errorMessage = error instanceof Error ? error.message : String(error ?? '');
 	const is404 =
-		error.message.includes("404") ||
-		error.message.toLowerCase().includes("not found");
+		errorMessage.includes("404") ||
+		errorMessage.toLowerCase().includes("not found");
 
 	const title = is404 ? title404 : titleGeneric;
 	const description = is404 ? description404 : descriptionGeneric;
@@ -64,7 +66,7 @@ export function ErrorFallback({
 								Technical details
 							</summary>
 							<pre className="mt-2 text-xs bg-muted p-2 rounded overflow-x-auto">
-								{error.message}
+								{errorMessage}
 							</pre>
 						</details>
 					)}
