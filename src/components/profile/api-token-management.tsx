@@ -1,3 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formatDistanceToNow } from "date-fns";
+import { Copy, Eye, EyeOff, Key, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,12 +60,6 @@ import {
 } from "@/queries/use-api-token";
 import { CreateApiTokenParamsSchema } from "@/schemas/api-token-schemas";
 import type { CreateApiTokenParams } from "@/types/api-token";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDistanceToNow } from "date-fns";
-import { Copy, Eye, EyeOff, Key, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 export function ApiTokenManagement() {
 	const { data: tokens } = useApiTokens();
@@ -92,7 +92,7 @@ export function ApiTokenManagement() {
 				abilities: [],
 				expires: "never",
 			});
-		} catch (error) {
+		} catch (_error) {
 			// Error handling is done in the mutation
 		}
 	};

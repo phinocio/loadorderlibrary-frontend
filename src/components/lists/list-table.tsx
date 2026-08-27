@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { Upload } from "lucide-react";
+import type { ReactElement } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
 	Table,
@@ -8,8 +11,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { List } from "@/types/list";
-import { Link } from "@tanstack/react-router";
-import { Upload } from "lucide-react";
 import { ListTableRow } from "./list-table-row";
 
 type ListTableProps = {
@@ -26,7 +27,7 @@ export function ListTable({
 	showEdit = true,
 	deleteListFunction,
 	isDeletingList = false,
-}: ListTableProps) {
+}: ListTableProps): ReactElement {
 	return (
 		<Card className="py-2">
 			<CardContent>
@@ -63,16 +64,18 @@ export function ListTable({
 					</TableHeader>
 					<TableBody>
 						{lists.length > 0 ? (
-							lists.map((list, index) => (
-								<ListTableRow
-									key={`${list.slug}-${index}`}
-									list={list}
-									showAuthor={showAuthor}
-									showEdit={showEdit}
-									deleteListFunction={deleteListFunction}
-									isDeletingList={isDeletingList}
-								/>
-							))
+							lists.map(
+								(list: List): ReactElement => (
+									<ListTableRow
+										key={`${list.slug}`}
+										list={list}
+										showAuthor={showAuthor}
+										showEdit={showEdit}
+										deleteListFunction={deleteListFunction}
+										isDeletingList={isDeletingList}
+									/>
+								),
+							)
 						) : (
 							<TableRow>
 								<TableCell

@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { ListSchema } from "@/schemas/list-schemas";
 import { optionalUrl } from "@/schemas/utils";
-import { z } from "zod";
 
 export const UserProfileSchema = z.object({
 	bio: z.union([z.string(), z.literal("")]).optional(),

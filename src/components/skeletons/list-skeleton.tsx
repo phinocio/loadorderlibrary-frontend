@@ -1,7 +1,8 @@
+import type { ReactElement } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function ListSkeleton() {
+export function ListSkeleton(): ReactElement {
 	return (
 		<Card className="flex flex-col h-full">
 			<CardHeader className="border-b pb-3">
@@ -28,17 +29,25 @@ export function ListSkeleton() {
 	);
 }
 
-export function ListSkeletonGrid() {
+export function ListSkeletonGrid(): ReactElement {
+	const skeletons = Array.from(
+		{ length: 6 },
+		(_: unknown, i: number): { id: string } => ({
+			id: `skeleton-${i}`,
+		}),
+	);
+
 	return (
 		<div className="container mx-auto py-6">
 			<h1 className="text-3xl font-bold mb-6">
 				<Skeleton className="h-8 w-1/4" />
 			</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{Array.from({ length: 6 }).map((_, index) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<ListSkeleton key={index} />
-				))}
+				{skeletons.map(
+					(item: { id: string }): ReactElement => (
+						<ListSkeleton key={item.id} />
+					),
+				)}
 			</div>
 		</div>
 	);

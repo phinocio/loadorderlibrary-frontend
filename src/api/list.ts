@@ -1,7 +1,7 @@
 import {
 	type ApiResponse,
-	type PaginatedApiResponse,
 	handleApiError,
+	type PaginatedApiResponse,
 } from "@/api/utils";
 import axios from "@/lib/axios";
 import type { List } from "@/types/list";

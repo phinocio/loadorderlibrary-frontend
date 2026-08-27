@@ -1,4 +1,4 @@
-import { type PaginatedApiResponse, handleApiError } from "@/api/utils";
+import { handleApiError, type PaginatedApiResponse } from "@/api/utils";
 import axios from "@/lib/axios";
 import type { List } from "@/types/list";
 

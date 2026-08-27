@@ -1,6 +1,6 @@
+import { isAxiosError } from "axios";
 import axios from "@/lib/axios";
 import type { CurrentUser, ForgotPassword } from "@/types/auth";
-import { isAxiosError } from "axios";
 import { type ApiResponse, handleApiError } from "./utils";
 
 export const register = async (data: {

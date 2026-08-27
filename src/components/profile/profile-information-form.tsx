@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -13,13 +16,12 @@ import { useUpdateUserProfile } from "@/queries/use-user";
 import { UserProfileSchema } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
 import type { UserProfile } from "@/types/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
 
 export function ProfileInformationForm({
 	currentUser,
-}: { currentUser: CurrentUser }) {
+}: {
+	currentUser: CurrentUser;
+}) {
 	const { updateProfile, isUpdatingProfile, updateProfileError } =
 		useUpdateUserProfile(currentUser.name);
 

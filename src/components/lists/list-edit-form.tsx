@@ -1,3 +1,4 @@
+import { CheckIcon } from "lucide-react";
 import { ListEditStep1 } from "@/components/lists/edit/list-edit-step-1";
 import { ListEditStep2 } from "@/components/lists/edit/list-edit-step-2";
 import { ListEditStep3 } from "@/components/lists/edit/list-edit-step-3";
@@ -11,7 +12,6 @@ import {
 	useListEditStep,
 } from "@/stores/list-edit-store";
 import type { List } from "@/types/list";
-import { CheckIcon } from "lucide-react";
 
 export function ListEditForm({ list }: { list: List }) {
 	const currentStep = useListEditStep();

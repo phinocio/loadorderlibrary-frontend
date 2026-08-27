@@ -1,6 +1,7 @@
-import logo from "@/assets/images/logo.png";
+import { Link } from "@tanstack/react-router";
+import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
-
+import logo from "@/assets/images/logo.png";
 import { NavLoginRegister } from "@/components/navigation/nav-login-register";
 import { NavMain } from "@/components/navigation/nav-main";
 import { NavUser } from "@/components/navigation/nav-user";
@@ -17,8 +18,6 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import type { CurrentUser } from "@/types/auth";
-import { Link } from "@tanstack/react-router";
-import type { LucideIcon } from "lucide-react";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 	routes: {

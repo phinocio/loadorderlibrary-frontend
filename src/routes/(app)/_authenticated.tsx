@@ -1,5 +1,5 @@
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { requireAuth } from "@/lib/guards";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/_authenticated")({
 	beforeLoad: async ({ context }) => {

@@ -1,6 +1,6 @@
-import type { ListUploadStore } from "@/types/list";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { ListUploadStore } from "@/types/list";
 
 const useListUploadStore = create<ListUploadStore>()(
 	persist(

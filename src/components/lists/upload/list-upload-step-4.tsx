@@ -1,3 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { FileUploadArea } from "@/components/lists/files/file-upload-area";
 import { SelectedFilesDisplay } from "@/components/lists/files/selected-files-display";
 import { Button } from "@/components/ui/button";
@@ -9,10 +13,6 @@ import {
 	useListUploadActions,
 	useListUploadFormData,
 } from "@/stores/list-upload-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 type FileFormData = z.infer<typeof FileUploadSchema>;
 

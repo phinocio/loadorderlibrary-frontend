@@ -1,3 +1,5 @@
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Fragment } from "react";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -6,8 +8,6 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Fragment } from "react";
 
 export function NavBreadcrumbs() {
 	const location = useRouterState({ select: (s) => s.location });

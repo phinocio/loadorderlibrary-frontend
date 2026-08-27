@@ -1,10 +1,10 @@
+import type { z } from "zod";
 import type {
 	UserPasswordUpdateParamsSchema,
 	UserProfileSchema,
 	UserSchema,
 	UserUpdateParamsSchema,
 } from "@/schemas/user-schemas";
-import type { z } from "zod";
 
 export type User = z.infer<typeof UserSchema>;
 export type UserUpdateParams = z.infer<typeof UserUpdateParamsSchema>;

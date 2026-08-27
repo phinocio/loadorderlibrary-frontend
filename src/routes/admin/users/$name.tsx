@@ -1,3 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { format, parseISO } from "date-fns";
+import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useForm } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,12 +32,6 @@ import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
 } from "@/types/admin/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { format, parseISO } from "date-fns";
-import { Suspense, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/admin/users/$name")({
 	component: RouteComponent,
@@ -286,7 +286,10 @@ function UserDetailComponent() {
 function AdminUserErrorFallback({
 	error,
 	resetErrorBoundary,
-}: { error: Error; resetErrorBoundary?: () => void }) {
+}: {
+	error: Error;
+	resetErrorBoundary?: () => void;
+}) {
 	return (
 		<ErrorFallback
 			error={error}

@@ -1,6 +1,7 @@
+import { Clock, FileText, Globe, MessageCircle } from "lucide-react";
+import type { ReactElement } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock, FileText, Globe, MessageCircle } from "lucide-react";
 
 function ListHeaderSkeleton() {
 	return (
@@ -22,6 +23,12 @@ function ListHeaderSkeleton() {
 }
 
 function ListFilesSkeleton() {
+	const skeletons = Array.from(
+		{ length: 3 },
+		(_: unknown, i: number): { id: string } => ({
+			id: `skeleton-${i}`,
+		}),
+	);
 	return (
 		<Card>
 			<CardHeader className="pb-2">
@@ -31,16 +38,20 @@ function ListFilesSkeleton() {
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				{Array.from({ length: 3 }).map((_, i) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<div key={i} className="flex items-center justify-between">
-						<div className="space-y-1">
-							<Skeleton className="h-5 w-48" />
-							<Skeleton className="h-4 w-24" />
+				{skeletons.map(
+					(item: { id: string }): ReactElement => (
+						<div
+							key={item.id}
+							className="flex items-center justify-between"
+						>
+							<div className="space-y-1">
+								<Skeleton className="h-5 w-48" />
+								<Skeleton className="h-4 w-24" />
+							</div>
+							<Skeleton className="h-9 w-24" />
 						</div>
-						<Skeleton className="h-9 w-24" />
-					</div>
-				))}
+					),
+				)}
 			</CardContent>
 		</Card>
 	);

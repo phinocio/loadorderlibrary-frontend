@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { CurrentFilesDisplay } from "@/components/lists/files/current-files-display";
 import { FileUploadArea } from "@/components/lists/files/file-upload-area";
 import { SelectedFilesDisplay } from "@/components/lists/files/selected-files-display";
@@ -11,11 +16,6 @@ import {
 	useListEditFormData,
 	useListEditOriginalList,
 } from "@/stores/list-edit-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 type FileFormData = z.infer<typeof FileUploadSchema>;
 
@@ -145,75 +145,73 @@ export function ListEditStep4() {
 	const currentFiles = originalList?.files || [];
 
 	return (
-		<>
-			<Card>
-				<CardHeader>
-					<CardTitle>Step 4: Manage Files</CardTitle>
-				</CardHeader>
-				<CardContent className="space-y-6">
-					{/* Current Files */}
-					<CurrentFilesDisplay files={currentFiles} />
+		<Card>
+			<CardHeader>
+				<CardTitle>Step 4: Manage Files</CardTitle>
+			</CardHeader>
+			<CardContent className="space-y-6">
+				{/* Current Files */}
+				<CurrentFilesDisplay files={currentFiles} />
 
-					{/* Upload New Files */}
-					<Form {...form}>
-						<form
-							onSubmit={form.handleSubmit(onSubmit)}
-							className="space-y-6"
-						>
-							<FormField
-								control={form.control}
-								name="files"
-								render={(props) => (
-									<FileUploadArea
-										field={props.field}
-										onFileChange={handleFileChange}
-										label="Replace Files"
-										description="Upload new mod list files in INI or TXT format. These will replace the existing files."
-										disabled={isUpdatingList}
-									/>
-								)}
-							/>
-
-							{/* Selected New Files */}
-							<SelectedFilesDisplay
-								files={fileInfo}
-								onRemoveFile={handleRemoveFile}
-								onRemoveAll={handleRemoveAllFiles}
-								title="New Files to Upload"
-								showRemoveAll={true}
-								disabled={isUpdatingList}
-							/>
-
-							{/* Error Display */}
-							{updateListError && (
-								<div className="text-sm text-red-600 bg-red-50 p-3 rounded-md border border-red-200">
-									{updateListError.message ||
-										"Failed to update list. Please try again."}
-								</div>
+				{/* Upload New Files */}
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="space-y-6"
+					>
+						<FormField
+							control={form.control}
+							name="files"
+							render={(props) => (
+								<FileUploadArea
+									field={props.field}
+									onFileChange={handleFileChange}
+									label="Replace Files"
+									description="Upload new mod list files in INI or TXT format. These will replace the existing files."
+									disabled={isUpdatingList}
+								/>
 							)}
+						/>
 
-							{/* Action Buttons */}
-							<div className="flex justify-between border-t pt-4">
-								<Button
-									type="button"
-									variant="outline"
-									onClick={goBack}
-									disabled={isUpdatingList}
-								>
-									Back
-								</Button>
-								<Button
-									type="submit"
-									variant="tertiary"
-									disabled={isUpdatingList}
-								>
-									Update List
-								</Button>
+						{/* Selected New Files */}
+						<SelectedFilesDisplay
+							files={fileInfo}
+							onRemoveFile={handleRemoveFile}
+							onRemoveAll={handleRemoveAllFiles}
+							title="New Files to Upload"
+							showRemoveAll={true}
+							disabled={isUpdatingList}
+						/>
+
+						{/* Error Display */}
+						{updateListError && (
+							<div className="text-sm text-red-600 bg-red-50 p-3 rounded-md border border-red-200">
+								{updateListError.message ||
+									"Failed to update list. Please try again."}
 							</div>
-						</form>
-					</Form>
-				</CardContent>
-			</Card>
-		</>
+						)}
+
+						{/* Action Buttons */}
+						<div className="flex justify-between border-t pt-4">
+							<Button
+								type="button"
+								variant="outline"
+								onClick={goBack}
+								disabled={isUpdatingList}
+							>
+								Back
+							</Button>
+							<Button
+								type="submit"
+								variant="tertiary"
+								disabled={isUpdatingList}
+							>
+								Update List
+							</Button>
+						</div>
+					</form>
+				</Form>
+			</CardContent>
+		</Card>
 	);
 }

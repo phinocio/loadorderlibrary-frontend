@@ -1,5 +1,3 @@
-import { createApiToken, deleteApiToken, getApiTokens } from "@/api/api-tokens";
-import type { CreateApiTokenParams } from "@/types/api-token";
 import {
 	queryOptions,
 	useMutation,
@@ -7,6 +5,8 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { createApiToken, deleteApiToken, getApiTokens } from "@/api/api-tokens";
+import type { CreateApiTokenParams } from "@/types/api-token";
 
 export const apiTokensQueryOptions = queryOptions({
 	queryKey: ["api-tokens"],

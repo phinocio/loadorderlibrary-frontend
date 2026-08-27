@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { FileText, X } from "lucide-react";
+import type { ReactElement } from "react";
+import { Button } from "@/components/ui/button";
 
 type FileInfo = {
 	name: string;
@@ -23,7 +24,7 @@ export function SelectedFilesDisplay({
 	showRemoveAll = false,
 	onRemoveAll,
 	disabled = false,
-}: SelectedFilesDisplayProps) {
+}: SelectedFilesDisplayProps): ReactElement | null {
 	// Format file size for display
 	const formatFileSize = (bytes: number): string => {
 		if (bytes === 0) return "0 Bytes";
@@ -56,37 +57,39 @@ export function SelectedFilesDisplay({
 				)}
 			</div>
 			<div className="grid gap-3">
-				{files.map((file, i) => (
-					<div
-						key={`file-${i}-${file.name}`}
-						className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50 hover:bg-muted/70 transition-colors"
-					>
-						<div className="flex items-center gap-3">
-							<div className="flex size-10 items-center justify-center rounded-md bg-primary/10">
-								<FileText className="size-5 text-primary" />
-							</div>
-							<div className="flex flex-col">
-								<p className="text-sm font-medium leading-none">
-									{file.name}
-								</p>
-								<p className="text-xs text-muted-foreground mt-1">
-									{file.name.endsWith(".ini")
-										? "Configuration File"
-										: "Text File"}{" "}
-									• {formatFileSize(file.size)}
-								</p>
-							</div>
-						</div>
-						<button
-							type="button"
-							onClick={() => onRemoveFile(i)}
-							disabled={disabled}
-							className="flex size-8 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+				{files.map(
+					(file: FileInfo, i: number): ReactElement => (
+						<div
+							key={file.name}
+							className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50 hover:bg-muted/70 transition-colors"
 						>
-							<X className="size-4" />
-						</button>
-					</div>
-				))}
+							<div className="flex items-center gap-3">
+								<div className="flex size-10 items-center justify-center rounded-md bg-primary/10">
+									<FileText className="size-5 text-primary" />
+								</div>
+								<div className="flex flex-col">
+									<p className="text-sm font-medium leading-none">
+										{file.name}
+									</p>
+									<p className="text-xs text-muted-foreground mt-1">
+										{file.name.endsWith(".ini")
+											? "Configuration File"
+											: "Text File"}{" "}
+										• {formatFileSize(file.size)}
+									</p>
+								</div>
+							</div>
+							<button
+								type="button"
+								onClick={() => onRemoveFile(i)}
+								disabled={disabled}
+								className="flex size-8 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+							>
+								<X className="size-4" />
+							</button>
+						</div>
+					),
+				)}
 			</div>
 		</div>
 	);

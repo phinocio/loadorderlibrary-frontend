@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -12,9 +15,6 @@ import { cn } from "@/lib/utils";
 import { useLogin } from "@/queries/use-auth";
 import { LoginCredentialsSchema } from "@/schemas/auth-schemas";
 import type { LoginCredentials } from "@/types/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
 
 export function LoginForm({
 	className,

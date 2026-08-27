@@ -1,3 +1,5 @@
+import { ChevronDown, Download, FileText } from "lucide-react";
+import { useEffect, useState } from "react";
 import { ListFileContent } from "@/components/lists/files/list-file-content";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,8 +10,6 @@ import {
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import type { File, Files } from "@/types/file";
-import { ChevronDown, Download, FileText } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export function ListFiles({ files }: { files: Files | undefined }) {
 	const [openFiles, setOpenFiles] = useState<Set<string>>(new Set());

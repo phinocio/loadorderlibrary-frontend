@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { ListSchema } from "@/schemas/list-schemas";
 import { UserProfileSchema } from "@/schemas/user-schemas";
-import { z } from "zod";
 
 export const LoginCredentialsSchema = z.object({
 	name: z.string().min(1, "Username is required"),

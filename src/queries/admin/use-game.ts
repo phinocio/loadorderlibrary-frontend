@@ -1,6 +1,6 @@
-import { adminCreateGame } from "@/api/admin/game";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { adminCreateGame } from "@/api/admin/game";
 
 export function useAdminCreateGame() {
 	const queryClient = useQueryClient();

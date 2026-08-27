@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -24,9 +27,6 @@ import {
 	useListUploadActions,
 	useListUploadFormData,
 } from "@/stores/list-upload-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 const Step1Schema = ListCreateParamsSchema.pick({
 	name: true,

@@ -1,3 +1,12 @@
+import { createFileRoute } from "@tanstack/react-router";
+import {
+	CircleDollarSign,
+	Coffee,
+	GitCompareArrows,
+	InfoIcon,
+	MessageCircle,
+	Share2,
+} from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
 	Card,
@@ -6,15 +15,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { createFileRoute } from "@tanstack/react-router";
-import {
-	CircleDollarSign,
-	Coffee,
-	Github,
-	InfoIcon,
-	MessageCircle,
-	Share2,
-} from "lucide-react";
 
 export const Route = createFileRoute("/(app)/support")({
 	head: () => ({
@@ -74,7 +74,7 @@ function RouteComponent() {
 				<Card className="flex flex-col">
 					<CardHeader className="flex-1">
 						<CardTitle className="flex items-center gap-2">
-							<Github className="size-5" />
+							<GitCompareArrows className="size-5" />
 							GitHub Sponsors
 						</CardTitle>
 						<CardDescription>

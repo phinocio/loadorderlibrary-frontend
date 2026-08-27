@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme/theme-provider";
 import { ThemeSelector } from "@/components/theme/theme-selector";
 import {
@@ -8,8 +10,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { createFileRoute } from "@tanstack/react-router";
-import { Monitor, Moon, Sun } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/settings")({
 	head: () => ({

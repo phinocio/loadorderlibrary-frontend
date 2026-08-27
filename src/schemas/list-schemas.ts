@@ -1,7 +1,7 @@
+import { z } from "zod";
 import { FileSchema } from "@/schemas/file-schemas";
 import { GameSchema } from "@/schemas/game-schemas";
 import { optionalUrl } from "@/schemas/utils";
-import { z } from "zod";
 
 export const ListSchema = z.object({
 	name: z.string(),

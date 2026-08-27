@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ListEditForm } from "@/components/lists/list-edit-form";
 import { ListDetailSkeleton } from "@/components/skeletons/list-detail-skeleton";
 import { listQueryOptions, useList } from "@/queries/use-list";
@@ -5,8 +7,6 @@ import {
 	useListEditActions,
 	useListEditFormData,
 } from "@/stores/list-edit-store";
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/(app)/lists/$slug/edit")({
 	head: () => ({

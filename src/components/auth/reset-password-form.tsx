@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearch } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -12,9 +15,6 @@ import { cn } from "@/lib/utils";
 import { useResetPassword } from "@/queries/use-auth";
 import { ResetPasswordSchema } from "@/schemas/auth-schemas";
 import type { ResetPassword } from "@/types/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearch } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
 
 export function ResetPasswordForm({
 	className,

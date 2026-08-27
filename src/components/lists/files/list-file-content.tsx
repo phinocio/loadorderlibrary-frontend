@@ -1,3 +1,5 @@
+import { ExpandIcon, Search, ShrinkIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Collapsible,
@@ -7,8 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { ExpandIcon, Search, ShrinkIcon } from "lucide-react";
-import { useMemo, useState } from "react";
 
 type ListFileContentProps = {
 	content: string[];
@@ -184,34 +184,32 @@ export function ListFileContent({ content, filename }: ListFileContentProps) {
 			{isModlist && (
 				<div className="flex flex-wrap items-center justify-between gap-4 p-3 ">
 					<div className="flex flex-wrap items-center gap-4">
-						<>
-							<div className="flex items-center gap-2">
-								<Switch
-									id="show-enabled"
-									checked={showEnabled}
-									onCheckedChange={setShowEnabled}
-								/>
-								<label
-									htmlFor="show-enabled"
-									className="text-sm font-medium"
-								>
-									Show Enabled
-								</label>
-							</div>
-							<div className="flex items-center gap-2">
-								<Switch
-									id="show-disabled"
-									checked={showDisabled}
-									onCheckedChange={setShowDisabled}
-								/>
-								<label
-									htmlFor="show-disabled"
-									className="text-sm font-medium"
-								>
-									Show Disabled
-								</label>
-							</div>
-						</>
+						<div className="flex items-center gap-2">
+							<Switch
+								id="show-enabled"
+								checked={showEnabled}
+								onCheckedChange={setShowEnabled}
+							/>
+							<label
+								htmlFor="show-enabled"
+								className="text-sm font-medium"
+							>
+								Show Enabled
+							</label>
+						</div>
+						<div className="flex items-center gap-2">
+							<Switch
+								id="show-disabled"
+								checked={showDisabled}
+								onCheckedChange={setShowDisabled}
+							/>
+							<label
+								htmlFor="show-disabled"
+								className="text-sm font-medium"
+							>
+								Show Disabled
+							</label>
+						</div>
 					</div>
 
 					{separatorSections.some((section) => section.separator) && (

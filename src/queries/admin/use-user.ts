@@ -1,4 +1,11 @@
 import {
+	queryOptions,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
+import { toast } from "sonner";
+import {
 	adminDeleteUser,
 	adminGetUser,
 	adminGetUsers,
@@ -9,13 +16,6 @@ import type {
 	AdminUserUpdateParams,
 	AdminUserUpdatePasswordParams,
 } from "@/types/admin/user";
-import {
-	queryOptions,
-	useMutation,
-	useQueryClient,
-	useSuspenseQuery,
-} from "@tanstack/react-query";
-import { toast } from "sonner";
 
 export const adminUserQueryOptions = queryOptions({
 	queryKey: ["admin-users"],

@@ -1,3 +1,4 @@
+import type { z } from "zod";
 import type {
 	CurrentUserSchema,
 	ForgotPasswordSchema,
@@ -5,7 +6,6 @@ import type {
 	RegisterCredentialsSchema,
 	ResetPasswordSchema,
 } from "@/schemas/auth-schemas";
-import type { z } from "zod";
 
 export type LoginCredentials = z.infer<typeof LoginCredentialsSchema>;
 export type RegisterCredentials = z.infer<typeof RegisterCredentialsSchema>;

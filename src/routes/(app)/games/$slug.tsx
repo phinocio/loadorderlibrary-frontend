@@ -1,3 +1,12 @@
+import {
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
+import { Search, X } from "lucide-react";
+import { Suspense, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { z } from "zod";
 import { ListCard } from "@/components/lists/list-card";
 import { GameDetailSkeleton } from "@/components/skeletons/game-detail-skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -17,15 +26,6 @@ import {
 	useGame,
 	useGameListsInfinite,
 } from "@/queries/use-game";
-import {
-	createFileRoute,
-	useNavigate,
-	useSearch,
-} from "@tanstack/react-router";
-import { Search, X } from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { z } from "zod";
 
 const searchSchema = z.object({
 	query: z.string().optional(),
@@ -194,7 +194,10 @@ function GameComponent() {
 function GameErrorFallback({
 	error,
 	resetErrorBoundary,
-}: { error: Error; resetErrorBoundary?: () => void }) {
+}: {
+	error: Error;
+	resetErrorBoundary?: () => void;
+}) {
 	return (
 		<ErrorFallback
 			error={error}

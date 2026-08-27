@@ -1,9 +1,9 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { GameIndexSkeleton } from "@/components/skeletons/game-index-skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { gamesQueryOptions, useGames } from "@/queries/use-game";
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
 
 export const Route = createFileRoute("/(app)/games/")({
 	head: () => ({

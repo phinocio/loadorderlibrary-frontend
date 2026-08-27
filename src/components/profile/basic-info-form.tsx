@@ -1,3 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { InfoIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,10 +20,6 @@ import {
 	UserUpdateParamsSchema,
 } from "@/schemas/user-schemas";
 import type { CurrentUser } from "@/types/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { InfoIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 type UserUpdateParams = z.infer<typeof UserUpdateParamsSchema>;
 type UserPasswordUpdateParams = z.infer<typeof UserPasswordUpdateParamsSchema>;

@@ -1,4 +1,12 @@
 import {
+	queryOptions,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import {
 	forgotPassword,
 	getCurrentUser,
 	login,
@@ -11,14 +19,6 @@ import type {
 	LoginCredentials,
 	RegisterCredentials,
 } from "@/types/auth";
-import {
-	queryOptions,
-	useMutation,
-	useQueryClient,
-	useSuspenseQuery,
-} from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
 
 export const currentUserQueryOptions = queryOptions({
 	queryKey: ["current-user"],

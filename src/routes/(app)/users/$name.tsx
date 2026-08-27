@@ -1,14 +1,3 @@
-import { ListCard } from "@/components/lists/list-card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ErrorFallback } from "@/components/ui/error-fallback";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useUser, userQueryOptions } from "@/queries/use-user";
 import { createFileRoute } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
 import {
@@ -20,6 +9,17 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { ListCard } from "@/components/lists/list-card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ErrorFallback } from "@/components/ui/error-fallback";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { userQueryOptions, useUser } from "@/queries/use-user";
 
 export const Route = createFileRoute("/(app)/users/$name")({
 	head: () => ({
@@ -184,7 +184,10 @@ function UserDetailComponent() {
 function UserErrorFallback({
 	error,
 	resetErrorBoundary,
-}: { error: Error; resetErrorBoundary?: () => void }) {
+}: {
+	error: Error;
+	resetErrorBoundary?: () => void;
+}) {
 	return (
 		<ErrorFallback
 			error={error}

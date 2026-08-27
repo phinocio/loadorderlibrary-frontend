@@ -1,6 +1,6 @@
-import type { List, ListEditStore } from "@/types/list";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { List, ListEditStore } from "@/types/list";
 
 const useListEditStore = create<ListEditStore>()(
 	persist(

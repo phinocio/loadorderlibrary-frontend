@@ -1,6 +1,6 @@
-import { currentUserQueryOptions } from "@/queries/use-auth";
 import type { QueryClient } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
+import { currentUserQueryOptions } from "@/queries/use-auth";
 
 export async function requireAuth(
 	queryClient: QueryClient,

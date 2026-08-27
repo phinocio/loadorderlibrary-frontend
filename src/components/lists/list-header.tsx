@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { CheckCircleIcon, Download, Share2 } from "lucide-react";
+import { useState } from "react";
 import { ShareDialog } from "@/components/lists/share-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,9 +13,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { List } from "@/types/list";
-import { Link } from "@tanstack/react-router";
-import { CheckCircleIcon, Download, Share2 } from "lucide-react";
-import { useState } from "react";
 
 interface ListHeaderProps {
 	list: List;

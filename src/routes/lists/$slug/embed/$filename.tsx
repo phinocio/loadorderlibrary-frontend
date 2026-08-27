@@ -1,8 +1,8 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { ListFileContent } from "@/components/lists/files/list-file-content";
 import { ErrorFallback } from "@/components/ui/error-fallback";
 import { listQueryOptions, useList } from "@/queries/use-list";
-import { createFileRoute } from "@tanstack/react-router";
-import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 export const Route = createFileRoute("/lists/$slug/embed/$filename")({
 	loader: ({ context, params }) => {
@@ -96,10 +96,7 @@ function EmbedFileComponent() {
 	);
 }
 
-function EmbedErrorFallback({
-	error,
-	resetErrorBoundary,
-}: FallbackProps) {
+function EmbedErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 	return (
 		<div className="flex items-center justify-center min-h-screen p-4 w-full">
 			<ErrorFallback
