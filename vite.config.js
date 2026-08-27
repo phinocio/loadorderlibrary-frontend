@@ -18,11 +18,11 @@ export default defineConfig({
 	},
 	server: {
 		host: true,
-		allowedHosts: ["lol.wonderland.phinoc.io"],
+		allowedHosts: ["lol.phinoc.io"],
 	},
 	resolve: {
 		alias: {
-			"@": resolve(__dirname, "./src"),
+			"@": resolve(import.meta.dirname, "./src"),
 		},
 	},
 });

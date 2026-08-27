@@ -8,381 +8,513 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as appIndexRouteImport } from './routes/(app)/index'
+import { Route as appAuthenticatedRouteImport } from './routes/(app)/_authenticated'
+import { Route as appCompareRouteImport } from './routes/(app)/compare'
+import { Route as appSettingsRouteImport } from './routes/(app)/settings'
+import { Route as appSupportRouteImport } from './routes/(app)/support'
+import { Route as appUploadRouteImport } from './routes/(app)/upload'
+import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authResetPasswordRouteImport } from './routes/(auth)/reset-password'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminListsRouteImport } from './routes/admin/lists'
+import { Route as appAuthenticatedProfileRouteImport } from './routes/(app)/_authenticated.profile'
+import { Route as appGamesIndexRouteImport } from './routes/(app)/games/index'
+import { Route as appGamesSlugRouteImport } from './routes/(app)/games/$slug'
+import { Route as appListsIndexRouteImport } from './routes/(app)/lists/index'
+import { Route as appUsersNameRouteImport } from './routes/(app)/users/$name'
+import { Route as AdminGamesIndexRouteImport } from './routes/admin/games/index'
+import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
+import { Route as AdminUsersNameRouteImport } from './routes/admin/users/$name'
+import { Route as appListsSlugIndexRouteImport } from './routes/(app)/lists/$slug/index'
+import { Route as appListsSlugEditRouteImport } from './routes/(app)/lists/$slug/edit'
+import { Route as ListsSlugEmbedFilenameRouteImport } from './routes/lists/$slug/embed/$filename'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AdminRouteImport } from './routes/admin/route'
-import { Route as authRouteImport } from './routes/(auth)/route'
-import { Route as appRouteImport } from './routes/(app)/route'
-import { Route as AdminIndexImport } from './routes/admin/index'
-import { Route as appIndexImport } from './routes/(app)/index'
-import { Route as AdminListsImport } from './routes/admin/lists'
-import { Route as authResetPasswordImport } from './routes/(auth)/reset-password'
-import { Route as authRegisterImport } from './routes/(auth)/register'
-import { Route as authLoginImport } from './routes/(auth)/login'
-import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
-import { Route as appUploadImport } from './routes/(app)/upload'
-import { Route as appSupportImport } from './routes/(app)/support'
-import { Route as appSettingsImport } from './routes/(app)/settings'
-import { Route as appCompareImport } from './routes/(app)/compare'
-import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
-import { Route as AdminUsersIndexImport } from './routes/admin/users/index'
-import { Route as AdminGamesIndexImport } from './routes/admin/games/index'
-import { Route as appListsIndexImport } from './routes/(app)/lists/index'
-import { Route as appGamesIndexImport } from './routes/(app)/games/index'
-import { Route as AdminUsersNameImport } from './routes/admin/users/$name'
-import { Route as appUsersNameImport } from './routes/(app)/users/$name'
-import { Route as appGamesSlugImport } from './routes/(app)/games/$slug'
-import { Route as appAuthenticatedProfileImport } from './routes/(app)/_authenticated.profile'
-import { Route as appListsSlugIndexImport } from './routes/(app)/lists/$slug/index'
-import { Route as ListsSlugEmbedFilenameImport } from './routes/lists/$slug/embed/$filename'
-import { Route as appListsSlugEditImport } from './routes/(app)/lists/$slug/edit'
-
-// Create/Update Routes
-
-const AdminRouteRoute = AdminRouteImport.update({
+const appRouteRoute = appRouteRouteImport.update({
+  id: '/(app)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authRouteRoute = authRouteRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const authRouteRoute = authRouteImport.update({
-  id: '/(auth)',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const appRouteRoute = appRouteImport.update({
-  id: '/(app)',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AdminIndexRoute = AdminIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-
-const appIndexRoute = appIndexImport.update({
+const appIndexRoute = appIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => appRouteRoute,
 } as any)
-
-const AdminListsRoute = AdminListsImport.update({
-  id: '/lists',
-  path: '/lists',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-
-const authResetPasswordRoute = authResetPasswordImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => authRouteRoute,
-} as any)
-
-const authRegisterRoute = authRegisterImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => authRouteRoute,
-} as any)
-
-const authLoginRoute = authLoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => authRouteRoute,
-} as any)
-
-const authForgotPasswordRoute = authForgotPasswordImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => authRouteRoute,
-} as any)
-
-const appUploadRoute = appUploadImport.update({
-  id: '/upload',
-  path: '/upload',
+const appAuthenticatedRoute = appAuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => appRouteRoute,
 } as any)
-
-const appSupportRoute = appSupportImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const appSettingsRoute = appSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const appCompareRoute = appCompareImport.update({
+const appCompareRoute = appCompareRouteImport.update({
   id: '/compare',
   path: '/compare',
   getParentRoute: () => appRouteRoute,
 } as any)
-
-const appAuthenticatedRoute = appAuthenticatedImport.update({
-  id: '/_authenticated',
+const appSettingsRoute = appSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => appRouteRoute,
 } as any)
-
-const AdminUsersIndexRoute = AdminUsersIndexImport.update({
-  id: '/users/',
-  path: '/users/',
+const appSupportRoute = appSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appUploadRoute = appUploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => authRouteRoute,
+} as any)
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => authRouteRoute,
+} as any)
+const authRegisterRoute = authRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => authRouteRoute,
+} as any)
+const authResetPasswordRoute = authResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => authRouteRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-
-const AdminGamesIndexRoute = AdminGamesIndexImport.update({
-  id: '/games/',
-  path: '/games/',
+const AdminListsRoute = AdminListsRouteImport.update({
+  id: '/lists',
+  path: '/lists',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-
-const appListsIndexRoute = appListsIndexImport.update({
-  id: '/lists/',
-  path: '/lists/',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const appGamesIndexRoute = appGamesIndexImport.update({
-  id: '/games/',
-  path: '/games/',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const AdminUsersNameRoute = AdminUsersNameImport.update({
-  id: '/users/$name',
-  path: '/users/$name',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-
-const appUsersNameRoute = appUsersNameImport.update({
-  id: '/users/$name',
-  path: '/users/$name',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const appGamesSlugRoute = appGamesSlugImport.update({
-  id: '/games/$slug',
-  path: '/games/$slug',
-  getParentRoute: () => appRouteRoute,
-} as any)
-
-const appAuthenticatedProfileRoute = appAuthenticatedProfileImport.update({
+const appAuthenticatedProfileRoute = appAuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => appAuthenticatedRoute,
 } as any)
-
-const appListsSlugIndexRoute = appListsSlugIndexImport.update({
+const appGamesIndexRoute = appGamesIndexRouteImport.update({
+  id: '/games/',
+  path: '/games/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appGamesSlugRoute = appGamesSlugRouteImport.update({
+  id: '/games/$slug',
+  path: '/games/$slug',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appListsIndexRoute = appListsIndexRouteImport.update({
+  id: '/lists/',
+  path: '/lists/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appUsersNameRoute = appUsersNameRouteImport.update({
+  id: '/users/$name',
+  path: '/users/$name',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const AdminGamesIndexRoute = AdminGamesIndexRouteImport.update({
+  id: '/games/',
+  path: '/games/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminUsersNameRoute = AdminUsersNameRouteImport.update({
+  id: '/users/$name',
+  path: '/users/$name',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const appListsSlugIndexRoute = appListsSlugIndexRouteImport.update({
   id: '/lists/$slug/',
   path: '/lists/$slug/',
   getParentRoute: () => appRouteRoute,
 } as any)
-
-const ListsSlugEmbedFilenameRoute = ListsSlugEmbedFilenameImport.update({
-  id: '/lists/$slug/embed/$filename',
-  path: '/lists/$slug/embed/$filename',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const appListsSlugEditRoute = appListsSlugEditImport.update({
+const appListsSlugEditRoute = appListsSlugEditRouteImport.update({
   id: '/lists/$slug/edit',
   path: '/lists/$slug/edit',
   getParentRoute: () => appRouteRoute,
 } as any)
+const ListsSlugEmbedFilenameRoute = ListsSlugEmbedFilenameRouteImport.update({
+  id: '/lists/$slug/embed/$filename',
+  path: '/lists/$slug/embed/$filename',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/compare': typeof appCompareRoute
+  '/settings': typeof appSettingsRoute
+  '/support': typeof appSupportRoute
+  '/upload': typeof appUploadRoute
+  '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
+  '/': typeof appIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/profile': typeof appAuthenticatedProfileRoute
+  '/games/$slug': typeof appGamesSlugRoute
+  '/users/$name': typeof appUsersNameRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
+  '/games/': typeof appGamesIndexRoute
+  '/lists/': typeof appListsIndexRoute
+  '/admin/games/': typeof AdminGamesIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
+  '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
+  '/lists/$slug/': typeof appListsSlugIndexRoute
+}
+export interface FileRoutesByTo {
+  '/compare': typeof appCompareRoute
+  '/settings': typeof appSettingsRoute
+  '/support': typeof appSupportRoute
+  '/upload': typeof appUploadRoute
+  '/forgot-password': typeof authForgotPasswordRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
+  '/': typeof appIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/profile': typeof appAuthenticatedProfileRoute
+  '/games/$slug': typeof appGamesSlugRoute
+  '/users/$name': typeof appUsersNameRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
+  '/games': typeof appGamesIndexRoute
+  '/lists': typeof appListsIndexRoute
+  '/admin/games': typeof AdminGamesIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
+  '/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
+  '/lists/$slug': typeof appListsSlugIndexRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/(app)': typeof appRouteRouteWithChildren
+  '/(auth)': typeof authRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
+  '/(app)/compare': typeof appCompareRoute
+  '/(app)/settings': typeof appSettingsRoute
+  '/(app)/support': typeof appSupportRoute
+  '/(app)/upload': typeof appUploadRoute
+  '/(auth)/forgot-password': typeof authForgotPasswordRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
+  '/(auth)/reset-password': typeof authResetPasswordRoute
+  '/admin/lists': typeof AdminListsRoute
+  '/(app)/': typeof appIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
+  '/(app)/games/$slug': typeof appGamesSlugRoute
+  '/(app)/users/$name': typeof appUsersNameRoute
+  '/admin/users/$name': typeof AdminUsersNameRoute
+  '/(app)/games/': typeof appGamesIndexRoute
+  '/(app)/lists/': typeof appListsIndexRoute
+  '/admin/games/': typeof AdminGamesIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
+  '/(app)/lists/$slug/edit': typeof appListsSlugEditRoute
+  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
+  '/(app)/lists/$slug/': typeof appListsSlugIndexRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/admin'
+    | '/compare'
+    | '/settings'
+    | '/support'
+    | '/upload'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/admin/lists'
+    | '/'
+    | '/admin/'
+    | '/profile'
+    | '/games/$slug'
+    | '/users/$name'
+    | '/admin/users/$name'
+    | '/games/'
+    | '/lists/'
+    | '/admin/games/'
+    | '/admin/users/'
+    | '/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
+    | '/lists/$slug/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/compare'
+    | '/settings'
+    | '/support'
+    | '/upload'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/admin/lists'
+    | '/'
+    | '/admin'
+    | '/profile'
+    | '/games/$slug'
+    | '/users/$name'
+    | '/admin/users/$name'
+    | '/games'
+    | '/lists'
+    | '/admin/games'
+    | '/admin/users'
+    | '/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
+    | '/lists/$slug'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/(auth)'
+    | '/admin'
+    | '/(app)/_authenticated'
+    | '/(app)/compare'
+    | '/(app)/settings'
+    | '/(app)/support'
+    | '/(app)/upload'
+    | '/(auth)/forgot-password'
+    | '/(auth)/login'
+    | '/(auth)/register'
+    | '/(auth)/reset-password'
+    | '/admin/lists'
+    | '/(app)/'
+    | '/admin/'
+    | '/(app)/_authenticated/profile'
+    | '/(app)/games/$slug'
+    | '/(app)/users/$name'
+    | '/admin/users/$name'
+    | '/(app)/games/'
+    | '/(app)/lists/'
+    | '/admin/games/'
+    | '/admin/users/'
+    | '/(app)/lists/$slug/edit'
+    | '/lists/$slug/embed/$filename'
+    | '/(app)/lists/$slug/'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  appRouteRoute: typeof appRouteRouteWithChildren
+  authRouteRoute: typeof authRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  ListsSlugEmbedFilenameRoute: typeof ListsSlugEmbedFilenameRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/(app)': {
       id: '/(app)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof appRouteImport
-      parentRoute: typeof rootRoute
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(auth)': {
       id: '/(auth)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof authRouteImport
-      parentRoute: typeof rootRoute
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(app)/_authenticated': {
-      id: '/(app)/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof appAuthenticatedImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/compare': {
-      id: '/(app)/compare'
-      path: '/compare'
-      fullPath: '/compare'
-      preLoaderRoute: typeof appCompareImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/settings': {
-      id: '/(app)/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof appSettingsImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/support': {
-      id: '/(app)/support'
-      path: '/support'
-      fullPath: '/support'
-      preLoaderRoute: typeof appSupportImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/upload': {
-      id: '/(app)/upload'
-      path: '/upload'
-      fullPath: '/upload'
-      preLoaderRoute: typeof appUploadImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(auth)/forgot-password': {
-      id: '/(auth)/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof authForgotPasswordImport
-      parentRoute: typeof authRouteImport
-    }
-    '/(auth)/login': {
-      id: '/(auth)/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof authLoginImport
-      parentRoute: typeof authRouteImport
-    }
-    '/(auth)/register': {
-      id: '/(auth)/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof authRegisterImport
-      parentRoute: typeof authRouteImport
-    }
-    '/(auth)/reset-password': {
-      id: '/(auth)/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof authResetPasswordImport
-      parentRoute: typeof authRouteImport
-    }
-    '/admin/lists': {
-      id: '/admin/lists'
-      path: '/lists'
-      fullPath: '/admin/lists'
-      preLoaderRoute: typeof AdminListsImport
-      parentRoute: typeof AdminRouteImport
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(app)/': {
       id: '/(app)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof appIndexImport
-      parentRoute: typeof appRouteImport
+      preLoaderRoute: typeof appIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/_authenticated': {
+      id: '/(app)/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appAuthenticatedRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/compare': {
+      id: '/(app)/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof appCompareRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/settings': {
+      id: '/(app)/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof appSettingsRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/support': {
+      id: '/(app)/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof appSupportRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/upload': {
+      id: '/(app)/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof appUploadRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(auth)/forgot-password': {
+      id: '/(auth)/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof authForgotPasswordRouteImport
+      parentRoute: typeof authRouteRoute
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof authRouteRoute
+    }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof authRouteRoute
+    }
+    '/(auth)/reset-password': {
+      id: '/(auth)/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof authResetPasswordRouteImport
+      parentRoute: typeof authRouteRoute
     }
     '/admin/': {
       id: '/admin/'
       path: '/'
       fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexImport
-      parentRoute: typeof AdminRouteImport
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/lists': {
+      id: '/admin/lists'
+      path: '/lists'
+      fullPath: '/admin/lists'
+      preLoaderRoute: typeof AdminListsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/(app)/_authenticated/profile': {
       id: '/(app)/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof appAuthenticatedProfileImport
-      parentRoute: typeof appAuthenticatedImport
+      preLoaderRoute: typeof appAuthenticatedProfileRouteImport
+      parentRoute: typeof appAuthenticatedRoute
+    }
+    '/(app)/games/': {
+      id: '/(app)/games/'
+      path: '/games'
+      fullPath: '/games/'
+      preLoaderRoute: typeof appGamesIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
     '/(app)/games/$slug': {
       id: '/(app)/games/$slug'
       path: '/games/$slug'
       fullPath: '/games/$slug'
-      preLoaderRoute: typeof appGamesSlugImport
-      parentRoute: typeof appRouteImport
+      preLoaderRoute: typeof appGamesSlugRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/lists/': {
+      id: '/(app)/lists/'
+      path: '/lists'
+      fullPath: '/lists/'
+      preLoaderRoute: typeof appListsIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
     '/(app)/users/$name': {
       id: '/(app)/users/$name'
       path: '/users/$name'
       fullPath: '/users/$name'
-      preLoaderRoute: typeof appUsersNameImport
-      parentRoute: typeof appRouteImport
+      preLoaderRoute: typeof appUsersNameRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/admin/games/': {
+      id: '/admin/games/'
+      path: '/games'
+      fullPath: '/admin/games/'
+      preLoaderRoute: typeof AdminGamesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AdminUsersIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/users/$name': {
       id: '/admin/users/$name'
       path: '/users/$name'
       fullPath: '/admin/users/$name'
-      preLoaderRoute: typeof AdminUsersNameImport
-      parentRoute: typeof AdminRouteImport
+      preLoaderRoute: typeof AdminUsersNameRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/(app)/games/': {
-      id: '/(app)/games/'
-      path: '/games'
-      fullPath: '/games'
-      preLoaderRoute: typeof appGamesIndexImport
-      parentRoute: typeof appRouteImport
-    }
-    '/(app)/lists/': {
-      id: '/(app)/lists/'
-      path: '/lists'
-      fullPath: '/lists'
-      preLoaderRoute: typeof appListsIndexImport
-      parentRoute: typeof appRouteImport
-    }
-    '/admin/games/': {
-      id: '/admin/games/'
-      path: '/games'
-      fullPath: '/admin/games'
-      preLoaderRoute: typeof AdminGamesIndexImport
-      parentRoute: typeof AdminRouteImport
-    }
-    '/admin/users/': {
-      id: '/admin/users/'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersIndexImport
-      parentRoute: typeof AdminRouteImport
+    '/(app)/lists/$slug/': {
+      id: '/(app)/lists/$slug/'
+      path: '/lists/$slug'
+      fullPath: '/lists/$slug/'
+      preLoaderRoute: typeof appListsSlugIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
     '/(app)/lists/$slug/edit': {
       id: '/(app)/lists/$slug/edit'
       path: '/lists/$slug/edit'
       fullPath: '/lists/$slug/edit'
-      preLoaderRoute: typeof appListsSlugEditImport
-      parentRoute: typeof appRouteImport
+      preLoaderRoute: typeof appListsSlugEditRouteImport
+      parentRoute: typeof appRouteRoute
     }
     '/lists/$slug/embed/$filename': {
       id: '/lists/$slug/embed/$filename'
       path: '/lists/$slug/embed/$filename'
       fullPath: '/lists/$slug/embed/$filename'
-      preLoaderRoute: typeof ListsSlugEmbedFilenameImport
-      parentRoute: typeof rootRoute
-    }
-    '/(app)/lists/$slug/': {
-      id: '/(app)/lists/$slug/'
-      path: '/lists/$slug'
-      fullPath: '/lists/$slug'
-      preLoaderRoute: typeof appListsSlugIndexImport
-      parentRoute: typeof appRouteImport
+      preLoaderRoute: typeof ListsSlugEmbedFilenameRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-// Create and export the route tree
 
 interface appAuthenticatedRouteChildren {
   appAuthenticatedProfileRoute: typeof appAuthenticatedProfileRoute
@@ -467,332 +599,12 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
-export interface FileRoutesByFullPath {
-  '/': typeof appIndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
-  '': typeof appAuthenticatedRouteWithChildren
-  '/compare': typeof appCompareRoute
-  '/settings': typeof appSettingsRoute
-  '/support': typeof appSupportRoute
-  '/upload': typeof appUploadRoute
-  '/forgot-password': typeof authForgotPasswordRoute
-  '/login': typeof authLoginRoute
-  '/register': typeof authRegisterRoute
-  '/reset-password': typeof authResetPasswordRoute
-  '/admin/lists': typeof AdminListsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/profile': typeof appAuthenticatedProfileRoute
-  '/games/$slug': typeof appGamesSlugRoute
-  '/users/$name': typeof appUsersNameRoute
-  '/admin/users/$name': typeof AdminUsersNameRoute
-  '/games': typeof appGamesIndexRoute
-  '/lists': typeof appListsIndexRoute
-  '/admin/games': typeof AdminGamesIndexRoute
-  '/admin/users': typeof AdminUsersIndexRoute
-  '/lists/$slug/edit': typeof appListsSlugEditRoute
-  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
-  '/lists/$slug': typeof appListsSlugIndexRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof appIndexRoute
-  '': typeof appAuthenticatedRouteWithChildren
-  '/compare': typeof appCompareRoute
-  '/settings': typeof appSettingsRoute
-  '/support': typeof appSupportRoute
-  '/upload': typeof appUploadRoute
-  '/forgot-password': typeof authForgotPasswordRoute
-  '/login': typeof authLoginRoute
-  '/register': typeof authRegisterRoute
-  '/reset-password': typeof authResetPasswordRoute
-  '/admin/lists': typeof AdminListsRoute
-  '/admin': typeof AdminIndexRoute
-  '/profile': typeof appAuthenticatedProfileRoute
-  '/games/$slug': typeof appGamesSlugRoute
-  '/users/$name': typeof appUsersNameRoute
-  '/admin/users/$name': typeof AdminUsersNameRoute
-  '/games': typeof appGamesIndexRoute
-  '/lists': typeof appListsIndexRoute
-  '/admin/games': typeof AdminGamesIndexRoute
-  '/admin/users': typeof AdminUsersIndexRoute
-  '/lists/$slug/edit': typeof appListsSlugEditRoute
-  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
-  '/lists/$slug': typeof appListsSlugIndexRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/(app)': typeof appRouteRouteWithChildren
-  '/(auth)': typeof authRouteRouteWithChildren
-  '/admin': typeof AdminRouteRouteWithChildren
-  '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
-  '/(app)/compare': typeof appCompareRoute
-  '/(app)/settings': typeof appSettingsRoute
-  '/(app)/support': typeof appSupportRoute
-  '/(app)/upload': typeof appUploadRoute
-  '/(auth)/forgot-password': typeof authForgotPasswordRoute
-  '/(auth)/login': typeof authLoginRoute
-  '/(auth)/register': typeof authRegisterRoute
-  '/(auth)/reset-password': typeof authResetPasswordRoute
-  '/admin/lists': typeof AdminListsRoute
-  '/(app)/': typeof appIndexRoute
-  '/admin/': typeof AdminIndexRoute
-  '/(app)/_authenticated/profile': typeof appAuthenticatedProfileRoute
-  '/(app)/games/$slug': typeof appGamesSlugRoute
-  '/(app)/users/$name': typeof appUsersNameRoute
-  '/admin/users/$name': typeof AdminUsersNameRoute
-  '/(app)/games/': typeof appGamesIndexRoute
-  '/(app)/lists/': typeof appListsIndexRoute
-  '/admin/games/': typeof AdminGamesIndexRoute
-  '/admin/users/': typeof AdminUsersIndexRoute
-  '/(app)/lists/$slug/edit': typeof appListsSlugEditRoute
-  '/lists/$slug/embed/$filename': typeof ListsSlugEmbedFilenameRoute
-  '/(app)/lists/$slug/': typeof appListsSlugIndexRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/admin'
-    | ''
-    | '/compare'
-    | '/settings'
-    | '/support'
-    | '/upload'
-    | '/forgot-password'
-    | '/login'
-    | '/register'
-    | '/reset-password'
-    | '/admin/lists'
-    | '/admin/'
-    | '/profile'
-    | '/games/$slug'
-    | '/users/$name'
-    | '/admin/users/$name'
-    | '/games'
-    | '/lists'
-    | '/admin/games'
-    | '/admin/users'
-    | '/lists/$slug/edit'
-    | '/lists/$slug/embed/$filename'
-    | '/lists/$slug'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | ''
-    | '/compare'
-    | '/settings'
-    | '/support'
-    | '/upload'
-    | '/forgot-password'
-    | '/login'
-    | '/register'
-    | '/reset-password'
-    | '/admin/lists'
-    | '/admin'
-    | '/profile'
-    | '/games/$slug'
-    | '/users/$name'
-    | '/admin/users/$name'
-    | '/games'
-    | '/lists'
-    | '/admin/games'
-    | '/admin/users'
-    | '/lists/$slug/edit'
-    | '/lists/$slug/embed/$filename'
-    | '/lists/$slug'
-  id:
-    | '__root__'
-    | '/(app)'
-    | '/(auth)'
-    | '/admin'
-    | '/(app)/_authenticated'
-    | '/(app)/compare'
-    | '/(app)/settings'
-    | '/(app)/support'
-    | '/(app)/upload'
-    | '/(auth)/forgot-password'
-    | '/(auth)/login'
-    | '/(auth)/register'
-    | '/(auth)/reset-password'
-    | '/admin/lists'
-    | '/(app)/'
-    | '/admin/'
-    | '/(app)/_authenticated/profile'
-    | '/(app)/games/$slug'
-    | '/(app)/users/$name'
-    | '/admin/users/$name'
-    | '/(app)/games/'
-    | '/(app)/lists/'
-    | '/admin/games/'
-    | '/admin/users/'
-    | '/(app)/lists/$slug/edit'
-    | '/lists/$slug/embed/$filename'
-    | '/(app)/lists/$slug/'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  appRouteRoute: typeof appRouteRouteWithChildren
-  authRouteRoute: typeof authRouteRouteWithChildren
-  AdminRouteRoute: typeof AdminRouteRouteWithChildren
-  ListsSlugEmbedFilenameRoute: typeof ListsSlugEmbedFilenameRoute
-}
-
 const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   ListsSlugEmbedFilenameRoute: ListsSlugEmbedFilenameRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/(app)",
-        "/(auth)",
-        "/admin",
-        "/lists/$slug/embed/$filename"
-      ]
-    },
-    "/(app)": {
-      "filePath": "(app)/route.tsx",
-      "children": [
-        "/(app)/_authenticated",
-        "/(app)/compare",
-        "/(app)/settings",
-        "/(app)/support",
-        "/(app)/upload",
-        "/(app)/",
-        "/(app)/games/$slug",
-        "/(app)/users/$name",
-        "/(app)/games/",
-        "/(app)/lists/",
-        "/(app)/lists/$slug/edit",
-        "/(app)/lists/$slug/"
-      ]
-    },
-    "/(auth)": {
-      "filePath": "(auth)/route.tsx",
-      "children": [
-        "/(auth)/forgot-password",
-        "/(auth)/login",
-        "/(auth)/register",
-        "/(auth)/reset-password"
-      ]
-    },
-    "/admin": {
-      "filePath": "admin/route.tsx",
-      "children": [
-        "/admin/lists",
-        "/admin/",
-        "/admin/users/$name",
-        "/admin/games/",
-        "/admin/users/"
-      ]
-    },
-    "/(app)/_authenticated": {
-      "filePath": "(app)/_authenticated.tsx",
-      "parent": "/(app)",
-      "children": [
-        "/(app)/_authenticated/profile"
-      ]
-    },
-    "/(app)/compare": {
-      "filePath": "(app)/compare.tsx",
-      "parent": "/(app)"
-    },
-    "/(app)/settings": {
-      "filePath": "(app)/settings.tsx",
-      "parent": "/(app)"
-    },
-    "/(app)/support": {
-      "filePath": "(app)/support.tsx",
-      "parent": "/(app)"
-    },
-    "/(app)/upload": {
-      "filePath": "(app)/upload.tsx",
-      "parent": "/(app)"
-    },
-    "/(auth)/forgot-password": {
-      "filePath": "(auth)/forgot-password.tsx",
-      "parent": "/(auth)"
-    },
-    "/(auth)/login": {
-      "filePath": "(auth)/login.tsx",
-      "parent": "/(auth)"
-    },
-    "/(auth)/register": {
-      "filePath": "(auth)/register.tsx",
-      "parent": "/(auth)"
-    },
-    "/(auth)/reset-password": {
-      "filePath": "(auth)/reset-password.tsx",
-      "parent": "/(auth)"
-    },
-    "/admin/lists": {
-      "filePath": "admin/lists.tsx",
-      "parent": "/admin"
-    },
-    "/(app)/": {
-      "filePath": "(app)/index.tsx",
-      "parent": "/(app)"
-    },
-    "/admin/": {
-      "filePath": "admin/index.tsx",
-      "parent": "/admin"
-    },
-    "/(app)/_authenticated/profile": {
-      "filePath": "(app)/_authenticated.profile.tsx",
-      "parent": "/(app)/_authenticated"
-    },
-    "/(app)/games/$slug": {
-      "filePath": "(app)/games/$slug.tsx",
-      "parent": "/(app)"
-    },
-    "/(app)/users/$name": {
-      "filePath": "(app)/users/$name.tsx",
-      "parent": "/(app)"
-    },
-    "/admin/users/$name": {
-      "filePath": "admin/users/$name.tsx",
-      "parent": "/admin"
-    },
-    "/(app)/games/": {
-      "filePath": "(app)/games/index.tsx",
-      "parent": "/(app)"
-    },
-    "/(app)/lists/": {
-      "filePath": "(app)/lists/index.tsx",
-      "parent": "/(app)"
-    },
-    "/admin/games/": {
-      "filePath": "admin/games/index.tsx",
-      "parent": "/admin"
-    },
-    "/admin/users/": {
-      "filePath": "admin/users/index.tsx",
-      "parent": "/admin"
-    },
-    "/(app)/lists/$slug/edit": {
-      "filePath": "(app)/lists/$slug/edit.tsx",
-      "parent": "/(app)"
-    },
-    "/lists/$slug/embed/$filename": {
-      "filePath": "lists/$slug/embed/$filename.tsx"
-    },
-    "/(app)/lists/$slug/": {
-      "filePath": "(app)/lists/$slug/index.tsx",
-      "parent": "/(app)"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
