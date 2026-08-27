@@ -96,10 +96,7 @@ function EmbedFileComponent() {
 	);
 }
 
-function EmbedErrorFallback({
-	error,
-	resetErrorBoundary,
-}: FallbackProps) {
+function EmbedErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 	return (
 		<div className="flex items-center justify-center min-h-screen p-4 w-full">
 			<ErrorFallback

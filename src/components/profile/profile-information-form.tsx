@@ -19,7 +19,9 @@ import { useForm } from "react-hook-form";
 
 export function ProfileInformationForm({
 	currentUser,
-}: { currentUser: CurrentUser }) {
+}: {
+	currentUser: CurrentUser;
+}) {
 	const { updateProfile, isUpdatingProfile, updateProfileError } =
 		useUpdateUserProfile(currentUser.name);
 

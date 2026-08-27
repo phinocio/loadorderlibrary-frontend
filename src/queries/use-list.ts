@@ -19,11 +19,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export const listsQueryOptions = (
-	options: {
-		query?: string;
-		sort?: string;
-		pageSize?: number;
-	} = {},
+	options: { query?: string; sort?: string; pageSize?: number } = {},
 ) =>
 	queryOptions({
 		queryKey: ["lists", options],
@@ -31,11 +27,7 @@ export const listsQueryOptions = (
 	});
 
 export const listsInfiniteQueryOptions = (
-	options: {
-		query?: string;
-		sort?: string;
-		pageSize?: number;
-	} = {},
+	options: { query?: string; sort?: string; pageSize?: number } = {},
 ) =>
 	infiniteQueryOptions({
 		queryKey: ["lists", "infinite", options],
@@ -55,31 +47,19 @@ export const listQueryOptions = (slug: string) => {
 };
 
 export function useLists(
-	options: {
-		query?: string;
-		sort?: string;
-		pageSize?: number;
-	} = {},
+	options: { query?: string; sort?: string; pageSize?: number } = {},
 ) {
 	return useSuspenseQuery(listsQueryOptions(options));
 }
 
 export function useListsWithLoading(
-	options: {
-		query?: string;
-		sort?: string;
-		pageSize?: number;
-	} = {},
+	options: { query?: string; sort?: string; pageSize?: number } = {},
 ) {
 	return useQuery(listsQueryOptions(options));
 }
 
 export function useListsInfinite(
-	options: {
-		query?: string;
-		sort?: string;
-		pageSize?: number;
-	} = {},
+	options: { query?: string; sort?: string; pageSize?: number } = {},
 ) {
 	return useSuspenseInfiniteQuery(listsInfiniteQueryOptions(options));
 }

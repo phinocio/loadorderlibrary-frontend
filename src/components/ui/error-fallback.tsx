@@ -11,7 +11,7 @@ import { AlertTriangle, ArrowLeft, Home, RefreshCw } from "lucide-react";
 import type { FallbackProps } from "react-error-boundary";
 
 export interface ErrorFallbackProps {
-	error: FallbackProps['error'];
+	error: FallbackProps["error"];
 	resetErrorBoundary?: () => void;
 	title404?: string;
 	description404?: string;

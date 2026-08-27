@@ -194,7 +194,10 @@ function GameComponent() {
 function GameErrorFallback({
 	error,
 	resetErrorBoundary,
-}: { error: Error; resetErrorBoundary?: () => void }) {
+}: {
+	error: Error;
+	resetErrorBoundary?: () => void;
+}) {
 	return (
 		<ErrorFallback
 			error={error}

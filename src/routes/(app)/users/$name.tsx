@@ -184,7 +184,10 @@ function UserDetailComponent() {
 function UserErrorFallback({
 	error,
 	resetErrorBoundary,
-}: { error: Error; resetErrorBoundary?: () => void }) {
+}: {
+	error: Error;
+	resetErrorBoundary?: () => void;
+}) {
 	return (
 		<ErrorFallback
 			error={error}
