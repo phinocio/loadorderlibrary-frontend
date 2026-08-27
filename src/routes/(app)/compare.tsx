@@ -24,10 +24,10 @@ function RouteComponent() {
 				{/* Main Card */}
 				<Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
 					<CardHeader className="text-center pb-8">
-						<div className="mx-auto mb-6 size-20 rounded-full bg-gradient-to-br from-primary/20 to-tertiary/20 flex items-center justify-center">
+						<div className="mx-auto mb-6 size-20 rounded-full bg-linear-to-br from-primary/20 to-tertiary/20 flex items-center justify-center">
 							<Construction className="h-10 w-10 text-primary" />
 						</div>
-						<CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-tertiary bg-clip-text text-transparent">
+						<CardTitle className="text-4xl font-bold bg-linear-to-r from-primary to-tertiary bg-clip-text text-transparent">
 							List Comparison
 						</CardTitle>
 						<CardDescription className="text-lg mt-2 max-w-2xl mx-auto">
@@ -45,31 +45,35 @@ function RouteComponent() {
 
 					<CardContent className="space-y-8">
 						{/* Status Message */}
-						<div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg p-6 text-center">
+						<div className="bg-linear-to-r from-muted/50 to-muted/30 rounded-lg p-6 text-center">
 							<h3 className="text-xl font-semibold mb-3">
 								Why isn't this ready yet?
 							</h3>
 							<p className="text-muted-foreground leading-relaxed">
-								During the recent rewrite of Load Order Library,
-								I focused on getting the core functionality
-								working first.{" "}
+								I am lazy :3
+							</p>
+							<p>
+								Check out this neat site using the Load Order
+								Library API for comparisons: created by fr0:{" "}
+								<a
+									href="https://loadordercompare.com/"
+									className="block text-primary hover:underline text-xl"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Load Order Compare
+								</a>
 							</p>
 						</div>
 
 						{/* Timeline */}
-						<div className="bg-gradient-to-r from-secondary/10 to-tertiary/10 rounded-lg p-6">
+						<div className="bg-linear-to-r from-secondary/10 to-tertiary/10 rounded-lg p-6">
 							<h3 className="text-xl font-semibold mb-4 text-center">
 								Timeline
 							</h3>
 							<div className="text-center space-y-2">
 								<p className="text-sm text-muted-foreground">
-									I plan to take time off programming during
-									June, but will fix any critical bugs that
-									pop up.
-								</p>
-								<p className="text-sm font-medium">
-									After that, I will focus on implementing the
-									list comparison feature in July.
+									Who knows?
 								</p>
 							</div>
 						</div>
