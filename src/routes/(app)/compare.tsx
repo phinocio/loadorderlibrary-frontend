@@ -1,3 +1,5 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Clock, Construction } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,8 +9,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { Clock, Construction } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/compare")({
 	head: () => ({

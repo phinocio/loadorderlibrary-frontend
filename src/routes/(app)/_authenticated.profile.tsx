@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { ListTable } from "@/components/lists/list-table";
 import { ApiTokenManagement } from "@/components/profile/api-token-management";
 import { BasicInfoForm } from "@/components/profile/basic-info-form";
@@ -15,8 +17,6 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { currentUserQueryOptions, useCurrentUser } from "@/queries/use-auth";
 import { useDeleteList } from "@/queries/use-list";
 import { useDeleteUser } from "@/queries/use-user";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/_authenticated/profile")({
 	head: () => ({

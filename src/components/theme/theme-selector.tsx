@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { Monitor, Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useTheme } from "./theme-provider";
 
 export function ThemeSelector() {

@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { CheckIcon } from "lucide-react";
 import { ListUploadStep1 } from "@/components/lists/upload/list-upload-step-1";
 import { ListUploadStep2 } from "@/components/lists/upload/list-upload-step-2";
 import { ListUploadStep3 } from "@/components/lists/upload/list-upload-step-3";
@@ -11,8 +13,6 @@ import {
 	useListUploadActions,
 	useListUploadStep,
 } from "@/stores/list-upload-store";
-import { createFileRoute } from "@tanstack/react-router";
-import { CheckIcon } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/upload")({
 	head: () => ({

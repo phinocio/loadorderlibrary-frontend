@@ -1,3 +1,11 @@
+import {
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
+import { Search, X } from "lucide-react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import z from "zod";
 import { ListTable } from "@/components/lists/list-table";
 import { AdminListsSkeleton } from "@/components/skeletons/list-table-skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -15,14 +23,6 @@ import {
 	useAdminDeleteList,
 	useAdminListsInfinite,
 } from "@/queries/admin/use-list";
-import {
-	createFileRoute,
-	useNavigate,
-	useSearch,
-} from "@tanstack/react-router";
-import { Search, X } from "lucide-react";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import z from "zod";
 
 const searchSchema = z.object({
 	query: z.string().optional(),

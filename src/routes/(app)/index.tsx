@@ -1,10 +1,10 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { FileText, Heart, Upload } from "lucide-react";
 import { ListCard } from "@/components/lists/list-card";
 import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useListsWithLoading } from "@/queries/use-list";
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { FileText, Heart, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/")({
 	head: () => ({
@@ -85,41 +85,39 @@ function HomePage() {
 			</Card>
 
 			{/* Recent Lists Section */}
-			<>
-				<h2 className="text-3xl font-bold">Recent Lists</h2>
-				{isLoading ? (
+			<h2 className="text-3xl font-bold">Recent Lists</h2>
+			{isLoading ? (
+				<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+					{Array.from({ length: pageSize }).map((_, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
+						<ListSkeleton key={index} />
+					))}
+				</div>
+			) : listsData && listsData.data.length > 0 ? (
+				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-						{Array.from({ length: pageSize }).map((_, index) => (
-							// biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
-							<ListSkeleton key={index} />
+						{listsData.data.map((list) => (
+							<ListCard key={list.slug} list={list} />
 						))}
 					</div>
-				) : listsData && listsData.data.length > 0 ? (
-					<>
-						<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-							{listsData.data.map((list) => (
-								<ListCard key={list.slug} list={list} />
-							))}
-						</div>
-						<div className="mt-6 text-center">
-							<Button asChild variant="outline">
-								<Link to="/lists">View All Lists</Link>
-							</Button>
-						</div>
-					</>
-				) : (
-					<div className="text-center py-8 text-muted-foreground">
-						No lists available yet. Why not{" "}
-						<Link
-							to="/upload"
-							className="hover:underline text-primary font-bold"
-						>
-							create one
-						</Link>
-						?
+					<div className="mt-6 text-center">
+						<Button asChild variant="outline">
+							<Link to="/lists">View All Lists</Link>
+						</Button>
 					</div>
-				)}
-			</>
+				</>
+			) : (
+				<div className="text-center py-8 text-muted-foreground">
+					No lists available yet. Why not{" "}
+					<Link
+						to="/upload"
+						className="hover:underline text-primary font-bold"
+					>
+						create one
+					</Link>
+					?
+				</div>
+			)}
 		</div>
 	);
 }

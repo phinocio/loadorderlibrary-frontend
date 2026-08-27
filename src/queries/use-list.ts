@@ -1,12 +1,4 @@
 import {
-	createList,
-	deleteList,
-	getList,
-	getLists,
-	updateList,
-} from "@/api/list";
-import { useListUploadActions } from "@/stores/list-upload-store";
-import {
 	infiniteQueryOptions,
 	queryOptions,
 	useMutation,
@@ -17,6 +9,14 @@ import {
 } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import {
+	createList,
+	deleteList,
+	getList,
+	getLists,
+	updateList,
+} from "@/api/list";
+import { useListUploadActions } from "@/stores/list-upload-store";
 
 export const listsQueryOptions = (
 	options: { query?: string; sort?: string; pageSize?: number } = {},

@@ -1,4 +1,3 @@
-import { adminDeleteList, adminGetLists } from "@/api/admin/list";
 import {
 	infiniteQueryOptions,
 	useMutation,
@@ -6,6 +5,7 @@ import {
 	useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { adminDeleteList, adminGetLists } from "@/api/admin/list";
 
 export const adminListsInfiniteQueryOptions = (query?: string) =>
 	infiniteQueryOptions({

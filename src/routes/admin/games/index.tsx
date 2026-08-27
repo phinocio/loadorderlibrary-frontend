@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createFileRoute } from "@tanstack/react-router";
+import { PlusIcon } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +27,6 @@ import { useAdminCreateGame } from "@/queries/admin/use-game";
 import { gamesQueryOptions, useGames } from "@/queries/use-game";
 import { AdminGameCreateSchema } from "@/schemas/admin/game-schemas";
 import type { AdminGameCreateParams } from "@/types/admin/game";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createFileRoute } from "@tanstack/react-router";
-import { PlusIcon } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/admin/games/")({
 	loader: ({ context }) =>

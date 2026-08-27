@@ -1,3 +1,5 @@
+import { Check, Copy, ExternalLink } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -19,8 +21,6 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import type { Files } from "@/types/file";
 import type { List } from "@/types/list";
-import { Check, Copy, ExternalLink } from "lucide-react";
-import { useState } from "react";
 
 interface ShareDialogProps {
 	open: boolean;

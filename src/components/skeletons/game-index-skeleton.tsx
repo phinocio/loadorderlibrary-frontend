@@ -1,7 +1,8 @@
+import type { ReactElement } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function GameCardSkeleton() {
+export function GameCardSkeleton(): ReactElement {
 	return (
 		<Card className="group hover:shadow-md transition-all">
 			<CardHeader>
@@ -17,15 +18,23 @@ export function GameCardSkeleton() {
 	);
 }
 
-export function GameIndexSkeleton() {
+export function GameIndexSkeleton(): ReactElement {
+	const skeletons = Array.from(
+		{ length: 6 },
+		(_: unknown, i: number): { id: string } => ({
+			id: `skeleton-${i}`,
+		}),
+	);
+
 	return (
 		<div className="container mx-auto py-6">
 			<Skeleton className="h-8 w-32 mb-6" />
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{Array.from({ length: 6 }).map((_, index) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<GameCardSkeleton key={index} />
-				))}
+				{skeletons.map(
+					(item: { id: string }): ReactElement => (
+						<GameIndexSkeleton key={item.id} />
+					),
+				)}
 			</div>
 		</div>
 	);

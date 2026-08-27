@@ -1,10 +1,10 @@
+import { Link } from "@tanstack/react-router";
+import { LogIn, User } from "lucide-react";
 import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
-import { LogIn, User } from "lucide-react";
 
 export function NavLoginRegister() {
 	return (

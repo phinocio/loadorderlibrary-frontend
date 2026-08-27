@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@tanstack/react-router";
+import { InfoIcon } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +18,6 @@ import { cn } from "@/lib/utils";
 import { useForgotPassword } from "@/queries/use-auth";
 import { ForgotPasswordSchema } from "@/schemas/auth-schemas";
 import type { ForgotPassword } from "@/types/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@tanstack/react-router";
-import { InfoIcon } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 export function ForgotPasswordForm({
 	className,

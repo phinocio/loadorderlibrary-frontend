@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -22,9 +25,6 @@ import {
 	useListEditActions,
 	useListEditFormData,
 } from "@/stores/list-edit-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 const EditStep2Schema = ListUpdateParamsSchema.pick({
 	private: true,
@@ -59,101 +59,99 @@ export function ListEditStep2() {
 	});
 
 	return (
-		<>
-			<Card>
-				<CardHeader>
-					<CardTitle>Step 2: List Visibility Settings</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Form {...form}>
-						<form
-							onSubmit={form.handleSubmit(onSubmit)}
-							className="space-y-6"
-						>
-							<FormField
-								control={form.control}
-								name="private"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											Make this list private
-										</FormLabel>
-										<FormDescription className="text-sm text-muted-foreground">
-											Only people with the link can view
-											this list
-										</FormDescription>
+		<Card>
+			<CardHeader>
+				<CardTitle>Step 2: List Visibility Settings</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="space-y-6"
+					>
+						<FormField
+							control={form.control}
+							name="private"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Make this list private
+									</FormLabel>
+									<FormDescription className="text-sm text-muted-foreground">
+										Only people with the link can view this
+										list
+									</FormDescription>
+									<FormControl>
+										<Switch
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name="expires"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Expiration Time</FormLabel>
+									<FormDescription className="text-sm text-muted-foreground">
+										Optional time period after which this
+										list will expire
+									</FormDescription>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+									>
 										<FormControl>
-											<Switch
-												checked={field.value}
-												onCheckedChange={field.onChange}
-											/>
+											<SelectTrigger>
+												<SelectValue placeholder="Select expiration time" />
+											</SelectTrigger>
 										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+										<SelectContent>
+											<SelectItem value="never">
+												Never
+											</SelectItem>
+											<SelectItem value="3h">
+												3 Hours
+											</SelectItem>
+											<SelectItem value="24h">
+												24 Hours
+											</SelectItem>
+											<SelectItem value="3d">
+												3 Days
+											</SelectItem>
+											<SelectItem value="1w">
+												1 Week
+											</SelectItem>
+											<SelectItem value="1m">
+												1 Month
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-							<FormField
-								control={form.control}
-								name="expires"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Expiration Time</FormLabel>
-										<FormDescription className="text-sm text-muted-foreground">
-											Optional time period after which
-											this list will expire
-										</FormDescription>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Select expiration time" />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												<SelectItem value="never">
-													Never
-												</SelectItem>
-												<SelectItem value="3h">
-													3 Hours
-												</SelectItem>
-												<SelectItem value="24h">
-													24 Hours
-												</SelectItem>
-												<SelectItem value="3d">
-													3 Days
-												</SelectItem>
-												<SelectItem value="1w">
-													1 Week
-												</SelectItem>
-												<SelectItem value="1m">
-													1 Month
-												</SelectItem>
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<div className="flex justify-between border-t pt-4">
-								<Button
-									type="button"
-									variant="outline"
-									onClick={goBack}
-								>
-									Back
-								</Button>
-								<Button type="submit" variant="tertiary">
-									Next
-								</Button>
-							</div>
-						</form>
-					</Form>
-				</CardContent>
-			</Card>
-		</>
+						<div className="flex justify-between border-t pt-4">
+							<Button
+								type="button"
+								variant="outline"
+								onClick={goBack}
+							>
+								Back
+							</Button>
+							<Button type="submit" variant="tertiary">
+								Next
+							</Button>
+						</div>
+					</form>
+				</Form>
+			</CardContent>
+		</Card>
 	);
 }

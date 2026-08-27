@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { CheckCircleIcon, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -13,9 +16,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { List } from "@/types/list";
-import { Link } from "@tanstack/react-router";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import { CheckCircleIcon, Clock } from "lucide-react";
 
 interface ListCardProps {
 	list: List;

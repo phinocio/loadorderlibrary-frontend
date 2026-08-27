@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -12,9 +15,6 @@ import { cn } from "@/lib/utils";
 import { useRegister } from "@/queries/use-auth";
 import { RegisterCredentialsSchema } from "@/schemas/auth-schemas";
 import type { RegisterCredentials } from "@/types/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
 
 export function RegisterForm({
 	className,

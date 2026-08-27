@@ -1,3 +1,5 @@
+import { Upload } from "lucide-react";
+import type { ControllerRenderProps } from "react-hook-form";
 import {
 	FormControl,
 	FormDescription,
@@ -6,8 +8,6 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Upload } from "lucide-react";
-import type { ControllerRenderProps } from "react-hook-form";
 
 type FileUploadAreaProps = {
 	// This file type is actual browser File, not the custom File type

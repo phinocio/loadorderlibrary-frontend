@@ -1,3 +1,11 @@
+import { formatDistanceToNow, parseISO } from "date-fns";
+import {
+	CalendarIcon,
+	Clock,
+	FileText,
+	Globe,
+	MessageCircle,
+} from "lucide-react";
 import { ListFiles } from "@/components/lists/files/list-files";
 import { ListHeader } from "@/components/lists/list-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,14 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { ensureHttpProtocol } from "@/lib/utils";
 import type { List } from "@/types/list";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import {
-	CalendarIcon,
-	Clock,
-	FileText,
-	Globe,
-	MessageCircle,
-} from "lucide-react";
 
 interface ListDetailProps {
 	list: List;

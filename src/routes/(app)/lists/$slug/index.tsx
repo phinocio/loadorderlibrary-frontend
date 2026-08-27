@@ -1,10 +1,10 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { ListDetail } from "@/components/lists/list-detail";
 import { ListDetailSkeleton } from "@/components/skeletons/list-detail-skeleton";
 import { ErrorFallback } from "@/components/ui/error-fallback";
 import { listQueryOptions, useList } from "@/queries/use-list";
-import { createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/(app)/lists/$slug/")({
 	head: () => ({

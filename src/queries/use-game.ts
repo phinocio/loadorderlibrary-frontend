@@ -1,10 +1,10 @@
-import { getGame, getGameLists, getGames } from "@/api/game";
 import {
 	infiniteQueryOptions,
 	queryOptions,
 	useSuspenseInfiniteQuery,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
+import { getGame, getGameLists, getGames } from "@/api/game";
 
 export const gamesQueryOptions = queryOptions({
 	queryKey: ["games"],
