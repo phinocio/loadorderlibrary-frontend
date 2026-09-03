@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as NexusOauthCompleteRouteImport } from './routes/nexus-oauth-complete'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
 import { Route as appAuthenticatedRouteImport } from './routes/(app)/_authenticated'
 import { Route as appCompareRouteImport } from './routes/(app)/compare'
@@ -47,6 +48,11 @@ const authRouteRoute = authRouteRouteImport.update({
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NexusOauthCompleteRoute = NexusOauthCompleteRouteImport.update({
+  id: '/nexus-oauth-complete',
+  path: '/nexus-oauth-complete',
   getParentRoute: () => rootRouteImport,
 } as any)
 const appIndexRoute = appIndexRouteImport.update({
@@ -166,6 +172,7 @@ const ListsSlugEmbedFilenameRoute = ListsSlugEmbedFilenameRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
+  '/nexus-oauth-complete': typeof NexusOauthCompleteRoute
   '/compare': typeof appCompareRoute
   '/settings': typeof appSettingsRoute
   '/support': typeof appSupportRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/lists/$slug/': typeof appListsSlugIndexRoute
 }
 export interface FileRoutesByTo {
+  '/nexus-oauth-complete': typeof NexusOauthCompleteRoute
   '/compare': typeof appCompareRoute
   '/settings': typeof appSettingsRoute
   '/support': typeof appSupportRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/(app)': typeof appRouteRouteWithChildren
   '/(auth)': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
+  '/nexus-oauth-complete': typeof NexusOauthCompleteRoute
   '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
   '/(app)/compare': typeof appCompareRoute
   '/(app)/settings': typeof appSettingsRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/admin'
+    | '/nexus-oauth-complete'
     | '/compare'
     | '/settings'
     | '/support'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
     | '/lists/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/nexus-oauth-complete'
     | '/compare'
     | '/settings'
     | '/support'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '/(app)'
     | '/(auth)'
     | '/admin'
+    | '/nexus-oauth-complete'
     | '/(app)/_authenticated'
     | '/(app)/compare'
     | '/(app)/settings'
@@ -326,6 +338,7 @@ export interface RootRouteChildren {
   appRouteRoute: typeof appRouteRouteWithChildren
   authRouteRoute: typeof authRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  NexusOauthCompleteRoute: typeof NexusOauthCompleteRoute
   ListsSlugEmbedFilenameRoute: typeof ListsSlugEmbedFilenameRoute
 }
 
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nexus-oauth-complete': {
+      id: '/nexus-oauth-complete'
+      path: '/nexus-oauth-complete'
+      fullPath: '/nexus-oauth-complete'
+      preLoaderRoute: typeof NexusOauthCompleteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(app)/': {
@@ -603,6 +623,7 @@ const rootRouteChildren: RootRouteChildren = {
   appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  NexusOauthCompleteRoute: NexusOauthCompleteRoute,
   ListsSlugEmbedFilenameRoute: ListsSlugEmbedFilenameRoute,
 }
 export const routeTree = rootRouteImport

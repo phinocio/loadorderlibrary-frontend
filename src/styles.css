@@ -124,3 +124,7 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@theme nexus {
+	--color-nexus: #d98f40;
+}

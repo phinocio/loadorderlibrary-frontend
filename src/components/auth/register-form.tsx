@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Card,
+	CardAction,
 	CardContent,
 	CardDescription,
 	CardHeader,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useRegister } from "@/queries/use-auth";
 import { RegisterCredentialsSchema } from "@/schemas/auth-schemas";
@@ -43,97 +45,111 @@ export function RegisterForm({
 	});
 
 	return (
-		<div className={cn("flex flex-col gap-6", className)} {...props}>
-			<Card>
-				<CardHeader>
-					<CardTitle>Create an account</CardTitle>
-					<CardDescription>
-						Enter your details below to create your account.
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form onSubmit={onSubmit}>
-						{registerError && (
-							<div className="mb-4 text-sm text-destructive">
-								{registerError instanceof Error
-									? registerError.message
-									: "Something went wrong. Please try again."}
-							</div>
-						)}
-						<div className="flex flex-col gap-6">
-							<div className="space-y-2">
-								<Label htmlFor="name">Username</Label>
-								<Input
-									id="name"
-									type="text"
-									placeholder="Enter your name"
-									{...register("name")}
-									autoComplete="username"
-									required
-								/>
-								{errors.name && (
-									<p className="text-sm text-destructive">
-										{errors.name.message}
-									</p>
-								)}
-							</div>
-							<div className="space-y-2">
-								<Label htmlFor="password">Password</Label>
-								<Input
-									id="password"
-									type="password"
-									placeholder="Enter your password"
-									{...register("password")}
-									autoComplete="new-password"
-									required
-								/>
-								{errors.password && (
-									<p className="text-sm text-destructive">
-										{errors.password.message}
-									</p>
-								)}
-							</div>
-							<div className="space-y-2">
-								<Label htmlFor="password_confirmation">
-									Confirm Password
-								</Label>
-								<Input
-									id="password_confirmation"
-									type="password"
-									placeholder="Confirm your password"
-									{...register("password_confirmation")}
-									autoComplete="new-password"
-									required
-								/>
-								{errors.password_confirmation && (
-									<p className="text-sm text-destructive">
-										{errors.password_confirmation.message}
-									</p>
-								)}
-							</div>
-							<div className="flex flex-col gap-3">
-								<Button
-									type="submit"
-									variant="tertiary"
-									className="w-full"
-									disabled={isRegistering}
-								>
-									Register
-								</Button>
-							</div>
+		<Card>
+			<CardHeader>
+				<CardTitle>Create an account</CardTitle>
+				<CardDescription>
+					Enter your details below to create your account.
+				</CardDescription>
+				<CardAction>
+					<Link
+						to="/login"
+						className="underline underline-offset-4 text-primary hover:text-primary/80"
+					>
+						Log In
+					</Link>
+				</CardAction>
+			</CardHeader>
+			<CardContent>
+				<form onSubmit={onSubmit}>
+					{registerError && (
+						<div className="mb-4 text-sm text-destructive">
+							{registerError instanceof Error
+								? registerError.message
+								: "Something went wrong. Please try again."}
 						</div>
-						<div className="mt-4 text-center text-sm">
-							Already have an account?{" "}
-							<Link
-								to="/login"
-								className="underline underline-offset-4 text-primary hover:text-primary/80"
+					)}
+					<div className="flex flex-col gap-6">
+						<div className="space-y-2">
+							<Label htmlFor="name">Username</Label>
+							<Input
+								id="name"
+								type="text"
+								placeholder="Enter your name"
+								{...register("name")}
+								autoComplete="username"
+								required
+							/>
+							{errors.name && (
+								<p className="text-sm text-destructive">
+									{errors.name.message}
+								</p>
+							)}
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="password">Password</Label>
+							<Input
+								id="password"
+								type="password"
+								placeholder="Enter your password"
+								{...register("password")}
+								autoComplete="new-password"
+								required
+							/>
+							{errors.password && (
+								<p className="text-sm text-destructive">
+									{errors.password.message}
+								</p>
+							)}
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="password_confirmation">
+								Confirm Password
+							</Label>
+							<Input
+								id="password_confirmation"
+								type="password"
+								placeholder="Confirm your password"
+								{...register("password_confirmation")}
+								autoComplete="new-password"
+								required
+							/>
+							{errors.password_confirmation && (
+								<p className="text-sm text-destructive">
+									{errors.password_confirmation.message}
+								</p>
+							)}
+						</div>
+						<div className="flex flex-col gap-3">
+							<Button
+								type="submit"
+								variant="tertiary"
+								className="w-full"
+								disabled={isRegistering}
 							>
-								Log In
-							</Link>
+								Register
+							</Button>
+
+							<div className="flex items-center gap-4 ">
+								<Separator className="flex-1" />
+								<span className="text-sm text-muted-foreground">
+									OR
+								</span>
+								<Separator className="flex-1" />
+							</div>
+
+							<a
+								href={import.meta.env.VITE_NEXUS_OAUTH_URL}
+								className={buttonVariants({
+									variant: "nexus",
+								})}
+							>
+								Register with Nexus Mods
+							</a>
 						</div>
-					</form>
-				</CardContent>
-			</Card>
-		</div>
+					</div>
+				</form>
+			</CardContent>
+		</Card>
 	);
 }
