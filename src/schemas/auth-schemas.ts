@@ -27,23 +27,24 @@ export const RegisterCredentialsSchema = z
 
 export const CurrentUserSchema = z.object({
 	name: z.string(),
-	email: z.string().email("Invalid email address").nullable(),
+	email: z.email("Invalid email address").nullable(),
 	verified: z.boolean(),
 	admin: z.boolean(),
 	profile: z.union([UserProfileSchema, z.null()]).optional(),
 	lists: z.array(ListSchema),
+	oauth_uder: z.boolean(),
 	created: z.string(),
 	updated: z.string(),
 });
 
 export const ForgotPasswordSchema = z.object({
-	email: z.string().email("Invalid email address"),
+	email: z.email("Invalid email address"),
 });
 
 export const ResetPasswordSchema = z
 	.object({
 		token: z.string().min(1, "Token is required"),
-		email: z.string().email("Invalid email address"),
+		email: z.email("Invalid email address"),
 		password: z
 			.string()
 			.min(1, "Password is required")
