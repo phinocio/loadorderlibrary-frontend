@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InfoIcon } from "lucide-react";
+import type { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -24,7 +25,11 @@ import type { CurrentUser } from "@/types/auth";
 type UserUpdateParams = z.infer<typeof UserUpdateParamsSchema>;
 type UserPasswordUpdateParams = z.infer<typeof UserPasswordUpdateParamsSchema>;
 
-export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
+export function BasicInfoForm({
+	currentUser,
+}: {
+	currentUser: CurrentUser;
+}): ReactElement {
 	const { updateUser, isUpdatingUser, updateUserError } = useUpdateUser(
 		currentUser.name,
 	);
@@ -55,13 +60,32 @@ export function BasicInfoForm({ currentUser }: { currentUser: CurrentUser }) {
 		},
 	});
 
-	const onEmailSubmit = handleEmailSubmit((data) => {
+	const onEmailSubmit = handleEmailSubmit((data: UserUpdateParams): void => {
 		updateUser(data);
 	});
 
-	const onPasswordSubmit = handlePasswordSubmit((data) => {
-		updateUserPassword(data);
-	});
+	const onPasswordSubmit = handlePasswordSubmit(
+		(data: UserPasswordUpdateParams): void => {
+			updateUserPassword(data);
+		},
+	);
+
+	if (currentUser.oauth_user) {
+		return (
+			<Card>
+				<CardHeader className="border-b">
+					<CardTitle className="text-xl">Basic Information</CardTitle>
+					<CardDescription>
+						Update your email address and password
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					You have logged in via OAuth, so are unable to change your
+					email or password.
+				</CardContent>
+			</Card>
+		);
+	}
 
 	return (
 		<Card>

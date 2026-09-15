@@ -3,6 +3,7 @@ import { ListSchema } from "@/schemas/list-schemas";
 import { optionalUrl } from "@/schemas/utils";
 
 export const UserProfileSchema = z.object({
+	avatar: z.string().optional(),
 	bio: z.union([z.string(), z.literal("")]).optional(),
 	discord: optionalUrl,
 	kofi: optionalUrl,
@@ -23,7 +24,7 @@ export const UserSchema = z.object({
 });
 
 export const UserUpdateParamsSchema = z.object({
-	email: z.union([z.string().email(), z.literal("")]).optional(),
+	email: z.union([z.email(), z.literal("")]).optional(),
 });
 
 export const UserPasswordUpdateParamsSchema = z.object({
