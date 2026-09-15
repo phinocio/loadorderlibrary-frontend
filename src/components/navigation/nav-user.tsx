@@ -1,5 +1,6 @@
 "use client";
 
+import { AvatarImage } from "@radix-ui/react-avatar";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
 	ChevronsUpDown,
@@ -8,7 +9,6 @@ import {
 	Settings,
 	User as UserIcon,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
@@ -45,6 +45,9 @@ export function NavUser({ currentUser }: { currentUser: CurrentUser }) {
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
+								<AvatarImage
+									src={currentUser.profile?.avatar}
+								/>
 								<AvatarFallback className="rounded-full bg-primary text-primary-foreground">
 									{initials}
 								</AvatarFallback>

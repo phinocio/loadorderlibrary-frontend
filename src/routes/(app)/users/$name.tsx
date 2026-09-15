@@ -10,7 +10,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { ListCard } from "@/components/lists/list-card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorFallback } from "@/components/ui/error-fallback";
@@ -44,6 +44,7 @@ function UserDetailComponent() {
 				<CardHeader className="relative pt-0">
 					<div className="-mt-12 flex items-end space-x-4">
 						<Avatar className="size-24 border-4 border-background">
+							<AvatarImage src={user.profile?.avatar} />
 							<AvatarFallback className="rounded-full bg-primary text-primary-foreground font-bold text-4xl">
 								{initials}
 							</AvatarFallback>
